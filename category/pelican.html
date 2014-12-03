@@ -67,8 +67,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/setup-pelican.html"><h1>pelican + github&nbsp;搭建个人Blog</h1></a>
-2014-11-30
+            <a href="http://blog.wiseturtles.com/posts/about-wiseturtles.html"><h1>如何发表文章</h1></a>
+2014-12-03
 
 by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
  
@@ -77,362 +77,188 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
  
         </div>
         
-        <div><h2>为什么选择Pelican</h2>
-<p>想搭建一个博客，不想受门户网站博客的限制，想用更纯净的方式写作，方便数据转移，
-专注内容而不是格式，在这个页面<a href="https://www.staticgen.com">https://www.staticgen.com</a>罗列了各种语言的静态博客引擎,&nbsp;最终选择了Pelican，</p>
-<p>为什么呢？</p>
+        <div><h2>为什么要有这个博客</h2>
+<p>方便知识的整理，分享和交流。更主要的是慢慢感觉年纪越来越大(黑线！！！)，记性越来越差，需要一个可以记录东西的地方.</p>
+<p>古话说得好</p>
 <blockquote>
-<p>因为人生苦短，我用python</p>
+<p>好记性不如烂笔头嘛!</p>
 </blockquote>
-<p>特色：</p>
+<h2>名字的由来</h2>
+<p>为什么取名叫Wise Turtles？在这里我不得不吐槽一下咯。取名字，本来就是一件很难的事情，取一个有意义的名字就更难了，让一个理工宅男来取就难到吐血啦。
+为了取一个有意义的名字，同时又能注册到域名和github组织名，我简直是使出了吃奶的力气, 从dota3一直试到了dota100， 域名都被注册了，想死的心都有。
+伤心欲绝时，突然灵光一闪，想到了不久前热映的电影《忍者神龟》， 四兄弟团结, 幽默, 充满活力, 这不是我们所追求的团队精神吗? 所以决定以忍者神龟作为名字啦！
+悲剧的是turtles竟然也被注册了，坚持着不放弃的原则，我觉得我们团队的兄弟姐妹们比起忍着神龟更加睿智，于是就用Wise Turtles啦！（实在不想再为名字纠结咯），&nbsp;赶紧去注册了域名和github组织名，大功告成！</p>
+<h2>如何加入组织</h2>
+<p>请大家把github的<strong>用户名</strong>（注意是用户名：而不是登陆邮箱）发给我，&nbsp;我会逐一给大家发送邀请。然后大家用自己的账号登陆github，访问</p>
+<p><a href="https://github.com/wiseturtles">https://github.com/wiseturtles</a></p>
+<p>即可接受邀请。</p>
+<h2>博客的功能介绍</h2>
+<p>博客采用开源的<a href="http://blog.getpelican.com">pelican</a>静态博客引擎，集成了Disqus评论，百度分享，百度统计(不要问我为什么用百度，你懂的)，支持Atom/<span class="caps">RSS</span> feeds
+订阅，响应式布局（移动端访问排版依然良好），Travis-ci自动构建文章。文章格式支持Markdown， reStructuredText,&nbsp;html语法。通过jinjia定义主题模板，git版本控制，以及程序员喜欢的语法高亮。</p>
+<p>附上一些常用语法的链接:</p>
 <ul>
-<li>它是一个基于python语言的静态博客引擎</li>
-<li>使用Jinjia作为主题的模板语言</li>
-<li>支持Markdown,&nbsp;reStructuredText格式</li>
-<li>其他特色</li>
+<li><a href="http://wowubuntu.com/markdown/index.html">Markdown 语法说明&nbsp;(简体中文版)</a></li>
+<li><a href="http://docutils.sourceforge.net/rst.html">Rst语法</a></li>
 </ul>
-<h2>安装Pelican</h2>
-<blockquote>
-<p>官方入门指南：<a href="http://docs.getpelican.com/en/latest/getting_started.html">http://docs.getpelican.com/en/latest/getting_started.html</a>.</p>
-</blockquote>
-<p>本文以Pelican3.5为例，使用Pelican需要python环境，官方推荐的python版本是2.7.X，因此开始之前，最好是检查一下当前系统的python版本是否满足情况。</p>
-<div class="highlight"><pre><span class="nv">$ </span>python --version
-Python 2.7.6
+<h2>与博客有关的repo介绍</h2>
+<p>我们的blog主要用到了三个repo</p>
+<ul>
+<li>wiseturtles.github.io  (博客静态html文件库，也就是博客展示的最终库，由travis-ci自动修改,&nbsp;不需要手动修改）</li>
+<li>blog  &nbsp;（博客源码库，大家平时写文章时需要提交的库）</li>
+<li>theme    （主题库，可以定制博客的排版，样式和布局,&nbsp;感觉现在博客难看的同学可以修改）</li>
+</ul>
+<p>大家平时主要使用到的也就是blog这个库，下面就blog的目录结构简单介绍一下。</p>
+<div class="highlight"><pre><span class="c"># 下载blog库</span>
+<span class="nv">$ </span>git clone --recursive git@github.com:wiseturtles/blog.git
+<span class="nv">$ </span><span class="nb">cd </span>blog
+<span class="nv">$ </span>tree -aL 1
+.
+├── cache       <span class="c"># 编译生成静态文件的cache库，加快编译速度</span>
+├── content     <span class="c"># 博客内容库，所有写的文章都按照目录来分类并放在这个目录下面</span>
+├── deploy.sh   <span class="c"># 部署编译出来的静态文件到wiseturtles.github.io库的脚本，由travis-ci调用</span>
+├── develop_server.sh
+├── fabfile.py  <span class="c"># 封装了常用命令的fab文件</span>
+├── Makefile    <span class="c"># 封装了常用命令的makefile文件</span>
+├── output      <span class="c"># 编译生成静态html文件的目录，wiseturtles.github.io库里的内容就是这个目录下的</span>
+├── pelicanconf.py  <span class="c"># 博客的配置文件</span>
+├── publishconf.py  <span class="c"># 博客发布时调用的配置文件, 主要覆盖了pelicanconf.py里的一些配置</span>
+├── README.md
+├── requirements.txt  <span class="c"># 记录安装本库需要使用的python包文件</span>
+├── theme       <span class="c"># 主题目录，其实就是theme库，作为一个子库放在blog里面</span>
+└── .travis.yml <span class="c"># travis-ci的配置文件</span>
 </pre></div>
 
 
-<h3>创建虚拟环境</h3>
-<p>如果当前系统默认是2.7.X, 我们则可以直接创建一个虚拟环境来为安装pelican做准备。
-关于python虚拟环境的创建，详细可以参考: <a href="http://liuzhijun.iteye.com/blog/1872241">http://liuzhijun.iteye.com/blog/1872241</a>。</p>
-<p>下面说说主要步骤</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pip install virtualenv virtualenvwrapper
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;[[ -s /usr/local/bin/virtualenvwrapper.sh ]] &amp;&amp; source /usr/local/bin/virtualenvwrapper.sh&#39;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
-<span class="nv">$ </span>mkvirtualenv pelican <span class="c"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
-<span class="nv">$ </span>workon pelican <span class="c"># 激活虚拟环境</span>
+<p>所有的文章写好之后，都要放到coetent目录下， 所有的文章按照目录分类，可以根据自己的需要在content下创建需要的目录(目录名会出现在<span class="caps">URL</span>中，建议是英文的）。</p>
+<h2>如何搭建本地环境</h2>
+<p>为了使整个过程简洁，下面以<strong>本地python版本为2.7.X, 不创建python虚拟为前提</strong>。
+如果不满足这两个条件，可以参考我的另一片文章 <a href="http://blog.wiseturtles.com/posts/setup-pelican.html">pelican + github&nbsp;搭建个人Blog</a></p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone --recursive git@github.com:wiseturtles/blog.git  <span class="c"># 下载代码</span>
+<span class="nv">$ </span><span class="nb">cd </span>blog
+<span class="nv">$ </span>sudo pip install -r requirements.txt  <span class="c"># 安装必要的python库, 如果不需要本地预览的话，可以跳过这一步</span>
+<span class="nv">$ </span>touch content/test/hello.md   <span class="c"># 此处略去编辑content/test/hello.md文件过程的三千字</span>
+<span class="nv">$ </span>make devserver    <span class="c"># 启动本地预览的server， 访问http://127.0.0.1:8000/查看文章那个效果</span>
+<span class="c"># 重复上面两个步骤,直到决定发布文章</span>
+<span class="nv">$ </span>git add content/test/hello.md
+<span class="nv">$ </span>git commit -m <span class="s2">&quot;add hello.md&quot;</span>
+<span class="nv">$ </span>git push origin master
 </pre></div>
 
 
-<p>另一个情况是当前系统默认python版本不是2.7.X的，
-为了方便及不影响当前系统的python版本，可以使用<a href="https://github.com/utahta/pythonbrew">pythonbrew</a>来搭建Python2.7.x环境。
-安装步骤: <a href="https://github.com/utahta/pythonbrew/blob/master/README.rst">https://github.com/utahta/pythonbrew/blob/master/<span class="caps">README</span>.rst</a></p>
-<div class="highlight"><pre><span class="c"># 安装pythonbrew</span>
-<span class="nv">$ </span>curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <span class="c"># 这步执行成功后会生成目录: ~/.pythonbrew</span>
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;[[ -s </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
-<span class="nv">$ </span>pythonbrew --version      <span class="c"># 检查是否安装成功</span>
-<span class="nv">$ </span>pythonbrew install --verbose 2.7.5       <span class="c"># 安装python 2.7.5</span>
-<span class="nv">$ </span>pythonbrew use 2.7.5      <span class="c"># 临时在当前会话使用python 2.7.5</span>
-<span class="nv">$ </span>which python              <span class="c"># 检查python版本信息是否正确</span>
-
-<span class="c"># 一些关于pythonbrew的常用命令</span>
-<span class="nv">$ </span>pythonbrew list           <span class="c"># 查看已经安装了的python版本</span>
-<span class="nv">$ </span>pythonbrew off            <span class="c"># 禁用pythonbrew，使用系统默认的python环境</span>
-<span class="nv">$ </span>pythonbrew list -k        <span class="c"># 查看pythonbrew提供了哪些python版本可以安装</span>
-<span class="nv">$ </span>pythonbrew switch 2.7.5   <span class="c"># 永久切换到python 2.7.5,与use有点不同</span>
-<span class="c"># 更多命令可以参考官方文档</span>
-</pre></div>
-
-
-<p>使用pythonbrew自带的virtualenv</p>
-<div class="highlight"><pre><span class="nv">$ </span>pythonbrew use 2.7.5
-<span class="nv">$ </span>pythonbrew venv init       <span class="c"># 初始化虚拟环境</span>
-<span class="nv">$ </span>pythonbrew venv create pelican  <span class="c"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
-<span class="nv">$ </span>pythonbrew venv use pelican     <span class="c"># 开启虚拟环境</span>
-
-<span class="c"># 为了以后使用方便,设置penv为开启虚拟环境的别名</span>
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias  penv=&#39;pythonbrew use 2.7.5 &amp;&amp; pythonbrew venv use pelican&#39;&quot;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
-
-<span class="c"># 一些常用的命令</span>
-<span class="nv">$ </span>pythonbrew venv list
-<span class="nv">$ </span>pythonbrew venv use proj
-<span class="nv">$ </span>pythonbrew venv delete proj
-<span class="nv">$ </span>pythonbrew venv rename proj proj2
-<span class="nv">$ </span>pythonbrew venv clone proj proj2
-</pre></div>
-
-
-<h3>安装pelican</h3>
-<p>在配置好了虚拟环境之后，就让我们进入虚拟环境安装pelican吧</p>
-<div class="highlight"><pre><span class="c"># 需要先激活虚拟环境</span>
-<span class="nv">$ </span>workon pelican  <span class="c"># 如果是使用的pythonbrew ,则是“penv”</span>
-<span class="nv">$ </span>pip install pelican markdown typogrif  <span class="c"># 安装必须的python包</span>
-</pre></div>
-
-
-<h2>博客配置</h2>
-<p>现在一切环境都好了，就让我们开始动手写博客吧</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir myblog           <span class="c"># 创建一个目录，用于存放博客</span>
-<span class="nv">$ </span><span class="nb">cd </span>myblog
-<span class="nv">$ </span>pelican-quickstart     <span class="c"># 开始创建博客的向导</span>
-</pre></div>
-
-
-<p>运行<code>pelican-quickstart</code>命令，会有一些问题，根据实际情况选择即可, 暂时不理解的也无所谓，直接回车就行了，后面都可以在配置文件里面修改。&nbsp;通过上面的向导，博客的基本框架就建立起来了。</p>
-<p>默认Pelican提供了Fabric文件和Makefile封装了常用操作, 可以根据自身的喜好选择。&nbsp;下面介绍一些常用的make命令，以后会用得比较频繁。</p>
+<p><span class="caps">OK</span>， 打完收工！ 过一会访问我们的博客<a href="http://blog.wiseturtles.com/">http://blog.wiseturtles.com/</a>就可以看到自己刚刚发表的文章啦!</p>
+<p>整个过程概述起来就跟把大象放进冰箱一样简单，只需要三步：</p>
+<ol>
+<li>下载blog代码</li>
+<li>写好文章</li>
+<li>提交文章</li>
+</ol>
+<h2>在线环境</h2>
+<p>如果感觉搭建本地环境麻烦的话，那就直接用github的在线编辑功能吧。&nbsp;访问</p>
+<p><a href="https://github.com/wiseturtles/blog">https://github.com/wiseturtles/blog</a></p>
+<p>即可在线编辑.</p>
+<h2>文件模板</h2>
+<p>无论选择Markdown， reStructuredText,&nbsp;html哪种语法，文章模板都应该像下面这样：</p>
+<h3>reStructuredText（Rst）格式（文件名以.rst结尾）</h3>
 <pre>
-    $ make     # 直接运行make， 查看命令帮助
+My super title
+##############
 
-    make html                        (re)generate the web site(生成网站)
-    make clean                       remove the generated files
-    make regenerate                  regenerate files upon modification(每当本地文件被修改时，都自动生存网站）
-    make publish                     generate using production settings
-    make serve                       serve site at http://localhost:8000 （开始本地服务，可以通过http://localhost:8000查看）
-    make devserver                   start/restart develop_server.sh (make regenerate 和make serve两个命令的集合）
-    make stopserver                  stop local server (关闭本地服务)
-    ssh_upload                       upload the web site via SSH
-    rsync_upload                     upload the web site via rsync+ssh
-    dropbox_upload                   upload the web site via Dropbox
-    ftp_upload                       upload the web site via FTP
-    s3_upload                        upload the web site via S3
-    github                           upload the web site via gh-pages
+:date: 2010-10-03 10:20
+:modified: 2010-10-04 18:40  
+:tags: thats, awesome
+:category: yeah
+:slug: my-super-post
+:authors: Alexis Metaireau, Conan Doyle
+:summary: Short version for index and feeds
+
+Rst语法的文章正文
 </pre>
 
-<h3>创建第一篇文章</h3>
-<p>说了这么多了，都还没有开始写呢，让我们开始写第一篇文章吧。
-pelican 支持三种格式的文件，reStructuredText， markdown和html。
-个人偏好于markdwon。下面就主要介绍markdown的吧，其他的可以到<a href="http://docs.getpelican.com/en/3.2/getting_started.html#kickstart-your-site">官网查看</a>.&nbsp;上面写得很清楚。</p>
-<p>创建第一篇文章，直接使用官网的例子。文章看起来应该大致像如下模板：</p>
-<div class="highlight"><pre>Title: 文章标题
-Date: 2014-11-30 23:15(日期)
-Category: Python
-Tags: pelican, publishing
-Slug: my-super-post
-Author: crazygit
-Summary: hello
+<h3>md格式(文件名以 .md, .markdown, .mkd,&nbsp;.mdown结尾）</h3>
+<pre>
+My super title
+##############
 
-这里是文章内容。
-##你好，pelican
-</pre></div>
+:date: 2010-10-03 10:20
+:modified: 2010-10-04 18:40
+:tags: thats, awesome
+:category: yeah
+:slug: my-super-post
+:authors: Alexis Metaireau, Conan Doyle
+:summary: Short version for index and feeds
 
+markdown语法的文章正文
+</pre>
 
-<p>将上面的内容保存到<code>content</code>目录下，取名为<code>test.md</code>
-。现在就要用到前面的命令了。</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
-</pre></div>
+<h3>html格式(文件名以.html and&nbsp;.htm结尾）</h3>
+<pre>
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;My super title&lt;/title&gt;
+&lt;meta name="tags" content="thats, awesome" /&gt;
+&lt;meta name="date" content="2012-07-09 22:28" /&gt;
+&lt;meta name="modified" content="2012-07-10 20:14" /&gt;
+&lt;meta name="category" content="yeah" /&gt;
+&lt;meta name="authors" content="Alexis Métaireau, Conan Doyle" /&gt;
+&lt;meta name="summary" content="Short version for index and feeds" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+This is the content of my super blog post.
+&lt;/body&gt;
+&lt;/html&gt;
 
+&lt;body&gt;
+html正文
+&lt;/body&gt;
+</pre>
 
-<p>现在打开<a href="http://localhost:8000/">http://localhost:8000/</a>，怎么样?&nbsp;看到了我们的第一篇文章了吧。</p>
-<h3>配置文件修改</h3>
-<p>博客的配置通过修改<code>publishconf.py</code>
-文件来实现，由于可以pelican比较灵活，可以配置的地方比较的多，就不介绍了，可以
-查看<a href="http://docs.getpelican.com/en/3.2/settings.html">官方文档</a>查找自己需要的
-。其实，默认的配置基本上已经很好了，我自己除了在配置文件里面加上了时区之外，其他的基本上没有修改什么了。&nbsp;给一个官方的配置文件示例:</p>
-<div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<p>从上面的模板可以看出，无论选择哪种语言，都包含了共同的信息.</p>
+<p><strong>需要注意的一点是slug标签的信息就是文章的<span class="caps">URL</span>链接，最好不要是中文的</strong></p>
+<h2>代码高亮</h2>
+<p>对于Rst格式,&nbsp;用如下格式</p>
+<pre>
 
-<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s">&#39;Alexis Métaireau&#39;</span>
-<span class="n">SITENAME</span> <span class="o">=</span> <span class="s">&quot;Alexis&#39; log&quot;</span>
-<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;http://blog.notmyidea.org&#39;</span>
-<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&quot;Europe/Paris&quot;</span>
+.. code-block:: identifier
 
-<span class="c"># can be useful in development, but set to False when you&#39;re ready to publish</span>
-<span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
+   &lt;indented code block goes here&gt;
 
-<span class="n">GITHUB_URL</span> <span class="o">=</span> <span class="s">&#39;http://github.com/ametaireau/&#39;</span>
-<span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">&quot;blog-notmyidea&quot;</span>
-<span class="n">PDF_GENERATOR</span> <span class="o">=</span> <span class="bp">False</span>
-<span class="n">REVERSE_CATEGORY_ORDER</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">LOCALE</span> <span class="o">=</span> <span class="s">&quot;C&quot;</span>
-<span class="n">DEFAULT_PAGINATION</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">DEFAULT_DATE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre>
 
-<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/all.rss.xml&#39;</span>
-<span class="n">CATEGORY_FEED_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/</span><span class="si">%s</span><span class="s">.rss.xml&#39;</span>
+<p>md格式</p>
+<pre>
 
-<span class="n">LINKS</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;Biologeek&#39;</span><span class="p">,</span> <span class="s">&#39;http://biologeek.org&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Filyb&#39;</span><span class="p">,</span> <span class="s">&quot;http://filyb.info/&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Libert-fr&#39;</span><span class="p">,</span> <span class="s">&quot;http://www.libert-fr.com&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;N1k0&#39;</span><span class="p">,</span> <span class="s">&quot;http://prendreuncafe.com/blog/&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Tarek Ziadé&#39;</span><span class="p">,</span> <span class="s">&quot;http://ziade.org/blog&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Zubin Mithra&#39;</span><span class="p">,</span> <span class="s">&quot;http://zubin71.wordpress.com/&quot;</span><span class="p">),)</span>
+A block of text.
 
-<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;twitter&#39;</span><span class="p">,</span> <span class="s">&#39;http://twitter.com/ametaireau&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;lastfm&#39;</span><span class="p">,</span> <span class="s">&#39;http://lastfm.com/user/akounet&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;github&#39;</span><span class="p">,</span> <span class="s">&#39;http://github.com/ametaireau&#39;</span><span class="p">),)</span>
+    :::identifier
+    &lt;code goes here&gt;
 
-<span class="c"># global metadata to all the contents</span>
-<span class="n">DEFAULT_METADATA</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;yeah&#39;</span><span class="p">,</span> <span class="s">&#39;it is&#39;</span><span class="p">),)</span>
+</pre>
 
-<span class="c"># static paths will be copied under the same name</span>
-<span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;pictures&quot;</span><span class="p">,</span> <span class="p">]</span>
-
-<span class="c"># A list of files to copy from the source to the destination</span>
-<span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;extra/robots.txt&#39;</span><span class="p">,</span> <span class="s">&#39;robots.txt&#39;</span><span class="p">),)</span>
-
-<span class="c"># custom page generated with a jinja2 template</span>
-<span class="n">TEMPLATE_PAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;pages/jinja2_template.html&#39;</span><span class="p">:</span> <span class="s">&#39;jinja2_template.html&#39;</span><span class="p">}</span>
-
-<span class="c"># foobar will not be used, because it&#39;s not in caps. All configuration keys</span>
-<span class="c"># have to be in caps</span>
-<span class="n">foobar</span> <span class="o">=</span> <span class="s">&quot;barbaz&quot;</span>
-</pre></div>
-
-
-<h3>主题安装</h3>
-<p>默认的博客主题是不是不符合你自己的胃口呢？没关系，pelican已经有很多漂亮的主题&nbsp;供你选择了，在</p>
-<p><a href="https://github.com/getpelican/pelican-themes">https://github.com/getpelican/pelican-themes</a></p>
-<p>已经有很多现成的主题了，打开每个主题的文件夹都有一张主题效果的截图，可以方便选择自己喜欢的主题。什么？这些主题都不满意。好吧，你还可以选择<a href="http://docs.getpelican.com/en/3.2/themes.html#theming-pelican">创建属于自己独有的主题</a>。由于个人比较懒，信奉拿来主义，所以就选择了<code>tuxlite_tbs</code>这个主题，自己只做了一些细节的修改。</p>
-<p>废话不多说，让我们开始安装主题吧。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/getpelican/pelican-themes.git ~/pelican-themes <span class="c"># 下载主题到`~/pelican-themes/`目录下</span>
-<span class="nv">$ </span><span class="nb">cd</span> ~/pelican-themes/
-<span class="nv">$ </span>git submodule init  <span class="c"># 由于这个git库里面的一些主题是单独的一个子模块，所以将它们一起下载下来</span>
-<span class="nv">$ </span>git submodule update
-</pre></div>
-
-
-<p>好了，现在已经有了所有的主题了，打开每个主题的文件夹都有一张主题效果的截图，选择自己喜欢的主题。</p>
-<p>修改<code>publishconf.py</code> 文件，添加<code>THEME</code>关键字，如果已经有了，则直接修改值即可，我选择的是<code>tuxlite-tbs</code></p>
-<div class="highlight"><pre>THEME = &quot;~/pelican-themes/tuxlite-tbs&quot;
-</pre></div>
-
-
-<p>然后重新执行</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
-</pre></div>
-
-
-<p>访问<a href="http://localhost:8000/">http://localhost:8000/</a>看看新的主题效果吧。</p>
-<h3>主题定制</h3>
-<p>新的主题怎么样呢？是不是还是有点遗憾呢？老外制作的主题总是弄Twitter，Google Plus等。这些东西虽然好，但是我们身在天朝，又用不上，要是我们能够把自己的新浪微博，<span class="caps">QQ</span>，等添加到自己的博客里面，看起来是不是更爽一点呢？&nbsp;下面就来添加吧!</p>
-<h3>添加新浪微博关注按钮</h3>
-<p>首先到<a href="http://open.weibo.com/widget/followbutton.php">新浪开放平台</a>获取关注按钮的代码吧。在我使用的时候，它主要提供了两中样式，一种是<span class="caps">WBML</span>标准版，一种是JavaScript简化版本。在实际使用的时候发现JavaScript版本时候会有一些问题。
-<a href="http://open.weibo.com/qa/index.php?qa=11802&amp;qa_1=%E4%BD%BF%E7%94%A8%E5%85%B3%E6%B3%A8%E6%8C%89%E9%92%AEjavascript%E7%AE%80%E5%8C%96%E7%89%88%EF%BC%8C%E6%8F%90%E7%A4%BAclient-js%E6%B2%A1%E6%9C%89sendmessage%E6%96%B9%E6%B3%95&amp;code=4b3704c5bce7d8cc46de2fe229687bdb">提示client.js没有sendMessage方法</a>.</p>
-<p>因此下面主要介绍如何添加<span class="caps">WBML</span>标准版本的。取得类似下面的代码</p>
-<div class="highlight"><pre><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;2991975565&quot;</span> <span class="na">type=</span><span class="s">&quot;red_1&quot;</span> <span class="na">width=</span><span class="s">&quot;67&quot;</span> <span class="na">height=</span><span class="s">&quot;24&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
-</pre></div>
-
-
-<p>注意上面的uid就是自己微博帐号的id，type就是选择的样式。&nbsp;为了让这个代码有通用性。我将它修改为如下：</p>
-<div class="highlight"><pre><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_UID</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_TYPE</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;64&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
-</pre></div>
-
-
-<p>这样我们就可以通过在<code>pelicanconf.py</code>通过配置<code>WEIBO_UID</code>和<code>WEIBO_TYPE</code>灵活地设置帐号和样式。
-将上面的代码保存在weibo.html文件中，并将文件保存到主题代码库的<code>~/pelican-themes/tuxlite-tbs/templates</code>目录下。&nbsp;再修改这个目录下的base.html文件，引用我们的weibo.html。具体改动如下:</p>
-<p>在<span class="caps">HTML</span>标签中增加<span class="caps">XML</span>命名空间</p>
-<div class="highlight"><pre>&lt;html xmlns:wb=“http://open.weibo.com/wb”&gt;
-</pre></div>
-
-
-<p>在<span class="caps">HEAD</span>头中引入<span class="caps">WB</span>.<span class="caps">JS</span></p>
-<div class="highlight"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;http://tjs.sjs.sinajs.cn/open/api/js/wb.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
-</pre></div>
-
-
-<p>在需要显示微博关注按钮的地方includ刚刚的weibo.html，我把它添加在了社交下面.同时设置了<span class="caps">WEIBO</span>变量来设置是否显示微博关注按钮</p>
-<div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">WEIBO</span> <span class="cp">%}</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;social&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span> <span class="na">style=</span><span class="s">&quot;padding: 8px 0; background-color: #FBFBFB;&quot;</span><span class="nt">&gt;</span>
-<span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;nav-header&quot;</span><span class="nt">&gt;</span>
-    新浪微博
-    <span class="nt">&lt;/li&gt;</span>
-    <span class="cp">{%</span> <span class="k">include</span> <span class="s2">&quot;weibo.html&quot;</span> <span class="cp">%}</span>
-<span class="nt">&lt;/ul&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
-</pre></div>
-
-
-<p>修改<code>pelicanconf.py</code>,&nbsp;添加如下字段：</p>
-<div class="highlight"><pre><span class="c"># 新浪微博新关注按钮</span>
-<span class="n">WEIBO</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">WEIBO_UID</span> <span class="o">=</span> <span class="mi">1768615155</span>        <span class="c"># 填入uid</span>
-<span class="n">WEIBO_TYPE</span> <span class="o">=</span> <span class="s">&quot;red_3&quot;</span>
-</pre></div>
-
-
-<p>编译发布并预览。在本地预览的时候可能不会看到效果。需要发布到github&nbsp;pages上面才能看到.下面马上会讲如何部署到github上面.</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
-</pre></div>
-
-
-<h3>部署到Github上面</h3>
-<p>如何利用github&nbsp;pages功能来创建个人的博客，网上和官网已经有很多教程了，就不再细讲具体步骤的，唯一需要注意的是，它主要分两类</p>
-<ul>
-<li>用户级别的pages</li>
-<li>项目级别的pages</li>
-</ul>
-<p>上面两个不同之处是提交代码的时候一个是master分支，另一个是gh-pages分支.
-因此，我们只需要将output 目录下的内容提交到上面的分支中。
-为了做这件事情，我们可以使用前面介绍的ghp-import工具. 同时在我们的Makefile文件中也有封装这个命令
-具体使用<a href="http://docs.getpelican.com/en/3.2/tips.html#publishing-to-github">参考这里</a>.</p>
-<p>但是需要根据实际修改Makefile文件中的</p>
-<div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
-    ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span>
-    git push origin gh-pages   <span class="c"># 根据实际使用的pages情况修改这里</span>
-</pre></div>
-
-
-<p>修改好了之后，可以直接使用<code>make github</code> 发布博客了.</p>
-<p>我使用的用户级别的pages时，具体修改如下：</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>myblog <span class="c"># 进入博客代码目录</span>
-<span class="nv">$ </span>git init
-<span class="nv">$ </span>git remote add origin git@github.com:username/username.github.io.git <span class="c"># 需要替换username</span>
-<span class="nv">$ </span>git add .
-<span class="nv">$ </span>git commit -m <span class="s1">&#39;init pelican source code&#39;</span>
-<span class="nv">$ </span>penv  <span class="c">#打开虚拟环境</span>
-<span class="nv">$ </span>make html 编译代码
-</pre></div>
-
-
-<p>修改Makefile文件如下内容：</p>
-<div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
-    ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span> <span class="c"># 这一步会在本地创建一个gh-pages分支。并将OUTPUTDIR里面的内容拷贝到这个分支</span>
-    git push -f origin gh-pages:master
-<span class="c"># 注意我这里添加了参数f，在后面每次往master 分支提交代码的时候，如果有冲突，会强制覆盖master的代码</span>
-</pre></div>
-
-
-<p>最后一步，提交代码</p>
-<div class="highlight"><pre><span class="nv">$ </span>make github
-</pre></div>
-
-
-<p>好了，打开你自己的github pages, 如<a href="http://username.github.io/">http://username.github.io/</a>查看效果。<strong>注意</strong>： 首次部署到github pages&nbsp;需要等15分钟才有效</p>
-<h3>使用google在线字体</h3>
-<p>有些时候，我们想在文章中使用一些好看的字体，怎么办呢？伟大的Google替我们解决了这个问题，提供了<a href="http://www.google.com/fonts/">Google Web Fonts</a>。
-在这里可以选择一些好看的字体来用。怎么用也写得很清楚，就不再这里叙述了。
-一些效果如下：
-<p class="googlefont">Hello Google Web&nbsp;Fonts</p>
-<p class="font-effect-fire-animation">Hello Google&nbsp;Fonts</p></p>
-<p>需要注意的是上面的字体有些老的浏览器不支持，所以在使用的时候注意下当前的浏览器是否支持这些字体。</p>
-<h3>图片添加</h3>
-<p>有时候，再多的语言，也比不上一张图片来得直白，虽然我们可以将图片直接放在写博客的代码库里面再直接引用。但是个人感觉这样做并不好。图片一多，代码库就明显变大。一点也不方便。最好的方法是选用一个第三方的图片托管，支持外链的。这样我们只需要在图片托管处上传图片，然后在博客里面引用即可。在网上搜寻一番之后，在<a href="http://c7sky.com/image-storage-server.html">这里</a>找到了一些关于各种图片托管的介绍。在这里我选择了yupoo。大家也可以根据自己的需求任意选择一款。不说了，直接上图吧.</p>
-<p><img alt="第一张图片" src="http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg" /></p>
-<p>由于markdown语法本身没有代办设置图片布局，所以可以用html标签来设置</p>
-<div class="highlight"><pre><span class="nt">&lt;p</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg&quot;</span> <span class="na">title=</span><span class="s">&quot;Test Image&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
-</pre></div>
-
-
-<p align="center"><img src="http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg" title="Test Image"/></p>
-
-<h3>添加文章评论系统，分享按钮，访问统计</h3>
-<p>这些步骤与添加新浪关注按钮一样，就不再赘述了。
-这些设置再我当前使用的主题中都添加了，如果有需要的话大家可以<a href="https://github.com/crazygit/pelican-themes-tuxlite-tbs-mine">参考一下</a></p>
-<h3>其他功能</h3>
-<ul>
-<li>导入已经存在的博客</li>
-<li>文字的多语言设置</li>
-<li>个人私有文章和草稿箱</li>
-<li>插件使用</li>
-<li>标签云</li>
-<li><span class="caps">RSS</span>订阅</li>
-<li>文章分类</li>
-<li>&#8230;</li>
-</ul>
-<p>这些功能<a href="http://docs.getpelican.com">官方文档</a>都有介绍，可以自己查找。</p>
-<h3>结束语</h3>
-<p>暂时使用到的功能就这么多了，以后有什么新的添加我会更新的，由于小弟也是刚刚接触这个，加上文笔不怎么好，如果有什么不明白的地方或错误的地方，欢迎留言，大家一起交流下。</p></div>
+<h2>图片和附件管理</h2>
+<p>一般不建议将文章中要使用到的图片或附件提交到blog库中，避免引起blog库迅速增大， blog库建议只保存纯文本的东西。可以将要使用的图片或附件上传到支持外链的第三方存储，然后在文正里直接引用图片或附件的<span class="caps">URL</span>。或者单独建立一个git库来保存图片和附件。</p>
+<h2>最后</h2>
+<p>这里只是介绍了大体上的一些用法，更多请参阅: <a href="http://docs.getpelican.com/en/3.5.0/content.html">http://docs.getpelican.com/en/3.5.0/content.html</a></p></div>
         <hr />
     </div>
 		
+
+ 
+        
+
+ 
+
+    <div class='article'>
+        <a href="http://blog.wiseturtles.com/posts/setup-pelican.html"><h2>pelican + github&nbsp;搭建个人Blog</h2></a>
+        <div class= "well small"> 2014-11-30
+
+by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>how to use pelican to setup personal&nbsp;blog</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/setup-pelican.html">read more</a></div>
+    </div>	
+				
 <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
