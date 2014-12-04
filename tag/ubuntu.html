@@ -60,13 +60,100 @@
     <div class="row">
 
         <div class="span9">
+
+
+
+    <div class='article'>
+        <div class="content-title">
+            <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h1>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h1></a>
+2014-12-04
+
+by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+ 
+
+
+        </div>
+
+        <div><p>公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox <span class="caps">OS</span>都有问题，所以，我尝试升级并把碰到的问题记录下来。</p>
+<h1>升级</h1>
+<h2>修改源</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/apt/sources.list
+deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
+deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
+deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
+deb http://172.26.32.18/ubuntu/ lucid-proposed main restricted universe multiverse
+deb http://172.26.32.18/ubuntu/ lucid-backports main restricted universe multiverse
+
+<span class="c"># aliyun</span>
+deb http://mirrors.aliyun.com/ubuntu/ lucid main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ lucid-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ lucid-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ lucid-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe multiverse
+</pre></div>
+
+
+<h2>开始升级</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo <span class="k">do</span>-release-upgrade
+</pre></div>
+
+
+<h2>nis无法启动，导致升级过程中配置nis包失败</h2>
+<div class="highlight"><pre><span class="nv">$ </span>grep redhat /etc/hosts
+172.26.32.12    <span class="nb">cd</span>-redhat-001.TCTCD
+
+<span class="nv">$ </span>tail -1 /etc/yp.conf 
+ypserver <span class="nb">cd</span>-redhat-001.TCTCD
+
+<span class="nv">$ </span>cat /etc/defaultdomain 
+TCTCD
+
+<span class="nv">$ </span>grep NIS /etc/default/nis <span class="p">|</span> grep -Ev <span class="s1">&#39;#&#39;</span>
+<span class="nv">NISSERVER</span><span class="o">=</span><span class="nb">false</span>
+<span class="nv">NISCLIENT</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">NISMASTER</span><span class="o">=</span>
+
+<span class="nv">$ </span>cat /etc/auto.master
+/home /etc/auto.home
+
+<span class="nv">$ </span>cat /etc/auto.home 
+xcsu <span class="nb">cd</span>-redhat-001.TCTCD:/home/xcsu
+
+<span class="nv">$ </span>/usr/lib/yp/ypinit -s <span class="nb">cd</span>-redhat-001.TCTCD
+
+<span class="nv">$ </span>sudo service portmap restart
+<span class="nv">$ </span>sudo service nis restart
+</pre></div>
+
+
+<h1>启动后登录时发现只能用administrator和guest登录</h1>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/lightdm/lightdm.conf 
+<span class="o">[</span>SeatDefaults<span class="o">]</span>
+user-session<span class="o">=</span>ubuntu
+greeter-session<span class="o">=</span>unity-greeter
+allow-guest<span class="o">=</span><span class="nb">false</span>
+greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<h2>重启电脑，就可以用其它用户登录了</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo reboot
+</pre></div></div>
+        <hr />
+    </div>
+
+<div class="pagination">
 <ul>
-    <li><a href="http://blog.wiseturtles.com/tag/blog.html">blog</a></li>
-    <li><a href="http://blog.wiseturtles.com/tag/pelican.html">pelican</a></li>
-    <li><a href="http://blog.wiseturtles.com/tag/nis.html">Nis</a></li>
-    <li><a href="http://blog.wiseturtles.com/tag/github.html">github</a></li>
-    <li><a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a></li>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">1</a></li>
+
+    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+
 </ul>
+</div>
+ 
+  
         </div>
 
         <div class="span3">
