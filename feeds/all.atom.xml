@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-04T00:00:00+08:00</updated><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-15T10:08:00+08:00</updated><entry><title>uptime</title><link href="http://blog.wiseturtles.com/posts/linux-uptime.html" rel="alternate"></link><updated>2014-12-15T10:08:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-15:posts/linux-uptime.html</id><summary type="html">&lt;h2&gt;用途&lt;/h2&gt;
+&lt;p&gt;man&amp;nbsp;page&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;uptime gives a one line display of the following information.  The cur‐
+rent time, how long the system has been running,  how  many  users  are
+currently  logged  on,  and the system load averages for the past 1, 5,
+and 15&amp;nbsp;minutes.&lt;/p&gt;
+&lt;p&gt;System load averages is the average number of processes that are either
+in a runnable or uninterruptable state.  A process in a runnable  state
+is  either  using the &lt;span class="caps"&gt;CPU&lt;/span&gt; or waiting to use the &lt;span class="caps"&gt;CPU&lt;/span&gt;. A process in unin‐
+terruptable state is waiting for some I/O access, eg waiting for  disk.
+The  averages  are  taken over the three time intervals. Load averages
+are not normalized for the number of CPUs in a system, so a load  aver‐
+age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loaded all the time while on a 4
+&lt;span class="caps"&gt;CPU&lt;/span&gt; system it means it was idle 75% of the&amp;nbsp;time.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;Load averages are not normalized for the number of CPUs in a system, so a load  aver‐ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loaded all the time while on a 4 &lt;span class="caps"&gt;CPU&lt;/span&gt; system it means it was idle 75% of the&amp;nbsp;time.&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;语法&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;uptime
+10:14:31 up &lt;span class="m"&gt;10&lt;/span&gt; days, 20:55,  &lt;span class="m"&gt;6&lt;/span&gt; users,  load average: 0.28, 0.42, 0.54
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;上面的结果显示的分别是系统的当前时间，运行时间，当前用户数，过去1, 5, 15分钟的系统平均负载
+总体来说，值为1时，当只有单个&lt;span class="caps"&gt;CPU&lt;/span&gt;表示已经完全利用，当有４个&lt;span class="caps"&gt;CPU&lt;/span&gt;时，表示还有75%的空闲.&lt;/p&gt;
+&lt;p&gt;关于平均负载的值可以阅读&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages"&gt;http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="uptime"></category></entry><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
 &lt;h1&gt;升级&lt;/h1&gt;
 &lt;h2&gt;修改源&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/apt/sources.list
