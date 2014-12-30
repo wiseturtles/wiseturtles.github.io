@@ -1,5 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-04T00:00:00+08:00</updated><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-30T00:00:00+08:00</updated><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;为了Ubuntu笔记本方便对Android手机上的Apps做抓包。&lt;/p&gt;
+&lt;p&gt;参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/&lt;/p&gt;
+&lt;h1&gt;查看Ubuntu系统配置&lt;/h1&gt;
+&lt;h2&gt;查看无线网卡硬件信息&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo lspci &lt;span class="p"&gt;|&lt;/span&gt; grep -i network
+03:00.0 Network controller: Intel Corporation Wireless &lt;span class="m"&gt;7260&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;rev 6b&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;查看无线网卡驱动信息&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;lsmod
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;查看无线网卡设备名称&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;iwconfig
+wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt; dBm   
+          Retry  long limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装需要的软件&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install dhcp3-server hostapd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/hostapd/hostapd.conf&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/hostapd/hostapd.conf
+&lt;span class="nv"&gt;interface&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;wlan0
+&lt;span class="nv"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nl80211
+&lt;span class="nv"&gt;ssid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_hotspot_name
+&lt;span class="nv"&gt;channel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;hw_mode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;g
+&lt;span class="nv"&gt;auth_algs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;wpa&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3
+&lt;span class="nv"&gt;wpa_passphrase&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your-password
+&lt;span class="nv"&gt;wpa_key_mgmt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;WPA-PSK
+&lt;span class="nv"&gt;wpa_pairwise&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;TKIP CCMP
+&lt;span class="nv"&gt;rsn_pairwise&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;CCMP
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/default/isc-dhcp-server&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;grep INTERFACES /etc/default/isc-dhcp-server
+&lt;span class="nv"&gt;INTERFACES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;wlan0&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/dhcp/dhcpd.conf&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;配置文件: /etc/dhcp/dhcpd.conf
+Make sure the follow lines are Commented out &lt;span class="o"&gt;(&lt;/span&gt; put a &lt;span class="nb"&gt;hash&lt;/span&gt; “#”  sign at the beginning of the line &lt;span class="o"&gt;)&lt;/span&gt; the following lines:
+&lt;span class="c"&gt;# option definitions common to all supported networks…&lt;/span&gt;
+&lt;span class="c"&gt;#option domain-name “example.org”;&lt;/span&gt;
+&lt;span class="c"&gt;#option domain-name-servers ns1.example.org, ns2.example.org;&lt;/span&gt;
+&lt;span class="c"&gt;#default-lease-time 600;&lt;/span&gt;
+&lt;span class="c"&gt;#max-lease-time 7200;&lt;/span&gt;
+
+Add the following lines to the file &lt;span class="o"&gt;(&lt;/span&gt;copy and paste&lt;span class="o"&gt;)&lt;/span&gt;
+subnet 10.10.0.0 netmask 255.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
+        range 10.10.0.2 10.10.0.16&lt;span class="p"&gt;;&lt;/span&gt;
+        option domain-name-servers 8.8.4.4, 208.67.222.222&lt;span class="p"&gt;;&lt;/span&gt;
+        option routers 10.10.0.1&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="o"&gt;(&lt;/span&gt;Note: the only other line in this whole config file that is uncommented is :
+
+ddns-update-style none&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/default/hostapd&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;grep -E &lt;span class="s1"&gt;&amp;#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&amp;#39;&lt;/span&gt; /etc/default/hostapd &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;RUN_DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;DAEMON_CONF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/hostapd/hostapd.conf&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-dd&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/network/interfaces&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+auto wlan0
+iface wlan0 inet static
+    address 10.10.0.1
+    netmask 255.255.255.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/sysctl.conf&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;grep net.ipv4.ip_forward /etc/sysctl.conf 
+net.ipv4.ip_forward&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;修改/etc/rc.local&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;编辑 /etc/rc.local, 在 &lt;span class="s2"&gt;&amp;quot;exit 0&amp;quot;&lt;/span&gt; 前添加下一行
+iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;重启电脑&lt;/h2&gt;
+&lt;p&gt;重启电脑，手机测试是否可以连接.&lt;/p&gt;</summary><category term="Ubuntu"></category></entry><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
 &lt;h1&gt;升级&lt;/h1&gt;
 &lt;h2&gt;修改源&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/apt/sources.list

@@ -65,8 +65,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h1>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h1></a>
-2014-12-04
+            <a href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html"><h1><span class="caps">WIFI</span> Hotspot Setup On Ubuntu&nbsp;12.04</h1></a>
+2014-12-30
 
 by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
  
@@ -74,72 +74,127 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html
 
         </div>
 
-        <div><p>公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox <span class="caps">OS</span>都有问题，所以，我尝试升级并把碰到的问题记录下来。</p>
-<h1>升级</h1>
-<h2>修改源</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/apt/sources.list
-deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-backports main restricted universe multiverse
-
-<span class="c"># aliyun</span>
-deb http://mirrors.aliyun.com/ubuntu/ lucid main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe multiverse
+        <div><p>为了Ubuntu笔记本方便对Android手机上的Apps做抓包。</p>
+<p>参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/</p>
+<h1>查看Ubuntu系统配置</h1>
+<h2>查看无线网卡硬件信息</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo lspci <span class="p">|</span> grep -i network
+03:00.0 Network controller: Intel Corporation Wireless <span class="m">7260</span> <span class="o">(</span>rev 6b<span class="o">)</span>
 </pre></div>
 
 
-<h2>开始升级</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo <span class="k">do</span>-release-upgrade
+<h2>查看无线网卡驱动信息</h2>
+<div class="highlight"><pre><span class="nv">$ </span>lsmod
 </pre></div>
 
 
-<h2>nis无法启动，导致升级过程中配置nis包失败</h2>
-<div class="highlight"><pre><span class="nv">$ </span>grep redhat /etc/hosts
-172.26.32.12    <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>tail -1 /etc/yp.conf 
-ypserver <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>cat /etc/defaultdomain 
-TCTCD
-
-<span class="nv">$ </span>grep NIS /etc/default/nis <span class="p">|</span> grep -Ev <span class="s1">&#39;#&#39;</span>
-<span class="nv">NISSERVER</span><span class="o">=</span><span class="nb">false</span>
-<span class="nv">NISCLIENT</span><span class="o">=</span><span class="nb">true</span>
-<span class="nv">NISMASTER</span><span class="o">=</span>
-
-<span class="nv">$ </span>cat /etc/auto.master
-/home /etc/auto.home
-
-<span class="nv">$ </span>cat /etc/auto.home 
-xcsu <span class="nb">cd</span>-redhat-001.TCTCD:/home/xcsu
-
-<span class="nv">$ </span>/usr/lib/yp/ypinit -s <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>sudo service portmap restart
-<span class="nv">$ </span>sudo service nis restart
+<h2>查看无线网卡设备名称</h2>
+<div class="highlight"><pre><span class="nv">$ </span>iwconfig
+wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span class="m">16</span> dBm   
+          Retry  long limit:7   RTS thr:off   Fragment thr:off
+          Power Management:on
 </pre></div>
 
 
-<h1>启动后登录时发现只能用administrator和guest登录</h1>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/lightdm/lightdm.conf 
-<span class="o">[</span>SeatDefaults<span class="o">]</span>
-user-session<span class="o">=</span>ubuntu
-greeter-session<span class="o">=</span>unity-greeter
-allow-guest<span class="o">=</span><span class="nb">false</span>
-greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
+<h2>安装需要的软件</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install dhcp3-server hostapd
 </pre></div>
 
 
-<h2>重启电脑，就可以用其它用户登录了</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo reboot
-</pre></div></div>
+<h2>修改/etc/hostapd/hostapd.conf</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/hostapd/hostapd.conf
+<span class="nv">interface</span><span class="o">=</span>wlan0
+<span class="nv">driver</span><span class="o">=</span>nl80211
+<span class="nv">ssid</span><span class="o">=</span>your_hotspot_name
+<span class="nv">channel</span><span class="o">=</span>1
+<span class="nv">hw_mode</span><span class="o">=</span>g
+<span class="nv">auth_algs</span><span class="o">=</span>1
+<span class="nv">wpa</span><span class="o">=</span>3
+<span class="nv">wpa_passphrase</span><span class="o">=</span>your-password
+<span class="nv">wpa_key_mgmt</span><span class="o">=</span>WPA-PSK
+<span class="nv">wpa_pairwise</span><span class="o">=</span>TKIP CCMP
+<span class="nv">rsn_pairwise</span><span class="o">=</span>CCMP
+</pre></div>
+
+
+<h2>修改/etc/default/isc-dhcp-server</h2>
+<div class="highlight"><pre><span class="nv">$ </span>grep INTERFACES /etc/default/isc-dhcp-server
+<span class="nv">INTERFACES</span><span class="o">=</span><span class="s2">&quot;wlan0&quot;</span>
+</pre></div>
+
+
+<h2>修改/etc/dhcp/dhcpd.conf</h2>
+<div class="highlight"><pre>配置文件: /etc/dhcp/dhcpd.conf
+Make sure the follow lines are Commented out <span class="o">(</span> put a <span class="nb">hash</span> “#”  sign at the beginning of the line <span class="o">)</span> the following lines:
+<span class="c"># option definitions common to all supported networks…</span>
+<span class="c">#option domain-name “example.org”;</span>
+<span class="c">#option domain-name-servers ns1.example.org, ns2.example.org;</span>
+<span class="c">#default-lease-time 600;</span>
+<span class="c">#max-lease-time 7200;</span>
+
+Add the following lines to the file <span class="o">(</span>copy and paste<span class="o">)</span>
+subnet 10.10.0.0 netmask 255.255.255.0 <span class="o">{</span>
+        range 10.10.0.2 10.10.0.16<span class="p">;</span>
+        option domain-name-servers 8.8.4.4, 208.67.222.222<span class="p">;</span>
+        option routers 10.10.0.1<span class="p">;</span>
+<span class="o">}</span>
+
+<span class="o">(</span>Note: the only other line in this whole config file that is uncommented is :
+
+ddns-update-style none<span class="p">;</span><span class="o">)</span>
+</pre></div>
+
+
+<h2>修改/etc/default/hostapd</h2>
+<div class="highlight"><pre><span class="nv">$ </span>grep -E <span class="s1">&#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&#39;</span> /etc/default/hostapd <span class="p">|</span> grep -Ev <span class="s1">&#39;^#&#39;</span>
+<span class="nv">RUN_DAEMON</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
+<span class="nv">DAEMON_CONF</span><span class="o">=</span><span class="s2">&quot;/etc/hostapd/hostapd.conf&quot;</span>
+<span class="nv">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-dd&quot;</span>
+</pre></div>
+
+
+<h2>修改/etc/network/interfaces</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
+auto wlan0
+iface wlan0 inet static
+    address 10.10.0.1
+    netmask 255.255.255.0
+</pre></div>
+
+
+<h2>修改/etc/sysctl.conf</h2>
+<div class="highlight"><pre><span class="nv">$ </span>grep net.ipv4.ip_forward /etc/sysctl.conf 
+net.ipv4.ip_forward<span class="o">=</span>1
+</pre></div>
+
+
+<h2>修改/etc/rc.local</h2>
+<div class="highlight"><pre>编辑 /etc/rc.local, 在 <span class="s2">&quot;exit 0&quot;</span> 前添加下一行
+iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
+</pre></div>
+
+
+<h2>重启电脑</h2>
+<p>重启电脑，手机测试是否可以连接.</p></div>
         <hr />
+    </div>
+
+
+ 
+
+
+    <div class='article'>
+        <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h2>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h2></a>
+        <div class= "well small"> 2014-12-04
+
+by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>如何升级公司电脑从Ubuntu 10.04 到&nbsp;12.04</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html">更多详情</a></div>
     </div>
 
 <div class="pagination">
