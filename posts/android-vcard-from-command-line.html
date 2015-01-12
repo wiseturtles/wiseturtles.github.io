@@ -75,44 +75,52 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html
 <a href="http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms">http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms</a></p>
 <p>昨天手机(<span class="caps">TCL</span>&nbsp;S960)掉地下把屏幕摔坏了，Google被xx后，就没在用过其它通讯录同步，只好想办法从坏手机里导出，屏幕完全坏了，只能通过adb完成。</p>
 <h1>获取通讯录</h1>
-<p>通过adb从手机中导出通讯录，可以用如下方法：
-1. am
-<pre>
-$ adb shell am start -t "text/x-vcard" -d "file:///sdcard/contacts.vcf" -a android.intent.action.VIEW com.android.contacts
-</pre></p>
+<p>通过adb从手机中导出通讯录，可以用如下方法：</p>
 <ol>
-<li>get contacts.db
-<pre>
-$ adb pull /data/data/com.android.providers.contacts/databases/contacts2.db .
-sqlite3 -batch &lt;<EOF contacts2.db <CR> .header on <CR> .mode tabs <CR> select * from data; <CR> EOF
-</pre></li>
+<li>
+<p>am</p>
+<div class="highlight"><pre><span class="nv">$ </span>adb shell am start -t <span class="s2">&quot;text/x-vcard&quot;</span> -d <span class="s2">&quot;file:///sdcard/contacts.vcf&quot;</span> -a android.intent.action.VIEW com.android.contacts
+</pre></div>
+
+
+</li>
+<li>
+<p>get&nbsp;contacts.db</p>
+<div class="highlight"><pre><span class="nv">$ </span>adb pull /data/data/com.android.providers.contacts/databases/contacts2.db .
+sqlite3 -batch <span class="s">&lt;&lt;EOF contacts2.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from data; &lt;CR&gt; EOF</span>
+</pre></div>
+
+
+</li>
 </ol>
 <p>方法一无法运行报错，方法二需要root权限。</p>
 <p>Android拿root权限貌似就两种方法: xx root工具(通过系统漏洞获取root权限); 刷recory分区。&nbsp;我没找到该机型的recory，而是用360一键root，拿到root权限。</p>
 <p>有了root权限，通过方法二就可以拿到通讯录数据了，剩下的就是生成vCard格式。&nbsp;github上已经有人写了通过contacts2.db生成vCard文件的小工具。</p>
-<pre>
-$ git clone git@github.com:stachre/dump-contacts2db.git
-$ cd dump-contacts2db
-$ bash dump-contacts2db.sh path/to/contacts2.db > path/to/contacts.vcf
-</pre>
+<div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:stachre/dump-contacts2db.git
+<span class="nv">$ </span><span class="nb">cd </span>dump-contacts2db
+<span class="nv">$ </span>bash dump-contacts2db.sh path/to/contacts2.db &gt; path/to/contacts.vcf
+</pre></div>
 
-<p>如果还希望获取手机里的短信，可以用下面的命令:
-<pre>
-$ adb pull /data/data/com.android.providers.telephony/databases/mmssms.db
-$ sqlite3 -batch &lt;<EOF mmssms.db <CR> .header on <CR> .mode tabs <CR> select * from sms; <CR> EOF
-</pre></p>
+
+<p>如果还希望获取手机里的短信，可以用下面的命令:</p>
+<div class="highlight"><pre><span class="nv">$ </span>adb pull /data/data/com.android.providers.telephony/databases/mmssms.db
+<span class="nv">$ </span>sqlite3 -batch <span class="s">&lt;&lt;EOF mmssms.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from sms; &lt;CR&gt; EOF</span>
+</pre></div>
+
+
 <h1>Android解锁</h1>
-<p>Android解锁我没试过，命令如下：
-<pre>
-adb shell
-cd /data/data/com.android.providers.settings/databases
+<p>Android解锁我没试过，命令如下：</p>
+<div class="highlight"><pre>adb shell
+<span class="nb">cd</span> /data/data/com.android.providers.settings/databases
 sqlite3 settings.db
-update system set value=0 where name=’lock_pattern_autolock';
-update secure set value=0 where name=’lock_pattern_autolock';
-update system set value=0 where name=’lockscreen.lockedoutpermanently';
-update secure set value=0 where name=’lockscreen.lockedoutpermanently';
+update system <span class="nb">set </span><span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lock_pattern_autolock<span class="s1">&#39;;</span>
+<span class="s1">update secure set value=0 where name=’lock_pattern_autolock&#39;</span><span class="p">;</span>
+update system <span class="nb">set </span><span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lockscreen.lockedoutpermanently<span class="s1">&#39;;</span>
+<span class="s1">update secure set value=0 where name=’lockscreen.lockedoutpermanently&#39;</span><span class="p">;</span>
 .quit
-</pre></p>
+</pre></div>
+
+
 <p>如果是忘了Android锁屏图案，想找回，可以试试&nbsp;https://github.com/sch3m4/androidpatternlock</p></div>
 
         <hr>
