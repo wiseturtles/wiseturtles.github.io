@@ -132,51 +132,51 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
 <li>
 <p>按照<span class="caps">CPU</span>或内存使用情况排序</p>
 <p>使用&#8212;sort选项可以按照一定的顺序排序，并且可以在指定的排序列前添加&#8217;-&#8216;或&#8217;+&#8217;&nbsp;来指定降序或升序排列</p>
-<div class="highlight"><pre>    # cpu 使用前５
-    $ ps aux --sort=-pcpu | head -5
+<div class="highlight"><pre><span class="c"># cpu 使用前５</span>
+<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pcpu <span class="p">|</span> head -5
 
-    # 内存 使用前５
-    $ ps aux --sort=-pmem | head -5
+<span class="c"># 内存 使用前５</span>
+<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pmem <span class="p">|</span> head -5
 
-    # 指定多个排序
-    $ ps jax --sort=uid,-ppid,+pid
+<span class="c"># 指定多个排序</span>
+<span class="nv">$ </span>ps jax --sort<span class="o">=</span>uid,-ppid,+pid
 </pre></div>
 
 
 <p>排序选项参见man page <code>STANDARD FORMAT SPECIFIERS</code>部分</p>
 <p>部分选项列出如下
 <pre>
-   cmd          simple name of executable
-   pcpu         cpu utilization
-   pmem         ratio of the process's resident set size to the
-                physical memory on the machine, expressed as a
-                percentage
-   flags        flags as in long format F field
-   pgrp         process group ID
-   tpgid        controlling tty process group ID
-   cutime       cumulative user time
-   cstime       cumulative system time
-   utime        user time
-   min_flt      number of minor page faults
-   maj_flt      number of major page faults
-   cmin_flt     cumulative minor page faults
-   cmaj_flt     cumulative major page faults
-   session      session ID
-   pid          process ID
-   ppid         parent process ID
-   rss          resident set size
-   resident     resident pages
-   size         approximate amount of swap space that would be
-                required if the process were to dirty all writable
-                pages and then be swapped out. This number is
-                very rough!
-   share        amount of shared pages
-   tty          the device number of the controlling tty
-   start_time   time process was started
-   uid          user ID number
-   user         user name
-   vsize        total VM size in kB
-   priority     kernel scheduling priority
+cmd          simple name of executable
+pcpu         cpu utilization
+pmem         ratio of the process's resident set size to the
+            physical memory on the machine, expressed as a
+            percentage
+flags        flags as in long format F field
+pgrp         process group ID
+tpgid        controlling tty process group ID
+cutime       cumulative user time
+cstime       cumulative system time
+utime        user time
+min_flt      number of minor page faults
+maj_flt      number of major page faults
+cmin_flt     cumulative minor page faults
+cmaj_flt     cumulative major page faults
+session      session ID
+pid          process ID
+ppid         parent process ID
+rss          resident set size
+resident     resident pages
+size         approximate amount of swap space that would be
+            required if the process were to dirty all writable
+            pages and then be swapped out. This number is
+            very rough!
+share        amount of shared pages
+tty          the device number of the controlling tty
+start_time   time process was started
+uid          user ID number
+user         user name
+vsize        total VM size in kB
+priority     kernel scheduling priority
 </pre></p>
 </li>
 <li>
@@ -197,22 +197,22 @@ www-data  <span class="m">1349</span>  <span class="m">1344</span>  <span class=
 <li>
 <p>列出子进程</p>
 <div class="highlight"><pre>＃先列出所有nginx进程
-$ ps -o pid,uname,comm -C nginx
+<span class="nv">$ </span>ps -o pid,uname,comm -C nginx
 PID USER     COMMAND
-1344 root     nginx
-1345 www-data nginx
-1346 www-data nginx
-1348 www-data nginx
-1349 www-data nginx
+<span class="m">1344</span> root     nginx
+<span class="m">1345</span> www-data nginx
+<span class="m">1346</span> www-data nginx
+<span class="m">1348</span> www-data nginx
+<span class="m">1349</span> www-data nginx
 
-# 使用--ppid选项列出子进程
-$ ps --ppid 2359
+<span class="c"># 使用--ppid选项列出子进程</span>
+<span class="nv">$ </span>ps --ppid 2359
 PID TTY          TIME CMD
-4524 ?        00:00:00 apache2
-4525 ?        00:00:00 apache2
-4526 ?        00:00:00 apache2
-4527 ?        00:00:00 apache2
-4528 ?        00:00:00 apache2
+<span class="m">4524</span> ?        00:00:00 apache2
+<span class="m">4525</span> ?        00:00:00 apache2
+<span class="m">4526</span> ?        00:00:00 apache2
+<span class="m">4527</span> ?        00:00:00 apache2
+<span class="m">4528</span> ?        00:00:00 apache2
 </pre></div>
 
 

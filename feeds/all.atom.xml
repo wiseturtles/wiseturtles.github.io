@@ -57,51 +57,51 @@
 &lt;li&gt;
 &lt;p&gt;按照&lt;span class="caps"&gt;CPU&lt;/span&gt;或内存使用情况排序&lt;/p&gt;
 &lt;p&gt;使用&amp;#8212;sort选项可以按照一定的顺序排序，并且可以在指定的排序列前添加&amp;#8217;-&amp;#8216;或&amp;#8217;+&amp;#8217;&amp;nbsp;来指定降序或升序排列&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;    # cpu 使用前５
-    $ ps aux --sort=-pcpu | head -5
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# cpu 使用前５&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pcpu &lt;span class="p"&gt;|&lt;/span&gt; head -5
 
-    # 内存 使用前５
-    $ ps aux --sort=-pmem | head -5
+&lt;span class="c"&gt;# 内存 使用前５&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pmem &lt;span class="p"&gt;|&lt;/span&gt; head -5
 
-    # 指定多个排序
-    $ ps jax --sort=uid,-ppid,+pid
+&lt;span class="c"&gt;# 指定多个排序&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps jax --sort&lt;span class="o"&gt;=&lt;/span&gt;uid,-ppid,+pid
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;排序选项参见man page &lt;code&gt;STANDARD FORMAT SPECIFIERS&lt;/code&gt;部分&lt;/p&gt;
 &lt;p&gt;部分选项列出如下
 &lt;pre&gt;
-   cmd          simple name of executable
-   pcpu         cpu utilization
-   pmem         ratio of the process's resident set size to the
-                physical memory on the machine, expressed as a
-                percentage
-   flags        flags as in long format F field
-   pgrp         process group ID
-   tpgid        controlling tty process group ID
-   cutime       cumulative user time
-   cstime       cumulative system time
-   utime        user time
-   min_flt      number of minor page faults
-   maj_flt      number of major page faults
-   cmin_flt     cumulative minor page faults
-   cmaj_flt     cumulative major page faults
-   session      session ID
-   pid          process ID
-   ppid         parent process ID
-   rss          resident set size
-   resident     resident pages
-   size         approximate amount of swap space that would be
-                required if the process were to dirty all writable
-                pages and then be swapped out. This number is
-                very rough!
-   share        amount of shared pages
-   tty          the device number of the controlling tty
-   start_time   time process was started
-   uid          user ID number
-   user         user name
-   vsize        total VM size in kB
-   priority     kernel scheduling priority
+cmd          simple name of executable
+pcpu         cpu utilization
+pmem         ratio of the process's resident set size to the
+            physical memory on the machine, expressed as a
+            percentage
+flags        flags as in long format F field
+pgrp         process group ID
+tpgid        controlling tty process group ID
+cutime       cumulative user time
+cstime       cumulative system time
+utime        user time
+min_flt      number of minor page faults
+maj_flt      number of major page faults
+cmin_flt     cumulative minor page faults
+cmaj_flt     cumulative major page faults
+session      session ID
+pid          process ID
+ppid         parent process ID
+rss          resident set size
+resident     resident pages
+size         approximate amount of swap space that would be
+            required if the process were to dirty all writable
+            pages and then be swapped out. This number is
+            very rough!
+share        amount of shared pages
+tty          the device number of the controlling tty
+start_time   time process was started
+uid          user ID number
+user         user name
+vsize        total VM size in kB
+priority     kernel scheduling priority
 &lt;/pre&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -122,22 +122,22 @@ www-data  &lt;span class="m"&gt;1349&lt;/span&gt;  &lt;span class="m"&gt;1344&lt
 &lt;li&gt;
 &lt;p&gt;列出子进程&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;＃先列出所有nginx进程
-$ ps -o pid,uname,comm -C nginx
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps -o pid,uname,comm -C nginx
 PID USER     COMMAND
-1344 root     nginx
-1345 www-data nginx
-1346 www-data nginx
-1348 www-data nginx
-1349 www-data nginx
+&lt;span class="m"&gt;1344&lt;/span&gt; root     nginx
+&lt;span class="m"&gt;1345&lt;/span&gt; www-data nginx
+&lt;span class="m"&gt;1346&lt;/span&gt; www-data nginx
+&lt;span class="m"&gt;1348&lt;/span&gt; www-data nginx
+&lt;span class="m"&gt;1349&lt;/span&gt; www-data nginx
 
-# 使用--ppid选项列出子进程
-$ ps --ppid 2359
+&lt;span class="c"&gt;# 使用--ppid选项列出子进程&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps --ppid 2359
 PID TTY          TIME CMD
-4524 ?        00:00:00 apache2
-4525 ?        00:00:00 apache2
-4526 ?        00:00:00 apache2
-4527 ?        00:00:00 apache2
-4528 ?        00:00:00 apache2
+&lt;span class="m"&gt;4524&lt;/span&gt; ?        00:00:00 apache2
+&lt;span class="m"&gt;4525&lt;/span&gt; ?        00:00:00 apache2
+&lt;span class="m"&gt;4526&lt;/span&gt; ?        00:00:00 apache2
+&lt;span class="m"&gt;4527&lt;/span&gt; ?        00:00:00 apache2
+&lt;span class="m"&gt;4528&lt;/span&gt; ?        00:00:00 apache2
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -350,7 +350,401 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 
 &lt;p&gt;这二者都不难理解。&lt;/p&gt;
 &lt;p&gt;free命令由procps.*.rpm提供（在Redhat系列的&lt;span class="caps"&gt;OS&lt;/span&gt;上）。free命令的所有输出值都是从/proc/meminfo中读出的。&lt;/p&gt;
-&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
+&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>htop</title><link href="http://blog.wiseturtles.com/posts/linux-htop.html" rel="alternate"></link><updated>2015-01-09T14:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-htop.html</id><summary type="html">&lt;p&gt;本文转摘自 &lt;a href="https://blog.linuxeye.com/350.html"&gt;Linux运维笔记&lt;/a&gt;.&amp;nbsp;并做适当修改　&lt;/p&gt;
+&lt;h2&gt;简介&lt;/h2&gt;
+&lt;p&gt;Htop是一款运行于Linux系统监控与进程管理软件，用于取代Unix下传统的top。与top只提供最消耗资源的进程列表不同，htop提供所有进程的列表，并且使用彩色标识出处理器、swap和内存状态。&lt;/p&gt;
+&lt;p&gt;用户一般可以在top无法提供详尽系统信息的情况下选择安装并使用htop。比如，在查找应用程序的内存泄漏问题时。与top相比，htop提供更方便、光标控制的界面来杀死进程。&lt;/p&gt;
+&lt;p&gt;htop用C语言编写，采用了ncurses库。htop的名称源于其作者的名字。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;htop安装&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install htop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;htop用法&lt;/p&gt;
+&lt;p&gt;&lt;img alt="htop screenshot" src="http://pic.yupoo.com/crazygit_v/ElYP0hQ6/medium.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;上面左上角显示&lt;span class="caps"&gt;CPU&lt;/span&gt;、内存、Swap使用情况，右边显示任务、负载、开机时间，下面&amp;nbsp;就是进程实时状况。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;常用快捷键&lt;/p&gt;
+&lt;p&gt;下面是 F1~F10 的功能和对应的字母快捷键。
+&lt;table class="table table-striped table-bordered table-hover table-condensed"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    Shortcut Key
+&lt;/td&gt;
+&lt;td&gt;
+    Function Key
+&lt;/td&gt;
+&lt;td&gt;
+    Description
+&lt;/td&gt;
+&lt;td&gt;
+    中文说明
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    h, ?
+&lt;/td&gt;
+&lt;td&gt;
+    F1
+&lt;/td&gt;
+&lt;td&gt;
+    Invoke htop Help
+&lt;/td&gt;
+&lt;td&gt;
+    查看htop使用说明
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    S
+&lt;/td&gt;
+&lt;td&gt;
+    F2
+&lt;/td&gt;
+&lt;td&gt;
+    Htop Setup Menu
+&lt;/td&gt;
+&lt;td&gt;
+    htop 设定
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    /
+&lt;/td&gt;
+&lt;td&gt;
+    F3
+&lt;/td&gt;
+&lt;td&gt;
+    Search for a Process
+&lt;/td&gt;
+&lt;td&gt;
+    搜索进程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    \
+&lt;/td&gt;
+&lt;td&gt;
+    F4
+&lt;/td&gt;
+&lt;td&gt;
+    Incremental process filtering
+&lt;/td&gt;
+&lt;td&gt;
+    增量进程过滤器
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    t
+&lt;/td&gt;
+&lt;td&gt;
+    F5
+&lt;/td&gt;
+&lt;td&gt;
+    Tree View
+&lt;/td&gt;
+&lt;td&gt;
+    显示树形结构
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    ,
+&lt;/td&gt;
+&lt;td&gt;
+    F6
+&lt;/td&gt;
+&lt;td&gt;
+    Sort by a column
+&lt;/td&gt;
+&lt;td&gt;
+    选择排序方式
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    [
+&lt;/td&gt;
+&lt;td&gt;
+    F7
+&lt;/td&gt;
+&lt;td&gt;
+    Nice – (change priority)
+&lt;/td&gt;
+&lt;td&gt;
+    可减少nice值，这样就可以提高对应进程的优先级
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    ]
+&lt;/td&gt;
+&lt;td&gt;
+    F8
+&lt;/td&gt;
+&lt;td&gt;
+    Nice + (change priority)
+&lt;/td&gt;
+&lt;td&gt;
+    可增加nice值，这样就可以降低对应进程的优先级
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    k
+&lt;/td&gt;
+&lt;td&gt;
+    F9
+&lt;/td&gt;
+&lt;td&gt;
+    Kill a Process
+&lt;/td&gt;
+&lt;td&gt;
+    可对进程传递信号
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    q
+&lt;/td&gt;
+&lt;td&gt;
+    F10
+&lt;/td&gt;
+&lt;td&gt;
+    Quit htop
+&lt;/td&gt;
+&lt;td&gt;
+    结束htop
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;命令行选项（&lt;span class="caps"&gt;COMMAND&lt;/span&gt;-&lt;span class="caps"&gt;LINE&lt;/span&gt; &lt;span class="caps"&gt;OPTIONS&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;table class="table table-striped table-bordered table-hover table-condensed"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -C –no-color
+&lt;/td&gt;
+&lt;td&gt;
+    使用一个单色的配色方案
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -d –delay=&lt;span class="caps"&gt;DELAY&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+    设置延迟更新时间，单位秒
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -h –help
+&lt;/td&gt;
+&lt;td&gt;
+    显示htop 命令帮助信息
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -u –user=&lt;span class="caps"&gt;USERNAME&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+    只显示一个给定的用户的过程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -p –pid=&lt;span class="caps"&gt;PID&lt;/span&gt;,&lt;span class="caps"&gt;PID&lt;/span&gt;…
+&lt;/td&gt;
+&lt;td&gt;
+    只显示给定的PIDs
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -s –sort-key &lt;span class="caps"&gt;COLUMN&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+    依此列来排序
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    -v –version
+&lt;/td&gt;
+&lt;td&gt;
+    显示版本信息
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;交互式命令（&lt;span class="caps"&gt;INTERACTIVE&lt;/span&gt; &lt;span class="caps"&gt;COMMANDS&lt;/span&gt;）&lt;/p&gt;
+&lt;p&gt;&lt;table class="table table-striped table-bordered table-hover table-condensed"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    上下键或PgUP, PgDn
+&lt;/td&gt;
+&lt;td&gt;
+    选定想要的进程，左右键或Home, End 移动字段，当然也可以直接用鼠标选定进程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    Space
+&lt;/td&gt;
+&lt;td&gt;
+    标记/取消标记一个进程。命令可以作用于多个进程，例如 “kill”，将应用于所有已标记的进程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    U
+&lt;/td&gt;
+&lt;td&gt;
+    取消标记所有进程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    s
+&lt;/td&gt;
+&lt;td&gt;
+    选择某一进程，按s:用strace追踪进程的系统调用
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    l
+&lt;/td&gt;
+&lt;td&gt;
+    显示进程打开的文件: 如果安装了lsof，按此键可以显示进程所打开的文件
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    I
+&lt;/td&gt;
+&lt;td&gt;
+    倒转排序顺序，如果排序是正序的，则反转成倒序的，反之亦然
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    +, -
+&lt;/td&gt;
+&lt;td&gt;
+    在树形模式下，展开或折叠子树
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    a (在有多处理器的机器上)
+&lt;/td&gt;
+&lt;td&gt;
+    设置 &lt;span class="caps"&gt;CPU&lt;/span&gt; affinity: 标记一个进程允许使用哪些&lt;span class="caps"&gt;CPU&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    u
+&lt;/td&gt;
+&lt;td&gt;
+    显示特定用户进程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    M
+&lt;/td&gt;
+&lt;td&gt;
+    按Memory使用排序
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    P
+&lt;/td&gt;
+&lt;td&gt;
+    按&lt;span class="caps"&gt;CPU&lt;/span&gt;使用排序
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    T
+&lt;/td&gt;
+&lt;td&gt;
+    按Time+使用排序
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    F
+&lt;/td&gt;
+&lt;td&gt;
+    跟踪进程: 如果排序顺序引起选定的进程在列表上到处移动，让选定条跟随该进程。这对监视一个进程非常有用：通过这种方式，你可以让一个进程在屏幕上一直可见。使用方向键会停止该功能
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    K
+&lt;/td&gt;
+&lt;td&gt;
+    显示/隐藏内核线程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    H
+&lt;/td&gt;
+&lt;td&gt;
+    显示/隐藏用户线程
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    Ctrl-L
+&lt;/td&gt;
+&lt;td&gt;
+    刷新
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+    Numbers
+&lt;/td&gt;
+&lt;td&gt;
+    &lt;span class="caps"&gt;PID&lt;/span&gt; 查找: 输入&lt;span class="caps"&gt;PID&lt;/span&gt;，光标将移动到相应的进程上
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;替代top&lt;/p&gt;
+&lt;p&gt;用htop替换top，可添加别名，编辑/root/.bashrc文件，添加如下代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;alias top=htop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="linux"></category><category term="command"></category><category term="htop"></category></entry><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
 Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffer/&amp;nbsp;Android利用tcpdump抓包：http://www.trinea.cn/android/tcpdump_wireshark/&lt;/p&gt;
 &lt;p&gt;为了Ubuntu笔记本方便对Android手机上的Apps做抓包, 本文介绍两种方法，方法二更容易配置。
 有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
