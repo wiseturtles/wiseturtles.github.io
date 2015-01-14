@@ -1,5 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-13T09:51:00+08:00</updated><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><updated>2015-01-13T09:51:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-14T10:35:00+08:00</updated><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html"&gt;http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.binarytides.com/linux-netstat-command-examples/"&gt;http://www.binarytides.com/linux-netstat-command-examples/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;作用&lt;/h2&gt;
+&lt;p&gt;Netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态
+(Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等&amp;nbsp;等。&lt;/p&gt;
+&lt;h2&gt;输出信息含义&lt;/h2&gt;
+&lt;p&gt;执行netstat后，其输出结果为&lt;/p&gt;
+&lt;pre&gt;
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address Foreign Address State
+tcp 0 2 210.34.6.89:telnet 210.34.6.96:2873 ESTABLISHED
+tcp 296 0 210.34.6.89:1165 210.34.6.84:netbios-ssn ESTABLISHED
+tcp 0 0 localhost.localdom:9001 localhost.localdom:1162 ESTABLISHED
+tcp 0 0 localhost.localdom:1162 localhost.localdom:9001 ESTABLISHED
+tcp 0 80 210.34.6.89:1161 210.34.6.10:netbios-ssn CLOSE
+
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags Type State I-Node Path
+unix 1 [ ] STREAM CONNECTED 16178 @000000dd
+unix 1 [ ] STREAM CONNECTED 16176 @000000dc
+unix 9 [ ] DGRAM 5292 /dev/log
+unix 1 [ ] STREAM CONNECTED 16182 @000000df
+&lt;/pre&gt;
+
+&lt;p&gt;从整体上看，netstat的输出结果可以分为两个部分：&lt;/p&gt;
+&lt;p&gt;一个是Active Internet connections，称为有源&lt;span class="caps"&gt;TCP&lt;/span&gt;连接，其中&amp;#8221;Recv-Q&amp;#8221;和&amp;#8221;Send-Q&amp;#8221;指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。&lt;/p&gt;
+&lt;p&gt;另一个是Active &lt;span class="caps"&gt;UNIX&lt;/span&gt; domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。&amp;nbsp;Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。&lt;/p&gt;
+&lt;h2&gt;常见参数&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;-a&amp;nbsp;(all)显示所有监听和未监听的连接&lt;/li&gt;
+&lt;li&gt;-t&amp;nbsp;(tcp)仅显示tcp相关选项&lt;/li&gt;
+&lt;li&gt;-u&amp;nbsp;(udp)仅显示udp相关选项&lt;/li&gt;
+&lt;li&gt;-n&amp;nbsp;拒绝显示别名，能显示数字的全部转化成数字。&lt;/li&gt;
+&lt;li&gt;-l 仅列出有在 Listen (监听) 的服務状态&amp;nbsp;*&lt;/li&gt;
+&lt;li&gt;-p&amp;nbsp;显示建立相关链接的程序名&lt;/li&gt;
+&lt;li&gt;-r&amp;nbsp;显示路由信息，路由表&lt;/li&gt;
+&lt;li&gt;-e&amp;nbsp;显示扩展信息，例如uid等&lt;/li&gt;
+&lt;li&gt;-s&amp;nbsp;按各个协议进行统计&lt;/li&gt;
+&lt;li&gt;-c&amp;nbsp;每隔一个固定时间，执行该netstat命令。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：&lt;span class="caps"&gt;LISTEN&lt;/span&gt;和&lt;span class="caps"&gt;LISTENING&lt;/span&gt;的状态只有用-a或者-l才能看到&lt;/p&gt;
+&lt;h2&gt;实用命令实例&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 列出所有连接（包括监听和未监听的)&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -a
+
+&lt;span class="c"&gt;# 列出所有tcp连接&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -at
+
+&lt;span class="c"&gt;# 列出所有udp连接&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -au
+
+&lt;span class="c"&gt;# 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip&lt;/span&gt;
+&lt;span class="c"&gt;# 对应的主机名，这会降低输出速度，如果不需要，可以使用-n&lt;/span&gt;
+&lt;span class="c"&gt;# 在netstat输出中不显示主机，端口和用户名(host, port or user)&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -an
+
+&lt;span class="c"&gt;# 列出所有处于监听状态的&lt;/span&gt;
+&lt;span class="c"&gt;# -l选项不要与-a同时使用，不然也会列出未监听状态的连接&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -l
+
+&lt;span class="c"&gt;# 列出所有监听状态的tcp连击&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lt
+
+&lt;span class="c"&gt;# 列出所有监听状态的udp连击&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lu
+
+&lt;span class="c"&gt;# 列出所有的unix连接&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lx
+
+&lt;span class="c"&gt;# 在netstat输出中显示PID和进程名称(-p),用户名(-e)&lt;/span&gt;
+&lt;span class="c"&gt;# -p使用需要root权限,不然无法获取PID&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo netstat -ltpe
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:5037          *:*                     LISTEN      linliang   &lt;span class="m"&gt;4530492&lt;/span&gt;     11684/adb
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:63342         *:*                     LISTEN      linliang   &lt;span class="m"&gt;10952269&lt;/span&gt;    6663/java
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:9200          *:*                     LISTEN      linliang   &lt;span class="m"&gt;10361577&lt;/span&gt;    12461/ssh
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; *:http                  *:*                     LISTEN      root       &lt;span class="m"&gt;12810&lt;/span&gt;       1344/nginx
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:domain        *:*                     LISTEN      root       &lt;span class="m"&gt;683&lt;/span&gt;         1481/dnsmasq
+
+&lt;span class="c"&gt;# 上面的命令总如果使用-n,将会显示用户UID，而不是用户名&lt;/span&gt;
+
+&lt;span class="c"&gt;# 列出所有的网络统计信息&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -s
+Ip:
+&lt;span class="m"&gt;14989101&lt;/span&gt; total packets received
+&lt;span class="m"&gt;0&lt;/span&gt; forwarded
+&lt;span class="m"&gt;0&lt;/span&gt; incoming packets discarded
+&lt;span class="m"&gt;14986294&lt;/span&gt; incoming packets delivered
+&lt;span class="m"&gt;11643610&lt;/span&gt; requests sent out
+Icmp:
+    &lt;span class="m"&gt;6034&lt;/span&gt; ICMP messages received
+    &lt;span class="m"&gt;71&lt;/span&gt; input ICMP message failed.
+    ICMP input histogram:
+        destination unreachable: 5774
+        timeout in transit: 106
+        &lt;span class="nb"&gt;echo &lt;/span&gt;replies: 154
+    &lt;span class="m"&gt;6882&lt;/span&gt; ICMP messages sent
+    &lt;span class="m"&gt;0&lt;/span&gt; ICMP messages failed
+    ICMP output histogram:
+....
+
+&lt;span class="c"&gt;# 显示TCP或UDP连接的统计信息&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -st
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -su
+
+&lt;span class="c"&gt;# 显示kernel的路由信息(-r)&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         172.26.50.1     0.0.0.0         UG        &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+169.254.0.0     0.0.0.0         255.255.0.0     U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+172.26.50.0     0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+192.168.56.0    0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; vboxnet0
+
+&lt;span class="c"&gt;# 打印网络接口(-i)&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -i
+Kernel Interface table
+Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+eth1       &lt;span class="m"&gt;1500&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;10650979&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;10656895&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; BMRU
+lo        &lt;span class="m"&gt;65536&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;   &lt;span class="m"&gt;5095802&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;       &lt;span class="m"&gt;5095802&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; LRU
+vboxnet0   &lt;span class="m"&gt;1500&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;         &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;1505&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; BMRU
+
+&lt;span class="c"&gt;# 上面的输出比较原始，为了获取友好输出，可以加上(-e)&lt;/span&gt;
+&lt;span class="c"&gt;# 达到与ifconfig命令类似的效果&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -ie
+Kernel Interface table
+eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
+        inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
+        inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:6607723134 &lt;span class="o"&gt;(&lt;/span&gt;6.6 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:10396843122 &lt;span class="o"&gt;(&lt;/span&gt;10.3 GB&lt;span class="o"&gt;)&lt;/span&gt;
+        Interrupt:20 Memory:f7c00000-f7c20000
+
+lo        Link encap:Local Loopback
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        inet6 addr: ::1/128 Scope:Host
+        UP LOOPBACK RUNNING  MTU:65536  Metric:1
+        RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:0
+        RX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;2.7 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;2.7 GB&lt;span class="o"&gt;)&lt;/span&gt;
+
+vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
+        inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
+        inet6 addr: fe80::800:27ff:fe00:0/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:0 &lt;span class="o"&gt;(&lt;/span&gt;0.0 B&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:130893 &lt;span class="o"&gt;(&lt;/span&gt;130.8 KB&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><updated>2015-01-13T09:51:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-ps-command/"&gt;10 basic examples of Linux ps&amp;nbsp;command&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://man.linuxde.net/ps"&gt;http://man.linuxde.net/ps&lt;/a&gt;&lt;/li&gt;
@@ -366,7 +522,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 &lt;li&gt;
 &lt;p&gt;htop用法&lt;/p&gt;
 &lt;p&gt;&lt;img alt="htop screenshot" src="http://pic.yupoo.com/crazygit_v/ElYP0hQ6/medium.jpg" /&gt;&lt;/p&gt;
-&lt;p&gt;上面左上角显示&lt;span class="caps"&gt;CPU&lt;/span&gt;、内存、Swap使用情况，右边显示任务、负载、开机时间，下面&amp;nbsp;就是进程实时状况。&lt;/p&gt;
+&lt;p&gt;上面左上角显示&lt;span class="caps"&gt;CPU&lt;/span&gt;、内存、Swap使用情况，右边显示任务、负载、开机时间，下面就是进程实时状况。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;常用快捷键&lt;/p&gt;
@@ -738,7 +894,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;替代top&lt;/p&gt;
-&lt;p&gt;用htop替换top，可添加别名，编辑/root/.bashrc文件，添加如下代码&lt;/p&gt;
+&lt;p&gt;用htop替换top，可添加别名，编辑&lt;code&gt;~/.bashrc&lt;/code&gt;文件，添加如下代码&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;alias top=htop
 &lt;/pre&gt;&lt;/div&gt;
 

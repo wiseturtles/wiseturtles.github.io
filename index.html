@@ -65,8 +65,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h1>ps</h1></a>
-2015-01-13
+            <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h1>netstat</h1></a>
+2015-01-14
 
 by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
  
@@ -76,241 +76,178 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
 
         <div><p>本文参考：</p>
 <ul>
-<li><a href="http://www.binarytides.com/linux-ps-command/">10 basic examples of Linux ps&nbsp;command</a></li>
-<li><a href="http://man.linuxde.net/ps">http://man.linuxde.net/ps</a></li>
+<li><a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html">http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html</a></li>
+<li><a href="http://www.binarytides.com/linux-netstat-command-examples/">http://www.binarytides.com/linux-netstat-command-examples/</a></li>
 </ul>
 <h2>作用</h2>
-<p>ps命令用来列出系统中当前运行的那些进程。ps命令列出的是当前那些进程的快照，就是执行ps命令的那个时刻的那些进程，如果想要动态的显示进程信息，可以使用top命令&nbsp;。</p>
-<h2>参数形式</h2>
+<p>Netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态
+(Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等&nbsp;等。</p>
+<h2>输出信息含义</h2>
+<p>执行netstat后，其输出结果为</p>
+<pre>
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address Foreign Address State
+tcp 0 2 210.34.6.89:telnet 210.34.6.96:2873 ESTABLISHED
+tcp 296 0 210.34.6.89:1165 210.34.6.84:netbios-ssn ESTABLISHED
+tcp 0 0 localhost.localdom:9001 localhost.localdom:1162 ESTABLISHED
+tcp 0 0 localhost.localdom:1162 localhost.localdom:9001 ESTABLISHED
+tcp 0 80 210.34.6.89:1161 210.34.6.10:netbios-ssn CLOSE
+
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags Type State I-Node Path
+unix 1 [ ] STREAM CONNECTED 16178 @000000dd
+unix 1 [ ] STREAM CONNECTED 16176 @000000dc
+unix 9 [ ] DGRAM 5292 /dev/log
+unix 1 [ ] STREAM CONNECTED 16182 @000000df
+</pre>
+
+<p>从整体上看，netstat的输出结果可以分为两个部分：</p>
+<p>一个是Active Internet connections，称为有源<span class="caps">TCP</span>连接，其中&#8221;Recv-Q&#8221;和&#8221;Send-Q&#8221;指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。</p>
+<p>另一个是Active <span class="caps">UNIX</span> domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。&nbsp;Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。</p>
+<h2>常见参数</h2>
 <ul>
-<li>Unix风格的参数，前面加单破折线</li>
-<li><span class="caps">BSD</span>风格的参数，&nbsp;前面不加破折线</li>
-<li><span class="caps">GNU</span>风格的长参数，前面加双破折线</li>
+<li>-a&nbsp;(all)显示所有监听和未监听的连接</li>
+<li>-t&nbsp;(tcp)仅显示tcp相关选项</li>
+<li>-u&nbsp;(udp)仅显示udp相关选项</li>
+<li>-n&nbsp;拒绝显示别名，能显示数字的全部转化成数字。</li>
+<li>-l 仅列出有在 Listen (监听) 的服務状态&nbsp;*</li>
+<li>-p&nbsp;显示建立相关链接的程序名</li>
+<li>-r&nbsp;显示路由信息，路由表</li>
+<li>-e&nbsp;显示扩展信息，例如uid等</li>
+<li>-s&nbsp;按各个协议进行统计</li>
+<li>-c&nbsp;每隔一个固定时间，执行该netstat命令。</li>
 </ul>
-<p>不同风格的参数可以混合使用,&nbsp;但是要注意避免冲突。</p>
-<p>如:</p>
-<p>命令<code>ps -aux</code>和<code>ps aux</code>是不一样的。<code>ps -aux</code>是显示所有&#8217;x&#8217;用户的进程, 如果用户&#8217;x&#8217;不存在的话，会给出警告，并当做<code>ps aux</code>来处理。</p>
-<h2>使用示例</h2>
-<ol>
-<li>
-<p>显示所有进程</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps aux
-<span class="nv">$ </span>ps -ef
-</pre></div>
+<p><strong>提示</strong>：<span class="caps">LISTEN</span>和<span class="caps">LISTENING</span>的状态只有用-a或者-l才能看到</p>
+<h2>实用命令实例</h2>
+<div class="highlight"><pre><span class="c"># 列出所有连接（包括监听和未监听的)</span>
+<span class="nv">$ </span>netstat -a
 
+<span class="c"># 列出所有tcp连接</span>
+<span class="nv">$ </span>netstat -at
 
-</li>
-<li>
-<p>显示指定用户的进程</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f -u www-data
+<span class="c"># 列出所有udp连接</span>
+<span class="nv">$ </span>netstat -au
 
-<span class="c"># 多个用户用&#39;,&#39;隔开</span>
-<span class="nv">$ </span>ps -f -u www-data,root
-</pre></div>
+<span class="c"># 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip</span>
+<span class="c"># 对应的主机名，这会降低输出速度，如果不需要，可以使用-n</span>
+<span class="c"># 在netstat输出中不显示主机，端口和用户名(host, port or user)</span>
+<span class="nv">$ </span>netstat -an
 
+<span class="c"># 列出所有处于监听状态的</span>
+<span class="c"># -l选项不要与-a同时使用，不然也会列出未监听状态的连接</span>
+<span class="nv">$ </span>netstat -l
 
-</li>
-<li>
-<p>按照进程名来指定</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -C nginx
-</pre></div>
+<span class="c"># 列出所有监听状态的tcp连击</span>
+<span class="nv">$ </span>netstat -lt
 
+<span class="c"># 列出所有监听状态的udp连击</span>
+<span class="nv">$ </span>netstat -lu
 
-<p>-C&nbsp;选项必须提供精确的进程名，不提供模糊匹配，一般使用grep来搜索</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -ef <span class="p">|</span>grep nginx
-</pre></div>
+<span class="c"># 列出所有的unix连接</span>
+<span class="nv">$ </span>netstat -lx
 
+<span class="c"># 在netstat输出中显示PID和进程名称(-p),用户名(-e)</span>
+<span class="c"># -p使用需要root权限,不然无法获取PID</span>
+<span class="nv">$ </span>sudo netstat -ltpe
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     11684/adb
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    6663/java
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200          *:*                     LISTEN      linliang   <span class="m">10361577</span>    12461/ssh
+tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       1344/nginx
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         1481/dnsmasq
 
-</li>
-<li>
-<p>按照进程id来查找</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f -p 3150,7298,6455
-</pre></div>
+<span class="c"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
 
+<span class="c"># 列出所有的网络统计信息</span>
+<span class="nv">$ </span>netstat -s
+Ip:
+<span class="m">14989101</span> total packets received
+<span class="m">0</span> forwarded
+<span class="m">0</span> incoming packets discarded
+<span class="m">14986294</span> incoming packets delivered
+<span class="m">11643610</span> requests sent out
+Icmp:
+    <span class="m">6034</span> ICMP messages received
+    <span class="m">71</span> input ICMP message failed.
+    ICMP input histogram:
+        destination unreachable: 5774
+        timeout in transit: 106
+        <span class="nb">echo </span>replies: 154
+    <span class="m">6882</span> ICMP messages sent
+    <span class="m">0</span> ICMP messages failed
+    ICMP output histogram:
+....
 
-</li>
-<li>
-<p>按照<span class="caps">CPU</span>或内存使用情况排序</p>
-<p>使用&#8212;sort选项可以按照一定的顺序排序，并且可以在指定的排序列前添加&#8217;-&#8216;或&#8217;+&#8217;&nbsp;来指定降序或升序排列</p>
-<div class="highlight"><pre><span class="c"># cpu 使用前５</span>
-<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pcpu <span class="p">|</span> head -5
+<span class="c"># 显示TCP或UDP连接的统计信息</span>
+<span class="nv">$ </span>netstat -st
+<span class="nv">$ </span>netstat -su
 
-<span class="c"># 内存 使用前５</span>
-<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pmem <span class="p">|</span> head -5
+<span class="c"># 显示kernel的路由信息(-r)</span>
+<span class="nv">$ </span>netstat -rn
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+0.0.0.0         172.26.50.1     0.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+169.254.0.0     0.0.0.0         255.255.0.0     U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+172.26.50.0     0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+192.168.56.0    0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
 
-<span class="c"># 指定多个排序</span>
-<span class="nv">$ </span>ps jax --sort<span class="o">=</span>uid,-ppid,+pid
-</pre></div>
+<span class="c"># 打印网络接口(-i)</span>
+<span class="nv">$ </span>netstat -i
+Kernel Interface table
+Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+eth1       <span class="m">1500</span> <span class="m">0</span>  <span class="m">10650979</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>      <span class="m">10656895</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
+lo        <span class="m">65536</span> <span class="m">0</span>   <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>       <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> LRU
+vboxnet0   <span class="m">1500</span> <span class="m">0</span>         <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>          <span class="m">1505</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
 
+<span class="c"># 上面的输出比较原始，为了获取友好输出，可以加上(-e)</span>
+<span class="c"># 达到与ifconfig命令类似的效果</span>
+<span class="nv">$ </span>netstat -ie
+Kernel Interface table
+eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
+        inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
+        inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:6607723134 <span class="o">(</span>6.6 GB<span class="o">)</span>  TX bytes:10396843122 <span class="o">(</span>10.3 GB<span class="o">)</span>
+        Interrupt:20 Memory:f7c00000-f7c20000
 
-<p>排序选项参见man page <code>STANDARD FORMAT SPECIFIERS</code>部分</p>
-<p>部分选项列出如下
-<pre>
-cmd          simple name of executable
-pcpu         cpu utilization
-pmem         ratio of the process's resident set size to the
-            physical memory on the machine, expressed as a
-            percentage
-flags        flags as in long format F field
-pgrp         process group ID
-tpgid        controlling tty process group ID
-cutime       cumulative user time
-cstime       cumulative system time
-utime        user time
-min_flt      number of minor page faults
-maj_flt      number of major page faults
-cmin_flt     cumulative minor page faults
-cmaj_flt     cumulative major page faults
-session      session ID
-pid          process ID
-ppid         parent process ID
-rss          resident set size
-resident     resident pages
-size         approximate amount of swap space that would be
-            required if the process were to dirty all writable
-            pages and then be swapped out. This number is
-            very rough!
-share        amount of shared pages
-tty          the device number of the controlling tty
-start_time   time process was started
-uid          user ID number
-user         user name
-vsize        total VM size in kB
-priority     kernel scheduling priority
-</pre></p>
-</li>
-<li>
-<p>按照树状结构显示</p>
-<p>使用<code>--forest</code>选项</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f --forest -C nginx
-UID        PID  PPID  C STIME TTY          TIME CMD
-root      <span class="m">1344</span>     <span class="m">1</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:00:00 nginx: master process /usr/sbin/nginx
-www-data  <span class="m">1345</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:01:52  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1346</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:02:05  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1348</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:02:00  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1349</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:01:04  <span class="se">\_</span> nginx: worker process
-</pre></div>
+lo        Link encap:Local Loopback
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        inet6 addr: ::1/128 Scope:Host
+        UP LOOPBACK RUNNING  MTU:65536  Metric:1
+        RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:0
+        RX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>  TX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>
 
-
-<p>不要把<code>--forest</code>和<code>--sort</code>选项混合使用，因为他们都会影响结果</p>
-</li>
-<li>
-<p>列出子进程</p>
-<div class="highlight"><pre>＃先列出所有nginx进程
-<span class="nv">$ </span>ps -o pid,uname,comm -C nginx
-PID USER     COMMAND
-<span class="m">1344</span> root     nginx
-<span class="m">1345</span> www-data nginx
-<span class="m">1346</span> www-data nginx
-<span class="m">1348</span> www-data nginx
-<span class="m">1349</span> www-data nginx
-
-<span class="c"># 使用--ppid选项列出子进程</span>
-<span class="nv">$ </span>ps --ppid 2359
-PID TTY          TIME CMD
-<span class="m">4524</span> ?        00:00:00 apache2
-<span class="m">4525</span> ?        00:00:00 apache2
-<span class="m">4526</span> ?        00:00:00 apache2
-<span class="m">4527</span> ?        00:00:00 apache2
-<span class="m">4528</span> ?        00:00:00 apache2
-</pre></div>
-
-
-</li>
-<li>
-<p>列出进程的线程</p>
-<p>使用<code>-L</code>选项</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -p <span class="m">3150</span> -L
-</pre></div>
-
-
-</li>
-<li>
-<p>指定输出结果的列</p>
-<p>可以输出的列信息与<code>--sort</code>选项一样，可以查看man page 的<code>STANDARD FORMAT SPECIFIERS</code>部分</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -e -o pid,uname,pcpu,pmem,comm
-
-<span class="c"># 显示指定的列并给出别名</span>
-<span class="nv">$ </span>ps -e -o pid,uname<span class="o">=</span>USERNAME,pcpu<span class="o">=</span>CPU_USAGE,pmem,comm
-</pre></div>
-
-
-</li>
-<li>
-<p>将ps转变为实时更新的效果</p>
-<div class="highlight"><pre><span class="nv">$ </span> watch -n <span class="m">1</span> <span class="s1">&#39;ps -e -o pid,uname,cmd,pmem,pcpu --sort=-pmem,-pcpu | head -15&#39;</span>
-</pre></div>
-
-
-</li>
-<li>
-<p>部分选项解释</p>
-</li>
-</ol>
-<pre>
--a： 显示所有终端机下执行的程序，除了阶段作业领导者之外。
-a：  显示现行终端机下的所有程序，包括其他用户的程序。
--A： 显示所有程序。
--c： 显示CLS和PRI栏位。
-c：  列出程序时，显示每个程序真正的指令名称，而不包含路径，选项或常驻服务的标示。
--C<指令名称>： 指定执行指令的名称，并列出该指令的程序的状况。
--d： 显示所有程序，但不包括阶段作业领导者的程序。
--e： 此选项的效果和指定"A"选项相同。
-e：  列出程序时，显示每个程序所使用的环境变量。
--f： 显示UID,PPIP,C与STIME栏位。
-f：  用ASCII字符显示树状结构，表达程序间的相互关系。
--g<群组名称>： 此选项的效果和指定"-G"选项相同，当亦能使用阶段作业领导者的名称来指定。
-g：  显示现行终端机下的所有程序，包括群组领导者的程序。 -G<群组识别码>：列出属于该群组的程序的状况，也可使用群组名称来指定。
-h：  不显示标题列。
--H： 显示树状结构，表示程序间的相互关系。
--j或j： 采用工作控制的格式显示程序状况。
--l或l： 采用详细的格式来显示程序状况。
-L：  列出栏位的相关信息。
--m或m： 显示所有的执行绪。
-n：  以数字来表示USER和WCHAN栏位。
--N： 显示所有的程序，除了执行ps指令终端机下的程序之外。
--p<程序识别码>： 指定程序识别码，并列出该程序的状况。
-p<程序识别码>：  此选项的效果和指定"-p"选项相同，只在列表格式方面稍有差异。
-r：  只列出现行终端机正在执行中的程序。
--s<阶段作业>：   指定阶段作业的程序识别码，并列出隶属该阶段作业的程序的状况。
-s：  采用程序信号的格式显示程序状况。
-S：  列出程序时，包括已中断的子程序资料。
--t<终端机编号>：  指定终端机编号，并列出属于该终端机的程序的状况。
-t<终端机编号>：   此选项的效果和指定"-t"选项相同，只在列表格式方面稍有差异。
--T：   显示现行终端机下的所有程序。
--u<用户识别码>：  此选项的效果和指定"-U"选项相同。
-u：  以用户为主的格式来显示程序状况。
--U<用户识别码>：  列出属于该用户的程序的状况，也可使用用户名称来指定。
-U<用户名称>：  列出属于该用户的程序的状况。
-v：  采用虚拟内存的格式显示程序状况。
--V或V：  显示版本信息。
--w或w：  采用宽阔的格式来显示程序状况。　
-x：  显示所有程序，不以终端机来区分。
-X：  采用旧式的Linux i386登陆格式显示程序状况。
--y：  配合选项"-l"使用时，不显示F(flag)栏位，并以RSS栏位取代ADDR栏位　。
--<程序识别码>：  此选项的效果和指定"p"选项相同。
---cols<每列字符数>：  设置每列的最大字符数。
---columns<每列字符数>：  此选项的效果和指定"--cols"选项相同。
---cumulative：  此选项的效果和指定"S"选项相同。
---deselect：  此选项的效果和指定"-N"选项相同。
---forest：  此选项的效果和指定"f"选项相同。
---headers：  重复显示标题列。
---help：  在线帮助。
---info：  显示排错信息。
---lines<显示列数>：  设置显示画面的列数。
---no-headers：  此选项的效果和指定"h"选项相同，只在列表格式方面稍有差异。
---group<群组名称>：  此选项的效果和指定"-G"选项相同。
---Group<群组识别码>：  此选项的效果和指定"-G"选项相同。
---pid<程序识别码>：  此选项的效果和指定"-p"选项相同。
---rows<显示列数>：  此选项的效果和指定"--lines"选项相同。
---sid<阶段作业>：  此选项的效果和指定"-s"选项相同。
---tty<终端机编号>：  此选项的效果和指定"-t"选项相同。
---user<用户名称>：  此选项的效果和指定"-U"选项相同。
---User<用户识别码>：  此选项的效果和指定"-U"选项相同。
---version：  此选项的效果和指定"-V"选项相同。
---widty<每列字符数>：  此选项的效果和指定"-cols"选项相同。
-</pre></div>
+vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
+        inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
+        inet6 addr: fe80::800:27ff:fe00:0/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000
+        RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:130893 <span class="o">(</span>130.8 KB<span class="o">)</span>
+</pre></div></div>
         <hr />
+    </div>
+
+
+ 
+
+
+    <div class='article'>
+        <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h2>ps</h2></a>
+        <div class= "well small"> 2015-01-13
+
+by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>the usage of&nbsp;ps</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-ps.html">更多详情</a></div>
     </div>
 
 
@@ -441,29 +378,14 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
         <div class="summary"><p>如何在本博客发表文章</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/about-wiseturtles.html">更多详情</a></div>
     </div>
 
-
- 
-
-
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/setup-pelican.html"><h2>pelican + github&nbsp;搭建个人Blog</h2></a>
-        <div class= "well small"> 2014-11-30
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
-
-
- </div>
-        <div class="summary"><p>如何使用github和pelican搭建个人博客</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/setup-pelican.html">更多详情</a></div>
-    </div>
-
 <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
 
     <li class="active"><a href="http://blog.wiseturtles.com/index.html">1</a></li>
+    <li class=""><a href="http://blog.wiseturtles.com/index2.html">2</a></li>
 
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+    <li class="next"><a href="http://blog.wiseturtles.com/index2.html">Next &rarr;</a></li>
 
 </ul>
 </div>
