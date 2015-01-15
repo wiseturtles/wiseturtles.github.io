@@ -1,5 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-14T10:35:00+08:00</updated><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-15T17:09:00+08:00</updated><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
+&lt;p&gt;Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。&lt;/p&gt;
+&lt;p&gt;本文以Ubuntu&amp;nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程&lt;/p&gt;
+&lt;h2&gt;参考文献&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/install.html"&gt;https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/install.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;环境要求&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="caps"&gt;JDK&lt;/span&gt;&amp;nbsp;1.7+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;前期准备&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;安装&lt;span class="caps"&gt;JDK1&lt;/span&gt;.7&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo add-apt-repository ppa:webupd8team/java
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get update
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install oracle-java7-installer
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装Git&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装Nginx服务器, 用于作为Gerrit网站的反向代理以及&lt;span class="caps"&gt;HTTP&lt;/span&gt;认证&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install nginx
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;数据库设置&lt;/h2&gt;
+&lt;p&gt;Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&amp;nbsp;Oracle.&lt;/p&gt;
+&lt;p&gt;本文以MySQL为例，介绍数据库的设置。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 安装数据库&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install mysql-server
+
+&lt;span class="c"&gt;# 创建数据库reviewdb和用户gerrit2为后面做准备&lt;/span&gt;
+&lt;span class="c"&gt;# 数据库名和用户名可以根据实际的使用情况自己选择&lt;/span&gt;
+mysql&amp;gt; CREATE USER &lt;span class="s1"&gt;&amp;#39;gerrit2&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt; IDENTIFIED BY &lt;span class="s1"&gt;&amp;#39;secret&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+mysql&amp;gt; CREATE DATABASE reviewdb&lt;span class="p"&gt;;&lt;/span&gt;
+mysql&amp;gt; GRANT ALL ON reviewdb.* TO &lt;span class="s1"&gt;&amp;#39;gerrit2&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+mysql&amp;gt; FLUSH PRIVILEGES&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;初始化Gerrit站点&lt;/h2&gt;
+&lt;p&gt;由于Gerrit创建中需要保存自己的&lt;span class="caps"&gt;SSH&lt;/span&gt; Keys,&amp;nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 在系统上添加用户gerrit2&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo adduser gerrit2
+&lt;span class="c"&gt;# 切换到当前用户&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo su gerrit2
+&lt;span class="c"&gt;# 下载gerrit安装包&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
+&lt;span class="c"&gt;# -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;java -jar gerrit-2.9.4.war init -d gerrit
+
+*** Gerrit Code Review 2.9.4
+***
+
+Create &lt;span class="s1"&gt;&amp;#39;/home/gerrit2/gerrit&amp;#39;&lt;/span&gt;  &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
+
+*** Git Repositories
+***
+&lt;span class="c"&gt;# 项目代码目录设置&lt;/span&gt;
+Location of Git repositories   &lt;span class="o"&gt;[&lt;/span&gt;git&lt;span class="o"&gt;]&lt;/span&gt;:
+
+*** SQL Database
+***
+
+Database server &lt;span class="nb"&gt;type&lt;/span&gt;           &lt;span class="o"&gt;[&lt;/span&gt;h2&lt;span class="o"&gt;]&lt;/span&gt;: mysql
+
+Gerrit Code Review is not shipped with MySQL Connector/J 5.1.21
+**  This library is required &lt;span class="k"&gt;for&lt;/span&gt; your configuration. **
+Download and install it now &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
+Downloading http://repo2.maven.org/maven2/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar ... OK
+Checksum mysql-connector-java-5.1.21.jar OK
+Server hostname                &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt;:           &lt;span class="c"&gt;# 此处填写刚刚创建数据库时设置的信息&lt;/span&gt;
+Server port                    &lt;span class="o"&gt;[(&lt;/span&gt;mysql default&lt;span class="o"&gt;)]&lt;/span&gt;:
+Database name                  &lt;span class="o"&gt;[&lt;/span&gt;reviewdb&lt;span class="o"&gt;]&lt;/span&gt;:
+Database username              &lt;span class="o"&gt;[&lt;/span&gt;gerrit2&lt;span class="o"&gt;]&lt;/span&gt;:
+gerrit2&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;s password             :
+            confirm password :
+
+*** Index
+***
+
+Type                           &lt;span class="o"&gt;[&lt;/span&gt;LUCENE/?&lt;span class="o"&gt;]&lt;/span&gt;:
+
+*** User Authentication
+***
+
+&lt;span class="c"&gt;# 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&amp;quot;?&amp;quot;查看&lt;/span&gt;
+Authentication method          &lt;span class="o"&gt;[&lt;/span&gt;OPENID/?&lt;span class="o"&gt;]&lt;/span&gt;: http
+Get username from custom HTTP header &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+SSO &lt;span class="nb"&gt;logout &lt;/span&gt;URL                 :
+
+*** Review Labels
+***
+
+Install Verified label         &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+
+*** Email Delivery
+***
+
+&lt;span class="c"&gt;# 邮件服务器设置, 根据实际情况自行选择&lt;/span&gt;
+SMTP server hostname           &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt;:
+SMTP server port               &lt;span class="o"&gt;[(&lt;/span&gt;default&lt;span class="o"&gt;)]&lt;/span&gt;:
+SMTP encryption                &lt;span class="o"&gt;[&lt;/span&gt;NONE/?&lt;span class="o"&gt;]&lt;/span&gt;:
+SMTP username                  :
+
+*** Container Process
+***
+
+Run as                         &lt;span class="o"&gt;[&lt;/span&gt;gerrit2&lt;span class="o"&gt;]&lt;/span&gt;:
+Java runtime                   &lt;span class="o"&gt;[&lt;/span&gt;/usr/lib/jvm/java-7-oracle/jre&lt;span class="o"&gt;]&lt;/span&gt;:
+Copy gerrit-2.9.4.war to /home/gerrit2/gerrit/bin/gerrit.war &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
+Copying gerrit-2.9.4.war to /home/gerrit2/gerrit/bin/gerrit.war
+
+*** SSH Daemon
+***
+
+Listen on address              &lt;span class="o"&gt;[&lt;/span&gt;*&lt;span class="o"&gt;]&lt;/span&gt;:
+Listen on port                 &lt;span class="o"&gt;[&lt;/span&gt;29418&lt;span class="o"&gt;]&lt;/span&gt;:
+
+Gerrit Code Review is not shipped with Bouncy Castle Crypto SSL v149
+If available, Gerrit can take advantage of features
+in the library, but will also &lt;span class="k"&gt;function&lt;/span&gt; without it.
+Download and install it now &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
+Downloading http://www.bouncycastle.org/download/bcpkix-jdk15on-149.jar ... OK
+Checksum bcpkix-jdk15on-149.jar OK
+
+Gerrit Code Review is not shipped with Bouncy Castle Crypto Provider v149
+** This library is required by Bouncy Castle Crypto SSL v149. **
+Download and install it now &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
+Downloading http://www.bouncycastle.org/download/bcprov-jdk15on-149.jar ... OK
+Checksum bcprov-jdk15on-149.jar OK
+Generating SSH host key ... rsa... dsa... &lt;span class="k"&gt;done&lt;/span&gt;
+
+*** HTTP Daemon
+***
+
+&lt;span class="c"&gt;# 启用反向代理&lt;/span&gt;
+Behind reverse proxy           &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;? y
+Proxy uses SSL &lt;span class="o"&gt;(&lt;/span&gt;https://&lt;span class="o"&gt;)&lt;/span&gt;      &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+Subdirectory on proxy server   &lt;span class="o"&gt;[&lt;/span&gt;/&lt;span class="o"&gt;]&lt;/span&gt;:
+Listen on address              &lt;span class="o"&gt;[&lt;/span&gt;*&lt;span class="o"&gt;]&lt;/span&gt;:
+Listen on port                 &lt;span class="o"&gt;[&lt;/span&gt;8081&lt;span class="o"&gt;]&lt;/span&gt;:     &lt;span class="c"&gt;# 设置gerrit网站监听端口&lt;/span&gt;
+Canonical URL                  &lt;span class="o"&gt;[&lt;/span&gt;http://localhost/&lt;span class="o"&gt;]&lt;/span&gt;:
+
+*** Plugins
+***
+
+Install plugin commit-message-length-validator version v2.9.4 &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+Install plugin download-commands version v2.9.4 &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+Install plugin replication version v2.9.4 &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+Install plugin reviewnotes version v2.9.4 &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+Install plugin singleusergroup version v2.9.4 &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
+
+Initialized /home/gerrit2/gerrit
+Executing /home/gerrit2/gerrit/bin/gerrit.sh start
+Starting Gerrit Code Review: OK
+Waiting &lt;span class="k"&gt;for&lt;/span&gt; server on localhost:80 ... OK
+Opening http://localhost/#/admin/projects/ ...No protocol specified
+No protocol specified
+OK
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置nginx反向代理&lt;/h2&gt;
+&lt;p&gt;在nginx配置中间中配置如下:&lt;/p&gt;
+&lt;pre&gt;
+      location / {
+            proxy_pass        http://localhost:8081;
+            proxy_set_header  X-Forwarded-For $remote_addr;
+            proxy_set_header  Host $host;
+            auth_basic "Restricted";  # 配置访问限制和密码文件
+            auth_basic_user_file  /home/gerrit2/gerrit/etc/auth_passwd;
+
+    }
+&lt;/pre&gt;
+
+&lt;p&gt;创建用户密码文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建用户名和密码都是admin的文件&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;p&gt;访问&lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt;输入用户名和密码即可登陆到Gerrit&lt;/p&gt;
+&lt;h2&gt;Gerrit目录结构&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;tree -L &lt;span class="m"&gt;1&lt;/span&gt; gerrit
+gerrit
+├── bin
+├── cache
+├── data
+├── etc  &lt;span class="c"&gt;# 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改&lt;/span&gt;
+├── git
+├── index
+├── lib
+├── logs
+├── plugins
+├── static
+└── tmp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;常用命令&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh start  &lt;span class="c"&gt;# 启动gerrit服务&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh stop   &lt;span class="c"&gt;# 关闭gerrit服务&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh restart &lt;span class="c"&gt;# 重启gerrit服务&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;更多信息&lt;/h2&gt;
+&lt;p&gt;关于gerrit主题设置，使用方法等更多信息，官方文档上已有详细描述,&amp;nbsp;请参考:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html"&gt;https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html&lt;/a&gt;&lt;/p&gt;</summary><category term="git"></category><category term="gerrit"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html"&gt;http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-netstat-command-examples/"&gt;http://www.binarytides.com/linux-netstat-command-examples/&lt;/a&gt;&lt;/li&gt;

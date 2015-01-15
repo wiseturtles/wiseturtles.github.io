@@ -65,8 +65,8 @@
 
     <div class='article'>
         <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h1>netstat</h1></a>
-2015-01-14
+            <a href="http://blog.wiseturtles.com/posts/gerrit.html"><h1>Gerrit搭建指南</h1></a>
+2015-01-15
 
 by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
  
@@ -74,164 +74,246 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
 
         </div>
 
-        <div><p>本文参考：</p>
+        <div><h2>什么是Gerrit</h2>
+<p>Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。</p>
+<p>本文以Ubuntu&nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程</p>
+<h2>参考文献</h2>
 <ul>
-<li><a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html">http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html</a></li>
-<li><a href="http://www.binarytides.com/linux-netstat-command-examples/">http://www.binarytides.com/linux-netstat-command-examples/</a></li>
+<li><a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/install.html">https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/install.html</a></li>
 </ul>
-<h2>作用</h2>
-<p>Netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态
-(Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等&nbsp;等。</p>
-<h2>输出信息含义</h2>
-<p>执行netstat后，其输出结果为</p>
-<pre>
-Active Internet connections (w/o servers)
-Proto Recv-Q Send-Q Local Address Foreign Address State
-tcp 0 2 210.34.6.89:telnet 210.34.6.96:2873 ESTABLISHED
-tcp 296 0 210.34.6.89:1165 210.34.6.84:netbios-ssn ESTABLISHED
-tcp 0 0 localhost.localdom:9001 localhost.localdom:1162 ESTABLISHED
-tcp 0 0 localhost.localdom:1162 localhost.localdom:9001 ESTABLISHED
-tcp 0 80 210.34.6.89:1161 210.34.6.10:netbios-ssn CLOSE
+<h2>环境要求</h2>
+<ul>
+<li><span class="caps">JDK</span>&nbsp;1.7+</li>
+</ul>
+<h2>前期准备</h2>
+<ol>
+<li>
+<p>安装<span class="caps">JDK1</span>.7</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
+<span class="nv">$ </span>sudo apt-get update
+<span class="nv">$ </span>sudo apt-get install oracle-java7-installer
+</pre></div>
 
-Active UNIX domain sockets (w/o servers)
-Proto RefCnt Flags Type State I-Node Path
-unix 1 [ ] STREAM CONNECTED 16178 @000000dd
-unix 1 [ ] STREAM CONNECTED 16176 @000000dc
-unix 9 [ ] DGRAM 5292 /dev/log
-unix 1 [ ] STREAM CONNECTED 16182 @000000df
+
+</li>
+<li>
+<p>安装Git</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install git
+</pre></div>
+
+
+</li>
+<li>
+<p>安装Nginx服务器, 用于作为Gerrit网站的反向代理以及<span class="caps">HTTP</span>认证</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install nginx
+</pre></div>
+
+
+</li>
+</ol>
+<h2>数据库设置</h2>
+<p>Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&nbsp;Oracle.</p>
+<p>本文以MySQL为例，介绍数据库的设置。</p>
+<div class="highlight"><pre><span class="c"># 安装数据库</span>
+<span class="nv">$ </span>sudo apt-get install mysql-server
+
+<span class="c"># 创建数据库reviewdb和用户gerrit2为后面做准备</span>
+<span class="c"># 数据库名和用户名可以根据实际的使用情况自己选择</span>
+mysql&gt; CREATE USER <span class="s1">&#39;gerrit2&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;secret&#39;</span><span class="p">;</span>
+mysql&gt; CREATE DATABASE reviewdb<span class="p">;</span>
+mysql&gt; GRANT ALL ON reviewdb.* TO <span class="s1">&#39;gerrit2&#39;</span>@<span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
+mysql&gt; FLUSH PRIVILEGES<span class="p">;</span>
+</pre></div>
+
+
+<h2>初始化Gerrit站点</h2>
+<p>由于Gerrit创建中需要保存自己的<span class="caps">SSH</span> Keys,&nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。</p>
+<div class="highlight"><pre><span class="c"># 在系统上添加用户gerrit2</span>
+<span class="nv">$ </span>sudo adduser gerrit2
+<span class="c"># 切换到当前用户</span>
+<span class="nv">$ </span>sudo su gerrit2
+<span class="c"># 下载gerrit安装包</span>
+<span class="nv">$ </span>wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
+<span class="c"># -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例</span>
+<span class="nv">$ </span>java -jar gerrit-2.9.4.war init -d gerrit
+
+*** Gerrit Code Review 2.9.4
+***
+
+Create <span class="s1">&#39;/home/gerrit2/gerrit&#39;</span>  <span class="o">[</span>Y/n<span class="o">]</span>?
+
+*** Git Repositories
+***
+<span class="c"># 项目代码目录设置</span>
+Location of Git repositories   <span class="o">[</span>git<span class="o">]</span>:
+
+*** SQL Database
+***
+
+Database server <span class="nb">type</span>           <span class="o">[</span>h2<span class="o">]</span>: mysql
+
+Gerrit Code Review is not shipped with MySQL Connector/J 5.1.21
+**  This library is required <span class="k">for</span> your configuration. **
+Download and install it now <span class="o">[</span>Y/n<span class="o">]</span>?
+Downloading http://repo2.maven.org/maven2/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar ... OK
+Checksum mysql-connector-java-5.1.21.jar OK
+Server hostname                <span class="o">[</span>localhost<span class="o">]</span>:           <span class="c"># 此处填写刚刚创建数据库时设置的信息</span>
+Server port                    <span class="o">[(</span>mysql default<span class="o">)]</span>:
+Database name                  <span class="o">[</span>reviewdb<span class="o">]</span>:
+Database username              <span class="o">[</span>gerrit2<span class="o">]</span>:
+gerrit2<span class="err">&#39;</span>s password             :
+            confirm password :
+
+*** Index
+***
+
+Type                           <span class="o">[</span>LUCENE/?<span class="o">]</span>:
+
+*** User Authentication
+***
+
+<span class="c"># 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&quot;?&quot;查看</span>
+Authentication method          <span class="o">[</span>OPENID/?<span class="o">]</span>: http
+Get username from custom HTTP header <span class="o">[</span>y/N<span class="o">]</span>?
+SSO <span class="nb">logout </span>URL                 :
+
+*** Review Labels
+***
+
+Install Verified label         <span class="o">[</span>y/N<span class="o">]</span>?
+
+*** Email Delivery
+***
+
+<span class="c"># 邮件服务器设置, 根据实际情况自行选择</span>
+SMTP server hostname           <span class="o">[</span>localhost<span class="o">]</span>:
+SMTP server port               <span class="o">[(</span>default<span class="o">)]</span>:
+SMTP encryption                <span class="o">[</span>NONE/?<span class="o">]</span>:
+SMTP username                  :
+
+*** Container Process
+***
+
+Run as                         <span class="o">[</span>gerrit2<span class="o">]</span>:
+Java runtime                   <span class="o">[</span>/usr/lib/jvm/java-7-oracle/jre<span class="o">]</span>:
+Copy gerrit-2.9.4.war to /home/gerrit2/gerrit/bin/gerrit.war <span class="o">[</span>Y/n<span class="o">]</span>?
+Copying gerrit-2.9.4.war to /home/gerrit2/gerrit/bin/gerrit.war
+
+*** SSH Daemon
+***
+
+Listen on address              <span class="o">[</span>*<span class="o">]</span>:
+Listen on port                 <span class="o">[</span>29418<span class="o">]</span>:
+
+Gerrit Code Review is not shipped with Bouncy Castle Crypto SSL v149
+If available, Gerrit can take advantage of features
+in the library, but will also <span class="k">function</span> without it.
+Download and install it now <span class="o">[</span>Y/n<span class="o">]</span>?
+Downloading http://www.bouncycastle.org/download/bcpkix-jdk15on-149.jar ... OK
+Checksum bcpkix-jdk15on-149.jar OK
+
+Gerrit Code Review is not shipped with Bouncy Castle Crypto Provider v149
+** This library is required by Bouncy Castle Crypto SSL v149. **
+Download and install it now <span class="o">[</span>Y/n<span class="o">]</span>?
+Downloading http://www.bouncycastle.org/download/bcprov-jdk15on-149.jar ... OK
+Checksum bcprov-jdk15on-149.jar OK
+Generating SSH host key ... rsa... dsa... <span class="k">done</span>
+
+*** HTTP Daemon
+***
+
+<span class="c"># 启用反向代理</span>
+Behind reverse proxy           <span class="o">[</span>y/N<span class="o">]</span>? y
+Proxy uses SSL <span class="o">(</span>https://<span class="o">)</span>      <span class="o">[</span>y/N<span class="o">]</span>?
+Subdirectory on proxy server   <span class="o">[</span>/<span class="o">]</span>:
+Listen on address              <span class="o">[</span>*<span class="o">]</span>:
+Listen on port                 <span class="o">[</span>8081<span class="o">]</span>:     <span class="c"># 设置gerrit网站监听端口</span>
+Canonical URL                  <span class="o">[</span>http://localhost/<span class="o">]</span>:
+
+*** Plugins
+***
+
+Install plugin commit-message-length-validator version v2.9.4 <span class="o">[</span>y/N<span class="o">]</span>?
+Install plugin download-commands version v2.9.4 <span class="o">[</span>y/N<span class="o">]</span>?
+Install plugin replication version v2.9.4 <span class="o">[</span>y/N<span class="o">]</span>?
+Install plugin reviewnotes version v2.9.4 <span class="o">[</span>y/N<span class="o">]</span>?
+Install plugin singleusergroup version v2.9.4 <span class="o">[</span>y/N<span class="o">]</span>?
+
+Initialized /home/gerrit2/gerrit
+Executing /home/gerrit2/gerrit/bin/gerrit.sh start
+Starting Gerrit Code Review: OK
+Waiting <span class="k">for</span> server on localhost:80 ... OK
+Opening http://localhost/#/admin/projects/ ...No protocol specified
+No protocol specified
+OK
+</pre></div>
+
+
+<h2>配置nginx反向代理</h2>
+<p>在nginx配置中间中配置如下:</p>
+<pre>
+      location / {
+            proxy_pass        http://localhost:8081;
+            proxy_set_header  X-Forwarded-For $remote_addr;
+            proxy_set_header  Host $host;
+            auth_basic "Restricted";  # 配置访问限制和密码文件
+            auth_basic_user_file  /home/gerrit2/gerrit/etc/auth_passwd;
+
+    }
 </pre>
 
-<p>从整体上看，netstat的输出结果可以分为两个部分：</p>
-<p>一个是Active Internet connections，称为有源<span class="caps">TCP</span>连接，其中&#8221;Recv-Q&#8221;和&#8221;Send-Q&#8221;指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。</p>
-<p>另一个是Active <span class="caps">UNIX</span> domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。&nbsp;Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。</p>
-<h2>常见参数</h2>
-<ul>
-<li>-a&nbsp;(all)显示所有监听和未监听的连接</li>
-<li>-t&nbsp;(tcp)仅显示tcp相关选项</li>
-<li>-u&nbsp;(udp)仅显示udp相关选项</li>
-<li>-n&nbsp;拒绝显示别名，能显示数字的全部转化成数字。</li>
-<li>-l 仅列出有在 Listen (监听) 的服務状态&nbsp;*</li>
-<li>-p&nbsp;显示建立相关链接的程序名</li>
-<li>-r&nbsp;显示路由信息，路由表</li>
-<li>-e&nbsp;显示扩展信息，例如uid等</li>
-<li>-s&nbsp;按各个协议进行统计</li>
-<li>-c&nbsp;每隔一个固定时间，执行该netstat命令。</li>
-</ul>
-<p><strong>提示</strong>：<span class="caps">LISTEN</span>和<span class="caps">LISTENING</span>的状态只有用-a或者-l才能看到</p>
-<h2>实用命令实例</h2>
-<div class="highlight"><pre><span class="c"># 列出所有连接（包括监听和未监听的)</span>
-<span class="nv">$ </span>netstat -a
+<p>创建用户密码文件</p>
+<div class="highlight"><pre><span class="c"># 创建用户名和密码都是admin的文件</span>
+<span class="nv">$ </span>htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
+</pre></div>
 
-<span class="c"># 列出所有tcp连接</span>
-<span class="nv">$ </span>netstat -at
 
-<span class="c"># 列出所有udp连接</span>
-<span class="nv">$ </span>netstat -au
+<h2>测试</h2>
+<p>访问<a href="http://localhost/">http://localhost/</a>输入用户名和密码即可登陆到Gerrit</p>
+<h2>Gerrit目录结构</h2>
+<div class="highlight"><pre><span class="nv">$ </span>tree -L <span class="m">1</span> gerrit
+gerrit
+├── bin
+├── cache
+├── data
+├── etc  <span class="c"># 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改</span>
+├── git
+├── index
+├── lib
+├── logs
+├── plugins
+├── static
+└── tmp
+</pre></div>
 
-<span class="c"># 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip</span>
-<span class="c"># 对应的主机名，这会降低输出速度，如果不需要，可以使用-n</span>
-<span class="c"># 在netstat输出中不显示主机，端口和用户名(host, port or user)</span>
-<span class="nv">$ </span>netstat -an
 
-<span class="c"># 列出所有处于监听状态的</span>
-<span class="c"># -l选项不要与-a同时使用，不然也会列出未监听状态的连接</span>
-<span class="nv">$ </span>netstat -l
+<h2>常用命令</h2>
+<div class="highlight"><pre><span class="nv">$ </span>gerrit/bin/gerrit.sh start  <span class="c"># 启动gerrit服务</span>
+<span class="nv">$ </span>gerrit/bin/gerrit.sh stop   <span class="c"># 关闭gerrit服务</span>
+<span class="nv">$ </span>gerrit/bin/gerrit.sh restart <span class="c"># 重启gerrit服务</span>
+</pre></div>
 
-<span class="c"># 列出所有监听状态的tcp连击</span>
-<span class="nv">$ </span>netstat -lt
 
-<span class="c"># 列出所有监听状态的udp连击</span>
-<span class="nv">$ </span>netstat -lu
-
-<span class="c"># 列出所有的unix连接</span>
-<span class="nv">$ </span>netstat -lx
-
-<span class="c"># 在netstat输出中显示PID和进程名称(-p),用户名(-e)</span>
-<span class="c"># -p使用需要root权限,不然无法获取PID</span>
-<span class="nv">$ </span>sudo netstat -ltpe
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     11684/adb
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    6663/java
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200          *:*                     LISTEN      linliang   <span class="m">10361577</span>    12461/ssh
-tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       1344/nginx
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         1481/dnsmasq
-
-<span class="c"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
-
-<span class="c"># 列出所有的网络统计信息</span>
-<span class="nv">$ </span>netstat -s
-Ip:
-<span class="m">14989101</span> total packets received
-<span class="m">0</span> forwarded
-<span class="m">0</span> incoming packets discarded
-<span class="m">14986294</span> incoming packets delivered
-<span class="m">11643610</span> requests sent out
-Icmp:
-    <span class="m">6034</span> ICMP messages received
-    <span class="m">71</span> input ICMP message failed.
-    ICMP input histogram:
-        destination unreachable: 5774
-        timeout in transit: 106
-        <span class="nb">echo </span>replies: 154
-    <span class="m">6882</span> ICMP messages sent
-    <span class="m">0</span> ICMP messages failed
-    ICMP output histogram:
-....
-
-<span class="c"># 显示TCP或UDP连接的统计信息</span>
-<span class="nv">$ </span>netstat -st
-<span class="nv">$ </span>netstat -su
-
-<span class="c"># 显示kernel的路由信息(-r)</span>
-<span class="nv">$ </span>netstat -rn
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-0.0.0.0         172.26.50.1     0.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-169.254.0.0     0.0.0.0         255.255.0.0     U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-172.26.50.0     0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-192.168.56.0    0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
-
-<span class="c"># 打印网络接口(-i)</span>
-<span class="nv">$ </span>netstat -i
-Kernel Interface table
-Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
-eth1       <span class="m">1500</span> <span class="m">0</span>  <span class="m">10650979</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>      <span class="m">10656895</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
-lo        <span class="m">65536</span> <span class="m">0</span>   <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>       <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> LRU
-vboxnet0   <span class="m">1500</span> <span class="m">0</span>         <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>          <span class="m">1505</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
-
-<span class="c"># 上面的输出比较原始，为了获取友好输出，可以加上(-e)</span>
-<span class="c"># 达到与ifconfig命令类似的效果</span>
-<span class="nv">$ </span>netstat -ie
-Kernel Interface table
-eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
-        inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
-        inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
-        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-        RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:1000
-        RX bytes:6607723134 <span class="o">(</span>6.6 GB<span class="o">)</span>  TX bytes:10396843122 <span class="o">(</span>10.3 GB<span class="o">)</span>
-        Interrupt:20 Memory:f7c00000-f7c20000
-
-lo        Link encap:Local Loopback
-        inet addr:127.0.0.1  Mask:255.0.0.0
-        inet6 addr: ::1/128 Scope:Host
-        UP LOOPBACK RUNNING  MTU:65536  Metric:1
-        RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:0
-        RX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>  TX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>
-
-vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
-        inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
-        inet6 addr: fe80::800:27ff:fe00:0/64 Scope:Link
-        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:1000
-        RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:130893 <span class="o">(</span>130.8 KB<span class="o">)</span>
-</pre></div></div>
+<h2>更多信息</h2>
+<p>关于gerrit主题设置，使用方法等更多信息，官方文档上已有详细描述,&nbsp;请参考:</p>
+<p><a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html">https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html</a></p></div>
         <hr />
+    </div>
+
+
+ 
+
+
+    <div class='article'>
+        <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h2>netstat</h2></a>
+        <div class= "well small"> 2015-01-14
+
+by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+ 
+
+
+ </div>
+        <div class="summary"><p>the usage of&nbsp;netstat</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-netstat.html">更多详情</a></div>
     </div>
 
 
@@ -362,22 +444,6 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html
         <div class="summary"><p>如何升级公司电脑从Ubuntu 10.04 到&nbsp;12.04</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html">更多详情</a></div>
     </div>
 
-
- 
-
-
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/about-wiseturtles.html"><h2>如何发表文章</h2></a>
-        <div class= "well small"> 2014-12-03
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
-
-
- </div>
-        <div class="summary"><p>如何在本博客发表文章</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/about-wiseturtles.html">更多详情</a></div>
-    </div>
-
 <div class="pagination">
 <ul>
     <li class="prev disabled"><a href="#">&larr; Previous</a></li>
@@ -415,6 +481,7 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
                 </li>
 
                 <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
