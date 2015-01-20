@@ -244,6 +244,14 @@ PID TTY          TIME CMD
 
 </li>
 <li>
+<p>列出僵尸进程</p>
+<div class="highlight"><pre><span class="nv">$ </span>ps -A -o stat,ppid,pid,cmd <span class="p">|</span>grep -e <span class="s1">&#39;^[Zz]&#39;</span>
+<span class="nv">$ </span>ps -ef <span class="p">|</span> grep defunct <span class="p">|</span> grep -v grep
+</pre></div>
+
+
+</li>
+<li>
 <p>部分选项解释</p>
 </li>
 </ol>
@@ -353,7 +361,7 @@ X：  采用旧式的Linux i386登陆格式显示程序状况。
                 <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
-                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
             </ul>
             </div>
 

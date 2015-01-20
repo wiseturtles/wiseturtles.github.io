@@ -325,6 +325,14 @@ PID TTY          TIME CMD
 
 &lt;/li&gt;
 &lt;li&gt;
+&lt;p&gt;列出僵尸进程&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -A -o stat,ppid,pid,cmd &lt;span class="p"&gt;|&lt;/span&gt;grep -e &lt;span class="s1"&gt;&amp;#39;^[Zz]&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt; grep defunct &lt;span class="p"&gt;|&lt;/span&gt; grep -v grep
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
 &lt;p&gt;部分选项解释&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;

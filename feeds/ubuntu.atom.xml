@@ -1,5 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-30T00:00:00+08:00</updated><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-20T18:16:00+08:00</updated><entry><title>linux 小贴士</title><link href="http://blog.wiseturtles.com/posts/linux-tips.html" rel="alternate"></link><updated>2015-01-20T18:16:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-20:posts/linux-tips.html</id><summary type="html">&lt;h2&gt;ssh端口转发&lt;/h2&gt;
+&lt;p&gt;由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？&lt;/p&gt;
+&lt;p&gt;以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&amp;nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。&lt;/p&gt;
+&lt;p&gt;前提:&amp;nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh -fNL 9200:localhost:9200 192.167.0.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过上面命令可以在本地机器和服务器A的9200端口之间做一个隧道，访问本地的9200端&amp;nbsp;口就跟直接访问服务器A上的9200端口一样。&lt;/p&gt;
+&lt;p&gt;为了使用方便，可以为上面的命令设置一个别名,添加到&lt;code&gt;~/.bashrc&lt;/code&gt;中，&amp;nbsp;如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;alias &lt;/span&gt;&lt;span class="nv"&gt;sshes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -fNL 9200:localhost:9200 192.167.0.1&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;那么以后使用&lt;code&gt;sshes&lt;/code&gt;就可以方便的建立一个ssh隧道连接,　同理，此法可用于连接服务器上的mysql及其它服务.&lt;/p&gt;
+&lt;p&gt;另外一个常用的是通过ssh翻墙的命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh -qTfnN -D &lt;span class="m"&gt;7070&lt;/span&gt; 192.167.0.2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;前提是172.167.0.2是一台可以直接翻墙的机器(如国外的云主机),执行上面的命令后便可以通过本地的7070端口翻墙.&lt;/p&gt;
+&lt;p&gt;更多关于ssh转发的可以查看下面的文章:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://codelife.me/blog/2012/12/09/three-types-of-ssh-turneling/"&gt;三种不同类型的ssh隧道&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;ssh登陆配置&lt;/h2&gt;
+&lt;p&gt;登陆到远程服务器时,当服务器上的用户名和本地的用户名不一致且端口也不是默认端口时.
+以服务器A(192.168.0.1), 用户名为root, 端口为4455。我们每次登陆到远程主机或拷贝
+文件时,&amp;nbsp;都需要带上用户名和端口信息。如:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ssh登陆&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ssh -p &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1
+&lt;span class="c"&gt;# scp拷贝&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;scp -P &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1:/tmp/a a
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样比较繁琐。稍微配置一下便可以化繁为简&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat ~/.ssh/config
+Host 192.168.0.1
+    User root
+    Port 4455
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样以后每次访问该服务器都不需要带上用户及端口信息&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# ssh登陆&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ssh 192.168.0.1
+&lt;span class="c"&gt;# scp拷贝&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;scp -P 192.168.0.1:/tmp/a a
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;当本机需要通过不同的key登陆到不同的服务器时，我们都是通过&lt;code&gt;-i&lt;/code&gt;来临时指定key.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 使用a.key登陆192.168.0.1&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ssh -i ~/.ssh/a.key 192.168.0.1
+&lt;span class="c"&gt;# 使用b.key登陆192.168.0.2&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ssh -i ~/.ssh/b.key 192.168.0.2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;稍微配置一下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat ~/.ssh/config
+Host 192.168.0.1
+    User root
+    Port 4455
+    IdentityFile ~/.ssh/a.key
+
+Host 192.168.0.2
+    User root
+    Port 4455
+    IdentityFile ~/.ssh/b.key
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;配置之后每次登陆不同的服务器也不需要通过&lt;code&gt;-i&lt;/code&gt;参数指定key了。&lt;/p&gt;
+&lt;h2&gt;~/.bashrc配置&lt;/h2&gt;
+&lt;p&gt;下面介绍的都是可以添加到&lt;code&gt;~/.bashrc&lt;/code&gt;中的一些配置.&lt;/p&gt;
+&lt;h3&gt;让man&amp;nbsp;page不再单调&lt;/h3&gt;
+&lt;p&gt;平时使用man page的时候，都是黑白的文字。看起来很是不方便，稍微配置一下，可以让
+你的man&amp;nbsp;page充满颜色。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# color man pages&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_mb&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;31m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_md&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;31m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_me&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[0m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_se&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[0m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_so&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;44;33m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_ue&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[0m&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LESS_TERMCAP_us&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;32m&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;source ~/.bashrc&lt;/code&gt;后，man一个命令可以看到效果&lt;/p&gt;
+&lt;h3&gt;终端操作使用vim模式&lt;/h3&gt;
+&lt;p&gt;从&lt;code&gt;@WanMing&lt;/code&gt;处习得的技能，vim控必备&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -o vi
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;效果如何，谁用谁知道&lt;/p&gt;
+&lt;h3&gt;python自动激活项目的虚拟环境&lt;/h3&gt;
+&lt;p&gt;重写&lt;code&gt;cd&lt;/code&gt;命令，是它在进入到python项目时，自动激活与项目名一样的虚拟环境&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt; workon_cwd &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="c"&gt;# Check that this is a Git repo&lt;/span&gt;
+    &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir 2&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="c"&gt;# Find the repo root and check for virtualenv name override&lt;/span&gt;
+        &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;d &lt;span class="nv"&gt;$GIT_DIR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="nv"&gt;PROJECT_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$GIT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;basename &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/.venv&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+            &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/.venv&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+        &lt;span class="c"&gt;# Activate the environment only if it is not already active&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$VIRTUAL_ENV&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$WORKON_HOME&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$WORKON_HOME&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;/bin/activate&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+                workon &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;CD_VIRTUAL_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+            &lt;span class="k"&gt;fi&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+    &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$CD_VIRTUAL_ENV&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="c"&gt;# We&amp;#39;ve just left the repo, deactivate the environment&lt;/span&gt;
+        &lt;span class="c"&gt;# Note: this only happens if the virtualenv was activated automatically&lt;/span&gt;
+        deactivate &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset &lt;/span&gt;CD_VIRTUAL_ENV
+    &lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;# New cd function that does the virtualenv magic&lt;/span&gt;
+&lt;span class="k"&gt;function&lt;/span&gt; venv_cd &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$@&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; workon_cwd
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="nb"&gt;alias cd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;venv_cd&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# init for create new terminal tab&lt;/span&gt;
+workon_cwd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;个性化终端提示符&lt;/h3&gt;
+&lt;p&gt;通过设置&lt;span class="caps"&gt;PS1&lt;/span&gt;变量, 可以个性化终端提示符,&amp;nbsp;展示更多有用信息.&lt;/p&gt;
+&lt;p&gt;如我的终端设置, 里面包含了项目的分支，当前&lt;span class="caps"&gt;HEAD&lt;/span&gt;值，及git库的状态信息&lt;/p&gt;
+&lt;p&gt;&lt;img alt="PS1 screenshot" src="http://pic.yupoo.com/crazygit_v/En4dALxz/medium.jpg" /&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;PS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;TITLEBAR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SAVE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_RIGHTMOST&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_5_LEFT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;RESTORE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;:+(&lt;/span&gt;&lt;span class="nv"&gt;$VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;D_USER_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\u &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="s2"&gt;at &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_MACHINE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\h &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="s2"&gt;in &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_DIR_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\w &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="k"&gt;$(&lt;/span&gt;demula_vcprompt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="k"&gt;$(&lt;/span&gt;is_vim_shell&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如下是一个在线生成&lt;span class="caps"&gt;PS1&lt;/span&gt;变量的网站，可以根据自己的需求定制&lt;span class="caps"&gt;PS1&lt;/span&gt;变量:&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://bashrcgenerator.com/"&gt;http://bashrcgenerator.com/&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="tips"></category></entry><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
 Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffer/&amp;nbsp;Android利用tcpdump抓包：http://www.trinea.cn/android/tcpdump_wireshark/&lt;/p&gt;
 &lt;p&gt;为了Ubuntu笔记本方便对Android手机上的Apps做抓包, 本文介绍两种方法，方法二更容易配置。
 有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
