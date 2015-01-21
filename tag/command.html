@@ -2,9 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles</title>
-    <meta name="description" content="">
-    <meta name="author" content="crazygit">
+    <title>Wise Turtles - command</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,7 +26,6 @@
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
 
-
 </head>
 
 <body>
@@ -36,12 +33,6 @@
 <div class="navbar">
     <div class="navbar-inner">
     <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
 
         <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
 
@@ -60,256 +51,81 @@
     <div class="row">
 
         <div class="span9">
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h2>netstat</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-01-14
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a>
 
 
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/linux.html">linux</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/command.html">command</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/netstat.html">netstat</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;netstat</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-netstat.html">阅读</a></div>
+      </div>
 
-    <div class='article'>
-        <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h1>netstat</h1></a>
-2015-01-14
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h2>ps</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-01-13
 
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
 
-
-        </div>
-
-        <div><p>本文参考：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html">http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html</a></li>
-<li><a href="http://www.binarytides.com/linux-netstat-command-examples/">http://www.binarytides.com/linux-netstat-command-examples/</a></li>
-</ul>
-<h2>作用</h2>
-<p>Netstat 命令用于显示各种网络相关信息，如网络连接，路由表，接口状态
-(Interface Statistics)，masquerade 连接，多播成员 (Multicast Memberships) 等&nbsp;等。</p>
-<h2>输出信息含义</h2>
-<p>执行netstat后，其输出结果为</p>
-<pre>
-Active Internet connections (w/o servers)
-Proto Recv-Q Send-Q Local Address Foreign Address State
-tcp 0 2 210.34.6.89:telnet 210.34.6.96:2873 ESTABLISHED
-tcp 296 0 210.34.6.89:1165 210.34.6.84:netbios-ssn ESTABLISHED
-tcp 0 0 localhost.localdom:9001 localhost.localdom:1162 ESTABLISHED
-tcp 0 0 localhost.localdom:1162 localhost.localdom:9001 ESTABLISHED
-tcp 0 80 210.34.6.89:1161 210.34.6.10:netbios-ssn CLOSE
-
-Active UNIX domain sockets (w/o servers)
-Proto RefCnt Flags Type State I-Node Path
-unix 1 [ ] STREAM CONNECTED 16178 @000000dd
-unix 1 [ ] STREAM CONNECTED 16176 @000000dc
-unix 9 [ ] DGRAM 5292 /dev/log
-unix 1 [ ] STREAM CONNECTED 16182 @000000df
-</pre>
-
-<p>从整体上看，netstat的输出结果可以分为两个部分：</p>
-<p>一个是Active Internet connections，称为有源<span class="caps">TCP</span>连接，其中&#8221;Recv-Q&#8221;和&#8221;Send-Q&#8221;指%0A的是接收队列和发送队列。这些数字一般都应该是0。如果不是则表示软件包正在队列中堆积。这种情况只能在非常少的情况见到。</p>
-<p>另一个是Active <span class="caps">UNIX</span> domain sockets，称为有源Unix域套接口(和网络套接字一样，但是只能用于本机通信，性能可以提高一倍)。&nbsp;Proto显示连接使用的协议,RefCnt表示连接到本套接口上的进程号,Types显示套接口的类型,State显示套接口当前的状态,Path表示连接到套接口的其它进程使用的路径名。</p>
-<h2>常见参数</h2>
-<ul>
-<li>-a&nbsp;(all)显示所有监听和未监听的连接</li>
-<li>-t&nbsp;(tcp)仅显示tcp相关选项</li>
-<li>-u&nbsp;(udp)仅显示udp相关选项</li>
-<li>-n&nbsp;拒绝显示别名，能显示数字的全部转化成数字。</li>
-<li>-l 仅列出有在 Listen (监听) 的服務状态&nbsp;*</li>
-<li>-p&nbsp;显示建立相关链接的程序名</li>
-<li>-r&nbsp;显示路由信息，路由表</li>
-<li>-e&nbsp;显示扩展信息，例如uid等</li>
-<li>-s&nbsp;按各个协议进行统计</li>
-<li>-c&nbsp;每隔一个固定时间，执行该netstat命令。</li>
-</ul>
-<p><strong>提示</strong>：<span class="caps">LISTEN</span>和<span class="caps">LISTENING</span>的状态只有用-a或者-l才能看到</p>
-<h2>实用命令实例</h2>
-<div class="highlight"><pre><span class="c"># 列出所有连接（包括监听和未监听的)</span>
-<span class="nv">$ </span>netstat -a
-
-<span class="c"># 列出所有tcp连接</span>
-<span class="nv">$ </span>netstat -at
-
-<span class="c"># 列出所有udp连接</span>
-<span class="nv">$ </span>netstat -au
-
-<span class="c"># 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip</span>
-<span class="c"># 对应的主机名，这会降低输出速度，如果不需要，可以使用-n</span>
-<span class="c"># 在netstat输出中不显示主机，端口和用户名(host, port or user)</span>
-<span class="nv">$ </span>netstat -an
-
-<span class="c"># 列出所有处于监听状态的</span>
-<span class="c"># -l选项不要与-a同时使用，不然也会列出未监听状态的连接</span>
-<span class="nv">$ </span>netstat -l
-
-<span class="c"># 列出所有监听状态的tcp连击</span>
-<span class="nv">$ </span>netstat -lt
-
-<span class="c"># 列出所有监听状态的udp连击</span>
-<span class="nv">$ </span>netstat -lu
-
-<span class="c"># 列出所有的unix连接</span>
-<span class="nv">$ </span>netstat -lx
-
-<span class="c"># 在netstat输出中显示PID和进程名称(-p),用户名(-e)</span>
-<span class="c"># -p使用需要root权限,不然无法获取PID</span>
-<span class="nv">$ </span>sudo netstat -ltpe
-Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     11684/adb
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    6663/java
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200          *:*                     LISTEN      linliang   <span class="m">10361577</span>    12461/ssh
-tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       1344/nginx
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         1481/dnsmasq
-
-<span class="c"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
-
-<span class="c"># 列出所有的网络统计信息</span>
-<span class="nv">$ </span>netstat -s
-Ip:
-<span class="m">14989101</span> total packets received
-<span class="m">0</span> forwarded
-<span class="m">0</span> incoming packets discarded
-<span class="m">14986294</span> incoming packets delivered
-<span class="m">11643610</span> requests sent out
-Icmp:
-    <span class="m">6034</span> ICMP messages received
-    <span class="m">71</span> input ICMP message failed.
-    ICMP input histogram:
-        destination unreachable: 5774
-        timeout in transit: 106
-        <span class="nb">echo </span>replies: 154
-    <span class="m">6882</span> ICMP messages sent
-    <span class="m">0</span> ICMP messages failed
-    ICMP output histogram:
-....
-
-<span class="c"># 显示TCP或UDP连接的统计信息</span>
-<span class="nv">$ </span>netstat -st
-<span class="nv">$ </span>netstat -su
-
-<span class="c"># 显示kernel的路由信息(-r)</span>
-<span class="nv">$ </span>netstat -rn
-Kernel IP routing table
-Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-0.0.0.0         172.26.50.1     0.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-169.254.0.0     0.0.0.0         255.255.0.0     U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-172.26.50.0     0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-192.168.56.0    0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
-
-<span class="c"># 打印网络接口(-i)</span>
-<span class="nv">$ </span>netstat -i
-Kernel Interface table
-Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
-eth1       <span class="m">1500</span> <span class="m">0</span>  <span class="m">10650979</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>      <span class="m">10656895</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
-lo        <span class="m">65536</span> <span class="m">0</span>   <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>       <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> LRU
-vboxnet0   <span class="m">1500</span> <span class="m">0</span>         <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>          <span class="m">1505</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
-
-<span class="c"># 上面的输出比较原始，为了获取友好输出，可以加上(-e)</span>
-<span class="c"># 达到与ifconfig命令类似的效果</span>
-<span class="nv">$ </span>netstat -ie
-Kernel Interface table
-eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
-        inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
-        inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
-        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-        RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:1000
-        RX bytes:6607723134 <span class="o">(</span>6.6 GB<span class="o">)</span>  TX bytes:10396843122 <span class="o">(</span>10.3 GB<span class="o">)</span>
-        Interrupt:20 Memory:f7c00000-f7c20000
-
-lo        Link encap:Local Loopback
-        inet addr:127.0.0.1  Mask:255.0.0.0
-        inet6 addr: ::1/128 Scope:Host
-        UP LOOPBACK RUNNING  MTU:65536  Metric:1
-        RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:0
-        RX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>  TX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>
-
-vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
-        inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
-        inet6 addr: fe80::800:27ff:fe00:0/64 Scope:Link
-        UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-        TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
-        collisions:0 txqueuelen:1000
-        RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:130893 <span class="o">(</span>130.8 KB<span class="o">)</span>
-</pre></div></div>
-        <hr />
-    </div>
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a>
 
 
- 
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/linux.html">linux</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/command.html">command</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/ps.html">ps</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;ps</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-ps.html">阅读</a></div>
+      </div>
+
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/linux-free.html"><h2>free</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-01-09
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a>
 
 
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h2>ps</h2></a>
-        <div class= "well small"> 2015-01-13
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/linux.html">linux</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/command.html">command</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/free.html">free</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;free</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-free.html">阅读</a></div>
+      </div>
 
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/linux-htop.html"><h2>htop</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-01-09
 
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
 
- </div>
-        <div class="summary"><p>the usage of&nbsp;ps</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-ps.html">更多详情</a></div>
-    </div>
-
-
- 
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a>
 
 
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/linux-free.html"><h2>free</h2></a>
-        <div class= "well small"> 2015-01-09
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/linux.html">linux</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/command.html">command</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/htop.html">htop</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;htop</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-htop.html">阅读</a></div>
+      </div>
 
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/linux-uptime.html"><h2>uptime</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2014-12-15
 
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
 
- </div>
-        <div class="summary"><p>the usage of&nbsp;free</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-free.html">更多详情</a></div>
-    </div>
-
-
- 
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a>
 
 
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/linux-htop.html"><h2>htop</h2></a>
-        <div class= "well small"> 2015-01-09
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
-
-
- </div>
-        <div class="summary"><p>the usage of&nbsp;htop</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-htop.html">更多详情</a></div>
-    </div>
-
-
- 
-
-
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/linux-uptime.html"><h2>uptime</h2></a>
-        <div class= "well small"> 2014-12-15
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
- 
-
-
- </div>
-        <div class="summary"><p>the usage of&nbsp;uptime</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-uptime.html">更多详情</a></div>
-    </div>
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/linux.html">linux</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/command.html">command</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/uptime.html">uptime</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;uptime</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-uptime.html">阅读</a></div>
+      </div>
 
 <div class="pagination">
 <ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
 
     <li class="active"><a href="http://blog.wiseturtles.com/tag/command.html">1</a></li>
 
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
 
 </ul>
-</div>
- 
-  
+</div>  
         </div>
 
         <div class="span3">
@@ -319,9 +135,9 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
                 <li class="nav-header">
                 站内
                 </li>
-
-                <li><a href="http://blog.wiseturtles.com/">存档</a>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
                 <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
                 <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
             </ul>
             </div>
@@ -341,7 +157,6 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">cra
                 <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
             </ul>
             </div>
-
 
             <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">

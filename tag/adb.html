@@ -2,9 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles</title>
-    <meta name="description" content="">
-    <meta name="author" content="crazygit">
+    <title>Wise Turtles - adb</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,7 +26,6 @@
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
 
-
 </head>
 
 <body>
@@ -36,12 +33,6 @@
 <div class="navbar">
     <div class="navbar-inner">
     <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
 
         <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
 
@@ -60,85 +51,19 @@
     <div class="row">
 
         <div class="span9">
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html"><h2>export Android cantacts with vCard format via&nbsp;adb</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-01-11
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/android.html">android</a>
 
 
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/android.html">Android</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/vcard.html">vCard</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/adb.html">adb</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>export Android contacts with vCard format via&nbsp;adb</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html">阅读</a></div>
+      </div>
 
-    <div class='article'>
-        <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html"><h1>export Android cantacts with vCard format via&nbsp;adb</h1></a>
-2015-01-11
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
- 
-
-
-        </div>
-
-        <div><p>参考:
-<a href="http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms">http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms</a></p>
-<p>昨天手机(<span class="caps">TCL</span>&nbsp;S960)掉地下把屏幕摔坏了，Google被xx后，就没在用过其它通讯录同步，只好想办法从坏手机里导出，屏幕完全坏了，只能通过adb完成。</p>
-<h1>获取通讯录</h1>
-<p>通过adb从手机中导出通讯录，可以用如下方法：</p>
-<ol>
-<li>
-<p>am</p>
-<div class="highlight"><pre><span class="nv">$ </span>adb shell am start -t <span class="s2">&quot;text/x-vcard&quot;</span> -d <span class="s2">&quot;file:///sdcard/contacts.vcf&quot;</span> -a android.intent.action.VIEW com.android.contacts
-</pre></div>
-
-
-</li>
-<li>
-<p>get&nbsp;contacts.db</p>
-<div class="highlight"><pre><span class="nv">$ </span>adb pull /data/data/com.android.providers.contacts/databases/contacts2.db .
-sqlite3 -batch <span class="s">&lt;&lt;EOF contacts2.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from data; &lt;CR&gt; EOF</span>
-</pre></div>
-
-
-</li>
-</ol>
-<p>方法一无法运行报错，方法二需要root权限。</p>
-<p>Android拿root权限貌似就两种方法: xx root工具(通过系统漏洞获取root权限); 刷recory分区。&nbsp;我没找到该机型的recory，而是用360一键root，拿到root权限。</p>
-<p>有了root权限，通过方法二就可以拿到通讯录数据了，剩下的就是生成vCard格式。&nbsp;github上已经有人写了通过contacts2.db生成vCard文件的小工具。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:stachre/dump-contacts2db.git
-<span class="nv">$ </span><span class="nb">cd </span>dump-contacts2db
-<span class="nv">$ </span>bash dump-contacts2db.sh path/to/contacts2.db &gt; path/to/contacts.vcf
-</pre></div>
-
-
-<p>如果还希望获取手机里的短信，可以用下面的命令:</p>
-<div class="highlight"><pre><span class="nv">$ </span>adb pull /data/data/com.android.providers.telephony/databases/mmssms.db
-<span class="nv">$ </span>sqlite3 -batch <span class="s">&lt;&lt;EOF mmssms.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from sms; &lt;CR&gt; EOF</span>
-</pre></div>
-
-
-<h1>Android解锁</h1>
-<p>Android解锁我没试过，命令如下：</p>
-<div class="highlight"><pre>adb shell
-<span class="nb">cd</span> /data/data/com.android.providers.settings/databases
-sqlite3 settings.db
-update system <span class="nb">set </span><span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lock_pattern_autolock<span class="s1">&#39;;</span>
-<span class="s1">update secure set value=0 where name=’lock_pattern_autolock&#39;</span><span class="p">;</span>
-update system <span class="nb">set </span><span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lockscreen.lockedoutpermanently<span class="s1">&#39;;</span>
-<span class="s1">update secure set value=0 where name=’lockscreen.lockedoutpermanently&#39;</span><span class="p">;</span>
-.quit
-</pre></div>
-
-
-<p>如果是忘了Android锁屏图案，想找回，可以试试&nbsp;https://github.com/sch3m4/androidpatternlock</p></div>
-        <hr />
-    </div>
-
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-
-    <li class="active"><a href="http://blog.wiseturtles.com/tag/adb.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>
- 
   
         </div>
 
@@ -149,9 +74,9 @@ update system <span class="nb">set </span><span class="nv">value</span><span cla
                 <li class="nav-header">
                 站内
                 </li>
-
-                <li><a href="http://blog.wiseturtles.com/">存档</a>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
                 <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
                 <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
             </ul>
             </div>
@@ -171,7 +96,6 @@ update system <span class="nb">set </span><span class="nv">value</span><span cla
                 <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
             </ul>
             </div>
-
 
             <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">

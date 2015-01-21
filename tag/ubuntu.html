@@ -2,9 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles</title>
-    <meta name="description" content="">
-    <meta name="author" content="crazygit">
+    <title>Wise Turtles - Ubuntu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,7 +26,6 @@
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
 
-
 </head>
 
 <body>
@@ -36,12 +33,6 @@
 <div class="navbar">
     <div class="navbar-inner">
     <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
 
         <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
 
@@ -60,173 +51,42 @@
     <div class="row">
 
         <div class="span9">
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html"><h2><span class="caps">WIFI</span> Hotspot Setup On Ubuntu&nbsp;12.04</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2014-12-30
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a>
 
 
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>Ubuntu笔记本上配置hotspot</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html">阅读</a></div>
+      </div>
 
-    <div class='article'>
-        <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html"><h1><span class="caps">WIFI</span> Hotspot Setup On Ubuntu&nbsp;12.04</h1></a>
-2014-12-30
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h2>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2014-12-04
 
-by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
- 
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
 
-
-        </div>
-
-        <div><p>hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
-Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffer/&nbsp;Android利用tcpdump抓包：http://www.trinea.cn/android/tcpdump_wireshark/</p>
-<p>为了Ubuntu笔记本方便对Android手机上的Apps做抓包, 本文介绍两种方法，方法二更容易配置。
-有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
-如果想直接通过无线网卡上外网，需要先停掉hostapd 或&nbsp;ap-hotspot，并重启网络。</p>
-<p>重启网络:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo service network-manager restart
-</pre></div>
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a>
 
 
-<h1>方法一</h1>
-<h2>查看无线网卡硬件信息</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo lspci <span class="p">|</span> grep -i network
-03:00.0 Network controller: Intel Corporation Wireless <span class="m">7260</span> <span class="o">(</span>rev 6b<span class="o">)</span>
-</pre></div>
-
-
-<h2>查看无线网卡驱动信息</h2>
-<div class="highlight"><pre><span class="nv">$ </span>lsmod
-</pre></div>
-
-
-<h2>查看无线网卡设备名称</h2>
-<div class="highlight"><pre><span class="nv">$ </span>iwconfig
-wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span class="m">16</span> dBm   
-          Retry  long limit:7   RTS thr:off   Fragment thr:off
-          Power Management:on
-</pre></div>
-
-
-<h2>安装需要的软件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install dhcp3-server hostapd
-</pre></div>
-
-
-<h2>修改/etc/hostapd/hostapd.conf</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/hostapd/hostapd.conf
-<span class="nv">interface</span><span class="o">=</span>wlan0
-<span class="nv">driver</span><span class="o">=</span>nl80211
-<span class="nv">ssid</span><span class="o">=</span>your_hotspot_name
-<span class="nv">channel</span><span class="o">=</span>1
-<span class="nv">hw_mode</span><span class="o">=</span>g
-<span class="nv">auth_algs</span><span class="o">=</span>1
-<span class="nv">wpa</span><span class="o">=</span>3
-<span class="nv">wpa_passphrase</span><span class="o">=</span>your-password
-<span class="nv">wpa_key_mgmt</span><span class="o">=</span>WPA-PSK
-<span class="nv">wpa_pairwise</span><span class="o">=</span>TKIP CCMP
-<span class="nv">rsn_pairwise</span><span class="o">=</span>CCMP
-</pre></div>
-
-
-<h2>修改/etc/default/isc-dhcp-server</h2>
-<div class="highlight"><pre><span class="nv">$ </span>grep INTERFACES /etc/default/isc-dhcp-server
-<span class="nv">INTERFACES</span><span class="o">=</span><span class="s2">&quot;wlan0&quot;</span>
-</pre></div>
-
-
-<h2>修改/etc/dhcp/dhcpd.conf</h2>
-<div class="highlight"><pre>配置文件: /etc/dhcp/dhcpd.conf
-Make sure the follow lines are Commented out <span class="o">(</span> put a <span class="nb">hash</span> “#”  sign at the beginning of the line <span class="o">)</span> the following lines:
-<span class="c"># option definitions common to all supported networks…</span>
-<span class="c">#option domain-name “example.org”;</span>
-<span class="c">#option domain-name-servers ns1.example.org, ns2.example.org;</span>
-<span class="c">#default-lease-time 600;</span>
-<span class="c">#max-lease-time 7200;</span>
-
-Add the following lines to the file <span class="o">(</span>copy and paste<span class="o">)</span>
-subnet 10.10.0.0 netmask 255.255.255.0 <span class="o">{</span>
-        range 10.10.0.2 10.10.0.16<span class="p">;</span>
-        option domain-name-servers 8.8.4.4, 208.67.222.222<span class="p">;</span>
-        option routers 10.10.0.1<span class="p">;</span>
-<span class="o">}</span>
-
-<span class="o">(</span>Note: the only other line in this whole config file that is uncommented is :
-
-ddns-update-style none<span class="p">;</span><span class="o">)</span>
-</pre></div>
-
-
-<h2>修改/etc/default/hostapd</h2>
-<div class="highlight"><pre><span class="nv">$ </span>grep -E <span class="s1">&#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&#39;</span> /etc/default/hostapd <span class="p">|</span> grep -Ev <span class="s1">&#39;^#&#39;</span>
-<span class="nv">RUN_DAEMON</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
-<span class="nv">DAEMON_CONF</span><span class="o">=</span><span class="s2">&quot;/etc/hostapd/hostapd.conf&quot;</span>
-<span class="nv">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-dd&quot;</span>
-</pre></div>
-
-
-<h2>修改/etc/network/interfaces</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/network/interfaces
-auto lo
-iface lo inet loopback
-auto wlan0
-iface wlan0 inet static
-    address 10.10.0.1
-    netmask 255.255.255.0
-</pre></div>
-
-
-<h2>修改/etc/sysctl.conf</h2>
-<div class="highlight"><pre><span class="nv">$ </span>grep net.ipv4.ip_forward /etc/sysctl.conf 
-net.ipv4.ip_forward<span class="o">=</span>1
-</pre></div>
-
-
-<h2>修改/etc/rc.local</h2>
-<div class="highlight"><pre>编辑 /etc/rc.local, 在 <span class="s2">&quot;exit 0&quot;</span> 前添加下一行
-iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
-</pre></div>
-
-
-<h2>重启电脑</h2>
-<p>重启电脑，手机测试是否可以连接.</p>
-<h1>方法二</h1>
-<p>用ap-hotspot更容易搭建。</p>
-<h2>ap-hotspot安装、配置</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:nilarimogard/webupd8
-<span class="nv">$ </span>sudo apt-get install ap-hotspot
-<span class="nv">$ </span>sudo ap-hotspot configure <span class="c"># configure</span>
-<span class="nv">$ </span>sudo ap-hotspot start <span class="c"># start</span>
-<span class="nv">$ </span>sudo ap-hotspot stop <span class="c"># stop</span>
-<span class="nv">$ </span>sudo ap-hotspot restart <span class="c"># restart</span>
-</pre></div></div>
-        <hr />
-    </div>
-
-
- 
-
-
-    <div class='article'>
-        <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h2>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h2></a>
-        <div class= "well small"> 2014-12-04
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
- 
-
-
- </div>
-        <div class="summary"><p>如何升级公司电脑从Ubuntu 10.04 到&nbsp;12.04</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html">更多详情</a></div>
-    </div>
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/nis.html">Nis</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>如何升级公司电脑从Ubuntu 10.04 到&nbsp;12.04</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html">阅读</a></div>
+      </div>
 
 <div class="pagination">
 <ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
 
     <li class="active"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">1</a></li>
 
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
+    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
 
 </ul>
-</div>
- 
-  
+</div>  
         </div>
 
         <div class="span3">
@@ -236,9 +96,9 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html
                 <li class="nav-header">
                 站内
                 </li>
-
-                <li><a href="http://blog.wiseturtles.com/">存档</a>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
                 <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
                 <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
             </ul>
             </div>
@@ -258,7 +118,6 @@ by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html
                 <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
             </ul>
             </div>
-
 
             <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">

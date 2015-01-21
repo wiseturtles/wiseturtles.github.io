@@ -2,9 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles</title>
-    <meta name="description" content="">
-    <meta name="author" content="crazygit">
+    <title>Wise Turtles - Nis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -28,7 +26,6 @@
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
 
-
 </head>
 
 <body>
@@ -36,12 +33,6 @@
 <div class="navbar">
     <div class="navbar-inner">
     <div class="container">
-
-         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-             <span class="icon-bar"></span>
-         </a>
 
         <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
 
@@ -60,99 +51,19 @@
     <div class="row">
 
         <div class="span9">
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h2>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h2></a>
+          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2014-12-04
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a>
 
 
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/nis.html">Nis</a></span></div>
+          <div class="summary"><b>内容摘要:</b><p>如何升级公司电脑从Ubuntu 10.04 到&nbsp;12.04</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html">阅读</a></div>
+      </div>
 
-    <div class='article'>
-        <div class="content-title">
-            <a href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"><h1>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h1></a>
-2014-12-04
-
-by <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
- 
-
-
-        </div>
-
-        <div><p>公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox <span class="caps">OS</span>都有问题，所以，我尝试升级并把碰到的问题记录下来。</p>
-<h1>升级</h1>
-<h2>修改源</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/apt/sources.list
-deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-backports main restricted universe multiverse
-
-<span class="c"># aliyun</span>
-deb http://mirrors.aliyun.com/ubuntu/ lucid main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe multiverse
-</pre></div>
-
-
-<h2>开始升级</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo <span class="k">do</span>-release-upgrade
-</pre></div>
-
-
-<h2>nis无法启动，导致升级过程中配置nis包失败</h2>
-<div class="highlight"><pre><span class="nv">$ </span>grep redhat /etc/hosts
-172.26.32.12    <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>tail -1 /etc/yp.conf 
-ypserver <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>cat /etc/defaultdomain 
-TCTCD
-
-<span class="nv">$ </span>grep NIS /etc/default/nis <span class="p">|</span> grep -Ev <span class="s1">&#39;#&#39;</span>
-<span class="nv">NISSERVER</span><span class="o">=</span><span class="nb">false</span>
-<span class="nv">NISCLIENT</span><span class="o">=</span><span class="nb">true</span>
-<span class="nv">NISMASTER</span><span class="o">=</span>
-
-<span class="nv">$ </span>cat /etc/auto.master
-/home /etc/auto.home
-
-<span class="nv">$ </span>cat /etc/auto.home 
-xcsu <span class="nb">cd</span>-redhat-001.TCTCD:/home/xcsu
-
-<span class="nv">$ </span>/usr/lib/yp/ypinit -s <span class="nb">cd</span>-redhat-001.TCTCD
-
-<span class="nv">$ </span>sudo service portmap restart
-<span class="nv">$ </span>sudo service nis restart
-</pre></div>
-
-
-<h1>启动后登录时发现只能用administrator和guest登录</h1>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/lightdm/lightdm.conf 
-<span class="o">[</span>SeatDefaults<span class="o">]</span>
-user-session<span class="o">=</span>ubuntu
-greeter-session<span class="o">=</span>unity-greeter
-allow-guest<span class="o">=</span><span class="nb">false</span>
-greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
-</pre></div>
-
-
-<h2>重启电脑，就可以用其它用户登录了</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo reboot
-</pre></div></div>
-        <hr />
-    </div>
-
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-
-    <li class="active"><a href="http://blog.wiseturtles.com/tag/nis.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; Next</a></li>
-
-</ul>
-</div>
- 
   
         </div>
 
@@ -163,9 +74,9 @@ greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
                 <li class="nav-header">
                 站内
                 </li>
-
-                <li><a href="http://blog.wiseturtles.com/">存档</a>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
                 <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
                 <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
             </ul>
             </div>
@@ -185,7 +96,6 @@ greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
                 <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
             </ul>
             </div>
-
 
             <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
