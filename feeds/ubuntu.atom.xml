@@ -99,7 +99,7 @@ Host 192.168.0.2
 
 &lt;p&gt;效果如何，谁用谁知道&lt;/p&gt;
 &lt;h3&gt;python自动激活项目的虚拟环境&lt;/h3&gt;
-&lt;p&gt;重写&lt;code&gt;cd&lt;/code&gt;命令，是它在进入到python项目时，自动激活与项目名一样的虚拟环境&lt;/p&gt;
+&lt;p&gt;重写&lt;code&gt;cd&lt;/code&gt;命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt; workon_cwd &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c"&gt;# Check that this is a Git repo&lt;/span&gt;
     &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir 2&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;

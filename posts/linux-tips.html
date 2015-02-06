@@ -170,7 +170,7 @@ Host 192.168.0.2
 
 <p>效果如何，谁用谁知道</p>
 <h3>python自动激活项目的虚拟环境</h3>
-<p>重写<code>cd</code>命令，是它在进入到python项目时，自动激活与项目名一样的虚拟环境</p>
+<p>重写<code>cd</code>命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境</p>
 <div class="highlight"><pre><span class="k">function</span> workon_cwd <span class="o">{</span>
     <span class="c"># Check that this is a Git repo</span>
     <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir 2&gt; /dev/null<span class="sb">`</span>
@@ -261,7 +261,7 @@ workon_cwd
             <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
             <ul class="nav nav-list">
                 <li class="nav-header">
-                分类
+                分类列表
                 </li>
 
                 <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
