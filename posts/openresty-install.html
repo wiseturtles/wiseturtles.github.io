@@ -223,17 +223,17 @@ do_info
 <ul>
 <li>
 <p>CentOS系统</p>
-<div class="highlight"><pre>chkconfig --list nginx   # 列出系统nginx服务启动情况
-chkconfig --add nginx    # 添加nginx服务
-chkconfig --level 35 nginx on # 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭
+<div class="highlight"><pre>chkconfig --list nginx   <span class="c"># 列出系统nginx服务启动情况</span>
+chkconfig --add nginx    <span class="c"># 添加nginx服务</span>
+chkconfig --level <span class="m">35</span> nginx on <span class="c"># 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>Debian系统</p>
-<div class="highlight"><pre>sudo update-rc.d -f nginx remove  # 删除nginx服务
-sudo update-rc.d apache2 defaults # 添加nginx服务
+<div class="highlight"><pre>sudo update-rc.d -f nginx remove  <span class="c"># 删除nginx服务</span>
+sudo update-rc.d apache2 defaults <span class="c"># 添加nginx服务</span>
 </pre></div>
 
 

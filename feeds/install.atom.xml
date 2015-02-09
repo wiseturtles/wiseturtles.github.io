@@ -1,5 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-06T15:45:00+08:00</updated><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install supervisor
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置supervisor&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;添加配置文件&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo mkdir /etc/supervisor
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo mkdir /etc/supervisor/conf.d
+&lt;span class="c"&gt;# 添加如下配置文件&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/supervisor/supervisord.conf
+&lt;span class="o"&gt;[&lt;/span&gt;unix_http_server&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/tmp/supervisor.sock    &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;the path to the socket file&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;chmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;                       &lt;span class="p"&gt;;&lt;/span&gt; sockef file mode &lt;span class="o"&gt;(&lt;/span&gt;default 0700&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;;&lt;/span&gt; the below section must remain in the config file &lt;span class="k"&gt;for&lt;/span&gt; RPC
+&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;supervisorctl/web interface&lt;span class="o"&gt;)&lt;/span&gt; to work, additional interfaces may be
+&lt;span class="p"&gt;;&lt;/span&gt; added by defining them in separate rpcinterface: sections
+&lt;span class="o"&gt;[&lt;/span&gt;rpcinterface:supervisor&lt;span class="o"&gt;]&lt;/span&gt;
+supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.rpcinterface:make_main_rpcinterface
+
+&lt;span class="o"&gt;[&lt;/span&gt;supervisord&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;http_port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisor.sock &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;default is to run a UNIX domain socket server&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;http_port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:9001  &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;alternately, ip_address:port specifies AF_INET&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;sockchmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; AF_UNIX socketmode &lt;span class="o"&gt;(&lt;/span&gt;AF_INET ignore, default 0700&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;sockchown&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nobody.nogroup     &lt;span class="p"&gt;;&lt;/span&gt; AF_UNIX socket uid.gid owner &lt;span class="o"&gt;(&lt;/span&gt;AF_INET ignores&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;umask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;022&lt;/span&gt;                   &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;process file creation &lt;span class="nb"&gt;umask&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;default 022&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/supervisord.log &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;main log file&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nv"&gt;$CWD&lt;/span&gt;/supervisord.log&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;50MB       &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;max main logfile bytes b4 rotation&lt;span class="p"&gt;;&lt;/span&gt;default 50MB&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;num of main logfile rotation backups&lt;span class="p"&gt;;&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;loglevel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;debug              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;logging level&lt;span class="p"&gt;;&lt;/span&gt;default info&lt;span class="p"&gt;;&lt;/span&gt; others: debug,warn&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;pidfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisord.pid &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;supervisord pidfile&lt;span class="p"&gt;;&lt;/span&gt;default supervisord.pid&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;nodaemon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;start in foreground &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;minfds&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1024&lt;/span&gt;                 &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail startup file descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 1024&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;minprocs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;                &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail process descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 200&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;childlogdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;AUTO&amp;#39;&lt;/span&gt; child log dir, default &lt;span class="nv"&gt;$TEMP&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;nocleanup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;don&lt;span class="s1"&gt;&amp;#39;t clean up tempfiles at start;default false)&lt;/span&gt;
+&lt;span class="s1"&gt;;http_username=user          ; (default is no username (open system))&lt;/span&gt;
+&lt;span class="s1"&gt;;http_password=123           ; (default is no password (open system))&lt;/span&gt;
+&lt;span class="s1"&gt;;user=chrism                 ; (default is current user, required if root)&lt;/span&gt;
+&lt;span class="s1"&gt;;directory=/tmp              ; (default is not to cd during start)&lt;/span&gt;
+&lt;span class="s1"&gt;;environment=KEY=value       ; (key value pairs to add to environment)&lt;/span&gt;
+
+&lt;span class="s1"&gt;[supervisorctl]&lt;/span&gt;
+&lt;span class="s1"&gt;serverurl=unix:///var/tmp/supervisor.sock ; use a unix:// URL  for a unix socket&lt;/span&gt;
+&lt;span class="s1"&gt;;serverurl=http://127.0.0.1:9001 ; use an http:// url to specify an inet socket&lt;/span&gt;
+&lt;span class="s1"&gt;;username=chris              ; should be same as http_username if set&lt;/span&gt;
+&lt;span class="s1"&gt;;password=123                ; should be same as http_password if set&lt;/span&gt;
+&lt;span class="s1"&gt;;prompt=mysupervisor         ; cmd line prompt (default &amp;quot;supervisor&amp;quot;)&lt;/span&gt;
+
+&lt;span class="s1"&gt;; The below sample program section shows all possible program subsection values,&lt;/span&gt;
+&lt;span class="s1"&gt;; create one or more &amp;#39;&lt;/span&gt;real&lt;span class="s1"&gt;&amp;#39; program: sections to be able to control them under&lt;/span&gt;
+&lt;span class="s1"&gt;; supervisor.&lt;/span&gt;
+
+&lt;span class="s1"&gt;;[program:theprogramname]&lt;/span&gt;
+&lt;span class="s1"&gt;;command=/bin/cat            ; the program (relative uses PATH, can take args)&lt;/span&gt;
+&lt;span class="s1"&gt;;priority=999                ; the relative start priority (default 999)&lt;/span&gt;
+&lt;span class="s1"&gt;;autostart=true              ; start at supervisord start (default: true)&lt;/span&gt;
+&lt;span class="s1"&gt;;autorestart=true            ; retstart at unexpected quit (default: true)&lt;/span&gt;
+&lt;span class="s1"&gt;;startsecs=10                ; number of secs prog must stay running (def. 10)&lt;/span&gt;
+&lt;span class="s1"&gt;;startretries=3              ; max # of serial start failures (default 3)&lt;/span&gt;
+&lt;span class="s1"&gt;;exitcodes=0,2               ; &amp;#39;&lt;/span&gt;expected&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;exit &lt;/span&gt;codes &lt;span class="k"&gt;for&lt;/span&gt; process &lt;span class="o"&gt;(&lt;/span&gt;default 0,2&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopsignal&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;QUIT             &lt;span class="p"&gt;;&lt;/span&gt; signal used to &lt;span class="nb"&gt;kill &lt;/span&gt;process &lt;span class="o"&gt;(&lt;/span&gt;default TERM&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopwaitsecs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; max num secs to &lt;span class="nb"&gt;wait &lt;/span&gt;before SIGKILL &lt;span class="o"&gt;(&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;chrism                 &lt;span class="p"&gt;;&lt;/span&gt; setuid to this UNIX account to run the program
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;, log program stdout &lt;span class="o"&gt;(&lt;/span&gt;default &lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;, log program stderr &lt;span class="o"&gt;(&lt;/span&gt;def &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/log/cat.log    &lt;span class="p"&gt;;&lt;/span&gt; child log path, use NONE &lt;span class="k"&gt;for&lt;/span&gt; none&lt;span class="p"&gt;;&lt;/span&gt; default AUTO
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1MB        &lt;span class="p"&gt;;&lt;/span&gt; max &lt;span class="c"&gt;# logfile bytes b4 rotation (default 50MB)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# of logfile backups (default 10)&lt;/span&gt;
+
+&lt;span class="o"&gt;[&lt;/span&gt;include&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /etc/supervisor/conf.d/*.conf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;项目的配置文件写入&amp;nbsp;/etc/supervisor/conf.d/目录即可&lt;/p&gt;
+&lt;h2&gt;添加开机启动&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 添加如下配置文件&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/init.d/supervisord
+
+&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# /etc/rc.d/init.d/supervisord&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Supervisor is a client/server system that&lt;/span&gt;
+&lt;span class="c"&gt;# allows its users to monitor and control a&lt;/span&gt;
+&lt;span class="c"&gt;# number of processes on UNIX-like operating&lt;/span&gt;
+&lt;span class="c"&gt;# systems.&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# chkconfig: - 64 36&lt;/span&gt;
+&lt;span class="c"&gt;# description: Supervisor Server&lt;/span&gt;
+&lt;span class="c"&gt;# processname: supervisord&lt;/span&gt;
+
+&lt;span class="c"&gt;# Source init functions&lt;/span&gt;
+. /etc/rc.d/init.d/functions
+
+&lt;span class="nv"&gt;prog&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;supervisord&amp;quot;&lt;/span&gt;
+
+&lt;span class="nv"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;exec_prefix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;prefix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;prog_bin&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;exec_prefix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/bin/supervisord&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;PIDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/run/&lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;.pid&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-c /etc/supervisor/supervisord.conf &lt;/span&gt;&lt;span class="nv"&gt;$DAEMON_OPTS&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+
+start&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Starting &lt;span class="nv"&gt;$prog&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;    daemon &lt;/span&gt;&lt;span class="nv"&gt;$prog_bin&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$DAEMON_OPTS&lt;/span&gt;&lt;span class="s2"&gt; --pidfile &lt;/span&gt;&lt;span class="nv"&gt;$PIDFILE&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;span class="s2"&gt;    [ -f &lt;/span&gt;&lt;span class="nv"&gt;$PIDFILE&lt;/span&gt;&lt;span class="s2"&gt; ] &amp;amp;&amp;amp; success &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt;&lt;span class="s2"&gt; startup&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; failure &lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt; startup&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;    echo&lt;/span&gt;
+&lt;span class="s2"&gt;}&lt;/span&gt;
+
+&lt;span class="s2"&gt;stop()&lt;/span&gt;
+&lt;span class="s2"&gt;{&lt;/span&gt;
+&lt;span class="s2"&gt;    echo -n &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Shutting down &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
+    &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="nv"&gt;$PIDFILE&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; killproc &lt;span class="nv"&gt;$prog&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; success &lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt; shutdown&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;    echo&lt;/span&gt;
+&lt;span class="s2"&gt;}&lt;/span&gt;
+
+&lt;span class="s2"&gt;case &amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; in&lt;/span&gt;
+
+&lt;span class="s2"&gt;start)&lt;/span&gt;
+&lt;span class="s2"&gt;start&lt;/span&gt;
+&lt;span class="s2"&gt;;;&lt;/span&gt;
+
+&lt;span class="s2"&gt;stop)&lt;/span&gt;
+&lt;span class="s2"&gt;stop&lt;/span&gt;
+&lt;span class="s2"&gt;;;&lt;/span&gt;
+
+&lt;span class="s2"&gt;status)&lt;/span&gt;
+&lt;span class="s2"&gt;    status &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;span class="s2"&gt;;;&lt;/span&gt;
+
+&lt;span class="s2"&gt;restart)&lt;/span&gt;
+&lt;span class="s2"&gt;stop&lt;/span&gt;
+&lt;span class="s2"&gt;start&lt;/span&gt;
+&lt;span class="s2"&gt;;;&lt;/span&gt;
+
+&lt;span class="s2"&gt;*)&lt;/span&gt;
+&lt;span class="s2"&gt;echo &amp;quot;&lt;/span&gt;Usage: &lt;span class="nv"&gt;$0&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;start&lt;span class="p"&gt;|&lt;/span&gt;stop&lt;span class="p"&gt;|&lt;/span&gt;restart&lt;span class="p"&gt;|&lt;/span&gt;status&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="s2"&gt;;;&lt;/span&gt;
+
+&lt;span class="s2"&gt;esac&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;设置如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chmod +x /etc/init.d/supervisord
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chkconfig --add supervisord
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chkconfig supervisord on
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo service supervisord start
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
 &lt;h2&gt;下架及安装&lt;/h2&gt;
@@ -152,17 +308,17 @@ do_info
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;CentOS系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;chkconfig --list nginx   # 列出系统nginx服务启动情况
-chkconfig --add nginx    # 添加nginx服务
-chkconfig --level 35 nginx on # 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭
+&lt;div class="highlight"&gt;&lt;pre&gt;chkconfig --list nginx   &lt;span class="c"&gt;# 列出系统nginx服务启动情况&lt;/span&gt;
+chkconfig --add nginx    &lt;span class="c"&gt;# 添加nginx服务&lt;/span&gt;
+chkconfig --level &lt;span class="m"&gt;35&lt;/span&gt; nginx on &lt;span class="c"&gt;# 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Debian系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo update-rc.d -f nginx remove  # 删除nginx服务
-sudo update-rc.d apache2 defaults # 添加nginx服务
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo update-rc.d -f nginx remove  &lt;span class="c"&gt;# 删除nginx服务&lt;/span&gt;
+sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
