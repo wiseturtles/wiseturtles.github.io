@@ -1,5 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-11T00:05:00+08:00</updated><entry><title>Flask中通过fileConfig配置多个logger</title><link href="http://blog.wiseturtles.com/posts/flask-logging.html" rel="alternate"></link><updated>2015-02-11T00:05:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-11:posts/flask-logging.html</id><summary type="html">&lt;h2&gt;Flask中如何通过配置文件配置logger&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;创建&lt;code&gt;app.py&lt;/code&gt;文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging.config&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;configure_logger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fileConfig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;log.conf&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c"&gt;# 获取当前所有的logger&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;logging&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;manager&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;loggerDict&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;logger&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;logger start&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;app_factory&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;configure_logger&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建&lt;code&gt;run.py&lt;/code&gt;文件&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app_factory&lt;/span&gt;
+
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app_factory&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;index&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;debug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建logger的配置文件&lt;code&gt;log.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat log.conf
+&lt;span class="c"&gt;# https://docs.python.org/2/library/logging.config.html#logging-config-fileformat&lt;/span&gt;
+
+&lt;span class="c"&gt;# configure loggers&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;loggers&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root, other_logger
+
+&lt;span class="o"&gt;[&lt;/span&gt;logger_root&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;DEBUG
+&lt;span class="nv"&gt;handlers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root_handler
+&lt;span class="nv"&gt;qualname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root
+
+&lt;span class="o"&gt;[&lt;/span&gt;logger_other_logger&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;DEBUG
+&lt;span class="nv"&gt;handlers&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root_handler
+&lt;span class="nv"&gt;qualname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root.other_logger
+
+&lt;span class="c"&gt;# configure handlers&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;handlers&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root_handler
+
+&lt;span class="o"&gt;[&lt;/span&gt;handler_root_handler&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;FileHandler
+&lt;span class="nv"&gt;level&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;INFO
+&lt;span class="nv"&gt;formatter&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root_formatter
+&lt;span class="nv"&gt;args&lt;/span&gt;&lt;span class="o"&gt;=(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;app.log&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;w+&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;# configure formatters&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;formatters&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;root_formatter
+
+&lt;span class="o"&gt;[&lt;/span&gt;formatter_root_formatter&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;format&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;%&lt;span class="o"&gt;(&lt;/span&gt;asctime&lt;span class="o"&gt;)&lt;/span&gt;s %&lt;span class="o"&gt;(&lt;/span&gt;levelname&lt;span class="o"&gt;)&lt;/span&gt;s %&lt;span class="o"&gt;(&lt;/span&gt;message&lt;span class="o"&gt;)&lt;/span&gt;s
+&lt;span class="nv"&gt;datefmt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="nv"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;logging.Formatter
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行&lt;code&gt;run.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python run.py 
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;root.other_logger&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;root.other_logger&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以看出当前已经配置了两个logger&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Flask中的默认logger名&lt;/p&gt;
+&lt;p&gt;Flask默认以import_name作为logger的默认名&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;app = Flask(&amp;#39;root&amp;#39;)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;本例就是以root作为logger名字，并配置了新的logger:&amp;nbsp;root.other_logger,&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;使用建议&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为Flask配置多个模块时，建议通过设置&amp;#8217;qualname&amp;#8217;为&amp;#8217;import_name.sub_name&amp;#8217;做为新的logger名,&lt;/li&gt;
+&lt;li&gt;level设置时, logger的level等级应该小于handler的level等级，最终是以handler的设置为准，&amp;nbsp;反之，则起作用的是logger的level&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="flask"></category><category term="logging"></category></entry><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install supervisor
 &lt;/pre&gt;&lt;/div&gt;
@@ -158,7 +264,7 @@ start&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
-&lt;h2&gt;下架及安装&lt;/h2&gt;
+&lt;h2&gt;下载及安装&lt;/h2&gt;
 &lt;p&gt;关于如何下载及安装OpenResty, &lt;a href="http://openresty.org/cn/"&gt;官网&lt;/a&gt;已经有很详细的介&amp;nbsp;绍，不再赘述。&lt;/p&gt;
 &lt;h2&gt;添加开机启动脚本&lt;/h2&gt;
 &lt;ol&gt;

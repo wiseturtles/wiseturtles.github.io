@@ -158,7 +158,7 @@ start&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
-&lt;h2&gt;下架及安装&lt;/h2&gt;
+&lt;h2&gt;下载及安装&lt;/h2&gt;
 &lt;p&gt;关于如何下载及安装OpenResty, &lt;a href="http://openresty.org/cn/"&gt;官网&lt;/a&gt;已经有很详细的介&amp;nbsp;绍，不再赘述。&lt;/p&gt;
 &lt;h2&gt;添加开机启动脚本&lt;/h2&gt;
 &lt;ol&gt;
