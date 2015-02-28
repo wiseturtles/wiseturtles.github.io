@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Nginx获取客户端真实<span class="caps">IP</span>，X-Real-<span class="caps">IP</span>和X-Forwarded-For注意
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="nginx" />
+      <meta name="tags" contents="x_real_ip" />
+      <meta name="tags" contents="x_forwarded_for" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Nginx获取客户端真实<span class="caps">IP</span>，X-Real-<span class="caps">IP</span>和X-Forwarded-For注意</h1>
+            <br />
+<span class="label label-info">日期</span>&nbsp;&nbsp;2015-02-28
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a>
+
+
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/nginx.html">nginx</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/x_real_ip.html">x_real_ip</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/x_forwarded_for.html">x_forwarded_for</a></span>        </div>
+
+        <div><p>本文参考于:</p>
+<ul>
+<li>http://serverfault.com/questions/314574/nginx-real-ip-header-and-x-forwarded-for-seems-wrong/414166</li>
+<li>http://luyadong.blog.51cto.com/2876653/851964</li>
+<li>http://nginx.org/en/docs/http/ngx_http_realip_module.html</li>
+<li>http://distinctplace.com/infrastructure/2014/04/23/story-behind-x-forwarded-for-and-x-real-ip-headers/</li>
+</ul>
+<h1>X-Real-<span class="caps">IP</span>和X-Forwarded-For的注意</h1>
+<p>在配置nginx反向代理时，我们往往做如下配置
+<pre>
+    location /uri {
+            proxy_set_header   Host             $host;
+            proxy_set_header   X-Real-IP        $remote_addr;
+            proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+            proxy_connect_timeout   60s;  # nginx跟后端服务器连接超时时间(代理连接超时)
+            proxy_send_timeout      90s;  # 后端服务器数据回传时间(代理发送超时)
+            proxy_read_timeout      90s;  # 连接成功后，后端服务器响应时间(代理接收超时)
+            proxy_buffer_size        4k;  # 设置代理服务器（nginx）保存用户头信息的缓冲区大小
+            proxy_buffers         4 32k;  # proxy_buffers缓冲区，网页平均在32k以下的设置
+            proxy_busy_buffers_size 64k;  # 高负荷下缓冲大小（proxy_buffers*2）
+            proxy_temp_file_write_size 64k; # 设定缓存文件夹大小，大于这个值，将从upstream服务器传
+            proxy_buffering         off;
+            proxy_ignore_client_abort on;
+            proxy_pass   http://xx.xx.xx.xx;
+</pre></p>
+<p>注意当中的这两行</p>
+<div class="highlight"><pre><span class="x">proxy_set_header   X-Real-IP        </span><span class="p">$</span><span class="nv">remote_addr</span><span class="x">;</span>
+<span class="x">proxy_set_header   X-Forwarded-For  </span><span class="p">$</span><span class="nv">proxy_add_x_forwarded_for</span><span class="x">;</span>
+</pre></div>
+
+
+<p>根据维基百科描述,</p>
+<p>X-Forwarded-for的格式应该如下:</p>
+<div class="highlight"><pre>X-Forwarded-For: client1, proxy1, proxy2, ...
+</pre></div>
+
+
+<p>而nginx中，每次都是取X-Forwarded-For 中最右边的<span class="caps">IP</span>作为X-Real-<span class="caps">IP</span>的值，明显最右边的<span class="caps">IP</span>是一个反向代理的<span class="caps">IP</span>，而不是真实的客户端<span class="caps">IP</span>，这么做貌似是不正确的, 我们应该使用最左边的值作为X-Real-<span class="caps">IP</span>的值，但是nginx为什么要做么做时。</p>
+<h2>获取真实的客户端<span class="caps">IP</span></h2>
+<p>为了获取真实的客户端<span class="caps">IP</span>,　需要使用ngx_http_realip_module模块，默认这个模块没有启动，需要在安装时使用<code>--with-http_realip_module</code>作为configuration的参数。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>        <h2>评论</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'wiseturtles'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2014, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
