@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/vim.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-03-07T00:15:00+08:00</updated><entry><title>从源码编译安装vim 7.4</title><link href="http://blog.wiseturtles.com/posts/build-vim-7.4.html" rel="alternate"></link><updated>2015-03-07T00:15:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-03-07:posts/build-vim-7.4.html</id><summary type="html">&lt;h3&gt;准备编译环境&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo apt-get build-dep vim
+    $ sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
+            libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+            libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+            ruby-dev mercurial
+    $ sudo apt-get install checkinstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;下载编译&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ hg clone https://code.google.com/p/vim/
+    $ cd vim
+    $ ./configure --with-features=huge \
+      --enable-multibyte \
+      --enable-perlinterp=dynamic \
+      --enable-pythoninterp=dynamic \
+      --enable-rubyinterp=dynamic \
+      --enable-luainterp --with-lua-prefix=/usr \
+      --with-python-config-dir=/usr/lib/python2.7/config \
+      --enable-gui=auto \
+      --enable-gtk2-check \
+      --enable-gnome-check \
+      --enable-cscope \
+      --with-x \
+      --prefix=/usr
+    $ make VIMRUNTIMEDIR=/usr/share/vim/vim74
+    $ sudo checkinstall
+    $ vim --version
+    $ sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+    $ sudo update-alternatives --set editor /usr/bin/vim
+    $ sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+    $ sudo update-alternatives --set vi /usr/bin/vim
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;坑&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Ubuntu系统包中的vim太老了&lt;/li&gt;
+&lt;li&gt;浪费生命的寡妇王&lt;/li&gt;
+&lt;li&gt;./configure &amp;#8212;with-luajit&amp;nbsp;总失败，最后直接去掉&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;收获&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;checkinstall&amp;nbsp;是个好东西&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="vim"></category><category term="ubuntu"></category></entry></feed>

@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - python</title>
+    <title>Wise Turtles - 从源码编译安装vim&nbsp;7.4
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,11 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="Zhang Wanming" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="vim" />
+      <meta name="tags" contents="ubuntu" />
 
 </head>
 
@@ -51,20 +57,83 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/flask-logging.html"><h2>Flask中通过fileConfig配置多个logger</h2></a>
-          <div class= "well small"> <span class="label label-info">日期</span>&nbsp;&nbsp;2015-02-11
+    <div class='article'>
+        <div class="content-title">
+            <h1>从源码编译安装vim&nbsp;7.4</h1>
+            <br />
+<span class="label label-info">日期</span>&nbsp;&nbsp;2015-03-07
 
-<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
 
-&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/python.html">python</a>
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/vim.html">vim</a>
 
 
-    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/flask.html">flask</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/logging.html">logging</a></span></div>
-          <div class="summary"><b>内容摘要:</b><p>Flask中通过config文件配置多个logger</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/flask-logging.html">阅读</a></div>
-      </div>
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/vim.html">vim</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">ubuntu</a></span>        </div>
 
-  
+        <div><h3>准备编译环境</h3>
+<div class="highlight"><pre>    $ sudo apt-get build-dep vim
+    $ sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
+            libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+            libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+            ruby-dev mercurial
+    $ sudo apt-get install checkinstall
+</pre></div>
+
+
+<h3>下载编译</h3>
+<div class="highlight"><pre>    $ hg clone https://code.google.com/p/vim/
+    $ cd vim
+    $ ./configure --with-features=huge \
+      --enable-multibyte \
+      --enable-perlinterp=dynamic \
+      --enable-pythoninterp=dynamic \
+      --enable-rubyinterp=dynamic \
+      --enable-luainterp --with-lua-prefix=/usr \
+      --with-python-config-dir=/usr/lib/python2.7/config \
+      --enable-gui=auto \
+      --enable-gtk2-check \
+      --enable-gnome-check \
+      --enable-cscope \
+      --with-x \
+      --prefix=/usr
+    $ make VIMRUNTIMEDIR=/usr/share/vim/vim74
+    $ sudo checkinstall
+    $ vim --version
+    $ sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
+    $ sudo update-alternatives --set editor /usr/bin/vim
+    $ sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
+    $ sudo update-alternatives --set vi /usr/bin/vim
+</pre></div>
+
+
+<h3>坑</h3>
+<ol>
+<li>Ubuntu系统包中的vim太老了</li>
+<li>浪费生命的寡妇王</li>
+<li>./configure &#8212;with-luajit&nbsp;总失败，最后直接去掉</li>
+</ol>
+<h3>收获</h3>
+<ol>
+<li>checkinstall&nbsp;是个好东西</li>
+</ol></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>        <h2>评论</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'wiseturtles'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
         </div>
 
         <div class="span3">
