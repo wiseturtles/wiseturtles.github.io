@@ -9,6 +9,11 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h3&gt;删除系统vim包&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;    $ sudo apt-get purge vim-tiny vim-common vim-runtime vim
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h3&gt;下载编译&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;    $ hg clone https://code.google.com/p/vim/
     $ cd vim

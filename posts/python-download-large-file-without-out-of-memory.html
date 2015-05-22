@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - 从源码编译安装vim&nbsp;7.4
+    <title>Wise Turtles - Python下载大文件
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,8 +29,8 @@
     <meta name="author" contents="Zhang Wanming" />
     <meta name="description" contents="" />
 
-      <meta name="tags" contents="vim" />
-      <meta name="tags" contents="ubuntu" />
+      <meta name="tags" contents="Python" />
+      <meta name="tags" contents="OOM" />
 
 </head>
 
@@ -59,67 +59,46 @@
         <div class="span9">
     <div class='article'>
         <div class="content-title">
-            <h1>从源码编译安装vim&nbsp;7.4</h1>
+            <h1>Python下载大文件</h1>
             <br />
-<span class="label label-info">日期</span>&nbsp;&nbsp;2015-03-07
+<span class="label label-info">日期</span>&nbsp;&nbsp;2015-05-22
 
 <span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
 
-&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/vim.html">vim</a>
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/python.html">Python</a>
 
 
-    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/vim.html">vim</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">ubuntu</a></span>        </div>
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/python.html">Python</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/oom.html">OOM</a></span>        </div>
 
-        <div><h3>准备编译环境</h3>
-<div class="highlight"><pre>    $ sudo apt-get build-dep vim
-    $ sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
-            libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
-            libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
-            ruby-dev mercurial
-    $ sudo apt-get install checkinstall
+        <div><h2>requests</h2>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<span class="n">local_filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="c"># NOTE the stream=True parameter</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">chunk_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">):</span> 
+        <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span> <span class="c"># filter out keep-alive new chunks</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="k">return</span> <span class="n">local_filename</span>
 </pre></div>
 
 
-<h3>删除系统vim包</h3>
-<div class="highlight"><pre>    $ sudo apt-get purge vim-tiny vim-common vim-runtime vim
+<h2>urllib2</h2>
+<div class="highlight"><pre><span class="nb">file</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;url&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;filename&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">tmp</span><span class="p">:</span>
+            <span class="k">break</span> 
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 </pre></div>
 
 
-<h3>下载编译</h3>
-<div class="highlight"><pre>    $ hg clone https://code.google.com/p/vim/
-    $ cd vim
-    $ ./configure --with-features=huge \
-      --enable-multibyte \
-      --enable-perlinterp=dynamic \
-      --enable-pythoninterp=dynamic \
-      --enable-rubyinterp=dynamic \
-      --enable-luainterp --with-lua-prefix=/usr \
-      --with-python-config-dir=/usr/lib/python2.7/config \
-      --enable-gui=auto \
-      --enable-gtk2-check \
-      --enable-gnome-check \
-      --enable-cscope \
-      --with-x \
-      --prefix=/usr
-    $ make VIMRUNTIMEDIR=/usr/share/vim/vim74
-    $ sudo checkinstall
-    $ vim --version
-    $ sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1
-    $ sudo update-alternatives --set editor /usr/bin/vim
-    $ sudo update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1
-    $ sudo update-alternatives --set vi /usr/bin/vim
-</pre></div>
-
-
-<h3>坑</h3>
+<p>详见:</p>
 <ol>
-<li>Ubuntu系统包中的vim太老了</li>
-<li>浪费生命的寡妇王</li>
-<li>./configure &#8212;with-luajit&nbsp;总失败，最后直接去掉</li>
-</ol>
-<h3>收获</h3>
-<ol>
-<li>checkinstall&nbsp;是个好东西</li>
+<li>http://stackoverflow.com/questions/16694907/how-to-download-large-file-in-python-with-requests-py</li>
+<li>http://stackoverflow.com/questions/27053028/how-to-download-large-file-without-memoryerror-in-python</li>
 </ol></div>
 
         <hr>
