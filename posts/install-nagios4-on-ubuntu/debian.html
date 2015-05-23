@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Install Nagios 4 on&nbsp;Ubuntu/Debian
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="Zhang Wanming" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Ubuntu" />
+      <meta name="tags" contents="Debian" />
+      <meta name="tags" contents="Monitor" />
+      <meta name="tags" contents="Management" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Install Nagios 4 on&nbsp;Ubuntu/Debian</h1>
+            <br />
+<span class="label label-info">日期</span>&nbsp;&nbsp;2015-05-23
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/ubuntu-monitor.html">Ubuntu, Monitor</a>
+
+
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/debian.html">Debian</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/monitor.html">Monitor</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/management.html">Management</a></span>        </div>
+
+        <div><p>Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。</p>
+<p>我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&nbsp;4。</p>
+<h1>监控主机安装Nagios</h1>
+<h2>安装需要的软件包</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
+</pre></div>
+
+
+<h2>创建用户、组</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo useradd nagios
+<span class="nv">$ </span>sudo groupadd nagcmd
+<span class="nv">$ </span>sudo usermod -a -G nagcmd nagios
+</pre></div>
+
+
+<h2>安装nagios&nbsp;4</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
+<span class="nv">$ </span>wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
+<span class="nv">$ </span>tar zxf nagios-4.0.8.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>nagios-4.0.8
+<span class="nv">$ </span>./configure --with-nagios-group<span class="o">=</span>nagios --with-command-group<span class="o">=</span>nagcmd --with-mail<span class="o">=</span><span class="k">$(</span>which sendmail<span class="k">)</span>
+<span class="nv">$ </span>sudo make all
+<span class="nv">$ </span>sudo make install <span class="o">&amp;&amp;</span> make install-commandmode <span class="o">&amp;&amp;</span> make install-init <span class="o">&amp;&amp;</span> make install-config
+<span class="nv">$ </span>sudo ln -s /etc/init.d/nagios /etc/rcS.d/S99nagios <span class="c"># 开机自启动</span>
+<span class="nv">$ </span>sudo service nagios restart
+</pre></div>
+
+
+<p>配置apache2</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo /usr/bin/install -c -m <span class="m">644</span> sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
+<span class="nv">$ </span>sudo ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/
+<span class="nv">$ </span>sudo a2enmod rewrite
+<span class="nv">$ </span>sudo a2enmod cgi
+<span class="nv">$ </span>sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+<span class="nv">$ </span>sudo service apache2 restart
+</pre></div>
+
+
+<p>nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&nbsp;是配置文件夹。</p>
+<h2>安装nagios-plugins-2.0.3</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
+<span class="nv">$ </span>wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+<span class="nv">$ </span>tar zxf nagios-plugins-2.0.3.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>nagios-plugins-2.0.3
+<span class="nv">$ </span>./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-openssl
+<span class="nv">$ </span>make all <span class="o">&amp;&amp;</span> make install
+</pre></div>
+
+
+<p>nagios-plugins 命令安装在 /usr/local/nagios/libexec&nbsp;目录。</p>
+<h2>安装nagios-nrpe-2.15</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
+<span class="nv">$ </span>wget -O nrpe-2.15.tar.gz <span class="s2">&quot;http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fnagios%2Ffiles%2Fnrpe-2.x%2Fnrpe-2.15%2F&amp;ts=1432369927&amp;use_mirror=liquidtelecom&quot;</span>
+<span class="nv">$ </span>tar zxf nrpe-2.15.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>nrpe-2.15
+<span class="nv">$ </span>./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-ssl<span class="o">=</span>/usr/bin/openssl --with-ssl-lib<span class="o">=</span>/usr/lib/x86_64-linux-gnu 
+<span class="nv">$ </span>make all
+<span class="nv">$ </span>find -iname <span class="s1">&#39;check_nrpe&#39;</span>
+<span class="nv">$ </span>sudo /usr/bin/install -c -m <span class="m">755</span> ./src/check_nrpe /usr/local/nagios/libexec/
+</pre></div>
+
+
+<p>测试是否可以工作:</p>
+<div class="highlight"><pre><span class="nv">$ </span>/usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 <span class="c"># 该IP是被监控主机的IP</span>
+NRPE v2.13
+</pre></div>
+
+
+<h1>被监控主机安装Nagios <span class="caps">NRPE</span></h1>
+<p>安装nagios-plugins,&nbsp;nagios-nrpe-server</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install nagios-plugins nagios-nrpe-server
+</pre></div>
+
+
+<p>配置nagios-nrpe-server，允许监控主机连接该被监控主机。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo vim /etc/nagios/nrpe.cfg
+<span class="nv">$ </span>将 监控主机IP 填入 allowed_hosts 字段，如: <span class="nv">allowed_hosts</span><span class="o">=</span>127.0.0.1,10.4.22.22
+<span class="nv">$ </span>sudo service nagios-nrpe-server restart
+</pre></div>
+
+
+<h1>配置</h1>
+<h2>配置监控主机</h2>
+<p>/usr/local/nagios/etc/nagios.cfg</p>
+<div class="highlight"><pre><span class="nv">$ </span>diff -u nagios.cfg.back nagios.cfg
+--- nagios.cfg.back2015-05-23 11:07:51.436491931 +0800
++++ nagios.cfg2015-05-23 22:08:09.872618927 +0800
+@@ -30,6 +30,9 @@
+<span class="nv">cfg_file</span><span class="o">=</span>/usr/local/nagios/etc/objects/contacts.cfg
+<span class="nv">cfg_file</span><span class="o">=</span>/usr/local/nagios/etc/objects/timeperiods.cfg
+<span class="nv">cfg_file</span><span class="o">=</span>/usr/local/nagios/etc/objects/templates.cfg
++cfg_file<span class="o">=</span>/usr/local/nagios/etc/objects/hosts.cfg
++cfg_file<span class="o">=</span>/usr/local/nagios/etc/objects/groups.cfg
++cfg_file<span class="o">=</span>/usr/local/nagios/etc/objects/services.cfg
+
+<span class="c"># Definitions for monitoring the local (Linux) host</span>
+<span class="nv">cfg_file</span><span class="o">=</span>/usr/local/nagios/etc/objects/localhost.cfg
+@@ -1174,7 +1177,7 @@
+<span class="c"># using the $ADMINEMAIL$ and $ADMINPAGER$ macros in your notification</span>
+<span class="c"># commands.</span>
+
+-admin_email<span class="o">=</span>nagios@localhost
++admin_email<span class="o">=</span>your-emai-address
+<span class="nv">admin_pager</span><span class="o">=</span>pagenagios@localhost
+</pre></div>
+
+
+<p>/usr/local/nagios/etc/objects/hosts.cfg</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="c"># Define a host for the local machine</span>
+<span class="c">##############</span>
+<span class="c"># appstore01 #</span>
+<span class="c">##############</span>
+define host<span class="o">{</span>
+    use                             linux-server  <span class="p">;</span> Name of host template to use
+                                    <span class="p">;</span> This host definition will inherit all variables that are defined
+                                    <span class="p">;</span> in <span class="o">(</span>or inherited by<span class="o">)</span> the linux-server host template definition.
+    host_name                       appstore01
+    <span class="nb">alias                           </span>appstore01 on ucloud
+    address                         10.4.2.2
+    <span class="o">}</span>
+
+<span class="c">##############</span>
+<span class="c"># appstore02 #</span>
+<span class="c">##############</span>
+define host<span class="o">{</span>
+    use                             linux-server  <span class="p">;</span> Name of host template to use
+                                    <span class="p">;</span> This host definition will inherit all variables that are defined
+                                    <span class="p">;</span> in <span class="o">(</span>or inherited by<span class="o">)</span> the linux-server host template definition.
+    host_name                       appstore02
+    <span class="nb">alias                           </span>appstore02 on ucloud
+    address                         10.4.2.22
+    <span class="o">}</span>
+</pre></div>
+
+
+<p>/usr/local/nagios/etc/objects/groups.cfg</p>
+<div class="highlight"><pre><span class="c"># Define an optional hostgroup for Linux machines</span>
+define hostgroup<span class="o">{</span>
+    hostgroup_name  appstore-group <span class="p">;</span> The name of the hostgroup
+    <span class="nb">alias           </span>appstore server group <span class="p">;</span> Long name of the group
+    members         appstore01,appstore02     <span class="p">;</span> Comma separated list of hosts that belong to this group
+    <span class="o">}</span>
+</pre></div>
+
+
+<p>/etc/local/nagios/etc/objects/commands.cfg</p>
+<div class="highlight"><pre><span class="nv">$ </span>diff -u objects/commands.cfg.back objects/commands.cfg
++########################
++# add by zhang wanming <span class="c">#</span>
++########################
++# <span class="s1">&#39;check_mysql&#39;</span> <span class="nb">command </span>definition
++define <span class="nb">command</span><span class="o">{</span>
++   command_name    check_mysql
++   command_line    <span class="nv">$USER1$/</span>check_mysql -H <span class="nv">$HOSTADDRESS$ </span>-u <span class="nv">$ARG1$ </span>-p <span class="nv">$ARG2$ </span>-d <span class="nv">$ARG3$ </span>-P 3306
++   <span class="o">}</span>
+
++# <span class="s1">&#39;check_http_with_url_port&#39;</span> <span class="nb">command </span>definition
++define <span class="nb">command</span><span class="o">{</span>
++        command_name    check_http_with_url_port
++        command_line    <span class="nv">$USER1$/</span>check_http -I <span class="nv">$HOSTADDRESS$ </span>-u <span class="nv">$ARG1$ </span>-p <span class="nv">$ARG2</span><span class="err">$</span>
++        <span class="o">}</span>
++
++# <span class="s1">&#39;check_nrpe&#39;</span> <span class="nb">command </span>definition
++define <span class="nb">command</span><span class="o">{</span>
++        command_name check_nrpe
++        command_line <span class="nv">$USER1$/</span>check_nrpe -H <span class="nv">$HOSTADDRESS$ </span>-c <span class="nv">$ARG1</span><span class="err">$</span>
++        <span class="o">}</span>
++
++# <span class="s1">&#39;check_memcached&#39;</span> <span class="nb">command </span>definition
++define <span class="nb">command</span><span class="o">{</span>
++        command_name check_memcached
++        command_line <span class="nv">$USER1$/</span>check_tcp -H <span class="nv">$HOSTADDRESS$ </span>-p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
++        <span class="o">}</span>
+</pre></div>
+
+
+<p>/etc/local/nagios/etc/objects/services.cfg</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat objects/services.cfg 
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             PING
+        check_command                   check_ping!100.0,20%!500.0,60%
+<span class="o">}</span>
+
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             SSH
+        check_command                   check_ssh!-p 1122
+<span class="o">}</span>
+
+<span class="c">#################</span>
+<span class="c"># HTTP services #</span>
+<span class="c">#################</span>
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             Nginx
+        check_command                   check_http
+<span class="o">}</span>
+
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             check http tdnaceweb
+        check_command                   check_nrpe!check_http_tdanceweb
+<span class="o">}</span>
+
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             check http appstore
+        check_command                   check_nrpe!check_http_appstore
+<span class="o">}</span>
+
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             check http launcher
+        check_command                   check_nrpe!check_http_launcher
+<span class="o">}</span>
+
+<span class="c">#########</span>
+<span class="c"># Redis #</span>
+<span class="c">#########</span>
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             Redis
+        check_command                   check_nrpe!check_redis
+<span class="o">}</span>
+
+<span class="c">#############</span>
+<span class="c"># Memcached #</span>
+<span class="c">#############</span>
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             Memcached
+        check_command                   check_nrpe!check_memcached
+<span class="o">}</span>
+
+<span class="c">#########</span>
+<span class="c"># MySQL #</span>
+<span class="c">#########</span>
+define service <span class="o">{</span>
+        use                             generic-service
+        host_name                       appstore01
+        service_description             MySQL
+        check_command                   check_nrpe!check_mysql
+<span class="o">}</span>
+
+<span class="c">################</span>
+<span class="c"># disk/partion #</span>
+<span class="c">################</span>
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             check root disk
+        check_command                   check_nrpe!check_disk_root
+<span class="o">}</span>
+
+define service <span class="o">{</span>
+        use                             generic-service
+        hostgroup_name                  appstore-group
+        service_description             check root data
+        check_command                   check_nrpe!check_disk_data
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>配置被监控主机</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/nagios/nrpe_local.cfg 
+<span class="c">######################################</span>
+<span class="c"># Do any local nrpe configuration here</span>
+<span class="c">######################################</span>
+<span class="nb">command</span><span class="o">[</span>check_disk_root<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /
+<span class="nb">command</span><span class="o">[</span>check_disk_data<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /data
+<span class="nb">command</span><span class="o">[</span>check_redis<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">6379</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;info\r\n&#39;</span> -q <span class="s1">&#39;quit\r\n&#39;</span> -e <span class="s1">&#39;uptime_in_days&#39;</span> -M crit
+<span class="nb">command</span><span class="o">[</span>check_memcached<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
+<span class="nb">command</span><span class="o">[</span>check_mysql<span class="o">]=</span>/usr/lib/nagios/plugins/check_mysql -H localhost -u user -p passwd -d your-database
+<span class="nb">command</span><span class="o">[</span>check_http_tdanceweb<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">6688</span> -t 3
+<span class="nb">command</span><span class="o">[</span>check_http_appstore<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">8888</span> -t <span class="m">3</span> -u /m3/subjects
+<span class="nb">command</span><span class="o">[</span>check_http_launcher<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">9999</span> -t 3
+</pre></div>
+
+
+<h1>配置过程中碰到的问题</h1>
+<h2>监控服务器上没有check_nrpe命令</h2>
+<p>如果没有安装nrpe，请下载、编译、安装，请参考&nbsp;安装nagios-nrpe-2.15</p>
+<h2>CHECK_NRPE: Error - Could not complete <span class="caps">SSL</span>&nbsp;handshake.</h2>
+<p>编辑/etc/nagios/nrpe.cfg, 确定 allowed_hosts 中加入监控主机<span class="caps">IP</span>，多个<span class="caps">IP</span>以 &#8220;,&#8221; 分隔。
+如:&nbsp;allowed_hosts=127.0.0.1,10.4.13.14</p>
+<p>然后，重新加载 nagios-nrpe-server&nbsp;配置文件，如下：</p>
+<div class="highlight"><pre><span class="nv">$ </span>service nagios-nrpe-server reload
+</pre></div>
+
+
+<p>下次再学习并补充联系人及报警相关设置。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>        <h2>评论</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'wiseturtles'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu-monitor.html">Ubuntu, Monitor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2014, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
