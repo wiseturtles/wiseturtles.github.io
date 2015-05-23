@@ -110,7 +110,8 @@
 </pre></div>
 
 
-<p>nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&nbsp;是配置文件夹。</p>
+<p>浏览器访问 http://监控主机<span class="caps">IP</span>/nagios 查看监控情况, 登录用户名、密码就是 htpasswd 设置的。
+nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&nbsp;是配置文件夹。</p>
 <h2>安装nagios-plugins-2.0.3</h2>
 <div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
 <span class="nv">$ </span>wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
@@ -371,7 +372,12 @@ define service <span class="o">{</span>
 </pre></div>
 
 
-<p>下次再学习并补充联系人及报警相关设置。</p></div>
+<p>下次再学习并补充联系人及报警相关设置。</p>
+<p>参考：</p>
+<ol>
+<li>https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04</li>
+<li>http://netkiller.github.io/monitoring/nagios/</li>
+</ol></div>
 
         <hr>
 

@@ -37,7 +37,8 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&amp;nbsp;是配置文件夹。&lt;/p&gt;
+&lt;p&gt;浏览器访问 http://监控主机&lt;span class="caps"&gt;IP&lt;/span&gt;/nagios 查看监控情况, 登录用户名、密码就是 htpasswd 设置的。
+nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&amp;nbsp;是配置文件夹。&lt;/p&gt;
 &lt;h2&gt;安装nagios-plugins-2.0.3&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 &lt;span class="nv"&gt;$ &lt;/span&gt;wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
@@ -298,7 +299,12 @@ define service &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;下次再学习并补充联系人及报警相关设置。&lt;/p&gt;</summary><category term="Ubuntu"></category><category term="Debian"></category><category term="Monitor"></category><category term="Management"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><updated>2015-05-22T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
+&lt;p&gt;下次再学习并补充联系人及报警相关设置。&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04&lt;/li&gt;
+&lt;li&gt;http://netkiller.github.io/monitoring/nagios/&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Debian"></category><category term="Monitor"></category><category term="Management"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><updated>2015-05-22T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="n"&gt;local_filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="c"&gt;# NOTE the stream=True parameter&lt;/span&gt;
