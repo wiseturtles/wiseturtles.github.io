@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Upgrade Elasticsearch 1.2.1 to&nbsp;1.4.5
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="Zhang Wanming" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Dashboard" />
+      <meta name="tags" contents="Elasticsearch" />
+      <meta name="tags" contents="Logstash" />
+      <meta name="tags" contents="ELK" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Upgrade Elasticsearch 1.2.1 to&nbsp;1.4.5</h1>
+            <br />
+<span class="label label-info">日期</span>&nbsp;&nbsp;2015-06-19
+
+<span class="label label-info">作者</span>&nbsp;&nbsp;<a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
+
+&nbsp;&nbsp;<span class="label label-info">分类&nbsp;&nbsp;</span> <a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a>
+
+
+    &nbsp;&nbsp;<span class="label label-info">标签</span>&nbsp;&nbsp;<span class="badge"><a href="http://blog.wiseturtles.com/tag/dashboard.html">Dashboard</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/elasticsearch.html">Elasticsearch</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/logstash.html">Logstash</a></span><span class="badge"><a href="http://blog.wiseturtles.com/tag/elk.html">ELK</a></span>        </div>
+
+        <div><p>一年前刚开始做应用市场数据统计，团队选用了<span class="caps">ELK</span>中的<span class="caps">EL</span> (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用<span class="caps">ES</span> Restful <span class="caps">API</span>，自己做Web展示。
+用了以下插件:analysis-icu, analysis-ik, analysis-mmseg, analysis-pinyin
+当时<span class="caps">ES</span>版本为1.2.1，一直没有升级，最近升级到1.4.5。</p>
+<p>我们之前服务器是Debian 7，现在服务器是CentOS 6.5；服务器版本和<span class="caps">ES</span>没有关系，至少我没碰到任何系统问题。</p>
+<p>目前有两台<span class="caps">ES</span> 1.2.1，准备用三台<span class="caps">ES</span>&nbsp;1.4.5替换。刚开始没有root权限，只好下载压缩包安装。</p>
+<p>注: Elasticsearch和Logstash都需要安装<span class="caps">JDK</span>, 我们用的<span class="caps">JDK</span>&nbsp;1.7</p>
+<h1>安装Logstash&nbsp;1.4.3</h1>
+<h2>安装需要的软件包</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
+<span class="nv">$ </span>wget https://download.elastic.co/logstash/logstash/logstash-1.4.3.tar.gz
+<span class="nv">$ </span>tar zxf logstash-1.4.3.tar.gz
+</pre></div>
+
+
+<h2>修改配置文件</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /data/softwares/logstash-1.4.3/logstash.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+input <span class="o">{</span>
+  redis <span class="o">{</span>
+    <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
+    <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span>
+    <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span>
+    <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:logstash&quot;</span>
+    <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
+    <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;appstore_logs&quot;</span><span class="o">]</span>
+    <span class="nv">db</span> <span class="o">=</span>&gt; 0
+  <span class="o">}</span>
+  redis <span class="o">{</span>
+    <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
+    <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span>
+    <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span>
+    <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
+    <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_reports&quot;</span>
+    <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_reports&quot;</span><span class="o">]</span>
+    <span class="nv">db</span> <span class="o">=</span>&gt; 0
+  <span class="o">}</span>
+  redis <span class="o">{</span>
+    <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
+    <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span>
+    <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span>
+    <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
+    <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s1">&#39;appstore:imei_reports&#39;</span>
+    <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;imei_reports&quot;</span><span class="o">]</span>
+    <span class="nv">db</span> <span class="o">=</span>&gt; 1
+  <span class="o">}</span>
+  redis <span class="o">{</span> 
+     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span> 
+     <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span> 
+     <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span> 
+     <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;tclonline&quot;</span>
+     <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_date_reports&quot;</span> 
+     <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_date_reports&quot;</span><span class="o">]</span> 
+     <span class="nv">db</span> <span class="o">=</span>&gt; 3
+   <span class="o">}</span> 
+   redis <span class="o">{</span> 
+     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span> 
+     <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span> 
+     <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span> 
+     <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;pwd&quot;</span>
+     <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_model_reports&quot;</span> 
+     <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_model_reports&quot;</span><span class="o">]</span> 
+     <span class="nv">db</span> <span class="o">=</span>&gt; 3
+
+   <span class="o">}</span> 
+<span class="o">}</span>
+filter <span class="o">{</span>
+  <span class="k">if</span> <span class="s2">&quot;appstore_logs&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span>
+    date <span class="o">{</span>
+      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;timestamp&quot;</span> , <span class="s2">&quot;UNIX&quot;</span> <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">if</span> <span class="s2">&quot;imei_reports&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span>
+    date <span class="o">{</span>
+      <span class="nv">match</span> <span class="o">=</span>&gt; <span class="o">[</span> <span class="s2">&quot;timestamp&quot;</span> , <span class="s2">&quot;UNIX&quot;</span> <span class="o">]</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+output <span class="o">{</span>
+  <span class="k">if</span> <span class="s2">&quot;appstore_logs&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span>
+    elasticsearch <span class="o">{</span> 
+      <span class="nv">index</span> <span class="o">=</span>&gt; logstash
+      <span class="nv">index_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore_stats&quot;</span>
+      <span class="nv">cluster</span> <span class="o">=</span>&gt; <span class="s2">&quot;elasticsearch_dashboard&quot;</span>
+      <span class="nv">node_name</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash_appstore_logs&quot;</span>
+    <span class="o">}</span>
+    redis<span class="o">{</span>
+      <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span>
+      <span class="nv">db</span> <span class="o">=</span>&gt; 3
+      <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span> 
+      <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
+      <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash:appstore_logs&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">if</span> <span class="s2">&quot;overview_reports&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span>
+    elasticsearch <span class="o">{</span> 
+      <span class="nv">index</span> <span class="o">=</span>&gt; dashboard
+      <span class="nv">index_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;overview_records&quot;</span>
+      <span class="nv">cluster</span> <span class="o">=</span>&gt; <span class="s2">&quot;elasticsearch_dashboard&quot;</span>
+      <span class="nv">node_name</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash_overview_reports&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+   <span class="k">if</span> <span class="s2">&quot;imei_reports&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span>
+    elasticsearch <span class="o">{</span>
+      <span class="nv">index</span> <span class="o">=</span>&gt; imei
+      <span class="nv">index_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;imei_records&quot;</span>
+      <span class="nv">cluster</span> <span class="o">=</span>&gt; <span class="s2">&quot;elasticsearch_dashboard&quot;</span>
+      <span class="nv">node_name</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash_imei_reports&quot;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+   <span class="k">if</span> <span class="s2">&quot;overview_date_reports&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span> 
+     elasticsearch <span class="o">{</span> 
+       <span class="nv">cluster</span> <span class="o">=</span>&gt; <span class="s2">&quot;elasticsearch_dashboard&quot;</span> 
+       <span class="nv">index</span> <span class="o">=</span>&gt; dashboard 
+       <span class="nv">index_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;overview_date_records&quot;</span> 
+       <span class="nv">node_name</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash_overview_date_reports&quot;</span>
+     <span class="o">}</span> 
+   <span class="o">}</span> 
+    <span class="k">if</span> <span class="s2">&quot;overview_model_reports&quot;</span> in <span class="o">[</span>tags<span class="o">]</span> <span class="o">{</span> 
+     elasticsearch <span class="o">{</span> 
+       <span class="nv">cluster</span> <span class="o">=</span>&gt; <span class="s2">&quot;elasticsearch_dashboard&quot;</span> 
+       <span class="nv">index</span> <span class="o">=</span>&gt; dashboard 
+       <span class="nv">index_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;overview_model_records&quot;</span> 
+       <span class="nv">node_name</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash_overview_model_reports&quot;</span>
+     <span class="o">}</span> 
+   <span class="o">}</span>   
+<span class="o">}</span>
+</pre></div>
+
+
+<h2>启动测试</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/softwares/logstash-1.4.3
+<span class="nv">$ </span>bin/logstash -f logstash.conf
+</pre></div>
+
+
+<h1>安装Elasticsearch&nbsp;1.4.5</h1>
+<h2>安装需要的软件包</h2>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
+<span class="nv">$ </span>wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz
+<span class="nv">$ </span>tar zxf elasticsearch-1.4.5.tar.gz
+</pre></div>
+
+
+<p>安装插件：</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software <span class="c"># 安装分词插件</span>
+<span class="nv">$ </span>git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
+<span class="nv">$ </span><span class="nb">cd </span>elasticsearch-rtf
+<span class="nv">$ </span>cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
+<span class="nv">$ </span>cp -vrf config/ik config/mmseg /data/softwares/elasticsearch-1.4.5/config/
+
+
+:::bash
+
+<span class="nv">$ </span><span class="nb">cd</span> /data/software <span class="c"># 监控插件</span>
+<span class="nv">$ </span><span class="nb">cd </span>elasticsearch-1.4.5
+<span class="nv">$ </span>bin/plugin -install mobz/elasticsearch-head <span class="c"># head插件</span>
+<span class="nv">$ </span>bin/plugin -install lukas-vlcek/bigdesk     <span class="c"># bigdesk插件</span>
+</pre></div>
+
+
+<h2>修改配置文件</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+cluster.name: elasticsearch_dashboard
+node.name: <span class="s2">&quot;es1&quot;</span>
+node.master: <span class="nb">true</span>
+node.data: <span class="nb">true</span>
+index.number_of_shards: 5
+index.number_of_replicas: 2
+path.data: /data/softwares/elasticsearch-1.4.5/data
+path.work: /data/softwares/elasticsearch-1.4.5/work
+path.logs: /data/log/elasticsearch
+path.plugins: /data/softwares/elasticsearch-1.4.5/plugins
+network.bind_host: 192.168.1.2
+network.publish_host: 192.168.1.2
+network.host: 192.168.1.2
+transport.tcp.port: 9300
+http.port: 9200
+indices.recovery.max_bytes_per_sec: 200mb
+indices.recovery.concurrent_streams: 8
+discovery.zen.minimum_master_nodes: 2
+discovery.zen.ping.timeout: 10s
+discovery.zen.ping.multicast.enabled: <span class="nb">true</span>
+discovery.zen.ping.unicast.hosts: <span class="o">[</span><span class="s2">&quot;192.168.1.2&quot;</span>, <span class="s2">&quot;192.168.1.6&quot;</span>, <span class="s2">&quot;192.168.1.7&quot;</span><span class="o">]</span>
+index:
+  analysis:
+    analyzer:
+      standardPlusWordDelimiter:
+        <span class="nb">type</span>: custom
+        tokenizer: standard
+        filter: <span class="o">[</span>standard, wordDelim, lowercase, stop, dict<span class="o">]</span>
+      ik:
+        <span class="nb">alias</span>: <span class="o">[</span>ik_analyzer<span class="o">]</span>
+        <span class="nb">type</span>: ik
+      ik_max_word:
+        <span class="nb">type</span>: ik
+        use_smart: <span class="nb">false</span>
+<span class="nb">      </span>ik_smart:
+        <span class="nb">type</span>: ik
+        use_smart: <span class="nb">true</span>
+<span class="nb">      </span>pinyin_ngram_analyzer:
+        <span class="nb">type</span>: custom
+        tokenizer: my_pinyin
+        filter: <span class="o">[</span>standard,lowercase,nGram,trim,unique<span class="o">]</span>     
+    tokenizer:
+      my_pinyin:
+        <span class="nb">type</span>: pinyin
+        first_letter: prefix
+        padding_char : <span class="s2">&quot;&quot;</span>
+    filter:
+      wordDelim:
+        <span class="nb">type</span>: word_delimiter
+        preserve_original: <span class="nb">true</span>
+<span class="nb">      </span>dict:
+        <span class="nb">type</span>: dictionary_decompounder
+        word_list: <span class="o">[</span>cool, iris, fire, bug, flag, fox, grease, monkey, flash, block, forecast, screen, grab, cookie, auto, fill, text, all, so, think, mega, upload, download, video, map, spring, fix, input, clip, fly, lang, up, down, persona, css, html, all, http, ball, firefox, bookmark, chat, zilla, edit, menu, menus, status, bar, with, easy, sync, search, google, <span class="nb">time</span>, window, js, super, scroll, title, close, undo, user, inspect, inspector, browser, context, dictionary, mail, button, url, password, secure, image, new, tab, delete, click, name, smart, down, manager, open, query, net, link, blog, this, color, <span class="k">select</span>, key, keys, foxy, translate, word<span class="o">]</span>
+</pre></div>
+
+
+<p>注：
+1. 删除了注释
+2. 其它机器配置文件类似，只需要修改和<span class="caps">IP</span>相关的字段值</p>
+<h2>启动Elasticsearch</h2>
+<p>测试能否正常启动：</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software/elasticsearch-1.4.5
+<span class="nv">$ </span>bin/elasticsearch  <span class="c"># 启动ES，测试是否可以正常启动</span>
+<span class="nv">$ </span>tail -f /data/log/elasticsearch/elasticsearch_dashboard.log <span class="c"># 查看日志</span>
+</pre></div>
+
+
+<h2>监控插件使用</h2>
+<p>head: http://<your-es-ip>:9200/_plugin/head/
+bigdesk: http://<your-es-ip>:9200/_plugin/bigdesk/</p>
+<h1>配置supervisor</h1>
+<p>如果可以正常启动，我们通过supervisor管理Elasticsearch和Logstash。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo pip install supervisor <span class="c"># 后来拿到root权限，否则还要先弄Python virtual env</span>
+<span class="nv">$ </span>修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
+
+
+:::bash
+
+<span class="nv">$ </span>cat /etc/supervisor/supervisord.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^;|^$&#39;</span>
+<span class="o">[</span>unix_http_server<span class="o">]</span>
+<span class="nv">file</span><span class="o">=</span>/var/run/supervisor.sock    <span class="p">;</span> <span class="o">(</span>the path to the socket file<span class="o">)</span>
+<span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default 0700<span class="o">)</span>
+<span class="o">[</span>rpcinterface:supervisor<span class="o">]</span>
+supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface:make_main_rpcinterface
+<span class="o">[</span>supervisord<span class="o">]</span>
+<span class="nv">http_port</span><span class="o">=</span>/var/run/supervisor.sock <span class="p">;</span> <span class="o">(</span>default is to run a UNIX domain socket server<span class="o">)</span>
+<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
+<span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
+<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
+<span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
+<span class="nv">pidfile</span><span class="o">=</span>/var/run/supervisord.pid <span class="p">;</span> <span class="o">(</span>supervisord pidfile<span class="p">;</span>default supervisord.pid<span class="o">)</span>
+<span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> <span class="nb">true</span><span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
+<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
+<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
+<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
+<span class="o">[</span>supervisorctl<span class="o">]</span>
+<span class="nv">serverurl</span><span class="o">=</span>unix:////var/run/supervisor.sock <span class="p">;</span> use a unix:// URL  <span class="k">for</span> a unix socket
+<span class="o">[</span>include<span class="o">]</span>
+<span class="nv">files</span> <span class="o">=</span> /etc/supervisor/conf.d/*.conf
+
+
+:::bash
+
+<span class="nv">$ </span>cat /etc/supervisor/conf.d/elasticsearch.conf 
+<span class="o">[</span>program:elasticsearch<span class="o">]</span>
+<span class="nb">command</span><span class="o">=</span>/data/softwares/elasticsearch-1.4.5/bin/elasticsearch -Xmx6g -Xms6g -XX:PermSize<span class="o">=</span>512m -Des.max-open-files<span class="o">=</span><span class="nb">true</span>
+<span class="nv">directory</span><span class="o">=</span>/data/softwares/elasticsearch-1.4.5
+<span class="nv">user</span><span class="o">=</span>work
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">stdout_logfile</span><span class="o">=</span>/data/log/supervisor/elasticsearch.stdout
+<span class="nv">stderr_logfile</span><span class="o">=</span>/data/log/supervisor/elasticsearch.stderr
+
+
+:::bash
+
+<span class="nv">$ </span>cat /etc/supervisor/conf.d/logstash.conf 
+<span class="o">[</span>program:logstash<span class="o">]</span>
+<span class="nb">command</span><span class="o">=</span>/data/softwares/logstash-1.4.3/bin/logstash -f logstash.conf
+<span class="nv">directory</span><span class="o">=</span>/data/softwares/logstash-1.4.3
+<span class="nv">user</span><span class="o">=</span>work
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">stdout_logfile</span><span class="o">=</span>/data/log/supervisor/logstash.stdout
+<span class="nv">stderr_logfile</span><span class="o">=</span>/data/log/supervisor/logstash.stderr
+</pre></div>
+
+
+<h1>常用的<span class="caps">ES</span>命令别名</h1>
+<div class="highlight"><pre><span class="nv">$ </span>tail -n3 ~/.bashrc 
+<span class="nb">alias </span><span class="nv">esh</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/health?pretty&quot;</span>
+<span class="nb">alias </span><span class="nv">esi</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/indices?pretty&quot;</span>
+<span class="nb">alias </span><span class="nv">ess</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/shards&quot;</span>
+<span class="nb">alias </span><span class="nv">esdownlocal</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/nodes/_local/_shutdown&quot;</span>
+<span class="nb">alias </span><span class="nv">esdownall</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_shutdown&quot;</span>
+</pre></div>
+
+
+<h1>升级</h1>
+<p>通过上面步骤，配置好3台Elasticsearch 1.4.5，然后，将这三台<span class="caps">ES</span>机器加入以前的Elasticsearch 1.2.1的集群。
+数据逐步同步到<span class="caps">ES</span> 1.4.5后，逐步将<span class="caps">ES</span>&nbsp;1.2.1的机器停掉。</p>
+<h1>碰到的问题</h1>
+<h2>没有将shard同步到新加入的<span class="caps">ES</span>&nbsp;1.4.5机器上</h2>
+<p>修改number_of_replicas，根据机器个数修改。</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT <span class="s1">&#39;&lt;your-ip&gt;:9200/&lt;your-index&gt;/_settings&#39;</span> -d <span class="s1">&#39;{</span>
+<span class="s1">     &quot;index&quot; : {</span>
+<span class="s1">         &quot;number_of_replicas&quot; : 2</span>
+<span class="s1">      }</span>
+<span class="s1">}&#39;</span>
+</pre></div>
+
+
+<p>明确让某个index的某个shard分配到指定机器上。</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPOST <span class="s1">&#39;&lt;your-es-ip&gt;:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<span class="s1">    &quot;commands&quot; : [ {</span>
+<span class="s1">        &quot;move&quot; :</span>
+<span class="s1">            {</span>
+<span class="s1">              &quot;index&quot; : &quot;your-index&quot;, &quot;shard&quot; : shard-no,</span>
+<span class="s1">              &quot;from_node&quot; : &quot;es-node-name&quot;, &quot;to_node&quot; : &quot;es-node-name&quot;</span>
+<span class="s1">            }</span>
+<span class="s1">        },</span>
+<span class="s1">        {</span>
+<span class="s1">          &quot;allocate&quot; : {</span>
+<span class="s1">              &quot;index&quot; : &quot;your-index&quot;, &quot;shard&quot; : shard-no, &quot;node&quot; : &quot;es-node-name&quot;</span>
+<span class="s1">          }</span>
+<span class="s1">        }</span>
+<span class="s1">    ]</span>
+<span class="s1">}&#39;</span>
+</pre></div>
+
+
+<p>比如：</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPOST <span class="s1">&#39;localhost:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<span class="s1">    &quot;commands&quot; : [ {</span>
+<span class="s1">        &quot;move&quot; :</span>
+<span class="s1">            {</span>
+<span class="s1">              &quot;index&quot; : &quot;logstash_v1_new&quot;, &quot;shard&quot; : 4,</span>
+<span class="s1">              &quot;from_node&quot; : &quot;Yojimbo&quot;, &quot;to_node&quot; : &quot;es3&quot;</span>
+<span class="s1">            }</span>
+<span class="s1">        },</span>
+<span class="s1">        {</span>
+<span class="s1">          &quot;allocate&quot; : {</span>
+<span class="s1">              &quot;index&quot; : &quot;logstash_v1_new&quot;, &quot;shard&quot; : 4, &quot;node&quot; : &quot;es2&quot;</span>
+<span class="s1">          }</span>
+<span class="s1">        }</span>
+<span class="s1">    ]</span>
+<span class="s1">}&#39;</span>
+</pre></div>
+
+
+<p>参考：</p>
+<ol>
+<li>http://stackoverflow.com/questions/23656458/elasticsearch-what-to-do-with-unassigned-shards/</li>
+<li>http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch</li>
+<li>https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html</li>
+<li>http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix</li>
+</ol></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>        <h2>评论</h2>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'wiseturtles'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">Python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu-monitor.html">Ubuntu, Monitor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2014, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
