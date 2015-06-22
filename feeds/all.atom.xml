@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-19T00:00:00+08:00</updated><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/-Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><updated>2015-06-19T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/-Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-19T00:00:00+08:00</updated><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><updated>2015-06-19T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
 用了以下插件:analysis-icu, analysis-ik, analysis-mmseg, analysis-pinyin
 当时&lt;span class="caps"&gt;ES&lt;/span&gt;版本为1.2.1，一直没有升级，最近升级到1.4.5。&lt;/p&gt;
 &lt;p&gt;我们之前服务器是Debian 7，现在服务器是CentOS 6.5；服务器版本和&lt;span class="caps"&gt;ES&lt;/span&gt;没有关系，至少我没碰到任何系统问题。&lt;/p&gt;
@@ -228,8 +228,10 @@ index:
 
 
 &lt;h2&gt;监控插件使用&lt;/h2&gt;
-&lt;p&gt;head: http://&lt;your-es-ip&gt;:9200/_plugin/head/
-bigdesk: http://&lt;your-es-ip&gt;:9200/_plugin/bigdesk/&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;head:&amp;nbsp;http://&amp;lt;your-es-ip&amp;gt;:9200/_plugin/head/&lt;/li&gt;
+&lt;li&gt;bigdesk:&amp;nbsp;http://&amp;lt;your-es-ip&amp;gt;:9200/_plugin/bigdesk/&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h1&gt;配置supervisor&lt;/h1&gt;
 &lt;p&gt;如果可以正常启动，我们通过supervisor管理Elasticsearch和Logstash。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install supervisor &lt;span class="c"&gt;# 后来拿到root权限，否则还要先弄Python virtual env&lt;/span&gt;
@@ -352,11 +354,11 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 
 &lt;p&gt;参考：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;http://stackoverflow.com/questions/23656458/elasticsearch-what-to-do-with-unassigned-shards/&lt;/li&gt;
-&lt;li&gt;http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch&lt;/li&gt;
-&lt;li&gt;https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html&lt;/li&gt;
-&lt;li&gt;http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Dashboard"></category><category term="Elasticsearch"></category><category term="Logstash"></category><category term="ELK"></category></entry><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu/debian.html" rel="alternate"></link><updated>2015-05-23T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu/debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/23656458/elasticsearch-what-to-do-with-unassigned-shards/"&gt;http://stackoverflow.com/questions/23656458/elasticsearch-what-to-do-with-unassigned-shards/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch"&gt;http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html"&gt;https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix"&gt;http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Dashboard"></category><category term="Elasticsearch"></category><category term="Logstash"></category><category term="ELK"></category></entry><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu-or-debian.html" rel="alternate"></link><updated>2015-05-23T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu-or-debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
 &lt;p&gt;我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&amp;nbsp;4。&lt;/p&gt;
 &lt;h1&gt;监控主机安装Nagios&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
@@ -659,8 +661,8 @@ define service &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;p&gt;下次再学习并补充联系人及报警相关设置。&lt;/p&gt;
 &lt;p&gt;参考：&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04&lt;/li&gt;
-&lt;li&gt;http://netkiller.github.io/monitoring/nagios/&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04"&gt;https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://netkiller.github.io/monitoring/nagios/"&gt;http://netkiller.github.io/monitoring/nagios/&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Debian"></category><category term="Monitor"></category><category term="Management"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><updated>2015-05-22T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="n"&gt;local_filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
