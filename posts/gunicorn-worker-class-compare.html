@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Gunicorn 几种 Worker class&nbsp;性能测试比较
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="gunicorn" />
+      <meta name="tags" contents="flask" />
+      <meta name="tags" contents="gevent" />
+      <meta name="tags" contents="eventlet" />
+      <meta name="tags" contents="tornado" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Gunicorn 几种 Worker class&nbsp;性能测试比较</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/gunicorn.html">gunicorn</a> <a href="http://blog.wiseturtles.com/tag/flask.html">flask</a> <a href="http://blog.wiseturtles.com/tag/gevent.html">gevent</a> <a href="http://blog.wiseturtles.com/tag/eventlet.html">eventlet</a> <a href="http://blog.wiseturtles.com/tag/tornado.html">tornado</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-06-26
+
+        </div>
+
+        <div><h2>简介</h2>
+<ul>
+<li>Gunicorn, 一个支持<span class="caps">WSGI</span>协议的web服务器</li>
+<li>Flask, 一个轻量级的python&nbsp;web框架</li>
+</ul>
+<p>Gunicorn目前自带支持几种工作方式:</p>
+<ul>
+<li>sync&nbsp;(默认值)</li>
+<li>eventlet</li>
+<li>gevent</li>
+<li>tornado</li>
+</ul>
+<h2>测试环境准备</h2>
+<ol>
+<li>python&nbsp;2.7+</li>
+<li>redis-server&nbsp;2.8.4</li>
+<li>压力测试工具ab</li>
+<li>
+<p>代码及相关python包准备&nbsp;创建虚一个新的虚拟环境并安装需要的包</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkvirtualenv <span class="nb">test</span>
+<span class="nv">$ </span>workon <span class="nb">test</span>
+
+<span class="nv">$ </span>cat requirements.txt
+<span class="nv">gunicorn</span><span class="o">==</span>19.3.0
+<span class="nv">flask</span><span class="o">==</span>0.10.1
+flask-redis<span class="o">==</span>0.1.0
+<span class="nv">gevent</span><span class="o">==</span>1.0.2
+<span class="nv">tornado</span><span class="o">==</span>4.2
+<span class="nv">eventlet</span><span class="o">==</span>0.17.4
+
+<span class="nv">$ </span>pip install -r requirements.txt
+</pre></div>
+
+
+<p>测试程序<code>app.py</code></p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask_redis</span> <span class="kn">import</span> <span class="n">FlaskRedis</span>
+
+<span class="n">REDIS_URL</span> <span class="o">=</span> <span class="s">&quot;redis://:password-string@localhost:6379/0&quot;</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">redis</span> <span class="o">=</span> <span class="n">FlaskRedis</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+</li>
+</ol>
+<h2>开始测试</h2>
+<ol>
+<li>
+<p>使用ab工具,并行500个客户端,&nbsp;发送50000次请求</p>
+<div class="highlight"><pre><span class="nv">$ </span>ab -c <span class="m">500</span> -t <span class="m">30</span> -r <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>分别使用四种方式启动使用服务，&nbsp;并开启４个worker</p>
+<div class="highlight"><pre><span class="nv">$ </span>gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class sync
+<span class="nv">$ </span>gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class gevent
+<span class="nv">$ </span>gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class tornado
+<span class="nv">$ </span>gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class eventlet
+</pre></div>
+
+
+</li>
+<li>
+<p>结果比较</p>
+</li>
+</ol>
+<table class="table table-striped table-bordered table-hover table-condensed">
+    <tbody>
+        <tr>
+            <td>
+                Worker class
+            </td>
+            <td>
+                Time taken for tests
+            </td>
+            <td>
+                Complete requests
+            </td>
+            <td>
+                Failed requests
+            </td>
+            <td>
+                Requests per second
+            </td>
+            <td>
+                用户平均请求等待时间
+            </td>
+            <td>
+                服务器平均处理时间
+            </td>
+            <td>
+                最小连接时间
+            </td>
+            <td>
+                平均连接时间
+            </td>
+            <td>
+                50%的连接时间
+            </td>
+            <td>
+                最大连接时间
+            </td>
+        </tr>
+        <tr>
+            <td>
+                sync
+            </td>
+            <td>
+                37.363 s
+            </td>
+            <td>
+                49928
+            </td>
+            <td>
+                793
+            </td>
+            <td>
+                1336.29
+            </td>
+            <td>
+                374.169 ms
+            </td>
+            <td>
+                0.748 ms
+            </td>
+            <td>
+                5 ms
+            </td>
+            <td>
+                75 ms
+            </td>
+            <td>
+                17 ms
+            </td>
+            <td>
+                31746 ms
+            </td>
+        </tr>
+        <tr>
+            <td>
+               tornado
+            </td>
+            <td>
+               13.995
+            </td>
+            <td>
+                50000
+            </td>
+            <td>
+                543
+            </td>
+            <td>
+               3572.64
+            </td>
+            <td>
+                139.953 ms
+            </td>
+            <td>
+                0.280 ms
+            </td>
+            <td>
+                6 ms
+            </td>
+            <td>
+                110 ms
+            </td>
+            <td>
+                24 ms
+            </td>
+            <td>
+                13837 ms
+            </td>
+        </tr>
+        <tr>
+            <td>
+              eventlet
+            </td>
+            <td>
+              8.156
+            </td>
+            <td>
+                50000
+            </td>
+            <td>
+                0
+            </td>
+            <td>
+               6130.74
+            </td>
+            <td>
+               81.556
+            </td>
+            <td>
+                0.163 ms
+            </td>
+            <td>
+                2 ms
+            </td>
+            <td>
+                80 ms
+            </td>
+            <td>
+               62 ms
+            </td>
+            <td>
+               3153 ms
+            </td>
+        </tr>
+        <tr>
+            <td>
+                gevent
+            </td>
+            <td>
+                7.647 s
+            </td>
+            <td>
+                50000
+            </td>
+            <td>
+                0
+            </td>
+            <td>
+               6538.23
+            </td>
+            <td>
+                76.473 ms
+            </td>
+            <td>
+                0.153 ms
+            </td>
+            <td>
+                1 ms
+            </td>
+            <td>
+                74 ms
+            </td>
+            <td>
+                52 ms
+            </td>
+            <td>
+                1122 ms
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<p>从测试结果来看，默认自带sync效率很低，并且在测试时发现，采用sync方式在高并发时
+会出现woker重启的情况,&nbsp;如下:</p>
+<pre>
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27064)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27051)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27045)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27046)
+[2015-06-25 11:31:06 +0000] [27064] [INFO] Worker exiting (pid: 27064)
+[2015-06-25 11:31:06 +0000] [27051] [INFO] Worker exiting (pid: 27051)
+[2015-06-25 11:31:06 +0000] [27045] [INFO] Worker exiting (pid: 27045)
+[2015-06-25 11:31:06 +0000] [27046] [INFO] Worker exiting (pid: 27046)
+[2015-06-25 11:31:06 +0000] [27263] [INFO] Booting worker with pid: 27263
+[2015-06-25 11:31:06 +0000] [27264] [INFO] Booting worker with pid: 27264
+[2015-06-25 11:31:06 +0000] [27277] [INFO] Booting worker with pid: 27277
+[2015-06-25 11:31:06 +0000] [27280] [INFO] Booting worker with pid: 27280
+</pre>
+
+<p>eventlet&nbsp;和gevent两种方式效果最好，数据基本差不多.</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="gunicorn-worker-class-compare" data-title="Gunicorn 几种 Worker class&nbsp;性能测试比较" data-url="http://blog.wiseturtles.com/posts/gunicorn-worker-class-compare.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

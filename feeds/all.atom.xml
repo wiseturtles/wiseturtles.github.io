@@ -1,5 +1,481 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-19T00:00:00+08:00</updated><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><updated>2015-06-19T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-26T12:59:00+08:00</updated><entry><title>高并发下Flask中采用gevent方式启用导致redis连接数增加</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
+&lt;p&gt;最近线上的redis服务器会莫名出现无法突然之间无法连接的情况，需要重启一下redis服务器才能正常工作，感觉很诡异.&amp;nbsp;查看redis日志，发现报如下错误:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Error allocating resoures for the&amp;nbsp;client&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;网上搜索之后，找到&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html"&gt;http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;根据描述,&amp;nbsp;怀疑可能是redis连接数太多导致,于是查看&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt; grep connected_clients
+connected_clients:6997
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这还是我刚刚才重新启动了redis&amp;nbsp;server不久看到的数据。&lt;/p&gt;
+&lt;p&gt;为什么会用这么高连接数?上面的文章中介绍的是由于代码引起不停地创建redis Connection&amp;nbsp;pool导致。仔细检查了自己的代码之后，发现不会有这种情况，但为什么还是会有这么高的连接?&lt;/p&gt;
+&lt;h3&gt;验证&lt;/h3&gt;
+&lt;p&gt;经过调试发现。虽然使用py-redis连接redis, 它使用到了连接池，但是，连接池默认是没有设置连接数的上限(可以通过相关参数设置)，当高并发时，它会不断的创建连接，并且这些连接用完之后也不会自动释放。
+由于我们的服务运行采用的gevent方式。 因此, 更容易引起这个问题。为了验证自己的
+猜测, 写了个简单的计数程序&lt;code&gt;app.py&lt;/code&gt;测试一下。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;
+
+&lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;redis://:password@localhost:6379/0&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;DEBUG&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;redis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;采用gevent方式,&amp;nbsp;单worker启动&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;1&lt;/span&gt; app:app --worker-class gevent --error-logfile -
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用ab模拟500个用户发送50000次请求的高并发&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ab  -c &lt;span class="m"&gt;500&lt;/span&gt;  -t &lt;span class="m"&gt;30&lt;/span&gt; -r  &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;查看连接数&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt;grep connected_clients
+connected_clients:232
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以看到, 在高并发, 单worker的条件下，&amp;nbsp;一个连接池的连接数会就有两百多。然后测试开启４个worker的话，能达到一千二百多。&lt;/p&gt;
+&lt;p&gt;这些连接在连接池里使用之后，基本上都长期处于idle状态，白白浪费资源.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;redis-cli -a password client list
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:45327 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;170&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;35&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;34&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43684 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;44&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43704 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;45&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43705 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;46&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43729 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;47&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43730 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;48&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43731 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;49&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+&lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
+&lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43732 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;50&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
+.....
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;解决方式:&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;从目前的情况来看，是由于连接池维持了太多的连接导致.　因此不用的连接池应该及&amp;nbsp;时被释放掉。通过设置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;reidis-cli -a password CONFIG SET timeout 30
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;让redis自动释放掉idle时间超过30秒的连接,　设置之后，服务器上redis连接数一&amp;nbsp;下子降下来了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;让redis连接也异步&lt;/p&gt;
+&lt;p&gt;根据另一篇文章介绍使用redis异步, 自己测试之后发现没有什么效果，也不知道哪
+里没有做对,&amp;nbsp;有机会再研究。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/"&gt;https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="flask"></category><category term="redis"></category><category term="gevent"></category></entry><entry><title>Gunicorn 几种 Worker class 性能测试比较</title><link href="http://blog.wiseturtles.com/posts/gunicorn-worker-class-compare.html" rel="alternate"></link><updated>2015-06-26T09:30:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/gunicorn-worker-class-compare.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Gunicorn, 一个支持&lt;span class="caps"&gt;WSGI&lt;/span&gt;协议的web服务器&lt;/li&gt;
+&lt;li&gt;Flask, 一个轻量级的python&amp;nbsp;web框架&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Gunicorn目前自带支持几种工作方式:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sync&amp;nbsp;(默认值)&lt;/li&gt;
+&lt;li&gt;eventlet&lt;/li&gt;
+&lt;li&gt;gevent&lt;/li&gt;
+&lt;li&gt;tornado&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;测试环境准备&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;python&amp;nbsp;2.7+&lt;/li&gt;
+&lt;li&gt;redis-server&amp;nbsp;2.8.4&lt;/li&gt;
+&lt;li&gt;压力测试工具ab&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;代码及相关python包准备&amp;nbsp;创建虚一个新的虚拟环境并安装需要的包&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvirtualenv &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;workon &lt;span class="nb"&gt;test&lt;/span&gt;
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;cat requirements.txt
+&lt;span class="nv"&gt;gunicorn&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;19.3.0
+&lt;span class="nv"&gt;flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.10.1
+flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
+&lt;span class="nv"&gt;gevent&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;1.0.2
+&lt;span class="nv"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;4.2
+&lt;span class="nv"&gt;eventlet&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.17.4
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install -r requirements.txt
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;测试程序&lt;code&gt;app.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;
+
+&lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;redis://:password-string@localhost:6379/0&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;redis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;开始测试&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;使用ab工具,并行500个客户端,&amp;nbsp;发送50000次请求&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;500&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;分别使用四种方式启动使用服务，&amp;nbsp;并开启４个worker&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class sync
+&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class gevent
+&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class tornado
+&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class eventlet
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;结果比较&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table class="table table-striped table-bordered table-hover table-condensed"&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                Worker class
+            &lt;/td&gt;
+            &lt;td&gt;
+                Time taken for tests
+            &lt;/td&gt;
+            &lt;td&gt;
+                Complete requests
+            &lt;/td&gt;
+            &lt;td&gt;
+                Failed requests
+            &lt;/td&gt;
+            &lt;td&gt;
+                Requests per second
+            &lt;/td&gt;
+            &lt;td&gt;
+                用户平均请求等待时间
+            &lt;/td&gt;
+            &lt;td&gt;
+                服务器平均处理时间
+            &lt;/td&gt;
+            &lt;td&gt;
+                最小连接时间
+            &lt;/td&gt;
+            &lt;td&gt;
+                平均连接时间
+            &lt;/td&gt;
+            &lt;td&gt;
+                50%的连接时间
+            &lt;/td&gt;
+            &lt;td&gt;
+                最大连接时间
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                sync
+            &lt;/td&gt;
+            &lt;td&gt;
+                37.363 s
+            &lt;/td&gt;
+            &lt;td&gt;
+                49928
+            &lt;/td&gt;
+            &lt;td&gt;
+                793
+            &lt;/td&gt;
+            &lt;td&gt;
+                1336.29
+            &lt;/td&gt;
+            &lt;td&gt;
+                374.169 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                0.748 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                5 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                75 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                17 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                31746 ms
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+               tornado
+            &lt;/td&gt;
+            &lt;td&gt;
+               13.995
+            &lt;/td&gt;
+            &lt;td&gt;
+                50000
+            &lt;/td&gt;
+            &lt;td&gt;
+                543
+            &lt;/td&gt;
+            &lt;td&gt;
+               3572.64
+            &lt;/td&gt;
+            &lt;td&gt;
+                139.953 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                0.280 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                6 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                110 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                24 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                13837 ms
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+              eventlet
+            &lt;/td&gt;
+            &lt;td&gt;
+              8.156
+            &lt;/td&gt;
+            &lt;td&gt;
+                50000
+            &lt;/td&gt;
+            &lt;td&gt;
+                0
+            &lt;/td&gt;
+            &lt;td&gt;
+               6130.74
+            &lt;/td&gt;
+            &lt;td&gt;
+               81.556
+            &lt;/td&gt;
+            &lt;td&gt;
+                0.163 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                2 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                80 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+               62 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+               3153 ms
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;
+                gevent
+            &lt;/td&gt;
+            &lt;td&gt;
+                7.647 s
+            &lt;/td&gt;
+            &lt;td&gt;
+                50000
+            &lt;/td&gt;
+            &lt;td&gt;
+                0
+            &lt;/td&gt;
+            &lt;td&gt;
+               6538.23
+            &lt;/td&gt;
+            &lt;td&gt;
+                76.473 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                0.153 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                1 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                74 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                52 ms
+            &lt;/td&gt;
+            &lt;td&gt;
+                1122 ms
+            &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;从测试结果来看，默认自带sync效率很低，并且在测试时发现，采用sync方式在高并发时
+会出现woker重启的情况,&amp;nbsp;如下:&lt;/p&gt;
+&lt;pre&gt;
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27064)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27051)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27045)
+[2015-06-25 11:31:06 +0000] [27040] [CRITICAL] WORKER TIMEOUT (pid:27046)
+[2015-06-25 11:31:06 +0000] [27064] [INFO] Worker exiting (pid: 27064)
+[2015-06-25 11:31:06 +0000] [27051] [INFO] Worker exiting (pid: 27051)
+[2015-06-25 11:31:06 +0000] [27045] [INFO] Worker exiting (pid: 27045)
+[2015-06-25 11:31:06 +0000] [27046] [INFO] Worker exiting (pid: 27046)
+[2015-06-25 11:31:06 +0000] [27263] [INFO] Booting worker with pid: 27263
+[2015-06-25 11:31:06 +0000] [27264] [INFO] Booting worker with pid: 27264
+[2015-06-25 11:31:06 +0000] [27277] [INFO] Booting worker with pid: 27277
+[2015-06-25 11:31:06 +0000] [27280] [INFO] Booting worker with pid: 27280
+&lt;/pre&gt;
+
+&lt;p&gt;eventlet&amp;nbsp;和gevent两种方式效果最好，数据基本差不多.&lt;/p&gt;</summary><category term="gunicorn"></category><category term="flask"></category><category term="gevent"></category><category term="eventlet"></category><category term="tornado"></category></entry><entry><title>压力测试工具ab webbench</title><link href="http://blog.wiseturtles.com/posts/server-benchmarkingt-tool-ab-and-webbench.html" rel="alternate"></link><updated>2015-06-26T07:29:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/server-benchmarkingt-tool-ab-and-webbench.html</id><summary type="html">&lt;h2&gt;ab&lt;/h2&gt;
+&lt;p&gt;ab是apache自带的压力测试工具。使用简单，便于一些简单的压力测试.&lt;/p&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install apache2-utils
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用帮助&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ab -h
+Usage: ab &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;http&lt;span class="o"&gt;[&lt;/span&gt;s&lt;span class="o"&gt;]&lt;/span&gt;://&lt;span class="o"&gt;]&lt;/span&gt;hostname&lt;span class="o"&gt;[&lt;/span&gt;:port&lt;span class="o"&gt;]&lt;/span&gt;/path
+Options are:
+    -n requests     Number of requests to perform &lt;span class="c"&gt;# 请求次数&lt;/span&gt;
+    -c concurrency  Number of multiple requests to make at a &lt;span class="nb"&gt;time&lt;/span&gt; &lt;span class="c"&gt;# 并发数&lt;/span&gt;
+    -t timelimit    Seconds to max. to spend on benchmarking &lt;span class="c"&gt;# 压力测试的最大时间&lt;/span&gt;
+                    This implies -n 50000
+    -s timeout      Seconds to max. &lt;span class="nb"&gt;wait &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; each response
+                    Default is &lt;span class="m"&gt;30&lt;/span&gt; seconds
+    -b windowsize   Size of TCP send/receive buffer, in bytes
+    -B address      Address to &lt;span class="nb"&gt;bind &lt;/span&gt;to when making outgoing connections
+    -p postfile     File containing data to POST. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T  &lt;span class="c"&gt;# POST方式，同时必须使用-T指定“Content-Type”&lt;/span&gt;
+    -u putfile      File containing data to PUT. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T   &lt;span class="c"&gt;# PUT方式&lt;/span&gt;
+    -T content-type Content-type header to use &lt;span class="k"&gt;for&lt;/span&gt; POST/PUT data, eg.
+                    &lt;span class="s1"&gt;&amp;#39;application/x-www-form-urlencoded&amp;#39;&lt;/span&gt;
+                    Default is &lt;span class="s1"&gt;&amp;#39;text/plain&amp;#39;&lt;/span&gt;
+    -v verbosity    How much troubleshooting info to print
+    -w              Print out results in HTML tables &lt;span class="c"&gt;# 以html表格形式输出结果&lt;/span&gt;
+    -i              Use HEAD instead of GET &lt;span class="c"&gt;# 使用Head请求&lt;/span&gt;
+    -x attributes   String to insert as table attributes
+    -y attributes   String to insert as tr attributes
+    -z attributes   String to insert as td or th attributes
+    -C attribute    Add cookie, eg. &lt;span class="s1"&gt;&amp;#39;Apache=1234&amp;#39;&lt;/span&gt;. &lt;span class="o"&gt;(&lt;/span&gt;repeatable&lt;span class="o"&gt;)&lt;/span&gt;
+    -H attribute    Add Arbitrary header line, eg. &lt;span class="s1"&gt;&amp;#39;Accept-Encoding: gzip&amp;#39;&lt;/span&gt;  &lt;span class="c"&gt;# 添加HTTP头信息&lt;/span&gt;
+                    Inserted after all normal header lines. &lt;span class="o"&gt;(&lt;/span&gt;repeatable&lt;span class="o"&gt;)&lt;/span&gt;
+    -A attribute    Add Basic WWW Authentication, the attributes   &lt;span class="c"&gt;# 添加认证信息&lt;/span&gt;
+                    are a colon separated username and password.
+    -P attribute    Add Basic Proxy Authentication, the attributes
+                    are a colon separated username and password.
+    -X proxy:port   Proxyserver and port number to use
+    -V              Print version number and &lt;span class="nb"&gt;exit&lt;/span&gt;
+    -k              Use HTTP KeepAlive feature
+    -d              Do not show percentiles served table.
+    -S              Do not show confidence estimators and warnings.
+    -q              Do not show progress when doing more than &lt;span class="m"&gt;150&lt;/span&gt; requests
+    -l              Accept variable document length &lt;span class="o"&gt;(&lt;/span&gt;use this &lt;span class="k"&gt;for&lt;/span&gt; dynamic pages&lt;span class="o"&gt;)&lt;/span&gt;
+    -g filename     Output collected data to gnuplot format file.
+    -e filename     Output CSV file with percentages served
+    -r              Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;exit &lt;/span&gt;on socket receive errors.   &lt;span class="c"&gt;# 在接收到socket错误时不退出&lt;/span&gt;
+    -h              Display usage information &lt;span class="o"&gt;(&lt;/span&gt;this message&lt;span class="o"&gt;)&lt;/span&gt;
+    -Z ciphersuite  Specify SSL/TLS cipher suite &lt;span class="o"&gt;(&lt;/span&gt;See openssl ciphers&lt;span class="o"&gt;)&lt;/span&gt;
+    -f protocol     Specify SSL/TLS protocol
+                    &lt;span class="o"&gt;(&lt;/span&gt;SSL3, TLS1, TLS1.1, TLS1.2 or ALL&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用示例&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# GET&lt;/span&gt;
+
+&lt;span class="c"&gt;# 30秒内并行1000个客户端，请求默认的50000次请求&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t  &lt;span class="m"&gt;30&lt;/span&gt; http://www.baidu.com/
+&lt;span class="c"&gt;# 并发100个客户端，请求10000次&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;100&lt;/span&gt; -n &lt;span class="m"&gt;10000&lt;/span&gt; http://www.baidu.com/
+
+&lt;span class="c"&gt;# POST&lt;/span&gt;
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;cat data.json
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;apps&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;package_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;com.baidu.browser.apps&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;app_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;百度浏览器&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version_code&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;version_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;5.3.4.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;pm_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;TCL M2M&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;# post json 数据&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -p data.json -T &lt;span class="s2"&gt;&amp;quot;application/json&amp;quot;&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;127.0.0.1:8888/m3/apps/update&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;更多&lt;/h3&gt;
+&lt;p&gt;关于其他的命令选项及命令的结果输出介绍，可以参看：&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://httpd.apache.org/docs/2.2/programs/ab.html"&gt;http://httpd.apache.org/docs/2.2/programs/ab.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;webbench&lt;/h2&gt;
+&lt;p&gt;另一个轻量级的压力测试工具，据说比ab好用，但是好像不支持模拟&lt;span class="caps"&gt;POST&lt;/span&gt;请求&lt;/p&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;p&gt;可以到&lt;a href="http://home.tiscali.cz/~cz210552/webbench.html"&gt;http://home.tiscali.cz/~cz210552/webbench.html&lt;/a&gt;获取最新版本的下载地址&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;解压之后&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo make install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;使用帮助&lt;/h3&gt;
+&lt;p&gt;使用上和ab差不多，具体参数可以参考下面&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;webbench
+webbench &lt;span class="o"&gt;[&lt;/span&gt;option&lt;span class="o"&gt;]&lt;/span&gt;... URL
+-f&lt;span class="p"&gt;|&lt;/span&gt;--force               Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;wait &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; reply from server.
+-r&lt;span class="p"&gt;|&lt;/span&gt;--reload              Send reload request - Pragma: no-cache.
+-t&lt;span class="p"&gt;|&lt;/span&gt;--time &amp;lt;sec&amp;gt;          Run benchmark &lt;span class="k"&gt;for&lt;/span&gt; &amp;lt;sec&amp;gt; seconds. Default 30.
+-p&lt;span class="p"&gt;|&lt;/span&gt;--proxy &amp;lt;server:port&amp;gt; Use proxy server &lt;span class="k"&gt;for&lt;/span&gt; request.
+-c&lt;span class="p"&gt;|&lt;/span&gt;--clients &amp;lt;n&amp;gt;         Run &amp;lt;n&amp;gt; HTTP clients at once. Default one.
+-9&lt;span class="p"&gt;|&lt;/span&gt;--http09              Use HTTP/0.9 style requests.
+-1&lt;span class="p"&gt;|&lt;/span&gt;--http10              Use HTTP/1.0 protocol.
+-2&lt;span class="p"&gt;|&lt;/span&gt;--http11              Use HTTP/1.1 protocol.
+--get                    Use GET request method.
+--head                   Use HEAD request method.
+--options                Use OPTIONS request method.
+--trace                  Use TRACE request method.
+-?&lt;span class="p"&gt;|&lt;/span&gt;-h&lt;span class="p"&gt;|&lt;/span&gt;--help             This information.
+-V&lt;span class="p"&gt;|&lt;/span&gt;--version             Display program version.
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="ab"></category><category term="workbench"></category></entry><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><updated>2015-06-19T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
 用了以下插件:analysis-icu, analysis-ik, analysis-mmseg, analysis-pinyin
 当时&lt;span class="caps"&gt;ES&lt;/span&gt;版本为1.2.1，一直没有升级，最近升级到1.4.5。&lt;/p&gt;
 &lt;p&gt;我们之前服务器是Debian 7，现在服务器是CentOS 6.5；服务器版本和&lt;span class="caps"&gt;ES&lt;/span&gt;没有关系，至少我没碰到任何系统问题。&lt;/p&gt;

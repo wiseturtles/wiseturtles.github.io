@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - 高并发下Flask中采用gevent方式启用导致redis连接数增加
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="flask" />
+      <meta name="tags" contents="redis" />
+      <meta name="tags" contents="gevent" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>高并发下Flask中采用gevent方式启用导致redis连接数增加</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/flask.html">flask</a> <a href="http://blog.wiseturtles.com/tag/redis.html">redis</a> <a href="http://blog.wiseturtles.com/tag/gevent.html">gevent</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-06-26
+
+        </div>
+
+        <div><h3>现象</h3>
+<p>最近线上的redis服务器会莫名出现无法突然之间无法连接的情况，需要重启一下redis服务器才能正常工作，感觉很诡异.&nbsp;查看redis日志，发现报如下错误:</p>
+<blockquote>
+<p>Error allocating resoures for the&nbsp;client</p>
+</blockquote>
+<p>网上搜索之后，找到</p>
+<p><a href="http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html">http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html</a></p>
+<p>根据描述,&nbsp;怀疑可能是redis连接数太多导致,于是查看</p>
+<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password info <span class="p">|</span> grep connected_clients
+connected_clients:6997
+</pre></div>
+
+
+<p>这还是我刚刚才重新启动了redis&nbsp;server不久看到的数据。</p>
+<p>为什么会用这么高连接数?上面的文章中介绍的是由于代码引起不停地创建redis Connection&nbsp;pool导致。仔细检查了自己的代码之后，发现不会有这种情况，但为什么还是会有这么高的连接?</p>
+<h3>验证</h3>
+<p>经过调试发现。虽然使用py-redis连接redis, 它使用到了连接池，但是，连接池默认是没有设置连接数的上限(可以通过相关参数设置)，当高并发时，它会不断的创建连接，并且这些连接用完之后也不会自动释放。
+由于我们的服务运行采用的gevent方式。 因此, 更容易引起这个问题。为了验证自己的
+猜测, 写了个简单的计数程序<code>app.py</code>测试一下。</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span> <span class="nn">flask_redis</span> <span class="kn">import</span> <span class="n">FlaskRedis</span>
+
+<span class="n">REDIS_URL</span> <span class="o">=</span> <span class="s">&quot;redis://:password@localhost:6379/0&quot;</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="n">redis</span> <span class="o">=</span> <span class="n">FlaskRedis</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+
+<p>采用gevent方式,&nbsp;单worker启动</p>
+<div class="highlight"><pre><span class="nv">$ </span>gunicorn -w <span class="m">1</span> app:app --worker-class gevent --error-logfile -
+</pre></div>
+
+
+<p>使用ab模拟500个用户发送50000次请求的高并发</p>
+<div class="highlight"><pre><span class="nv">$ </span>ab  -c <span class="m">500</span>  -t <span class="m">30</span> -r  <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
+</pre></div>
+
+
+<p>查看连接数</p>
+<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password info <span class="p">|</span>grep connected_clients
+connected_clients:232
+</pre></div>
+
+
+<p>可以看到, 在高并发, 单worker的条件下，&nbsp;一个连接池的连接数会就有两百多。然后测试开启４个worker的话，能达到一千二百多。</p>
+<p>这些连接在连接池里使用之后，基本上都长期处于idle状态，白白浪费资源.</p>
+<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password client list
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:45327 <span class="nv">fd</span><span class="o">=</span><span class="m">170</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">35</span> <span class="nv">idle</span><span class="o">=</span><span class="m">34</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43684 <span class="nv">fd</span><span class="o">=</span><span class="m">44</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43704 <span class="nv">fd</span><span class="o">=</span><span class="m">45</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43705 <span class="nv">fd</span><span class="o">=</span><span class="m">46</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43729 <span class="nv">fd</span><span class="o">=</span><span class="m">47</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43730 <span class="nv">fd</span><span class="o">=</span><span class="m">48</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43731 <span class="nv">fd</span><span class="o">=</span><span class="m">49</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+<span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
+<span class="nv">addr</span><span class="o">=</span>127.0.0.1:43732 <span class="nv">fd</span><span class="o">=</span><span class="m">50</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
+.....
+</pre></div>
+
+
+<h3>解决方式:</h3>
+<ol>
+<li>
+<p>从目前的情况来看，是由于连接池维持了太多的连接导致.　因此不用的连接池应该及&nbsp;时被释放掉。通过设置</p>
+<div class="highlight"><pre><span class="nv">$ </span>reidis-cli -a password CONFIG SET timeout 30
+</pre></div>
+
+
+<p>让redis自动释放掉idle时间超过30秒的连接,　设置之后，服务器上redis连接数一&nbsp;下子降下来了。</p>
+</li>
+<li>
+<p>让redis连接也异步</p>
+<p>根据另一篇文章介绍使用redis异步, 自己测试之后发现没有什么效果，也不知道哪
+里没有做对,&nbsp;有机会再研究。</p>
+<p><a href="https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/">https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/</a></p>
+</li>
+</ol></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="flask-redis-gevent" data-title="高并发下Flask中采用gevent方式启用导致redis连接数增加" data-url="http://blog.wiseturtles.com/posts/flask-redis-gevent.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

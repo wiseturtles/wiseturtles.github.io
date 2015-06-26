@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - 压力测试工具ab &&&nbsp;webbench
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="ab" />
+      <meta name="tags" contents="workbench" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>压力测试工具ab &&&nbsp;webbench</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/ab.html">ab</a> <a href="http://blog.wiseturtles.com/tag/workbench.html">workbench</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-06-26
+
+        </div>
+
+        <div><h2>ab</h2>
+<p>ab是apache自带的压力测试工具。使用简单，便于一些简单的压力测试.</p>
+<h3>安装</h3>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install apache2-utils
+</pre></div>
+
+
+<h3>使用帮助</h3>
+<div class="highlight"><pre><span class="nv">$ </span>ab -h
+Usage: ab <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>http<span class="o">[</span>s<span class="o">]</span>://<span class="o">]</span>hostname<span class="o">[</span>:port<span class="o">]</span>/path
+Options are:
+    -n requests     Number of requests to perform <span class="c"># 请求次数</span>
+    -c concurrency  Number of multiple requests to make at a <span class="nb">time</span> <span class="c"># 并发数</span>
+    -t timelimit    Seconds to max. to spend on benchmarking <span class="c"># 压力测试的最大时间</span>
+                    This implies -n 50000
+    -s timeout      Seconds to max. <span class="nb">wait </span><span class="k">for</span> each response
+                    Default is <span class="m">30</span> seconds
+    -b windowsize   Size of TCP send/receive buffer, in bytes
+    -B address      Address to <span class="nb">bind </span>to when making outgoing connections
+    -p postfile     File containing data to POST. Remember also to <span class="nb">set</span> -T  <span class="c"># POST方式，同时必须使用-T指定“Content-Type”</span>
+    -u putfile      File containing data to PUT. Remember also to <span class="nb">set</span> -T   <span class="c"># PUT方式</span>
+    -T content-type Content-type header to use <span class="k">for</span> POST/PUT data, eg.
+                    <span class="s1">&#39;application/x-www-form-urlencoded&#39;</span>
+                    Default is <span class="s1">&#39;text/plain&#39;</span>
+    -v verbosity    How much troubleshooting info to print
+    -w              Print out results in HTML tables <span class="c"># 以html表格形式输出结果</span>
+    -i              Use HEAD instead of GET <span class="c"># 使用Head请求</span>
+    -x attributes   String to insert as table attributes
+    -y attributes   String to insert as tr attributes
+    -z attributes   String to insert as td or th attributes
+    -C attribute    Add cookie, eg. <span class="s1">&#39;Apache=1234&#39;</span>. <span class="o">(</span>repeatable<span class="o">)</span>
+    -H attribute    Add Arbitrary header line, eg. <span class="s1">&#39;Accept-Encoding: gzip&#39;</span>  <span class="c"># 添加HTTP头信息</span>
+                    Inserted after all normal header lines. <span class="o">(</span>repeatable<span class="o">)</span>
+    -A attribute    Add Basic WWW Authentication, the attributes   <span class="c"># 添加认证信息</span>
+                    are a colon separated username and password.
+    -P attribute    Add Basic Proxy Authentication, the attributes
+                    are a colon separated username and password.
+    -X proxy:port   Proxyserver and port number to use
+    -V              Print version number and <span class="nb">exit</span>
+    -k              Use HTTP KeepAlive feature
+    -d              Do not show percentiles served table.
+    -S              Do not show confidence estimators and warnings.
+    -q              Do not show progress when doing more than <span class="m">150</span> requests
+    -l              Accept variable document length <span class="o">(</span>use this <span class="k">for</span> dynamic pages<span class="o">)</span>
+    -g filename     Output collected data to gnuplot format file.
+    -e filename     Output CSV file with percentages served
+    -r              Don<span class="err">&#39;</span>t <span class="nb">exit </span>on socket receive errors.   <span class="c"># 在接收到socket错误时不退出</span>
+    -h              Display usage information <span class="o">(</span>this message<span class="o">)</span>
+    -Z ciphersuite  Specify SSL/TLS cipher suite <span class="o">(</span>See openssl ciphers<span class="o">)</span>
+    -f protocol     Specify SSL/TLS protocol
+                    <span class="o">(</span>SSL3, TLS1, TLS1.1, TLS1.2 or ALL<span class="o">)</span>
+</pre></div>
+
+
+<h3>使用示例</h3>
+<div class="highlight"><pre><span class="c"># GET</span>
+
+<span class="c"># 30秒内并行1000个客户端，请求默认的50000次请求</span>
+<span class="nv">$ </span>ab -c <span class="m">1000</span> -t  <span class="m">30</span> http://www.baidu.com/
+<span class="c"># 并发100个客户端，请求10000次</span>
+<span class="nv">$ </span>ab -c <span class="m">100</span> -n <span class="m">10000</span> http://www.baidu.com/
+
+<span class="c"># POST</span>
+
+<span class="nv">$ </span>cat data.json
+<span class="o">{</span><span class="s2">&quot;apps&quot;</span>: <span class="o">[{</span><span class="s2">&quot;package_name&quot;</span>: <span class="s2">&quot;com.baidu.browser.apps&quot;</span>, <span class="s2">&quot;app_name&quot;</span>:<span class="s2">&quot;百度浏览器&quot;</span>, <span class="s2">&quot;version_code&quot;</span>: 1, <span class="s2">&quot;version_name&quot;</span>: <span class="s2">&quot;5.3.4.1&quot;</span><span class="o">}]</span>, <span class="s2">&quot;pm_name&quot;</span>:<span class="s2">&quot;TCL M2M&quot;</span><span class="o">}</span>
+
+<span class="c"># post json 数据</span>
+<span class="nv">$ </span>ab -c <span class="m">1000</span> -t <span class="m">30</span> -p data.json -T <span class="s2">&quot;application/json&quot;</span> -r <span class="s2">&quot;127.0.0.1:8888/m3/apps/update&quot;</span>
+</pre></div>
+
+
+<h3>更多</h3>
+<p>关于其他的命令选项及命令的结果输出介绍，可以参看：</p>
+<p><a href="http://httpd.apache.org/docs/2.2/programs/ab.html">http://httpd.apache.org/docs/2.2/programs/ab.html</a></p>
+<h2>webbench</h2>
+<p>另一个轻量级的压力测试工具，据说比ab好用，但是好像不支持模拟<span class="caps">POST</span>请求</p>
+<h3>安装</h3>
+<p>可以到<a href="http://home.tiscali.cz/~cz210552/webbench.html">http://home.tiscali.cz/~cz210552/webbench.html</a>获取最新版本的下载地址</p>
+<div class="highlight"><pre><span class="nv">$ </span>wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+</pre></div>
+
+
+<p>解压之后</p>
+<div class="highlight"><pre><span class="nv">$ </span>make <span class="o">&amp;&amp;</span> sudo make install
+</pre></div>
+
+
+<h3>使用帮助</h3>
+<p>使用上和ab差不多，具体参数可以参考下面</p>
+<div class="highlight"><pre><span class="nv">$ </span>webbench
+webbench <span class="o">[</span>option<span class="o">]</span>... URL
+-f<span class="p">|</span>--force               Don<span class="err">&#39;</span>t <span class="nb">wait </span><span class="k">for</span> reply from server.
+-r<span class="p">|</span>--reload              Send reload request - Pragma: no-cache.
+-t<span class="p">|</span>--time &lt;sec&gt;          Run benchmark <span class="k">for</span> &lt;sec&gt; seconds. Default 30.
+-p<span class="p">|</span>--proxy &lt;server:port&gt; Use proxy server <span class="k">for</span> request.
+-c<span class="p">|</span>--clients &lt;n&gt;         Run &lt;n&gt; HTTP clients at once. Default one.
+-9<span class="p">|</span>--http09              Use HTTP/0.9 style requests.
+-1<span class="p">|</span>--http10              Use HTTP/1.0 protocol.
+-2<span class="p">|</span>--http11              Use HTTP/1.1 protocol.
+--get                    Use GET request method.
+--head                   Use HEAD request method.
+--options                Use OPTIONS request method.
+--trace                  Use TRACE request method.
+-?<span class="p">|</span>-h<span class="p">|</span>--help             This information.
+-V<span class="p">|</span>--version             Display program version.
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="server-benchmarkingt-tool-ab-and-webbench" data-title="压力测试工具ab &&&nbsp;webbench" data-url="http://blog.wiseturtles.com/posts/server-benchmarkingt-tool-ab-and-webbench.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
