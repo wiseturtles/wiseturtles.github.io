@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-26T12:59:00+08:00</updated><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-06-30T23:11:00+08:00</updated><entry><title>Go学习笔记——(1)安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;a href="https://golang.org/doc/install"&gt;Installing Go - Getting&amp;nbsp;Started&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;必备技能之翻墙&lt;/h3&gt;
+&lt;p&gt;这个是必须的技能，不然go的官网都没法访问,&amp;nbsp;后面也不用看了。&lt;/p&gt;
+&lt;h3&gt;开发环境搭建&lt;/h3&gt;
+&lt;p&gt;整个安装过程比较简单，下载安装包，配置环境变量即可。&lt;/p&gt;
+&lt;p&gt;以Linux为例. &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;添加环境变量: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;export GOROOT=/usr/local/go&lt;/span&gt;
+&lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;GOROOT&lt;/code&gt;是告诉系统Go安装在哪里，
+&lt;code&gt;PATH&lt;/code&gt;是指定Go相关命令的调用路径.&lt;/p&gt;
+&lt;p&gt;环境检查，按照国际惯例，当然是先来&amp;#8221;Hello World&amp;#8221;. 创建&lt;code&gt;hello.go&lt;/code&gt;: &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
+
+&lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;fmt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello, world\n&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;go run hello.go
+hello, world
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题. &lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
 &lt;p&gt;最近线上的redis服务器会莫名出现无法突然之间无法连接的情况，需要重启一下redis服务器才能正常工作，感觉很诡异.&amp;nbsp;查看redis日志，发现报如下错误:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Error allocating resoures for the&amp;nbsp;client&lt;/p&gt;
