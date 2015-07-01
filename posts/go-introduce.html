@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Go学习笔记——(2)初始Go
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="go" />
+      <meta name="tags" contents="入门" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Go学习笔记——(2)初始Go</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ru-men.html">入门</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-06-30
+
+        </div>
+
+        <div><p>本文参考于:
+<a href="https://golang.org/doc/code.html">How to Write Go&nbsp;Code</a></p>
+<h2>代码组织</h2>
+<h3>工作空间</h3>
+<p>Go&nbsp;tool先天就是设计来与开源仓库协作的，不管你愿不愿意发布你的代码，构建开发环境的方式是一样的。</p>
+<p>Go代码必须保存在一个工作空间里，　一个工作空间要有三个根目录</p>
+<ul>
+<li>
+<p>src  <br />&nbsp;Go源代码</p>
+</li>
+<li>
+<p>pkg  <br />&nbsp;Go库文件</p>
+</li>
+<li>
+<p>bin <br />&nbsp;包含可执行命令</p>
+</li>
+</ul>
+<p>一个工作空间的示例:
+<pre>
+bin/
+    hello                          # command executable
+    outyet                         # command executable
+pkg/
+    linux_amd64/
+        github.com/golang/example/
+            stringutil.a           # package object
+src/
+    github.com/golang/example/
+        .git/                      # Git repository metadata
+    hello/
+        hello.go               # command source
+    outyet/
+        main.go                # command source
+        main_test.go           # test source
+    stringutil/
+        reverse.go             # package source
+        reverse_test.go        # test source
+    github.com/golang/project1/
+        ......
+    github.com/golang/project2/
+        ......
+</pre></p>
+<h3>设置<span class="caps">GOPATH</span>环境变量</h3>
+<p><span class="caps">GOPATH</span>是Go中唯一必须需要设置的环境变量, <span class="caps">GOPATH</span>就是工作空间的路径</p>
+<p>如:</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir <span class="nv">$HOME</span>/go
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="nv">$HOME</span>/go
+</pre></div>
+
+
+<h3>包路径</h3>
+<p>无论你是否要发布你的程序, 你都应该以要发布的方式来构建你的程序,最好的包名是&nbsp;github.com/user</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/github.com/user
+</pre></div>
+
+
+<h3>第一个Go程序</h3>
+<p>下面，我将介绍如何将从头构建一个简单的go程序.
+首先, 我们以<code>/data/github/golang</code>为工作空间</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p /data/github/golang
+<span class="nv">$ </span><span class="nb">cd</span> /data/github/golang
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+</pre></div>
+
+
+<p>为了创建一个简单的程序. 首先要选择包路径, 如<code>github.com/crazygit/hello</code>,&nbsp;并创建对于的目录结构</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/github.com/crazygit/hello
+</pre></div>
+
+
+<p>在目录<code>$GOPATH/src/github.com/crazygit/hello</code>里创建<code>hello.go</code></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>使用go工具编译并安装程序</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
+<span class="nv">$ </span>go install github.com/crazygit/hello
+</pre></div>
+
+
+<p>或者</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>/github.com/crazygit/hello
+<span class="nv">$ </span>go install
+</pre></div>
+
+
+<p>执行了之后，可以看到<code>$GOPATH</code>中多了一个<code>bin</code>目录，里面有一个名为<code>hello</code>的可执行文件</p>
+<div class="highlight"><pre><span class="nv">$ $GOPATH</span>/bin/hello
+Hello, world.
+</pre></div>
+
+
+<h3>第一个Go库</h3>
+<p>让我们再创建一个库，同样，先创建包路径<code>github.com/crazygit/stringutil</code></p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir <span class="nv">$GOPATH</span>/src/github.com/crazygit/stringutil
+</pre></div>
+
+
+<p>在里面再创建一个名为<code>reverse.go</code></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">stringutil</span>
+
+<span class="kd">func</span> <span class="nx">Reverse</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="nx">r</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="p">=</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+        <span class="nx">r</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">r</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">r</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">r</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>编译</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
+<span class="nv">$ </span>go build github.com/crazygit/stringutil
+</pre></div>
+
+
+<p>编译过程不会有什么文件产生, 可以使用<code>go install</code>, 它会创建pkg目录
+并生成<code>pkg/linux_amd64/github.com/crazygit/stringutil.a</code>文件.</p>
+<p>修改<code>hello.go</code>,让它使用我们刚刚创建的库</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;github.com/crazygit/stringutil&quot;</span>
+<span class="p">)</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello world&quot;</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">stringutil</span><span class="p">.</span><span class="nx">Reverse</span><span class="p">(</span><span class="s">&quot;!oG ,olleH&quot;</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>安装，当安装的的时候，它会自动根据安装依赖,所以安装<code>hello</code>时, 它会自动安装<code>stringutil</code></p>
+<div class="highlight"><pre><span class="nv">$ </span>go install github.com/crazygit/hello
+</pre></div>
+
+
+<p>运行</p>
+<div class="highlight"><pre><span class="nv">$ $GOPATH</span>/bin/hello
+Hello, Go!
+</pre></div>
+
+
+<h3>包名</h3>
+<p>Go代码文件的第一句话必须是</p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">name</span>
+</pre></div>
+
+
+<p>name就是要引起的包名，所有在同一个包下的包名也一样</p>
+<p>go里面为了方便，会使用引入包路径的最后一段作为包名，如 <code>crazygit/rot14</code>的包名就是<code>rot14</code></p>
+<p>可执行的命令必须引入包<code>package main</code></p>
+<h2>测试</h2>
+<p>Go自带了一个使用<code>go test</code>的测试框架，为了写一个测试文件。</p>
+<p>应该创建一个文件名<code>_test.go</code>结尾的文件，函数名为如<code>TestXXX</code>的, 并且有参数<code>t *testing.T</code></p>
+<p>让我们为stringutil包创建测试<code>$GOPATH/src/github.com/crazygit/stringutil/reverse_test.go</code></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">stringutil</span>
+
+<span class="kn">import</span> <span class="s">&quot;testing&quot;</span>
+
+<span class="kd">func</span> <span class="nx">TestReverse</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">cases</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
+        <span class="nx">in</span><span class="p">,</span> <span class="nx">want</span> <span class="kt">string</span>
+    <span class="p">}{</span>
+        <span class="p">{</span><span class="s">&quot;Hello, world&quot;</span><span class="p">,</span> <span class="s">&quot;dlrow ,olleH&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">&quot;Hello, 世界&quot;</span><span class="p">,</span> <span class="s">&quot;界世 ,olleH&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">cases</span> <span class="p">{</span>
+        <span class="nx">got</span> <span class="o">:=</span> <span class="nx">Reverse</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">in</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">got</span> <span class="o">!=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">want</span> <span class="p">{</span>
+            <span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;Reverse(%q) == %q, want %q&quot;</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">in</span><span class="p">,</span> <span class="nx">got</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">want</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>执行测试</p>
+<div class="highlight"><pre><span class="nv">$ </span>go <span class="nb">test </span>github.com/crazygit/stringutil
+ok      github.com/crazygit/stringutil  0.002s
+</pre></div>
+
+
+<h2>第三方包</h2>
+<div class="highlight"><pre><span class="nv">$ </span>go get github.com/golang/example/hello
+<span class="nv">$ $GOPATH</span>/bin/hello
+Hello, Go examples!
+</pre></div>
+
+
+<p>如果当前包已经存在，<code>go get</code>会跳过下载</p>
+<p>到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="go-introduce" data-title="Go学习笔记——(2)初始Go" data-url="http://blog.wiseturtles.com/posts/go-introduce.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">Ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
