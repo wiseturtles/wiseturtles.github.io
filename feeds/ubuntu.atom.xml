@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-05-23T00:00:00+08:00</updated><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu-or-debian.html" rel="alternate"></link><updated>2015-05-23T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu-or-debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-06T15:00:00+08:00</updated><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install ssmtp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置&lt;/h2&gt;
+&lt;p&gt;/etc/ssmtp/revaliases&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/ssmtp/revaliases
+&lt;span class="c"&gt;# sSMTP aliases&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Format:   local_account:outgoing_address:mailhub&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Example: root:your_login@your.domain:mailhub.your.domain[:port]&lt;/span&gt;
+&lt;span class="c"&gt;# where [:port] is an optional port number that defaults to 25.&lt;/span&gt;
+nagios:no-reply@example.com:mail.example.com:587
+root:no-reply@example.com:mail.example.com:587
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;/etc/ssmtp/ssmtp.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Config file for sSMTP sendmail&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# The person who gets all mail for userids &amp;lt; 1000&lt;/span&gt;
+&lt;span class="c"&gt;# Make this empty to disable rewriting.&lt;/span&gt;
+&lt;span class="nv"&gt;root&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your-email@example.com&amp;gt;
+&lt;span class="c"&gt;# The place where the mail goes. The actual machine name is required no&lt;/span&gt;
+&lt;span class="c"&gt;# MX records are consulted. Commonly mailhosts are named mail.domain.com&lt;/span&gt;
+&lt;span class="nv"&gt;mailhub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;mail.example.com&amp;gt;
+&lt;span class="c"&gt;# Where will the mail seem to come from?&lt;/span&gt;
+&lt;span class="c"&gt;#rewriteDomain=&lt;/span&gt;
+&lt;span class="c"&gt;# The full hostname&lt;/span&gt;
+&lt;span class="nv"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;mail.example.com&amp;gt;
+&lt;span class="c"&gt;# Are users allowed to set their own From: address?&lt;/span&gt;
+&lt;span class="c"&gt;# YES - Allow the user to specify their own From: address&lt;/span&gt;
+&lt;span class="c"&gt;# NO - Use the system generated From: address&lt;/span&gt;
+&lt;span class="nv"&gt;FromLineOverride&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;YES
+&lt;span class="nv"&gt;UseSTARTTLS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes
+&lt;span class="nv"&gt;UseTLS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;yes
+&lt;span class="nv"&gt;AuthUser&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your-domain/username&amp;gt;
+&lt;span class="nv"&gt;AuthPass&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&amp;lt;your-passwd&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;/usr/sbin/sendmail -t -F your-domain-name &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF&lt;/span&gt;
+&lt;span class="s"&gt;SUBJECT: $YOUR-SUBJECT&lt;/span&gt;
+&lt;span class="s"&gt;TO: A@example.com,B@example.com&lt;/span&gt;
+&lt;span class="s"&gt;MIME-VERSION: 1.0&lt;/span&gt;
+&lt;span class="s"&gt;Content-type: text/plain&lt;/span&gt;
+&lt;span class="s"&gt;$YOUR-MAIL-BODY&lt;/span&gt;
+
+&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu-or-debian.html" rel="alternate"></link><updated>2015-05-23T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu-or-debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
 &lt;p&gt;我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&amp;nbsp;4。&lt;/p&gt;
 &lt;h1&gt;监控主机安装Nagios&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
