@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Go学习笔记——(3)打造Sublime Text 3作为<span class="caps">GO</span>的集成开发环境(<span class="caps">IDE</span>)
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="go" />
+      <meta name="tags" contents="ide" />
+      <meta name="tags" contents="sublime" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Go学习笔记——(3)打造Sublime Text 3作为<span class="caps">GO</span>的集成开发环境(<span class="caps">IDE</span>)</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ide.html">ide</a> <a href="http://blog.wiseturtles.com/tag/sublime.html">sublime</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-07-13
+
+        </div>
+
+        <div><h3>可用于<span class="caps">GO</span>开发的工具</h3>
+<p>可以用于<span class="caps">GO</span>开发的工具和插件目前已经非常多了,如<span class="caps">VIM</span>, Emacs, atom等，这里<a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins">IDEs and Plugins for
+Go</a>罗列了许多可以作为<span class="caps">GO</span>开发
+的<span class="caps">IDE</span>和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
+Text 3 作为<span class="caps">GO</span>的开发环境.</p>
+<h3>安装Sublime text&nbsp;3及插件</h3>
+<p>到Sublime 官网选择适合自己系统的版本<a href="http://www.sublimetext.com/3">http://www.sublimetext.com/3</a>, 我选择的是
+Ubuntu&nbsp;64位的tarball包，解压出来可以直接用了。</p>
+<p>依次安装插件</p>
+<ul>
+<li>Package&nbsp;Control</li>
+<li>GoSublime</li>
+<li>GoDef</li>
+</ul>
+<p>这里我只列出了Go开发必须的插件, 其他的一些插件可以根据自身需要选择安装或者从
+<a href="http://blog.wiseturtles.com/posts/go-introduce.html">http://blog.wiseturtles.com/posts/go-introduce.html</a>选择热门插件</p>
+<h3>安装插件依赖的Go&nbsp;Package</h3>
+<p>上面的插件需要用到一些go cmd tools, 但是这些工具因为墙的问题，没法直接下载，好
+在Github上面由这些工具的镜像，因此我们可以曲线救国，从镜像下载。在下载之前，首先，还是要先设置<code>GOPATH</code>变
+量, 怎么设置可以参考本系列文章第二篇<a href="http://blog.wiseturtles.com/posts/go-introduce.html">http://blog.wiseturtles.com/posts/go-introduce.html</a></p>
+<p>安装必备的cmd&nbsp;tools</p>
+<div class="highlight"><pre><span class="c">#　创建目录</span>
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="s1">&#39;your_go_path&#39;</span>
+<span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/golang.org/x
+
+<span class="c"># 根据实际需要下载对应分支的tools</span>
+<span class="nv">$ </span>git clone -b release-branch.go1.4 git@github.com:golang/tools.git <span class="nv">$GOPATH</span>/src/golang.org/x/tools
+<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
+<span class="c"># 安装工具</span>
+<span class="nv">$ </span>go install golang.org/x/tools/cmd/goimports
+<span class="nv">$ </span>go install golang.org/x/tools/cmd/vet
+<span class="nv">$ </span>go install golang.org/x/tools/cmd/oracle
+<span class="nv">$ </span>go install golang.org/x/tools/cmd/godoc
+
+<span class="c"># 安装不需要翻墙的工具</span>
+<span class="nv">$ </span>go get github.com/rogpeppe/godef
+
+<span class="c"># 最后两个是我做web开发需要安装的包，没有需要的话可以不下载</span>
+<span class="nv">$ </span>go get github.com/astaxie/beego
+<span class="nv">$ </span>go get github.com/beego/bee
+</pre></div>
+
+
+<h3>配置插件:</h3>
+<ul>
+<li>
+<p>GoSublime 配置, Preferences -&gt; Package Settings -&gt; GoSublime -&gt;　Settings -&nbsp;User</p>
+<div class="highlight"><pre>{
+    // <span class="n">you</span> <span class="n">may</span> <span class="n">set</span> <span class="n">specific</span> <span class="n">environment</span> <span class="n">variables</span> <span class="n">here</span>
+    // <span class="nb">e</span>.<span class="n">g</span> <span class="s">&quot;env&quot;</span>: { <span class="s">&quot;PATH&quot;</span>: <span class="s">&quot;$HOME/go/bin:$PATH&quot;</span> }
+    // <span class="n">in</span> <span class="nb">values</span>, <span class="nv">$PATH</span> <span class="o">and</span> ${<span class="n">PATH</span>} <span class="n">are</span> <span class="n">replaced</span> <span class="n">with</span>
+    // <span class="n">the</span> <span class="n">corresponding</span> <span class="n">environment</span>(<span class="n">PATH</span>) <span class="n">variable</span>, <span class="k">if</span> <span class="n">it</span> <span class="nb">exists</span>.
+    //<span class="n">根据实际情况设置如下变量</span>
+    <span class="s">&quot;env&quot;</span>: {<span class="s">&quot;GOROOT&quot;</span>: <span class="s">&quot;/usr/local/go&quot;</span>, <span class="s">&quot;GOPATH&quot;</span>: <span class="s">&quot;$HOME/golang&quot;</span>, <span class="s">&quot;PATH&quot;</span>: <span class="s">&quot;$GOPATH/bin:$GOROOT/bin:$PATH&quot;</span> },
+
+    <span class="s">&quot;fmt_cmd&quot;</span>: [<span class="s">&quot;goimports&quot;</span>],<span class="sr"></span>
+
+<span class="sr">    //</span> <span class="n">enable</span> <span class="n">comp-lint</span>, <span class="n">this</span> <span class="k">will</span> <span class="n">effectively</span> <span class="n">disable</span> <span class="n">the</span> <span class="n">live</span> <span class="n">linter</span>
+    <span class="s">&quot;comp_lint_enabled&quot;</span>: <span class="nb">true</span>,<span class="sr"></span>
+
+<span class="sr">    //</span> <span class="n">list</span> <span class="k">of</span> <span class="n">commands</span> <span class="nb">to</span> <span class="nb">run</span>
+    <span class="s">&quot;comp_lint_commands&quot;</span>: [
+        // <span class="nb">run</span> `<span class="n">golint</span>` <span class="n">on</span> <span class="nb">all</span> <span class="n">files</span> <span class="n">in</span> <span class="n">the</span> <span class="k">package</span>
+        // <span class="s">&quot;shell&quot;</span>:<span class="n">true</span> <span class="k">is</span> <span class="k">required</span> <span class="n">in</span> <span class="n">order</span> <span class="nb">to</span> <span class="nb">run</span> <span class="n">the</span> <span class="n">command</span> <span class="n">through</span> <span class="n">your</span> <span class="n">shell</span> (<span class="nb">to</span> <span class="n">expand</span> `*.<span class="n">go</span>`)
+        // <span class="o">also</span> <span class="n">see:</span> <span class="n">the</span> <span class="n">documentation</span> <span class="k">for</span> <span class="n">the</span> `<span class="n">shell</span>` <span class="n">setting</span> <span class="n">in</span> <span class="n">the</span> <span class="k">default</span> <span class="n">settings</span> <span class="n">file</span> <span class="n">ctrl</span><span class="o">+</span><span class="n">dot</span>,<span class="n">ctrl</span><span class="o">+</span><span class="mi">4</span>
+        {<span class="s">&quot;cmd&quot;</span>: [<span class="s">&quot;golint *.go&quot;</span>], <span class="s">&quot;shell&quot;</span>: <span class="nb">true</span>},<span class="sr"></span>
+
+<span class="sr">        //</span> <span class="nb">run</span> <span class="n">go</span> <span class="n">vet</span> <span class="n">on</span> <span class="n">the</span> <span class="k">package</span>
+        {<span class="s">&quot;cmd&quot;</span>: [<span class="s">&quot;go&quot;</span>, <span class="s">&quot;vet&quot;</span>]},<span class="sr"></span>
+
+<span class="sr">        //</span> <span class="nb">run</span> `<span class="n">go</span> <span class="n">install</span>` <span class="n">on</span> <span class="n">the</span> <span class="k">package</span>. <span class="n">GOBIN</span> <span class="k">is</span> <span class="n">set</span>,<span class="sr"></span>
+<span class="sr">        //</span> <span class="o">so</span> `<span class="n">main</span>` <span class="n">packages</span> <span class="n">shouldn&#39;t</span> <span class="n">result</span> <span class="n">in</span> <span class="n">the</span> <span class="n">installation</span> <span class="k">of</span> <span class="n">a</span> <span class="k">binary</span>
+        {<span class="s">&quot;cmd&quot;</span>: [<span class="s">&quot;go&quot;</span>, <span class="s">&quot;install&quot;</span>]}
+    ],
+
+    <span class="s">&quot;on_save&quot;</span>: [
+        // <span class="nb">run</span> <span class="n">comp-lint</span> <span class="k">when</span> <span class="n">you</span> <span class="n">save</span>,<span class="sr"></span>
+<span class="sr">        //</span> <span class="n">naturally</span>, <span class="n">you</span> <span class="nb">can</span> <span class="o">also</span> <span class="n">bind</span> <span class="n">this</span> <span class="n">command</span> `<span class="n">gs_comp_lint</span>`
+        // <span class="nb">to</span> <span class="n">a</span> <span class="nb">key</span> <span class="n">binding</span> <span class="k">if</span> <span class="n">you</span> <span class="nb">want</span>
+        {<span class="s">&quot;cmd&quot;</span>: <span class="s">&quot;gs_comp_lint&quot;</span>}
+    ]
+}
+</pre></div>
+
+
+</li>
+<li>
+<p>GoDef 配置, Preferences -&gt; Package Settings -&gt; GoDef -&gt;　Settings -&nbsp;User</p>
+<div class="highlight"><pre>{
+    //根据实际情况设置如下变量
+    &quot;gopath&quot;: &quot;/home/linliang/golang&quot;
+}
+</pre></div>
+
+
+</li>
+</ul>
+<h3>使用</h3>
+<p>创建一个Go文件，默认情况下:
+<em> 连续两次输入<code>Ctrl + dot(.)</code>, 可以查看GoSublime的功能和快捷键.
+</em> 使用<code>gd</code>可以使用GoDef插件的跳转,&nbsp;更多使用可以参考两个插件的帮助文档</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="go-ide" data-title="Go学习笔记——(3)打造Sublime Text 3作为<span class="caps">GO</span>的集成开发环境(<span class="caps">IDE</span>)" data-url="http://blog.wiseturtles.com/posts/go-ide.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

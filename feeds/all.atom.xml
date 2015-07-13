@@ -1,5 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-06T15:00:00+08:00</updated><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-13T16:45:00+08:00</updated><entry><title>Go学习笔记——(3)打造Sublime Text 3作为GO的集成开发环境(IDE)</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
+&lt;p&gt;可以用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具和插件目前已经非常多了,如&lt;span class="caps"&gt;VIM&lt;/span&gt;, Emacs, atom等，这里&lt;a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins"&gt;IDEs and Plugins for
+Go&lt;/a&gt;罗列了许多可以作为&lt;span class="caps"&gt;GO&lt;/span&gt;开发
+的&lt;span class="caps"&gt;IDE&lt;/span&gt;和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
+Text 3 作为&lt;span class="caps"&gt;GO&lt;/span&gt;的开发环境.&lt;/p&gt;
+&lt;h3&gt;安装Sublime text&amp;nbsp;3及插件&lt;/h3&gt;
+&lt;p&gt;到Sublime 官网选择适合自己系统的版本&lt;a href="http://www.sublimetext.com/3"&gt;http://www.sublimetext.com/3&lt;/a&gt;, 我选择的是
+Ubuntu&amp;nbsp;64位的tarball包，解压出来可以直接用了。&lt;/p&gt;
+&lt;p&gt;依次安装插件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Package&amp;nbsp;Control&lt;/li&gt;
+&lt;li&gt;GoSublime&lt;/li&gt;
+&lt;li&gt;GoDef&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这里我只列出了Go开发必须的插件, 其他的一些插件可以根据自身需要选择安装或者从
+&lt;a href="http://blog.wiseturtles.com/posts/go-introduce.html"&gt;http://blog.wiseturtles.com/posts/go-introduce.html&lt;/a&gt;选择热门插件&lt;/p&gt;
+&lt;h3&gt;安装插件依赖的Go&amp;nbsp;Package&lt;/h3&gt;
+&lt;p&gt;上面的插件需要用到一些go cmd tools, 但是这些工具因为墙的问题，没法直接下载，好
+在Github上面由这些工具的镜像，因此我们可以曲线救国，从镜像下载。在下载之前，首先，还是要先设置&lt;code&gt;GOPATH&lt;/code&gt;变
+量, 怎么设置可以参考本系列文章第二篇&lt;a href="http://blog.wiseturtles.com/posts/go-introduce.html"&gt;http://blog.wiseturtles.com/posts/go-introduce.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;安装必备的cmd&amp;nbsp;tools&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#　创建目录&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;your_go_path&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir -p &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/golang.org/x
+
+&lt;span class="c"&gt;# 根据实际需要下载对应分支的tools&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git clone -b release-branch.go1.4 git@github.com:golang/tools.git &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/golang.org/x/tools
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
+&lt;span class="c"&gt;# 安装工具&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;go install golang.org/x/tools/cmd/goimports
+&lt;span class="nv"&gt;$ &lt;/span&gt;go install golang.org/x/tools/cmd/vet
+&lt;span class="nv"&gt;$ &lt;/span&gt;go install golang.org/x/tools/cmd/oracle
+&lt;span class="nv"&gt;$ &lt;/span&gt;go install golang.org/x/tools/cmd/godoc
+
+&lt;span class="c"&gt;# 安装不需要翻墙的工具&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;go get github.com/rogpeppe/godef
+
+&lt;span class="c"&gt;# 最后两个是我做web开发需要安装的包，没有需要的话可以不下载&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;go get github.com/astaxie/beego
+&lt;span class="nv"&gt;$ &lt;/span&gt;go get github.com/beego/bee
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置插件:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;GoSublime 配置, Preferences -&amp;gt; Package Settings -&amp;gt; GoSublime -&amp;gt;　Settings -&amp;nbsp;User&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;{
+    // &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;specific&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt; &lt;span class="n"&gt;variables&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt;
+    // &lt;span class="nb"&gt;e&lt;/span&gt;.&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;env&amp;quot;&lt;/span&gt;: { &lt;span class="s"&gt;&amp;quot;PATH&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;$HOME/go/bin:$PATH&amp;quot;&lt;/span&gt; }
+    // &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;values&lt;/span&gt;, &lt;span class="nv"&gt;$PATH&lt;/span&gt; &lt;span class="o"&gt;and&lt;/span&gt; ${&lt;span class="n"&gt;PATH&lt;/span&gt;} &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;replaced&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt;
+    // &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;corresponding&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt;(&lt;span class="n"&gt;PATH&lt;/span&gt;) &lt;span class="n"&gt;variable&lt;/span&gt;, &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt; &lt;span class="nb"&gt;exists&lt;/span&gt;.
+    //&lt;span class="n"&gt;根据实际情况设置如下变量&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;env&amp;quot;&lt;/span&gt;: {&lt;span class="s"&gt;&amp;quot;GOROOT&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;, &lt;span class="s"&gt;&amp;quot;GOPATH&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;$HOME/golang&amp;quot;&lt;/span&gt;, &lt;span class="s"&gt;&amp;quot;PATH&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;$GOPATH/bin:$GOROOT/bin:$PATH&amp;quot;&lt;/span&gt; },
+
+    &lt;span class="s"&gt;&amp;quot;fmt_cmd&amp;quot;&lt;/span&gt;: [&lt;span class="s"&gt;&amp;quot;goimports&amp;quot;&lt;/span&gt;],&lt;span class="sr"&gt;&lt;/span&gt;
+
+&lt;span class="sr"&gt;    //&lt;/span&gt; &lt;span class="n"&gt;enable&lt;/span&gt; &lt;span class="n"&gt;comp-lint&lt;/span&gt;, &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="k"&gt;will&lt;/span&gt; &lt;span class="n"&gt;effectively&lt;/span&gt; &lt;span class="n"&gt;disable&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;live&lt;/span&gt; &lt;span class="n"&gt;linter&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;comp_lint_enabled&amp;quot;&lt;/span&gt;: &lt;span class="nb"&gt;true&lt;/span&gt;,&lt;span class="sr"&gt;&lt;/span&gt;
+
+&lt;span class="sr"&gt;    //&lt;/span&gt; &lt;span class="n"&gt;list&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;commands&lt;/span&gt; &lt;span class="nb"&gt;to&lt;/span&gt; &lt;span class="nb"&gt;run&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;comp_lint_commands&amp;quot;&lt;/span&gt;: [
+        // &lt;span class="nb"&gt;run&lt;/span&gt; `&lt;span class="n"&gt;golint&lt;/span&gt;` &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="nb"&gt;all&lt;/span&gt; &lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt;
+        // &lt;span class="s"&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;:&lt;span class="n"&gt;true&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="k"&gt;required&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;order&lt;/span&gt; &lt;span class="nb"&gt;to&lt;/span&gt; &lt;span class="nb"&gt;run&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; &lt;span class="n"&gt;through&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt; &lt;span class="n"&gt;shell&lt;/span&gt; (&lt;span class="nb"&gt;to&lt;/span&gt; &lt;span class="n"&gt;expand&lt;/span&gt; `*.&lt;span class="n"&gt;go&lt;/span&gt;`)
+        // &lt;span class="o"&gt;also&lt;/span&gt; &lt;span class="n"&gt;see:&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;documentation&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; `&lt;span class="n"&gt;shell&lt;/span&gt;` &lt;span class="n"&gt;setting&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;default&lt;/span&gt; &lt;span class="n"&gt;settings&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;dot&lt;/span&gt;,&lt;span class="n"&gt;ctrl&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;
+        {&lt;span class="s"&gt;&amp;quot;cmd&amp;quot;&lt;/span&gt;: [&lt;span class="s"&gt;&amp;quot;golint *.go&amp;quot;&lt;/span&gt;], &lt;span class="s"&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;: &lt;span class="nb"&gt;true&lt;/span&gt;},&lt;span class="sr"&gt;&lt;/span&gt;
+
+&lt;span class="sr"&gt;        //&lt;/span&gt; &lt;span class="nb"&gt;run&lt;/span&gt; &lt;span class="n"&gt;go&lt;/span&gt; &lt;span class="n"&gt;vet&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt;
+        {&lt;span class="s"&gt;&amp;quot;cmd&amp;quot;&lt;/span&gt;: [&lt;span class="s"&gt;&amp;quot;go&amp;quot;&lt;/span&gt;, &lt;span class="s"&gt;&amp;quot;vet&amp;quot;&lt;/span&gt;]},&lt;span class="sr"&gt;&lt;/span&gt;
+
+&lt;span class="sr"&gt;        //&lt;/span&gt; &lt;span class="nb"&gt;run&lt;/span&gt; `&lt;span class="n"&gt;go&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;` &lt;span class="n"&gt;on&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="k"&gt;package&lt;/span&gt;. &lt;span class="n"&gt;GOBIN&lt;/span&gt; &lt;span class="k"&gt;is&lt;/span&gt; &lt;span class="n"&gt;set&lt;/span&gt;,&lt;span class="sr"&gt;&lt;/span&gt;
+&lt;span class="sr"&gt;        //&lt;/span&gt; &lt;span class="o"&gt;so&lt;/span&gt; `&lt;span class="n"&gt;main&lt;/span&gt;` &lt;span class="n"&gt;packages&lt;/span&gt; &lt;span class="n"&gt;shouldn&amp;#39;t&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;installation&lt;/span&gt; &lt;span class="k"&gt;of&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="k"&gt;binary&lt;/span&gt;
+        {&lt;span class="s"&gt;&amp;quot;cmd&amp;quot;&lt;/span&gt;: [&lt;span class="s"&gt;&amp;quot;go&amp;quot;&lt;/span&gt;, &lt;span class="s"&gt;&amp;quot;install&amp;quot;&lt;/span&gt;]}
+    ],
+
+    &lt;span class="s"&gt;&amp;quot;on_save&amp;quot;&lt;/span&gt;: [
+        // &lt;span class="nb"&gt;run&lt;/span&gt; &lt;span class="n"&gt;comp-lint&lt;/span&gt; &lt;span class="k"&gt;when&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;save&lt;/span&gt;,&lt;span class="sr"&gt;&lt;/span&gt;
+&lt;span class="sr"&gt;        //&lt;/span&gt; &lt;span class="n"&gt;naturally&lt;/span&gt;, &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="nb"&gt;can&lt;/span&gt; &lt;span class="o"&gt;also&lt;/span&gt; &lt;span class="n"&gt;bind&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt; `&lt;span class="n"&gt;gs_comp_lint&lt;/span&gt;`
+        // &lt;span class="nb"&gt;to&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="nb"&gt;key&lt;/span&gt; &lt;span class="n"&gt;binding&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="nb"&gt;want&lt;/span&gt;
+        {&lt;span class="s"&gt;&amp;quot;cmd&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;gs_comp_lint&amp;quot;&lt;/span&gt;}
+    ]
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;GoDef 配置, Preferences -&amp;gt; Package Settings -&amp;gt; GoDef -&amp;gt;　Settings -&amp;nbsp;User&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;{
+    //根据实际情况设置如下变量
+    &amp;quot;gopath&amp;quot;: &amp;quot;/home/linliang/golang&amp;quot;
+}
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;使用&lt;/h3&gt;
+&lt;p&gt;创建一个Go文件，默认情况下:
+&lt;em&gt; 连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;, 可以查看GoSublime的功能和快捷键.
+&lt;/em&gt; 使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转,&amp;nbsp;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install ssmtp
 &lt;/pre&gt;&lt;/div&gt;
@@ -53,7 +153,7 @@ root:no-reply@example.com:mail.example.com:587
 &lt;span class="s"&gt;$YOUR-MAIL-BODY&lt;/span&gt;
 
 &lt;span class="s"&gt;EOF&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记——(2)初始Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记——(2)初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/code.html"&gt;How to Write Go&amp;nbsp;Code&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;代码组织&lt;/h2&gt;
 &lt;h3&gt;工作空间&lt;/h3&gt;
@@ -61,13 +161,13 @@ root:no-reply@example.com:mail.example.com:587
 &lt;p&gt;Go代码必须保存在一个工作空间里，　一个工作空间要有三个根目录&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;src  &lt;br /&gt;&amp;nbsp;Go源代码&lt;/p&gt;
+&lt;p&gt;src&amp;nbsp;Go源代码&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;pkg  &lt;br /&gt;&amp;nbsp;Go库文件&lt;/p&gt;
+&lt;p&gt;pkg&amp;nbsp;Go库文件&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;bin &lt;br /&gt;&amp;nbsp;包含可执行命令&lt;/p&gt;
+&lt;p&gt;bin&amp;nbsp;包含可执行命令&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;一个工作空间的示例:
