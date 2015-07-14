@@ -99,9 +99,10 @@ Ubuntu&amp;nbsp;64位的tarball包，解压出来可以直接用了。&lt;/p&gt;
 &lt;h3&gt;使用&lt;/h3&gt;
 &lt;p&gt;创建一个Go文件，默认情况下:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键.&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转,&amp;nbsp;更多使用可以参考两个插件的帮助文档&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
+&lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install ssmtp
 &lt;/pre&gt;&lt;/div&gt;

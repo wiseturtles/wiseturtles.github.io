@@ -99,9 +99,10 @@ Ubuntu&amp;nbsp;64位的tarball包，解压出来可以直接用了。&lt;/p&gt;
 &lt;h3&gt;使用&lt;/h3&gt;
 &lt;p&gt;创建一个Go文件，默认情况下:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键.&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转,&amp;nbsp;更多使用可以参考两个插件的帮助文档&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>Go学习笔记——(2)初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>Go学习笔记——(2)初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/code.html"&gt;How to Write Go&amp;nbsp;Code&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;代码组织&lt;/h2&gt;
 &lt;h3&gt;工作空间&lt;/h3&gt;
