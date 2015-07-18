@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Go学习笔记——(1)安装Go
+    <title>Wise Turtles - Mac&nbsp;Pro初体验
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,11 +26,10 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
-    <meta name="author" contents="crazygit" />
+    <meta name="author" contents="ox0spy" />
     <meta name="description" contents="" />
 
-      <meta name="tags" contents="go" />
-      <meta name="tags" contents="入门" />
+      <meta name="tags" contents="Mac" />
 
 </head>
 
@@ -59,57 +58,103 @@
         <div class="span9">
     <div class='article'>
         <div class="content-title">
-            <h1>Go学习笔记——(1)安装Go</h1>
+            <h1>Mac&nbsp;Pro初体验</h1>
             <br />
-    Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ru-men.html">入门</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-06-30
+    Tags <a href="http://blog.wiseturtles.com/tag/mac.html">Mac</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-07-18
 
         </div>
 
-        <div><p>本文参考于:
-<a href="https://golang.org/doc/install">Installing Go - Getting&nbsp;Started</a></p>
-<h3>必备技能之翻墙</h3>
-<p>这个是必须的技能，不然go的官网都没法访问,&nbsp;后面也不用看了。</p>
-<h3>开发环境搭建</h3>
-<p>整个安装过程比较简单，下载安装包，配置环境变量即可。</p>
-<p>以Linux为例. </p>
-<div class="highlight"><pre><span class="nv">$ </span>wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
-<span class="nv">$ </span>tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
+        <div><p>貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&nbsp;下面记录下环境配置和最近使用感受。</p>
+<h2>XCode</h2>
+<div class="highlight"><pre><span class="nv">$ </span>xcode-select --install
 </pre></div>
 
 
-<p>添加环境变量: </p>
-<div class="highlight"><pre><span class="x">export GOROOT=/usr/local/go</span>
-<span class="x">export PATH=</span><span class="p">$</span><span class="nv">PATH</span><span class="x">:</span><span class="p">$</span><span class="nv">GOROOT</span><span class="x">/bin</span>
+<h2>Homebrew</h2>
+<p><a href="http://brew.sh">Homebrew</a>是Mac中非常受欢迎的包管理工具，熟悉Linux的朋友一定知道rpm/yum,&nbsp;dpkg/apt等。</p>
+<div class="highlight"><pre><span class="nv">$ </span>ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">$ </span>brew doctor
+<span class="nv">$ </span>man brew                     <span class="c"># manpage for brew</span>
+<span class="nv">$ </span>brew install &lt;package-name&gt;  <span class="c"># install package</span>
+<span class="nv">$ </span>brew update
+<span class="nv">$ </span>brew outdated
+<span class="nv">$ </span>brew upgrade &lt;package-name&gt;
+<span class="nv">$ </span>brew cleanup
+<span class="nv">$ </span>brew list --versions
 </pre></div>
 
 
-<p><code>GOROOT</code>是告诉系统Go安装在哪里，
-<code>PATH</code>是指定Go相关命令的调用路径.</p>
-<p>环境检查，按照国际惯例，当然是先来&#8221;Hello World&#8221;. 创建<code>hello.go</code>: </p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
-
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-
-<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;hello, world\n&quot;</span><span class="p">)</span>
-<span class="p">}</span>
+<h2>Homebrew&nbsp;Cask</h2>
+<p>通过Homebrew可以方便的管理命令行程序，Homebrew&nbsp;Cask可以管理图形界面程序。</p>
+<div class="highlight"><pre><span class="nv">$ </span>brew tap caskroom/cask
+<span class="nv">$ </span>brew install brew-cask
+<span class="nv">$ </span>brew cask install google-chrome
+<span class="nv">$ </span>brew update <span class="o">&amp;&amp;</span> brew upgrade brew-cask <span class="o">&amp;&amp;</span> brew cleanup
 </pre></div>
 
 
-<p>执行</p>
-<div class="highlight"><pre><span class="nv">$ </span>go run hello.go
-hello, world
+<h2>iTerm2</h2>
+<p>从苹果App&nbsp;Store上搜索安装iTerm2.</p>
+<h2>Zsh</h2>
+<div class="highlight"><pre><span class="nv">$ </span>brew install zsh zsh-completions
+<span class="nv">$ </span>sh -c <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">$ </span>chsh -s /bin/zsh
 </pre></div>
 
 
-<p>如果输出&#8221;hello,world&#8221;，&nbsp;则表示环境没有什么问题. </p></div>
+<p>Zsh还配置了powerline，开始Zsh、vim都使用powerline，后来vim使用vim-airline。&nbsp;powerline要显示一些Unicode字符，需要安装打过patch的powerline字体。</p>
+<p>安装powerline: https://powerline.readthedocs.org/en/latest/installation/linux.html
+powerline font:&nbsp;https://github.com/powerline/fonts</p>
+<p>字体安装后需要在iTerm2中选用刚安装的打过powerline&nbsp;patch的字体。</p>
+<h2>vim</h2>
+<p>常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/wklken/k-vim.git ~/k-vim
+<span class="nv">$ </span><span class="nb">cd</span> ~/k-vim <span class="o">&amp;&amp;</span> bash -x install.sh
+</pre></div>
+
+
+<p>注：
+1. k-vim没有适配最新版的vbundle，导致运行安装程序报错，基本就是Bundle修改为Plugin。。。
+2.&nbsp;YouCompleteMe安装总失败，后来手动下载安装</p>
+<h2>Intellij <span class="caps">IDEA</span></h2>
+<p><span class="caps">IDEA</span>运行需要<span class="caps">JDK</span>，从oracle官网下载、安装Java 1.8 <span class="caps">JDK</span>。</p>
+<p>从<span class="caps">IDEA</span> -&gt; Project Default -&gt; Project Structure -&gt; <span class="caps">SDKS</span>中添加<span class="caps">JDK</span>和Intellij Platform Plugin <span class="caps">SDK</span>。（需要选择<span class="caps">JDK</span>、Intellij的目录）</p>
+<p>安装go-lang-idea-plugin插件，可以从<a href="https://plugins.jetbrains.com/plugin/5047">官网</a>下载安装；也可以通过下面方式编译安装。</p>
+<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
+</pre></div>
+
+
+<p><span class="caps">IDEA</span>中打开该plugin代码，配置<span class="caps">IDEA</span> Platform <span class="caps">SDK</span>版本，Build出jar包。然后，选择jar包安装。</p>
+<p>配置<span class="caps">IDEA</span>的golang开发环境浪费了很多时间，尝试了不同版本的<a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin">go-lang-idea-plugin</a>，总是报错“The selected directory is not a valid home for Go <span class="caps">SDK</span>”。
+最后运行下面命令再选择<span class="caps">GO</span> <span class="caps">SDK</span>目录终于可以了。</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$GOROOT</span>
+/Users/&lt;my-home&gt;/Projects/golang/sdk
+<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$GOPATH</span>
+/Users/&lt;my-home&gt;/Projects/golang/mygo
+<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOROOT</span>
+<span class="nv">$ </span>git checkout -b go1.4.2 go1.4.2
+<span class="nv">$ </span><span class="nb">cd </span>src <span class="o">&amp;&amp;</span> ./all.bash
+<span class="nv">$ </span>cp <span class="nv">$GOPATH</span>/bin/go <span class="nv">$GOROOT</span>/bin/
+<span class="nv">$ </span>cp <span class="nv">$GOPATH</span>/bin/gofmt <span class="nv">$GOROOT</span>/bin/
+</pre></div>
+
+
+<p>注：
+1. <span class="caps">GOROOT</span>是go的源代码，下载地址：https://github.com/golang/go
+2. <span class="caps">GOPATH</span>是go workspace，自己的代码都$<span class="caps">GOPATH</span>/src下</p>
+<h2>最后</h2>
+<ol>
+<li>mac的屏的确要比我之前用过的笔记本好很多</li>
+<li>严重怀疑网上那些把mac捧得太高的人只用过Windows，根本没用过Ubuntu之类的桌面Linux&nbsp;(至少目前自己还没体会到mac比Linux高效在哪里)</li>
+<li>刚开始使用难免出错，也许上面的都是错的。。</li>
+</ol></div>
 
         <hr>
 
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="go-install" data-title="Go学习笔记——(1)安装Go" data-url="http://blog.wiseturtles.com/posts/go-install.html"></div>
+  <div class="ds-thread" data-thread-key="mac-pro-get-started" data-title="Mac&nbsp;Pro初体验" data-url="http://blog.wiseturtles.com/posts/mac-pro-get-started.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

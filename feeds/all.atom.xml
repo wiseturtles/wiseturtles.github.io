@@ -1,5 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-13T16:45:00+08:00</updated><entry><title>Go学习笔记——(3)打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-18T14:56:00+08:00</updated><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
+&lt;h2&gt;XCode&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;xcode-select --install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Homebrew&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://brew.sh"&gt;Homebrew&lt;/a&gt;是Mac中非常受欢迎的包管理工具，熟悉Linux的朋友一定知道rpm/yum,&amp;nbsp;dpkg/apt等。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ruby -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew doctor
+&lt;span class="nv"&gt;$ &lt;/span&gt;man brew                     &lt;span class="c"&gt;# manpage for brew&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew install &amp;lt;package-name&amp;gt;  &lt;span class="c"&gt;# install package&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew outdated
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew upgrade &amp;lt;package-name&amp;gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew cleanup
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew list --versions
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Homebrew&amp;nbsp;Cask&lt;/h2&gt;
+&lt;p&gt;通过Homebrew可以方便的管理命令行程序，Homebrew&amp;nbsp;Cask可以管理图形界面程序。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew tap caskroom/cask
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew install brew-cask
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew cask install google-chrome
+&lt;span class="nv"&gt;$ &lt;/span&gt;brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew upgrade brew-cask &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew cleanup
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;iTerm2&lt;/h2&gt;
+&lt;p&gt;从苹果App&amp;nbsp;Store上搜索安装iTerm2.&lt;/p&gt;
+&lt;h2&gt;Zsh&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install zsh zsh-completions
+&lt;span class="nv"&gt;$ &lt;/span&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;chsh -s /bin/zsh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Zsh还配置了powerline，开始Zsh、vim都使用powerline，后来vim使用vim-airline。&amp;nbsp;powerline要显示一些Unicode字符，需要安装打过patch的powerline字体。&lt;/p&gt;
+&lt;p&gt;安装powerline: https://powerline.readthedocs.org/en/latest/installation/linux.html
+powerline font:&amp;nbsp;https://github.com/powerline/fonts&lt;/p&gt;
+&lt;p&gt;字体安装后需要在iTerm2中选用刚安装的打过powerline&amp;nbsp;patch的字体。&lt;/p&gt;
+&lt;h2&gt;vim&lt;/h2&gt;
+&lt;p&gt;常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/wklken/k-vim.git ~/k-vim
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash -x install.sh
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：
+1. k-vim没有适配最新版的vbundle，导致运行安装程序报错，基本就是Bundle修改为Plugin。。。
+2.&amp;nbsp;YouCompleteMe安装总失败，后来手动下载安装&lt;/p&gt;
+&lt;h2&gt;Intellij &lt;span class="caps"&gt;IDEA&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;运行需要&lt;span class="caps"&gt;JDK&lt;/span&gt;，从oracle官网下载、安装Java 1.8 &lt;span class="caps"&gt;JDK&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;从&lt;span class="caps"&gt;IDEA&lt;/span&gt; -&amp;gt; Project Default -&amp;gt; Project Structure -&amp;gt; &lt;span class="caps"&gt;SDKS&lt;/span&gt;中添加&lt;span class="caps"&gt;JDK&lt;/span&gt;和Intellij Platform Plugin &lt;span class="caps"&gt;SDK&lt;/span&gt;。（需要选择&lt;span class="caps"&gt;JDK&lt;/span&gt;、Intellij的目录）&lt;/p&gt;
+&lt;p&gt;安装go-lang-idea-plugin插件，可以从&lt;a href="https://plugins.jetbrains.com/plugin/5047"&gt;官网&lt;/a&gt;下载安装；也可以通过下面方式编译安装。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;中打开该plugin代码，配置&lt;span class="caps"&gt;IDEA&lt;/span&gt; Platform &lt;span class="caps"&gt;SDK&lt;/span&gt;版本，Build出jar包。然后，选择jar包安装。&lt;/p&gt;
+&lt;p&gt;配置&lt;span class="caps"&gt;IDEA&lt;/span&gt;的golang开发环境浪费了很多时间，尝试了不同版本的&lt;a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin"&gt;go-lang-idea-plugin&lt;/a&gt;，总是报错“The selected directory is not a valid home for Go &lt;span class="caps"&gt;SDK&lt;/span&gt;”。
+最后运行下面命令再选择&lt;span class="caps"&gt;GO&lt;/span&gt; &lt;span class="caps"&gt;SDK&lt;/span&gt;目录终于可以了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
+/Users/&amp;lt;my-home&amp;gt;/Projects/golang/sdk
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
+/Users/&amp;lt;my-home&amp;gt;/Projects/golang/mygo
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout -b go1.4.2 go1.4.2
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;src &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./all.bash
+&lt;span class="nv"&gt;$ &lt;/span&gt;cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/go &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
+&lt;span class="nv"&gt;$ &lt;/span&gt;cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/gofmt &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：
+1. &lt;span class="caps"&gt;GOROOT&lt;/span&gt;是go的源代码，下载地址：https://github.com/golang/go
+2. &lt;span class="caps"&gt;GOPATH&lt;/span&gt;是go workspace，自己的代码都$&lt;span class="caps"&gt;GOPATH&lt;/span&gt;/src下&lt;/p&gt;
+&lt;h2&gt;最后&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;mac的屏的确要比我之前用过的笔记本好很多&lt;/li&gt;
+&lt;li&gt;严重怀疑网上那些把mac捧得太高的人只用过Windows，根本没用过Ubuntu之类的桌面Linux&amp;nbsp;(至少目前自己还没体会到mac比Linux高效在哪里)&lt;/li&gt;
+&lt;li&gt;刚开始使用难免出错，也许上面的都是错的。。&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="Mac"></category></entry><entry><title>Go学习笔记——(3)打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
 &lt;p&gt;可以用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具和插件目前已经非常多了,如&lt;span class="caps"&gt;VIM&lt;/span&gt;, Emacs, atom等，这里&lt;a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins"&gt;IDEs and Plugins for
 Go&lt;/a&gt;罗列了许多可以作为&lt;span class="caps"&gt;GO&lt;/span&gt;开发
 的&lt;span class="caps"&gt;IDE&lt;/span&gt;和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
