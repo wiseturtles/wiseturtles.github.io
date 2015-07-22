@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Go学习笔记——(2)初识Go
+    <title>Wise Turtles - Go学习笔记2之初识Go
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -59,7 +59,7 @@
         <div class="span9">
     <div class='article'>
         <div class="content-title">
-            <h1>Go学习笔记——(2)初识Go</h1>
+            <h1>Go学习笔记2之初识Go</h1>
             <br />
     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ru-men.html">入门</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
@@ -110,10 +110,17 @@ src/
         ......
 </pre></p>
 <h3>设置<span class="caps">GOPATH</span>环境变量</h3>
-<p><span class="caps">GOPATH</span>是Go中唯一必须需要设置的环境变量, <span class="caps">GOPATH</span>就是工作空间的路径</p>
+<p><span class="caps">GOPATH</span>是Go中唯一必须需要设置的环境变量, <span class="caps">GOPATH</span>就是工作空间的路径, 并且<span class="caps">GOPATH</span>可
+以设置多个值，区别是使用<code>go get</code>命令的时候默认将下载的包安装在<span class="caps">GOPATH</span>第一个路径
+下面，我自己一般设置两个路径作为<span class="caps">GOPATH</span>的值，一个用于专门下载第三方包，一个作为
+自己的工作环境,　这有的好处是可以在代码版本控制时,&nbsp;不受第三方库的影响</p>
 <p>如:</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir <span class="nv">$HOME</span>/go
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="nv">$HOME</span>/go
+<div class="highlight"><pre># <span class="nv">$HOME</span>/golang作为第三方包的下载目录
+# <span class="nv">$HOME</span>/github/golang作为自己的开发目录
+$ export GOPATH=&quot;<span class="nv">$HOME</span>/golang:<span class="nv">$HOME</span>/github/golang&quot;
+
+# 将每个GOPATH下面的bin目录添加到PATH变量
+$ export PATH=<span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:<span class="cp">${</span><span class="n">GOPATH</span><span class="o">//</span><span class="p">:</span><span class="o">//</span><span class="nb">bin</span><span class="p">:</span><span class="cp">}</span>/bin
 </pre></div>
 
 
@@ -272,7 +279,7 @@ Hello, Go examples!
         <hr>
 
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="go-introduce" data-title="Go学习笔记——(2)初识Go" data-url="http://blog.wiseturtles.com/posts/go-introduce.html"></div>
+  <div class="ds-thread" data-thread-key="go-introduce" data-title="Go学习笔记2之初识Go" data-url="http://blog.wiseturtles.com/posts/go-introduce.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

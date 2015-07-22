@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - go</title>
+    <title>Wise Turtles - Go学习笔记5之Beego框架
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,11 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="go" />
+      <meta name="tags" contents="beego" />
 
 </head>
 
@@ -51,66 +57,64 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/go-hello-beego.html"><h2>Go学习笔记5之Beego框架</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/beego.html">beego</a> 
+    <div class='article'>
+        <div class="content-title">
+            <h1>Go学习笔记5之Beego框架</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/beego.html">beego</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
 On 2015-07-22
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Go学习笔记5之Beego框架</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/go-hello-beego.html">阅读</a></div>
-      </div>
+        </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/go-notes.html"><h2>Go学习笔记4之知识点记录</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ide.html">ide</a> <a href="http://blog.wiseturtles.com/tag/note.html">note</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-07-22
+        <div><h3>Beego框架准备</h3>
+<div class="highlight"><pre><span class="nv">$ </span>go get github.com/astaxie/beego
+<span class="nv">$ </span>go get github.com/beego/bee
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Go学习笔记4之知识点记录</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/go-notes.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/go-ide.html"><h2>Go学习笔记3之打造Sublime Text&nbsp;3作为Go的集成开发环境</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ide.html">ide</a> <a href="http://blog.wiseturtles.com/tag/sublime.html">sublime</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-07-13
+<p>创建程序<code>hello-beego.go</code></p>
+<div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Go学习笔记3之打造Sublime Text 3作为<span class="caps">GO</span>的集成开发环境(<span class="caps">IDE</span>)</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/go-ide.html">阅读</a></div>
-      </div>
+<span class="kn">import</span> <span class="p">(</span>
+        <span class="s">&quot;github.com/astaxie/beego&quot;</span>
+<span class="p">)</span>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/go-introduce.html"><h2>Go学习笔记2之初识Go</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ru-men.html">入门</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-06-30
+<span class="kd">type</span> <span class="nx">MainController</span> <span class="kd">struct</span> <span class="p">{</span>
+     <span class="nx">beego</span><span class="p">.</span><span class="nx">Controller</span>
+<span class="p">}</span>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Go学习笔记2之初识Go</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/go-introduce.html">阅读</a></div>
-      </div>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">MainController</span><span class="p">)</span> <span class="nx">Get</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">this</span><span class="p">.</span><span class="nx">Ctx</span><span class="p">.</span><span class="nx">WriteString</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="p">}</span>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/go-install.html"><h2>Go学习笔记1之安装Go</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/go.html">go</a> <a href="http://blog.wiseturtles.com/tag/ru-men.html">入门</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-06-30
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">beego</span><span class="p">.</span><span class="nx">Router</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">MainController</span><span class="p">{})</span>
+    <span class="nx">beego</span><span class="p">.</span><span class="nx">Run</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Go学习笔记1之安装go</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/go-install.html">阅读</a></div>
-      </div>
 
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
+<p>执行<code>go run hello-beego.go</code>, 访问<a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>检查，　如果输出&#8221;hello world&#8221;&nbsp;表示本地beego环境已经搭建成功</p></div>
 
-    <li class="active"><a href="http://blog.wiseturtles.com/tag/go.html">1</a></li>
+        <hr>
 
-    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
-
-</ul>
-</div>  
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="go-hello-beego" data-title="Go学习笔记5之Beego框架" data-url="http://blog.wiseturtles.com/posts/go-hello-beego.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

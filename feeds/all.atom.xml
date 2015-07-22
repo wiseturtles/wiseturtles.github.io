@@ -1,5 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-18T14:56:00+08:00</updated><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-22T16:33:00+08:00</updated><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><updated>2015-07-22T16:33:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-hello-beego.html</id><summary type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;go get github.com/astaxie/beego
+&lt;span class="nv"&gt;$ &lt;/span&gt;go get github.com/beego/bee
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;创建程序&lt;code&gt;hello-beego.go&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+        &lt;span class="s"&gt;&amp;quot;github.com/astaxie/beego&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;type&lt;/span&gt; &lt;span class="nx"&gt;MainController&lt;/span&gt; &lt;span class="kd"&gt;struct&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+     &lt;span class="nx"&gt;beego&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Controller&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;this&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;MainController&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nx"&gt;Get&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;this&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Ctx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;WriteString&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hello world&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;beego&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Router&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;MainController&lt;/span&gt;&lt;span class="p"&gt;{})&lt;/span&gt;
+    &lt;span class="nx"&gt;beego&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行&lt;code&gt;go run hello-beego.go&lt;/code&gt;, 访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查，　如果输出&amp;#8221;hello world&amp;#8221;&amp;nbsp;表示本地beego环境已经搭建成功&lt;/p&gt;</summary><category term="go"></category><category term="beego"></category></entry><entry><title>Go学习笔记4之知识点记录</title><link href="http://blog.wiseturtles.com/posts/go-notes.html" rel="alternate"></link><updated>2015-07-22T14:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-notes.html</id><summary type="html">&lt;h3&gt;Go环境配置&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;如果你想在同一个系统中安装多个版本的Go，你可以参考第三方工具&lt;a href="https://github.com/moovweb/gvm"&gt;&lt;span class="caps"&gt;GVM&lt;/span&gt;&lt;/a&gt;，这是目前在这&amp;nbsp;方面做得最好的工具。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;span class="caps"&gt;GOPATH&lt;/span&gt;允许多个目录, 当&lt;span class="caps"&gt;GOPATH&lt;/span&gt;有多个目录时，为了让每个目录下的bin目录都加入环境变量
+可以设置&lt;code&gt;${GOPATH//://bin:}/bin&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/golang:&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/github/golang&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;:&lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="p"&gt;//://bin:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Go&amp;nbsp;命令&lt;/h3&gt;
+&lt;p&gt;详细使用可以参考
+&lt;a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.3.md"&gt;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.3.md&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;go&amp;nbsp;build&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;clean&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;fmt&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;install&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;test&lt;/li&gt;
+&lt;li&gt;go tool&amp;nbsp;fix&lt;/li&gt;
+&lt;li&gt;go tool vet&amp;nbsp;directory|files&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;generate&lt;/li&gt;
+&lt;li&gt;godoc&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;version&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;env&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;list&lt;/li&gt;
+&lt;li&gt;go&amp;nbsp;run&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Go字符串&lt;/h3&gt;
+&lt;p&gt;字符串是用一对双引号（&amp;#8221;&amp;#8220;）或反引号（&amp;#8220;）括起来定义，它的类型是string&amp;nbsp;如果要声明一个多行的字符串怎么办？可以通过`来声明&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nx"&gt;m&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;`hello&lt;/span&gt;
+&lt;span class="s"&gt;        world`&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;iota枚举&lt;/h3&gt;
+&lt;p&gt;Go里面有一个关键字iota，这个关键字用来声明enum的时候采用，它默认开始值是0，每调用一次加1：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;const&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// x == 0&lt;/span&gt;
+    &lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// y == 1&lt;/span&gt;
+    &lt;span class="nx"&gt;z&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// z == 2&lt;/span&gt;
+    &lt;span class="nx"&gt;w&lt;/span&gt;  &lt;span class="c1"&gt;// 常量声明省略值时，默认和之前一个值的字面相同。这里隐式地说w = iota，因此w == 3。其实上面y和z可同样不用&amp;quot;= iota&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;v&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt; &lt;span class="c1"&gt;// 每遇到一个const关键字，iota就会重置，此时v == 0&lt;/span&gt;
+
+&lt;span class="kd"&gt;const&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;span class="nx"&gt;e&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;g&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt; &lt;span class="c1"&gt;//e=0,f=0,g=0 iota在同一行值相同&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;除非被显式设置为其它值或iota，每个const分组的第一个常量被默认设置为它的0值，第二及后续的常量被默认设置为它前面那个常量的值，如果前面那个常量的值是iota，则它也被设置为iota。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;默认变量及函数名规则&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;大写字母开头的变量是可导出的，也就是其它包可以读取的，是公用变量；小写字母开头的就是不可导出的，是私有变量。&lt;/li&gt;
+&lt;li&gt;大写字母开头的函数也是一样，相当于class中的带public关键词的公有函数；小写字母开头的就是有private关键词的私有函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;数组&lt;/h3&gt;
+&lt;p&gt;声明&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 声明了一个长度为3的int数组&lt;/span&gt;
+&lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 声明了一个长度为10的int数组，其中前三个元素初始化为1、2、3，其它默认为0&lt;/span&gt;
+&lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 可以省略长度而采用`...`的方式，Go会自动根据元素个数来计算长度&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;二维数组&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素&lt;/span&gt;
+&lt;span class="nx"&gt;doubleArray&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// 上面的声明可以简化，直接忽略内部的类型&lt;/span&gt;
+&lt;span class="nx"&gt;easyArray&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;em&gt;注意&lt;/em&gt;:&amp;nbsp;数组之间的赋值是值的赋值，即当把一个数组作为参数传入函数的时候，传入的其实是该数组的副本，而不是它的指针。如果要使用指针，那么就需要用到后面介绍的slice类型了。&lt;/p&gt;
+&lt;h3&gt;Slice&lt;/h3&gt;
+&lt;p&gt;注意slice和数组在声明时的区别：声明数组时，方括号内写明了数组的长度或使用&amp;#8230;自动计算长度，而声明slice时，方括号内没有任何字符。&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="note"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
 &lt;h2&gt;XCode&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;xcode-select --install
 &lt;/pre&gt;&lt;/div&gt;
@@ -82,7 +195,7 @@ powerline font:&amp;nbsp;https://github.com/powerline/fonts&lt;/p&gt;
 &lt;li&gt;mac的屏的确要比我之前用过的笔记本好很多&lt;/li&gt;
 &lt;li&gt;严重怀疑网上那些把mac捧得太高的人只用过Windows，根本没用过Ubuntu之类的桌面Linux&amp;nbsp;(至少目前自己还没体会到mac比Linux高效在哪里)&lt;/li&gt;
 &lt;li&gt;刚开始使用难免出错，也许上面的都是错的。。&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Mac"></category></entry><entry><title>Go学习笔记——(3)打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
+&lt;/ol&gt;</summary><category term="Mac"></category></entry><entry><title>Go学习笔记3之打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
 &lt;p&gt;可以用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具和插件目前已经非常多了,如&lt;span class="caps"&gt;VIM&lt;/span&gt;, Emacs, atom等，这里&lt;a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins"&gt;IDEs and Plugins for
 Go&lt;/a&gt;罗列了许多可以作为&lt;span class="caps"&gt;GO&lt;/span&gt;开发
 的&lt;span class="caps"&gt;IDE&lt;/span&gt;和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
@@ -239,7 +352,7 @@ root:no-reply@example.com:mail.example.com:587
 &lt;span class="s"&gt;$YOUR-MAIL-BODY&lt;/span&gt;
 
 &lt;span class="s"&gt;EOF&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记——(2)初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记2之初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/code.html"&gt;How to Write Go&amp;nbsp;Code&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;代码组织&lt;/h2&gt;
 &lt;h3&gt;工作空间&lt;/h3&gt;
@@ -282,10 +395,17 @@ src/
         ......
 &lt;/pre&gt;&lt;/p&gt;
 &lt;h3&gt;设置&lt;span class="caps"&gt;GOPATH&lt;/span&gt;环境变量&lt;/h3&gt;
-&lt;p&gt;&lt;span class="caps"&gt;GOPATH&lt;/span&gt;是Go中唯一必须需要设置的环境变量, &lt;span class="caps"&gt;GOPATH&lt;/span&gt;就是工作空间的路径&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;GOPATH&lt;/span&gt;是Go中唯一必须需要设置的环境变量, &lt;span class="caps"&gt;GOPATH&lt;/span&gt;就是工作空间的路径, 并且&lt;span class="caps"&gt;GOPATH&lt;/span&gt;可
+以设置多个值，区别是使用&lt;code&gt;go get&lt;/code&gt;命令的时候默认将下载的包安装在&lt;span class="caps"&gt;GOPATH&lt;/span&gt;第一个路径
+下面，我自己一般设置两个路径作为&lt;span class="caps"&gt;GOPATH&lt;/span&gt;的值，一个用于专门下载第三方包，一个作为
+自己的工作环境,　这有的好处是可以在代码版本控制时,&amp;nbsp;不受第三方库的影响&lt;/p&gt;
 &lt;p&gt;如:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir &lt;span class="nv"&gt;$HOME&lt;/span&gt;/go
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/go
+&lt;div class="highlight"&gt;&lt;pre&gt;# &lt;span class="nv"&gt;$HOME&lt;/span&gt;/golang作为第三方包的下载目录
+# &lt;span class="nv"&gt;$HOME&lt;/span&gt;/github/golang作为自己的开发目录
+$ export GOPATH=&amp;quot;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/golang:&lt;span class="nv"&gt;$HOME&lt;/span&gt;/github/golang&amp;quot;
+
+# 将每个GOPATH下面的bin目录添加到PATH变量
+$ export PATH=&lt;span class="nv"&gt;$PATH&lt;/span&gt;:&lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin:&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="nb"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;/bin
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -439,19 +559,19 @@ Hello, Go examples!
 
 
 &lt;p&gt;如果当前包已经存在，&lt;code&gt;go get&lt;/code&gt;会跳过下载&lt;/p&gt;
-&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记——(1)安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记1之安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/install"&gt;Installing Go - Getting&amp;nbsp;Started&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;必备技能之翻墙&lt;/h3&gt;
 &lt;p&gt;这个是必须的技能，不然go的官网都没法访问,&amp;nbsp;后面也不用看了。&lt;/p&gt;
 &lt;h3&gt;开发环境搭建&lt;/h3&gt;
 &lt;p&gt;整个安装过程比较简单，下载安装包，配置环境变量即可。&lt;/p&gt;
-&lt;p&gt;以Linux为例. &lt;/p&gt;
+&lt;p&gt;以Linux为例.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
 &lt;span class="nv"&gt;$ &lt;/span&gt;tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;添加环境变量: &lt;/p&gt;
+&lt;p&gt;添加环境变量:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;export GOROOT=/usr/local/go&lt;/span&gt;
 &lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -459,7 +579,7 @@ Hello, Go examples!
 
 &lt;p&gt;&lt;code&gt;GOROOT&lt;/code&gt;是告诉系统Go安装在哪里，
 &lt;code&gt;PATH&lt;/code&gt;是指定Go相关命令的调用路径.&lt;/p&gt;
-&lt;p&gt;环境检查，按照国际惯例，当然是先来&amp;#8221;Hello World&amp;#8221;. 创建&lt;code&gt;hello.go&lt;/code&gt;: &lt;/p&gt;
+&lt;p&gt;环境检查，按照国际惯例，当然是先来&amp;#8221;Hello World&amp;#8221;. 创建&lt;code&gt;hello.go&lt;/code&gt;:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
@@ -476,7 +596,7 @@ hello, world
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题. &lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
+&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题.&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
 &lt;p&gt;最近线上的redis服务器会莫名出现无法突然之间无法连接的情况，需要重启一下redis服务器才能正常工作，感觉很诡异.&amp;nbsp;查看redis日志，发现报如下错误:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Error allocating resoures for the&amp;nbsp;client&lt;/p&gt;
