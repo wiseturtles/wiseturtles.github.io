@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/elasticsearch.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-08-12T14:13:00+08:00</updated><entry><title>Elastichsearch数据备份，恢复，及迁移</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html" rel="alternate"></link><updated>2015-08-12T14:13:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-snapshot-restore.html</id><summary type="html">&lt;h3&gt;参考资料:&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/elasticsearch.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-08-12T17:29:00+08:00</updated><entry><title>Elastichsearch反向代理设置</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-reverse-proxy.html" rel="alternate"></link><updated>2015-08-12T17:29:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-reverse-proxy.html</id><summary type="html">&lt;p&gt;内网的&lt;span class="caps"&gt;ES&lt;/span&gt;集群，平时操作都是通过命令行，有点不方便，而且安装的site插件也没法使用&amp;nbsp;，比较蛋疼，所以配置nginx作为elasticsearch的反向代理，并且添加认证信息.&lt;/p&gt;
+&lt;p&gt;如果是直接用域名的根节点作为反向代理的话，比较简单，直接配置一下就可以，但是问
+题是根节点被暂用，需要设置一个前缀来来访问,&amp;nbsp;就稍微麻烦一点.&lt;/p&gt;
+&lt;p&gt;nginx配置如下:&lt;/p&gt;
+&lt;pre&gt;
+    location ^~ /es/ {
+            rewrite ^/es/(.*)$ /$1 break;
+            include proxy_params;
+            proxy_pass http://es_node_ip:9200;
+            proxy_redirect http://$host/ http://$host/es/;
+            auth_basic "please login";
+            auth_basic_user_file /data/passwd/es.htpasswd;
+    }
+&lt;/pre&gt;
+
+&lt;p&gt;几点需要注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;include proxy_params;&lt;/code&gt; proxy_params为一些反向代理设置参数，没有的话可以去掉&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;proxy_pass http://es_node_ip:9200;&lt;/code&gt; 需要替换es_node_ip 为&lt;span class="caps"&gt;ES&lt;/span&gt;集群的&lt;span class="caps"&gt;IP&lt;/span&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;auth_basic_user_file /data/passwd/es.htpasswd&lt;/code&gt;中&lt;code&gt;/data/passwd/es.htpasswd&lt;/code&gt;为认证文件，可以用apache工具或一些&lt;a href="http://tool.oschina.net/htpasswd"&gt;在线工具&lt;/a&gt;生成&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;假设域名为www.example.com,&amp;nbsp;那么就可以直接访问&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.example.com/es/"&gt;http://www.example.com/es/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.example.com/es/_plugin/head/"&gt;http://www.example.com/es/_plugin/head/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;配置好之后，用起来爽多了。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="reverse"></category><category term="proxy"></category></entry><entry><title>Elastichsearch数据备份，恢复，及迁移</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html" rel="alternate"></link><updated>2015-08-12T14:13:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-snapshot-restore.html</id><summary type="html">&lt;h3&gt;参考资料:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html&lt;/a&gt;&lt;/li&gt;
