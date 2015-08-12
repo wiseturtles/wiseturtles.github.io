@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Elastichsearch数据备份，恢复，及迁移
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="craygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="elasticsearch" />
+      <meta name="tags" contents="snapshot" />
+      <meta name="tags" contents="restore" />
+      <meta name="tags" contents="transfer" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Elastichsearch数据备份，恢复，及迁移</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/elasticsearch.html">elasticsearch</a> <a href="http://blog.wiseturtles.com/tag/snapshot.html">snapshot</a> <a href="http://blog.wiseturtles.com/tag/restore.html">restore</a> <a href="http://blog.wiseturtles.com/tag/transfer.html">transfer</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/craygit.html">craygit</a>
+On 2015-08-12
+
+        </div>
+
+        <div><h3>参考资料:</h3>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html">https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html">https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html</a></li>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html</a></li>
+<li><a href="https://www.elastic.co/blog/introducing-snapshot-restore">https://www.elastic.co/blog/introducing-snapshot-restore</a></li>
+<li><a href="http://stackoverflow.com/questions/27903929/elasticsearch-snapshot-across-cluster">http://stackoverflow.com/questions/27903929/elasticsearch-snapshot-across-cluster</a></li>
+</ul>
+<p>最近工作需要，要将一个索引的数据迁移到新的另一个集群，查阅了一些资料过后，便开始操作。由于数据量大，整个过程也花费了不少时间，遇到一些坑，特此整理一下整个过程。</p>
+<h3>迁移注意事项</h3>
+<ul>
+<li>保证<span class="caps">ES</span>集群不再接受新的数据(如果是备份的话，这一点可以不考虑，但是做数据迁移的话，建议这样做）.</li>
+<li>不建议直接在生产环境做这些操作，最好是先在本地搭建一个和生产环境一样的集群环境，创建一些测试数据，把整个过程先跑一遍，然后再到生产环境操作。</li>
+</ul>
+<p>本文假设<span class="caps">ES</span>集群有3个节点，<span class="caps">IP</span>分别是: 192.168.0.1, 193.168.0.2,&nbsp;192.168.0.3</p>
+<h3>注册快照仓库</h3>
+<p><span class="caps">ES</span>是通过快照的方式来实现数据备份，并且是以增量的方式，所以一般第一次做的话会花费较长的时间。为了做快照，那么就需要注册一个快照仓库，告诉<span class="caps">ES</span>我们的快照应该如何保存以及将快照保存到哪里.</p>
+<p><span class="caps">ES</span>的快照仓库支持如下几种形式：</p>
+<ul>
+<li>共享的文件系统，如<span class="caps">NAS</span></li>
+<li>Amazon&nbsp;S3</li>
+<li><span class="caps">HDFS</span> (Hadoop Distributed File&nbsp;System)</li>
+<li>Azure&nbsp;Cloud</li>
+</ul>
+<p>通常选择注册第一种形式。</p>
+<p>任意选择一个节点，执行如下命令</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d <span class="s1">&#39;</span>
+<span class="s1">{</span>
+<span class="s1">    &quot;type&quot;: &quot;fs&quot;,</span>
+<span class="s1">    &quot;settings&quot;: {</span>
+<span class="s1">        &quot;location&quot;: &quot;/data/backups/elasticsearch&quot;</span>
+<span class="s1">    }</span>
+<span class="s1">}</span>
+<span class="s1">&#39;</span>
+</pre></div>
+
+
+<p>这样就注册了一个名为<code>my_backup</code>的仓库，这里的<code>location</code>需要注意，最好是设置一个每个节点都能访问并且有写权限的共享目录，如smb目录等(如果整个集群就一个节点那么设置为本地目录也无所谓)。
+我自己在做的时候由于设置了本地目录<code>/data/backups/elasticsearch</code>, 最后做出来发现快照被分别保存在集群每个节点的<code>/data/backups/elasticsearch</code>目录下，并且一个节点保存了一些信息。最后做数据迁移的时候，不得不从每个节点将快照文件拷贝出来，然后合并到一起。</p>
+<p>除了<code>location</code>外，还有一些其他选项可以设置:</p>
+<ul>
+<li>compress&nbsp;是否压缩</li>
+<li>max_snapshot_bytes_per_sec&nbsp;制作快照的速度，默认20mb/s</li>
+<li>max_restore_bytes_per_sec&nbsp;快照恢复的速度，默认20mb/s</li>
+</ul>
+<p>更新仓库设置如下:</p>
+<div class="highlight"><pre>curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/
+<span class="o">{</span>
+    <span class="s2">&quot;type&quot;</span>: <span class="s2">&quot;fs&quot;</span>,
+    <span class="s2">&quot;settings&quot;</span>: <span class="o">{</span>
+        <span class="s2">&quot;location&quot;</span>: <span class="s2">&quot;/data/backups/elasticsearch&quot;</span>,
+        <span class="s2">&quot;max_snapshot_bytes_per_sec&quot;</span> : <span class="s2">&quot;50mb&quot;</span>,
+        <span class="s2">&quot;max_restore_bytes_per_sec&quot;</span> : <span class="s2">&quot;50mb&quot;</span>,
+        <span class="s2">&quot;compress&quot;</span> : <span class="nb">true</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>这里需要注意一点是，注册仓库用的是<code>PUT</code>, 而更新仓库设置用的是<code>POST</code>.</p>
+<h3>检查注册的仓库信息</h3>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
+</pre></div>
+
+
+<h3>开始备份</h3>
+<p>指定快照名称为<code>snapshot_20150812</code></p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+</pre></div>
+
+
+<p>执行上面的上面的命令会马上返回，并在后台执行备份操作, 如果想等到备份完成，可以加上参数<code>wait_for_completion=true</code></p>
+<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<p>默认是备份所有的索引indices,&nbsp;如果要指定index,可以</p>
+<div class="highlight"><pre>curl -XPUT http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+<span class="o">{</span>
+    <span class="s2">&quot;indices&quot;</span>: <span class="s2">&quot;index_1,index_2&quot;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>这个备份过程需要的时间视数据量而定.</p>
+<h3>查看备份状态</h3>
+<p>整个备份过程中，可以通过如下命令查看备份进度</p>
+<div class="highlight"><pre>curl -XGET http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_status
+</pre></div>
+
+
+<p>主要由如下几种状态：</p>
+<ul>
+<li><span class="caps">INITIALIZING</span>&nbsp;集群状态检查，检查当前集群是否可以做快照，通常这个过程会非常快</li>
+<li><span class="caps">STARTED</span>&nbsp;正在转移数据到仓库</li>
+<li><span class="caps">FINALIZING</span>&nbsp;数据转移完成，正在转移元信息</li>
+<li><span class="caps">DONE</span>　完成</li>
+<li><span class="caps">FAILED</span>&nbsp;备份失败</li>
+</ul>
+<h3>取消备份</h3>
+<div class="highlight"><pre>curl -XDELETE http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+</pre></div>
+
+
+<h3>恢复备份</h3>
+<div class="highlight"><pre>curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+</pre></div>
+
+
+<p>同备份一样，也可以设置wait_for_completion=true等待恢复结果</p>
+<div class="highlight"><pre>curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore?wait_for_completion<span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<p>默认情况下，是恢复所有的索引，我们也可以设置一些参数来指定恢复的索引，以及重命令恢复的索引，这样可以避免覆盖原有的数据.</p>
+<div class="highlight"><pre>curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+<span class="o">{</span>
+    <span class="s2">&quot;indices&quot;</span>: <span class="s2">&quot;index_1&quot;</span>,
+    <span class="s2">&quot;rename_pattern&quot;</span>: <span class="s2">&quot;index_(.+)&quot;</span>,
+    <span class="s2">&quot;rename_replacement&quot;</span>: <span class="s2">&quot;restored_index_</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<ul>
+<li>上面的indices,&nbsp;表示只恢复索引&#8217;index_1&#8217;</li>
+<li>rename_pattern:&nbsp;表示重命名索引以&#8217;index_&#8217;开头的索引.</li>
+<li>rename_replacement:&nbsp;表示将所有的索引重命名为&#8217;restored_index_xxx&#8217;.如index_1会被重命名为restored_index_1.</li>
+</ul>
+<h3>查看恢复进度</h3>
+<div class="highlight"><pre><span class="c"># 查看所有索引的恢复进度</span>
+curl -XGET http://192.168.0.1:9200/_recovery/
+
+<span class="c"># 查看索引restored_index_1的恢复进度</span>
+curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
+</pre></div>
+
+
+<h3>取消恢复</h3>
+<p>只需要删除索引，即可取消恢复</p>
+<div class="highlight"><pre>curl -XDELETE http://192.168.0.1:9200/restored_index_1
+</pre></div>
+
+
+<h3>备份快照迁移</h3>
+<p>如果需要将快照迁移到另一个集群.只需要将备份文件全部拷贝到要迁移的机器上, 然后再在新的集群上注册一个快照仓库,设置<code>location</code>的位置为备份文件所在的地方，然后执行恢复备份的命令即可。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="elasticsearch-snapshot-restore" data-title="Elastichsearch数据备份，恢复，及迁移" data-url="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

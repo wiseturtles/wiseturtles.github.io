@@ -1,5 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-08-06T00:20:00+08:00</updated><entry><title>Java Spring 学习索引</title><link href="http://blog.wiseturtles.com/posts/get-started-with-java-spring.html" rel="alternate"></link><updated>2015-08-06T00:20:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-08-06:posts/get-started-with-java-spring.html</id><summary type="html">&lt;p&gt;近期由于工作需要，需要学习Java Web开发，虽然以前也接触过Java, 不过也就仅限于写个&amp;#8221;Hello World&amp;#8221;. 为了尽快掌握Java Web开发，面对网上琳琅满目的学习资料，&amp;nbsp;必须梳理一条清晰的学习路线，不然就会陷入无尽的文档流中了。结合本人的学习情况，整理出如下学习过程。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-08-12T14:13:00+08:00</updated><entry><title>Elastichsearch数据备份，恢复，及迁移</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html" rel="alternate"></link><updated>2015-08-12T14:13:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-snapshot-restore.html</id><summary type="html">&lt;h3&gt;参考资料:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html"&gt;https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.elastic.co/blog/introducing-snapshot-restore"&gt;https://www.elastic.co/blog/introducing-snapshot-restore&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://stackoverflow.com/questions/27903929/elasticsearch-snapshot-across-cluster"&gt;http://stackoverflow.com/questions/27903929/elasticsearch-snapshot-across-cluster&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最近工作需要，要将一个索引的数据迁移到新的另一个集群，查阅了一些资料过后，便开始操作。由于数据量大，整个过程也花费了不少时间，遇到一些坑，特此整理一下整个过程。&lt;/p&gt;
+&lt;h3&gt;迁移注意事项&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;保证&lt;span class="caps"&gt;ES&lt;/span&gt;集群不再接受新的数据(如果是备份的话，这一点可以不考虑，但是做数据迁移的话，建议这样做）.&lt;/li&gt;
+&lt;li&gt;不建议直接在生产环境做这些操作，最好是先在本地搭建一个和生产环境一样的集群环境，创建一些测试数据，把整个过程先跑一遍，然后再到生产环境操作。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文假设&lt;span class="caps"&gt;ES&lt;/span&gt;集群有3个节点，&lt;span class="caps"&gt;IP&lt;/span&gt;分别是: 192.168.0.1, 193.168.0.2,&amp;nbsp;192.168.0.3&lt;/p&gt;
+&lt;h3&gt;注册快照仓库&lt;/h3&gt;
+&lt;p&gt;&lt;span class="caps"&gt;ES&lt;/span&gt;是通过快照的方式来实现数据备份，并且是以增量的方式，所以一般第一次做的话会花费较长的时间。为了做快照，那么就需要注册一个快照仓库，告诉&lt;span class="caps"&gt;ES&lt;/span&gt;我们的快照应该如何保存以及将快照保存到哪里.&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;ES&lt;/span&gt;的快照仓库支持如下几种形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;共享的文件系统，如&lt;span class="caps"&gt;NAS&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Amazon&amp;nbsp;S3&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;HDFS&lt;/span&gt; (Hadoop Distributed File&amp;nbsp;System)&lt;/li&gt;
+&lt;li&gt;Azure&amp;nbsp;Cloud&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常选择注册第一种形式。&lt;/p&gt;
+&lt;p&gt;任意选择一个节点，执行如下命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s1"&gt;{&lt;/span&gt;
+&lt;span class="s1"&gt;    &amp;quot;type&amp;quot;: &amp;quot;fs&amp;quot;,&lt;/span&gt;
+&lt;span class="s1"&gt;    &amp;quot;settings&amp;quot;: {&lt;/span&gt;
+&lt;span class="s1"&gt;        &amp;quot;location&amp;quot;: &amp;quot;/data/backups/elasticsearch&amp;quot;&lt;/span&gt;
+&lt;span class="s1"&gt;    }&lt;/span&gt;
+&lt;span class="s1"&gt;}&lt;/span&gt;
+&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就注册了一个名为&lt;code&gt;my_backup&lt;/code&gt;的仓库，这里的&lt;code&gt;location&lt;/code&gt;需要注意，最好是设置一个每个节点都能访问并且有写权限的共享目录，如smb目录等(如果整个集群就一个节点那么设置为本地目录也无所谓)。
+我自己在做的时候由于设置了本地目录&lt;code&gt;/data/backups/elasticsearch&lt;/code&gt;, 最后做出来发现快照被分别保存在集群每个节点的&lt;code&gt;/data/backups/elasticsearch&lt;/code&gt;目录下，并且一个节点保存了一些信息。最后做数据迁移的时候，不得不从每个节点将快照文件拷贝出来，然后合并到一起。&lt;/p&gt;
+&lt;p&gt;除了&lt;code&gt;location&lt;/code&gt;外，还有一些其他选项可以设置:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;compress&amp;nbsp;是否压缩&lt;/li&gt;
+&lt;li&gt;max_snapshot_bytes_per_sec&amp;nbsp;制作快照的速度，默认20mb/s&lt;/li&gt;
+&lt;li&gt;max_restore_bytes_per_sec&amp;nbsp;快照恢复的速度，默认20mb/s&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;更新仓库设置如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;fs&amp;quot;&lt;/span&gt;,
+    &lt;span class="s2"&gt;&amp;quot;settings&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="s2"&gt;&amp;quot;location&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;/data/backups/elasticsearch&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;max_snapshot_bytes_per_sec&amp;quot;&lt;/span&gt; : &lt;span class="s2"&gt;&amp;quot;50mb&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;max_restore_bytes_per_sec&amp;quot;&lt;/span&gt; : &lt;span class="s2"&gt;&amp;quot;50mb&amp;quot;&lt;/span&gt;,
+        &lt;span class="s2"&gt;&amp;quot;compress&amp;quot;&lt;/span&gt; : &lt;span class="nb"&gt;true&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里需要注意一点是，注册仓库用的是&lt;code&gt;PUT&lt;/code&gt;, 而更新仓库设置用的是&lt;code&gt;POST&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;检查注册的仓库信息&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;开始备份&lt;/h3&gt;
+&lt;p&gt;指定快照名称为&lt;code&gt;snapshot_20150812&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;执行上面的上面的命令会马上返回，并在后台执行备份操作, 如果想等到备份完成，可以加上参数&lt;code&gt;wait_for_completion=true&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;默认是备份所有的索引indices,&amp;nbsp;如果要指定index,可以&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPUT http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;indices&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_1,index_2&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这个备份过程需要的时间视数据量而定.&lt;/p&gt;
+&lt;h3&gt;查看备份状态&lt;/h3&gt;
+&lt;p&gt;整个备份过程中，可以通过如下命令查看备份进度&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XGET http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_status
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;主要由如下几种状态：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class="caps"&gt;INITIALIZING&lt;/span&gt;&amp;nbsp;集群状态检查，检查当前集群是否可以做快照，通常这个过程会非常快&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;STARTED&lt;/span&gt;&amp;nbsp;正在转移数据到仓库&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;FINALIZING&lt;/span&gt;&amp;nbsp;数据转移完成，正在转移元信息&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;DONE&lt;/span&gt;　完成&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;FAILED&lt;/span&gt;&amp;nbsp;备份失败&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;取消备份&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XDELETE http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;恢复备份&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;同备份一样，也可以设置wait_for_completion=true等待恢复结果&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;默认情况下，是恢复所有的索引，我们也可以设置一些参数来指定恢复的索引，以及重命令恢复的索引，这样可以避免覆盖原有的数据.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;indices&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_1&amp;quot;&lt;/span&gt;,
+    &lt;span class="s2"&gt;&amp;quot;rename_pattern&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_(.+)&amp;quot;&lt;/span&gt;,
+    &lt;span class="s2"&gt;&amp;quot;rename_replacement&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;restored_index_&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;上面的indices,&amp;nbsp;表示只恢复索引&amp;#8217;index_1&amp;#8217;&lt;/li&gt;
+&lt;li&gt;rename_pattern:&amp;nbsp;表示重命名索引以&amp;#8217;index_&amp;#8217;开头的索引.&lt;/li&gt;
+&lt;li&gt;rename_replacement:&amp;nbsp;表示将所有的索引重命名为&amp;#8217;restored_index_xxx&amp;#8217;.如index_1会被重命名为restored_index_1.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;查看恢复进度&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 查看所有索引的恢复进度&lt;/span&gt;
+curl -XGET http://192.168.0.1:9200/_recovery/
+
+&lt;span class="c"&gt;# 查看索引restored_index_1的恢复进度&lt;/span&gt;
+curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;取消恢复&lt;/h3&gt;
+&lt;p&gt;只需要删除索引，即可取消恢复&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;curl -XDELETE http://192.168.0.1:9200/restored_index_1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;备份快照迁移&lt;/h3&gt;
+&lt;p&gt;如果需要将快照迁移到另一个集群.只需要将备份文件全部拷贝到要迁移的机器上, 然后再在新的集群上注册一个快照仓库,设置&lt;code&gt;location&lt;/code&gt;的位置为备份文件所在的地方，然后执行恢复备份的命令即可。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="snapshot"></category><category term="restore"></category><category term="transfer"></category></entry><entry><title>Java Spring 学习索引</title><link href="http://blog.wiseturtles.com/posts/get-started-with-java-spring.html" rel="alternate"></link><updated>2015-08-06T00:20:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-08-06:posts/get-started-with-java-spring.html</id><summary type="html">&lt;p&gt;近期由于工作需要，需要学习Java Web开发，虽然以前也接触过Java, 不过也就仅限于写个&amp;#8221;Hello World&amp;#8221;. 为了尽快掌握Java Web开发，面对网上琳琅满目的学习资料，&amp;nbsp;必须梳理一条清晰的学习路线，不然就会陷入无尽的文档流中了。结合本人的学习情况，整理出如下学习过程。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Java基础语法&lt;/p&gt;
