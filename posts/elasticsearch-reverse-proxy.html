@@ -73,7 +73,7 @@ On 2015-08-12
 题是根节点被暂用，需要设置一个前缀来来访问,&nbsp;就稍微麻烦一点.</p>
 <p>nginx配置如下:</p>
 <pre>
-    location ^~ /es/ {
+    location ~ ^/es/ {
             rewrite ^/es/(.*)$ /$1 break;
             include proxy_params;
             proxy_pass http://es_node_ip:9200;
