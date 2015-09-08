@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Scrapy入门
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="python" />
+      <meta name="tags" contents="scrapy" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Scrapy入门</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/scrapy.html">scrapy</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-08-27
+
+        </div>
+
+        <div><h2>常用命令</h2>
+<div class="highlight"><pre><span class="c"># 运行一个爬虫</span>
+<span class="nv">$ </span>scrapy runspider stackoverflow_spider.py -o top-stackoverflow-questions.json
+
+<span class="c"># 创建项目</span>
+<span class="nv">$ </span>scrapy startproject tutorial
+
+<span class="c"># 开始爬取</span>
+<span class="nv">$ </span>scrapy crawl dmoz
+</pre></div>
+
+
+<h2>有用的代码片段</h2>
+<ul>
+<li><a href="http://snipplr.com/all/tags/scrapy/">http://snipplr.com/all/tags/scrapy/</a></li>
+</ul>
+<h2>命令行工具</h2>
+<p>命令行工具运行时会加载Scrapy的配置文件，加载顺序如下：</p>
+<ul>
+<li>系统级别: /etc/scrapy.cfg 或&nbsp;c:\scrapy\scrapy.cfg</li>
+<li>用户级别: ~/.config/scrapy.cfg ($XDG_CONFIG_HOME) 或 ~/.scrapy.cfg ($<span class="caps">HOME</span>)</li>
+<li>项目级别:&nbsp;scrapy.cfg</li>
+</ul>
+<p>常用命令</p>
+<div class="highlight"><pre># 创建项目
+$ scrapy startproject &lt;project_name&gt;
+
+# 创建爬虫
+$ scrapy genspider [-t template] &lt;name&gt; &lt;domain&gt;
+
+# 运行爬虫
+$ scrapy crawl &lt;spider&gt;
+
+# contract检查
+$ scrapy check [-l] &lt;spider&gt;
+
+# 列出可用的爬虫
+$ scrapy list
+
+# 使用`EDITOR`编辑爬虫
+$ scrapy edit &lt;spider&gt;
+
+# 下载链接
+$ scrapy fetch &lt;url&gt;
+
+# 使用浏览器打开链接
+$ scrapy view &lt;url&gt;
+
+# 进入命令行交互环境(如果有装ipython则使用ipython)
+$ scrapy shell
+
+# 解析URL
+$ scrapy parse &lt;url&gt; [options]
+
+
+# 获取设置信息
+$ scrapy settings [options]
+
+# 运行一个爬虫
+$ scrapy runspider &lt;spider_file.py&gt;
+
+# 运行测试用例
+$ scrapy bench
+</pre></div>
+
+
+<p>自定义命令</p>
+<p>设置<code>COMMANDS_MODULE = 'mybot.commands'</code></p>
+<p>命令的定义方式可以参考
+<a href="https://github.com/scrapy/scrapy/tree/master/scrapy/commands">https://github.com/scrapy/scrapy/tree/master/scrapy/commands</a></p>
+<h2>蜘蛛分类</h2>
+<ul>
+<li>scrapy.spiders.Spider</li>
+<li>scrapy.spiders.CrawlSpider</li>
+<li>scrapy.spiders.XMLFeedSpider</li>
+<li>crapy.spiders.CSVFeedSpider</li>
+<li>scrapy.spiders.SitemapSpider</li>
+</ul>
+<h2>选择器</h2>
+<ul>
+<li>
+<p>Xpath
+        - <a href="http://www.zvon.org/comp/r/tut-XPath_1.html">Xpath指南</a>
+        - <a href="http://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches/">Xpath使用技巧</a></p>
+</li>
+<li>
+<p><span class="caps">CSS</span></p>
+</li>
+</ul>
+<p>可以使用<code>BeautifulSoup</code>和<code>lxml</code>来解析网页&nbsp;使用Xpath取不到想要的节点时，需要考虑命名空间的影响</p>
+<h2>Items</h2>
+<p><a href="http://doc.scrapy.org/en/1.0/topics/items.html">http://doc.scrapy.org/en/1.0/topics/items.html</a></p>
+<h2>ItemLoaders</h2>
+<p><a href="http://doc.scrapy.org/en/1.0/topics/loaders.html">http://doc.scrapy.org/en/1.0/topics/loaders.html</a>
+输入输出的处理器优先级(由高到低)
+ItemLoader field属性 &gt; Item input_processor 或output_processor &gt; ItemLoader的default_input_processor&nbsp;和defualt_output_processor</p>
+<h2>Scrapy&nbsp;Shell</h2>
+<p>可以在Spider代码中使用shell</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">scrapy.shell</span> <span class="kn">import</span> <span class="n">inspect_response</span>
+<span class="n">inspect_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+</pre></div>
+
+
+<h2>调试技巧</h2>
+<ul>
+<li>使用</li>
+</ul>
+<div class="highlight"><pre># 调试CrawlSpider的Rules
+scrapy parse --spider=douban --noitems http://movie.douban.com/top250
+</pre></div>
+
+
+<h2>其他</h2>
+<ul>
+<li><a href="http://scrapyd.readthedocs.org/en/latest/">scrapyd</a></li>
+<li><a href="https://github.com/scrapinghub/scrapyrt">scrapyrt</a></li>
+<li><a href="https://github.com/scrapy-plugins/scrapy-jsonrpc">scrapy-jsonrpc</a></li>
+</ul></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="get-started-scrapy" data-title="Scrapy入门" data-url="http://blog.wiseturtles.com/drafts/get-started-scrapy.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
