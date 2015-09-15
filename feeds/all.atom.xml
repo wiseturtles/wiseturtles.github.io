@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-08-12T17:29:00+08:00</updated><entry><title>Elastichsearch反向代理设置</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-reverse-proxy.html" rel="alternate"></link><updated>2015-08-12T17:29:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-reverse-proxy.html</id><summary type="html">&lt;p&gt;内网的&lt;span class="caps"&gt;ES&lt;/span&gt;集群，平时操作都是通过命令行，有点不方便，而且安装的site插件也没法使用&amp;nbsp;，比较蛋疼，所以配置nginx作为elasticsearch的反向代理，并且添加认证信息.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-15T13:47:00+08:00</updated><entry><title>Golang评价</title><link href="http://blog.wiseturtles.com/posts/golang-chaos.html" rel="alternate"></link><updated>2015-09-15T13:47:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-15:posts/golang-chaos.html</id><summary type="html">&lt;h3&gt;djvu9&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;作为一具码了差不多20年C++的C++11爱好者，我觉得对于大部分后端半栈码农，golang才是未来的方向。C++缺乏可用的标准库，Java的问题是&lt;span class="caps"&gt;JVM&lt;/span&gt;，python/php没有static&amp;nbsp;typing，这些问题看来都没什么解决希望。golang的toolchain，runtime和标准库，目前来看是配合的最好的没有之一。语言本身其实不太重要。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;golang的最大特点就是方便，比如goroutine不用创建线程，chan通信不用消息队列，自带网络、压缩、加密、协议、编解码、图像、文本处理的库，全部用go实现所以交叉编译很简单，还有parser/serializer的支持，静态编译部署简单不担心运行库的版本问题。所以即使没有模版，代码累赘且丑也能接受了。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;有人问&lt;span class="caps"&gt;JVM&lt;/span&gt;有什么问题。软件的基本原理就是&amp;#8221;We can solve any problem by introducing an extra level of indirection&amp;#8221;。但是抽象就会带来新的问题：维护成本，跟外界的交互限制，信息的缺失等，所以要调gc，jni会影响优化，debug起来麻烦。&lt;span class="caps"&gt;JVM&lt;/span&gt;当年要解决的问题现在都不存在了所以它自己就成问题了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;操作系统和体系结构的多样性减少，编译器基础设施的改进，以及开放源代码的发展。基本上现在换个平台重新编译下代码就好了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;yinwang&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.yinwang.org/blog-cn/2014/04/18/golang/"&gt;对 Go&amp;nbsp;语言的综合评价&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="go"></category></entry><entry><title>Elastichsearch反向代理设置</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-reverse-proxy.html" rel="alternate"></link><updated>2015-08-12T17:29:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-reverse-proxy.html</id><summary type="html">&lt;p&gt;内网的&lt;span class="caps"&gt;ES&lt;/span&gt;集群，平时操作都是通过命令行，有点不方便，而且安装的site插件也没法使用&amp;nbsp;，比较蛋疼，所以配置nginx作为elasticsearch的反向代理，并且添加认证信息.&lt;/p&gt;
 &lt;p&gt;如果是直接用域名的根节点作为反向代理的话，比较简单，直接配置一下就可以，但是问
 题是根节点被暂用，需要设置一个前缀来来访问,&amp;nbsp;就稍微麻烦一点.&lt;/p&gt;
 &lt;p&gt;nginx配置如下:&lt;/p&gt;
