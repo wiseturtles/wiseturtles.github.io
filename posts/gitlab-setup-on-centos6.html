@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Gitlab安装
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="gitlab" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Gitlab安装</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/gitlab.html">gitlab</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-09-18
+
+        </div>
+
+        <div><p>公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&nbsp;下面介绍下gitlab安装、配置。</p>
+<h2>系统环境</h2>
+<p>查看系统版本。</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/issue
+CentOS release 6.6 <span class="o">(</span>Final<span class="o">)</span>
+Kernel <span class="se">\r</span> on an <span class="se">\m</span>
+</pre></div>
+
+
+<h2>安装gitlab</h2>
+<p><a href="https://about.gitlab.com/downloads/#centos6">官方安装文档</a>介绍的比较详细，&nbsp;我用公司邮箱发送邮件，所以，没有安装postfix。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo yum install curl openssh-server cronie
+<span class="nv">$ </span>sudo lokkit -s http -s ssh
+<span class="nv">$ </span>curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh <span class="p">|</span> sudo bash
+<span class="nv">$ </span>sudo yum install gitlab-ce
+</pre></div>
+
+
+<h2>配置gitlab</h2>
+<p>数据库使用的是PostgreSQL，使用公司邮件服务器。</p>
+<div class="highlight"><pre>--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
++++ /etc/gitlab/gitlab.rb   2015-09-09 14:47:33.710061343 +0800
+@@ -3,7 +3,7 @@
+<span class="c">## Url on which GitLab will be reachable.</span>
+<span class="c">## For more details on configuring external_url see:</span>
+<span class="c">## https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#configuring-the-external-url-for-gitlab</span>
+-external_url <span class="s1">&#39;http://iZ23rkm97f5Z&#39;</span>
++external_url <span class="s1">&#39;http://your-git-domain&#39;</span>
+
+
+<span class="c">## Note: configuration settings below are optional.</span>
+@@ -14,23 +14,23 @@
+
+<span class="c"># gitlab_rails[&#39;gitlab_ssh_host&#39;] = &#39;ssh.host_example.com&#39;</span>
+gitlab_rails<span class="o">[</span><span class="s1">&#39;time_zone&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;UTC&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_enabled&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;example@example.com&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_display_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Example&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_reply_to&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;noreply@example.com&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_can_create_group&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_username_changing_enabled&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_theme&#39;</span><span class="o">]</span> <span class="o">=</span> 2
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_restricted_visibility_levels&#39;</span><span class="o">]</span> <span class="o">=</span> nil <span class="c"># to restrict public and internal: [&#39;public&#39;, &#39;internal&#39;]</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_issues&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_merge_requests&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_wiki&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_snippets&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_visibility_level&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;private&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_repository_downloads_path&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;tmp/repositories&#39;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_enabled&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_from&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;noreply@yourdomain&#39;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_display_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Gitlab&#39;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_email_reply_to&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;noreply@yourdomain&#39;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_can_create_group&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_username_changing_enabled&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_theme&#39;</span><span class="o">]</span> <span class="o">=</span> 2
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_restricted_visibility_levels&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="s1">&#39;public&#39;</span>, <span class="s1">&#39;internal&#39;</span><span class="o">]</span> <span class="c"># to restrict public and internal: [&#39;public&#39;, &#39;internal&#39;]</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_issues&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_merge_requests&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_wiki&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_snippets&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_default_projects_features_visibility_level&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;private&#39;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_repository_downloads_path&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;tmp/repositories&#39;</span>
+<span class="c"># gitlab_rails[&#39;gravatar_plain_url&#39;] = &#39;http://www.gravatar.com/avatar/%{hash}?s=%{size}&amp;d=identicon&#39;</span>
+<span class="c"># gitlab_rails[&#39;gravatar_ssl_url&#39;] = &#39;https://secure.gravatar.com/avatar/%{hash}?s=%{size}&amp;d=identicon&#39;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;webhook_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 10
++gitlab_rails<span class="o">[</span><span class="s1">&#39;webhook_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 10
+
+<span class="c">## For setting up LDAP</span>
+<span class="c">## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#setting-up-ldap-sign-in</span>
+@@ -107,9 +107,9 @@
+<span class="c">## For setting up backups</span>
+<span class="c">## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#backups</span>
+
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_path&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/backups&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_archive_permissions&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">0644</span> <span class="c"># See: http://doc.gitlab.com/ce/raketasks/backup_restore.html#backup-archive-permissions</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_keep_time&#39;</span><span class="o">]</span> <span class="o">=</span> 604800
++gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_path&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/backups&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_archive_permissions&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="m">0644</span> <span class="c"># See: http://doc.gitlab.com/ce/raketasks/backup_restore.html#backup-archive-permissions</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;backup_keep_time&#39;</span><span class="o">]</span> <span class="o">=</span> 604800
+<span class="c"># gitlab_rails[&#39;backup_upload_connection&#39;] = {</span>
+<span class="c">#   &#39;provider&#39; =&gt; &#39;AWS&#39;,</span>
+<span class="c">#   &#39;region&#39; =&gt; &#39;eu-west-1&#39;,</span>
+@@ -128,9 +128,9 @@
+<span class="c"># gitlab_rails[&#39;satellites_timeout&#39;] = 30</span>
+
+<span class="c">## GitLab Shell settings for GitLab</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_shell_ssh_port&#39;</span><span class="o">]</span> <span class="o">=</span> 22
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;git_max_size&#39;</span><span class="o">]</span> <span class="o">=</span> 20971520
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;git_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 10
++gitlab_rails<span class="o">[</span><span class="s1">&#39;gitlab_shell_ssh_port&#39;</span><span class="o">]</span> <span class="o">=</span> 22
++gitlab_rails<span class="o">[</span><span class="s1">&#39;git_max_size&#39;</span><span class="o">]</span> <span class="o">=</span> 20971520
++gitlab_rails<span class="o">[</span><span class="s1">&#39;git_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 10
+
+<span class="c">## Extra customization</span>
+<span class="c"># gitlab_rails[&#39;extra_google_analytics_id&#39;] = &#39;_your_tracking_id&#39;</span>
+@@ -161,9 +161,9 @@
+<span class="c"># GitLab application settings #</span>
+<span class="c">###############################</span>
+
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;uploads_directory&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/gitlab-rails/uploads&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;rate_limit_requests_per_period&#39;</span><span class="o">]</span> <span class="o">=</span> 10
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;rate_limit_period&#39;</span><span class="o">]</span> <span class="o">=</span> 60
++gitlab_rails<span class="o">[</span><span class="s1">&#39;uploads_directory&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/gitlab-rails/uploads&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;rate_limit_requests_per_period&#39;</span><span class="o">]</span> <span class="o">=</span> 10
++gitlab_rails<span class="o">[</span><span class="s1">&#39;rate_limit_period&#39;</span><span class="o">]</span> <span class="o">=</span> 60
+
+<span class="c"># Change the initial default admin password.</span>
+<span class="c"># Only applicable on inital setup, changing this setting after database is created and seeded</span>
+@@ -176,13 +176,13 @@
+<span class="c">## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/database.md#database-settings</span>
+<span class="c">## Only needed if you use an external database.</span>
+
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_adapter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_encoding&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;unicode&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_database&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlabhq_production&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_pool&#39;</span><span class="o">]</span> <span class="o">=</span> 10
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_username&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_password&#39;</span><span class="o">]</span> <span class="o">=</span> nil
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;db_host&#39;</span><span class="o">]</span> <span class="o">=</span> nil
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_adapter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_encoding&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;unicode&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_database&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_pool&#39;</span><span class="o">]</span> <span class="o">=</span> 10
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_username&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_password&#39;</span><span class="o">]</span> <span class="o">=</span> nil
++gitlab_rails<span class="o">[</span><span class="s1">&#39;db_host&#39;</span><span class="o">]</span> <span class="o">=</span> nil
+<span class="c"># gitlab_rails[&#39;db_port&#39;] = 5432</span>
+<span class="c"># gitlab_rails[&#39;db_socket&#39;] = nil</span>
+<span class="c"># gitlab_rails[&#39;db_sslmode&#39;] = nil</span>
+@@ -206,15 +206,15 @@
+<span class="c"># see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings</span>
+<span class="c"># Use smtp instead of sendmail/postfix.</span>
+
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;smtp.server&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> 456
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;smtp user&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;smtp password&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;example.com&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;login&quot;</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable_starttls_auto&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_tls&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;smtp.xxx.com&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> 25
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;noreply@yourdomain&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;yourpassword&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;yourdomain&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;login&quot;</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_enable_starttls_auto&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
++gitlab_rails<span class="o">[</span><span class="s1">&#39;smtp_tls&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+<span class="c"># gitlab_rails[&#39;smtp_openssl_verify_mode&#39;] = &#39;none&#39; # Can be: &#39;none&#39;, &#39;peer&#39;, &#39;client_once&#39;, &#39;fail_if_no_peer_cert&#39;, see http://api.rubyonrails.org/classes/ActionMailer/Base.html</span>
+<span class="c"># gitlab_rails[&#39;smtp_ca_path&#39;] = &quot;/etc/ssl/certs&quot;</span>
+<span class="c"># gitlab_rails[&#39;smtp_ca_file&#39;] = &quot;/etc/ssl/certs/ca-certificates.crt&quot;</span>
+@@ -242,18 +242,18 @@
+<span class="c">##################</span>
+<span class="c">## Tweak unicorn settings.</span>
+
+-# unicorn<span class="o">[</span><span class="s1">&#39;worker_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 60
+-# unicorn<span class="o">[</span><span class="s1">&#39;worker_processes&#39;</span><span class="o">]</span> <span class="o">=</span> 2
++unicorn<span class="o">[</span><span class="s1">&#39;worker_timeout&#39;</span><span class="o">]</span> <span class="o">=</span> 60
++unicorn<span class="o">[</span><span class="s1">&#39;worker_processes&#39;</span><span class="o">]</span> <span class="o">=</span> 2
+
+<span class="c">## Advanced settings</span>
+-# unicorn<span class="o">[</span><span class="s1">&#39;listen&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+-# unicorn<span class="o">[</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="o">=</span> 8080
+-# unicorn<span class="o">[</span><span class="s1">&#39;socket&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket&#39;</span>
+-# unicorn<span class="o">[</span><span class="s1">&#39;pidfile&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/opt/gitlab/var/unicorn/unicorn.pid&#39;</span>
++unicorn<span class="o">[</span><span class="s1">&#39;listen&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
++unicorn<span class="o">[</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="o">=</span> 8088
++unicorn<span class="o">[</span><span class="s1">&#39;socket&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket&#39;</span>
++unicorn<span class="o">[</span><span class="s1">&#39;pidfile&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;/opt/gitlab/var/unicorn/unicorn.pid&#39;</span>
+<span class="c"># unicorn[&#39;tcp_nopush&#39;] = true</span>
+-# unicorn<span class="o">[</span><span class="s1">&#39;backlog_socket&#39;</span><span class="o">]</span> <span class="o">=</span> 1024
++unicorn<span class="o">[</span><span class="s1">&#39;backlog_socket&#39;</span><span class="o">]</span> <span class="o">=</span> 1024
+<span class="c"># Make sure somaxconn is equal or higher then backlog_socket</span>
+-# unicorn<span class="o">[</span><span class="s1">&#39;somaxconn&#39;</span><span class="o">]</span> <span class="o">=</span> 1024
++unicorn<span class="o">[</span><span class="s1">&#39;somaxconn&#39;</span><span class="o">]</span> <span class="o">=</span> 1024
+<span class="c"># We do not recommend changing this setting</span>
+<span class="c"># unicorn[&#39;log_directory&#39;] = &quot;/var/log/gitlab/unicorn&quot;</span>
+
+@@ -290,11 +290,11 @@
+<span class="c"># GitLab PostgreSQL #</span>
+<span class="c">#####################</span>
+
+-# postgresql<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+-# postgresql<span class="o">[</span><span class="s1">&#39;listen_address&#39;</span><span class="o">]</span> <span class="o">=</span> nil
+-# postgresql<span class="o">[</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="o">=</span> 5432
+-# postgresql<span class="o">[</span><span class="s1">&#39;data_dir&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/postgresql/data&quot;</span>
+-# postgresql<span class="o">[</span><span class="s1">&#39;shared_buffers&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;256MB&quot;</span> <span class="c"># recommend value is 1/4 of total RAM, up to 14GB.</span>
++postgresql<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++postgresql<span class="o">[</span><span class="s1">&#39;listen_address&#39;</span><span class="o">]</span> <span class="o">=</span> nil
++postgresql<span class="o">[</span><span class="s1">&#39;port&#39;</span><span class="o">]</span> <span class="o">=</span> 5432
++postgresql<span class="o">[</span><span class="s1">&#39;data_dir&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;/var/opt/gitlab/postgresql/data&quot;</span>
++postgresql<span class="o">[</span><span class="s1">&#39;shared_buffers&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;256MB&quot;</span> <span class="c"># recommend value is 1/4 of total RAM, up to 14GB.</span>
+
+<span class="c">## Advanced settings</span>
+<span class="c"># postgresql[&#39;ha&#39;] = false</span>
+@@ -326,7 +326,7 @@
+<span class="c">################</span>
+<span class="c">## Can be disabled if you are using your own redis instance.</span>
+
+-# redis<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++redis<span class="o">[</span><span class="s1">&#39;enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
+<span class="c"># redis[&#39;username&#39;] = &quot;gitlab-redis&quot;</span>
+<span class="c"># redis[&#39;uid&#39;] = nil</span>
+<span class="c"># redis[&#39;gid&#39;] = nil</span>
+@@ -470,14 +470,14 @@
+<span class="c">## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/database.md#database-settings</span>
+<span class="c">## Only needed if you use an external database.</span>
+
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_adapter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_encoding&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;unicode&quot;</span>
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_database&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab_ci_production&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_adapter&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;postgresql&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_encoding&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;unicode&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_database&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab_ci_production&quot;</span>
+<span class="c"># gitlab_ci[&#39;db_pool&#39;] = 10</span>
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_username&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab_ci&quot;</span>
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_password&#39;</span><span class="o">]</span> <span class="o">=</span> nil
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_host&#39;</span><span class="o">]</span> <span class="o">=</span> nil
+-# gitlab_ci<span class="o">[</span><span class="s1">&#39;db_port&#39;</span><span class="o">]</span> <span class="o">=</span> 5432
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_username&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;gitlab_ci&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_password&#39;</span><span class="o">]</span> <span class="o">=</span> nil
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_host&#39;</span><span class="o">]</span> <span class="o">=</span> nil
++gitlab_ci<span class="o">[</span><span class="s1">&#39;db_port&#39;</span><span class="o">]</span> <span class="o">=</span> 5432
+<span class="c"># gitlab_ci[&#39;db_socket&#39;] = nil</span>
+<span class="c"># gitlab_ci[&#39;db_sslmode&#39;] = nil</span>
+<span class="c"># gitlab_ci[&#39;db_sslrootcert&#39;] = nil</span>
+@@ -497,6 +497,15 @@
+<span class="c">###################################</span>
+<span class="c">## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings</span>
+
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_enable&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">true</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_address&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;smtp.xxx.com&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_port&#39;</span><span class="o">]</span> <span class="o">=</span> 25
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_user_name&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;noreply@yourdomain&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_password&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;yourpassword&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_domain&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;yourdomain&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_authentication&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;login&quot;</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_enable_starttls_auto&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
++gitlab_ci<span class="o">[</span><span class="s1">&#39;smtp_tls&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="nb">false</span>
+<span class="c"># gitlab_ci[&#39;smtp_enable&#39;] = true</span>
+<span class="c"># gitlab_ci[&#39;smtp_address&#39;] = &quot;smtp.server&quot;</span>
+<span class="c"># gitlab_ci[&#39;smtp_port&#39;] = 456</span>
+</pre></div>
+
+
+<p>根据/etc/gitlab/gitlab.rb重新配置gitlab。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo gitlab-ctl reconfigure
+</pre></div>
+
+
+<p>使用默认用户名:<code>root</code> 密码:<code>5iveL!fe</code>登陆，登陆后修改默认密码。</p>
+<h2>备份</h2>
+<div class="highlight"><pre><span class="nv">$ </span>sudo crontab -l
+<span class="m">0</span> <span class="m">2</span> * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="gitlab-setup-on-centos6" data-title="Gitlab安装" data-url="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

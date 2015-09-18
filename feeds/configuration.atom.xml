@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T13:13:00+08:00</updated><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
+&lt;h2&gt;系统环境&lt;/h2&gt;
+&lt;p&gt;查看系统版本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/issue
+CentOS release 6.6 &lt;span class="o"&gt;(&lt;/span&gt;Final&lt;span class="o"&gt;)&lt;/span&gt;
+Kernel &lt;span class="se"&gt;\r&lt;/span&gt; on an &lt;span class="se"&gt;\m&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装gitlab&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://about.gitlab.com/downloads/#centos6"&gt;官方安装文档&lt;/a&gt;介绍的比较详细，&amp;nbsp;我用公司邮箱发送邮件，所以，没有安装postfix。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo yum install curl openssh-server cronie
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo lokkit -s http -s ssh
+&lt;span class="nv"&gt;$ &lt;/span&gt;curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh &lt;span class="p"&gt;|&lt;/span&gt; sudo bash
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo yum install gitlab-ce
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置gitlab&lt;/h2&gt;
+&lt;p&gt;数据库使用的是PostgreSQL，使用公司邮件服务器。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
++++ /etc/gitlab/gitlab.rb   2015-09-09 14:47:33.710061343 +0800
+@@ -3,7 +3,7 @@
+&lt;span class="c"&gt;## Url on which GitLab will be reachable.&lt;/span&gt;
+&lt;span class="c"&gt;## For more details on configuring external_url see:&lt;/span&gt;
+&lt;span class="c"&gt;## https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#configuring-the-external-url-for-gitlab&lt;/span&gt;
+-external_url &lt;span class="s1"&gt;&amp;#39;http://iZ23rkm97f5Z&amp;#39;&lt;/span&gt;
++external_url &lt;span class="s1"&gt;&amp;#39;http://your-git-domain&amp;#39;&lt;/span&gt;
+
+
+&lt;span class="c"&gt;## Note: configuration settings below are optional.&lt;/span&gt;
+@@ -14,23 +14,23 @@
+
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;gitlab_ssh_host&amp;#39;] = &amp;#39;ssh.host_example.com&amp;#39;&lt;/span&gt;
+gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;time_zone&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;UTC&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_enabled&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_from&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;example@example.com&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_display_name&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Example&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_reply_to&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;noreply@example.com&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_can_create_group&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_username_changing_enabled&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_theme&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 2
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_restricted_visibility_levels&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil &lt;span class="c"&gt;# to restrict public and internal: [&amp;#39;public&amp;#39;, &amp;#39;internal&amp;#39;]&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_issues&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_merge_requests&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_wiki&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_snippets&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_visibility_level&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;private&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_repository_downloads_path&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tmp/repositories&amp;#39;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_enabled&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_from&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;noreply@yourdomain&amp;#39;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_display_name&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Gitlab&amp;#39;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_email_reply_to&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;noreply@yourdomain&amp;#39;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_can_create_group&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_username_changing_enabled&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_theme&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 2
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_restricted_visibility_levels&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;public&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;internal&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="c"&gt;# to restrict public and internal: [&amp;#39;public&amp;#39;, &amp;#39;internal&amp;#39;]&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_issues&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_merge_requests&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_wiki&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_snippets&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_default_projects_features_visibility_level&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;private&amp;#39;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_repository_downloads_path&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;tmp/repositories&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;gravatar_plain_url&amp;#39;] = &amp;#39;http://www.gravatar.com/avatar/%{hash}?s=%{size}&amp;amp;d=identicon&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;gravatar_ssl_url&amp;#39;] = &amp;#39;https://secure.gravatar.com/avatar/%{hash}?s=%{size}&amp;amp;d=identicon&amp;#39;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;webhook_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;webhook_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
+
+&lt;span class="c"&gt;## For setting up LDAP&lt;/span&gt;
+&lt;span class="c"&gt;## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#setting-up-ldap-sign-in&lt;/span&gt;
+@@ -107,9 +107,9 @@
+&lt;span class="c"&gt;## For setting up backups&lt;/span&gt;
+&lt;span class="c"&gt;## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#backups&lt;/span&gt;
+
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_path&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/backups&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_archive_permissions&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0644&lt;/span&gt; &lt;span class="c"&gt;# See: http://doc.gitlab.com/ce/raketasks/backup_restore.html#backup-archive-permissions&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_keep_time&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 604800
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_path&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/backups&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_archive_permissions&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;0644&lt;/span&gt; &lt;span class="c"&gt;# See: http://doc.gitlab.com/ce/raketasks/backup_restore.html#backup-archive-permissions&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backup_keep_time&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 604800
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;backup_upload_connection&amp;#39;] = {&lt;/span&gt;
+&lt;span class="c"&gt;#   &amp;#39;provider&amp;#39; =&amp;gt; &amp;#39;AWS&amp;#39;,&lt;/span&gt;
+&lt;span class="c"&gt;#   &amp;#39;region&amp;#39; =&amp;gt; &amp;#39;eu-west-1&amp;#39;,&lt;/span&gt;
+@@ -128,9 +128,9 @@
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;satellites_timeout&amp;#39;] = 30&lt;/span&gt;
+
+&lt;span class="c"&gt;## GitLab Shell settings for GitLab&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_shell_ssh_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 22
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;git_max_size&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 20971520
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;git_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;gitlab_shell_ssh_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 22
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;git_max_size&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 20971520
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;git_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
+
+&lt;span class="c"&gt;## Extra customization&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;extra_google_analytics_id&amp;#39;] = &amp;#39;_your_tracking_id&amp;#39;&lt;/span&gt;
+@@ -161,9 +161,9 @@
+&lt;span class="c"&gt;# GitLab application settings #&lt;/span&gt;
+&lt;span class="c"&gt;###############################&lt;/span&gt;
+
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;uploads_directory&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/gitlab-rails/uploads&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rate_limit_requests_per_period&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rate_limit_period&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 60
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;uploads_directory&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/gitlab-rails/uploads&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rate_limit_requests_per_period&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;rate_limit_period&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 60
+
+&lt;span class="c"&gt;# Change the initial default admin password.&lt;/span&gt;
+&lt;span class="c"&gt;# Only applicable on inital setup, changing this setting after database is created and seeded&lt;/span&gt;
+@@ -176,13 +176,13 @@
+&lt;span class="c"&gt;## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/database.md#database-settings&lt;/span&gt;
+&lt;span class="c"&gt;## Only needed if you use an external database.&lt;/span&gt;
+
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_adapter&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;postgresql&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_encoding&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;unicode&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_database&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlabhq_production&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_pool&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_username&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_host&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_adapter&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;postgresql&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_encoding&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;unicode&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_database&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_pool&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 10
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_username&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_host&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;db_port&amp;#39;] = 5432&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;db_socket&amp;#39;] = nil&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;db_sslmode&amp;#39;] = nil&lt;/span&gt;
+@@ -206,15 +206,15 @@
+&lt;span class="c"&gt;# see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings&lt;/span&gt;
+&lt;span class="c"&gt;# Use smtp instead of sendmail/postfix.&lt;/span&gt;
+
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_address&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp.server&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 456
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_user_name&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp user&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp password&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_domain&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;example.com&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_authentication&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;login&amp;quot;&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable_starttls_auto&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_tls&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_address&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp.xxx.com&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 25
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_user_name&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;noreply@yourdomain&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;yourpassword&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_domain&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;yourdomain&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_authentication&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;login&amp;quot;&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable_starttls_auto&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
++gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_tls&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;smtp_openssl_verify_mode&amp;#39;] = &amp;#39;none&amp;#39; # Can be: &amp;#39;none&amp;#39;, &amp;#39;peer&amp;#39;, &amp;#39;client_once&amp;#39;, &amp;#39;fail_if_no_peer_cert&amp;#39;, see http://api.rubyonrails.org/classes/ActionMailer/Base.html&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;smtp_ca_path&amp;#39;] = &amp;quot;/etc/ssl/certs&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_rails[&amp;#39;smtp_ca_file&amp;#39;] = &amp;quot;/etc/ssl/certs/ca-certificates.crt&amp;quot;&lt;/span&gt;
+@@ -242,18 +242,18 @@
+&lt;span class="c"&gt;##################&lt;/span&gt;
+&lt;span class="c"&gt;## Tweak unicorn settings.&lt;/span&gt;
+
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;worker_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 60
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;worker_processes&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 2
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;worker_timeout&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 60
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;worker_processes&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 2
+
+&lt;span class="c"&gt;## Advanced settings&lt;/span&gt;
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;listen&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 8080
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;socket&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket&amp;#39;&lt;/span&gt;
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pidfile&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/opt/gitlab/var/unicorn/unicorn.pid&amp;#39;&lt;/span&gt;
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;listen&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;127.0.0.1&amp;#39;&lt;/span&gt;
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 8088
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;socket&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket&amp;#39;&lt;/span&gt;
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;pidfile&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/opt/gitlab/var/unicorn/unicorn.pid&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# unicorn[&amp;#39;tcp_nopush&amp;#39;] = true&lt;/span&gt;
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backlog_socket&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 1024
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;backlog_socket&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 1024
+&lt;span class="c"&gt;# Make sure somaxconn is equal or higher then backlog_socket&lt;/span&gt;
+-# unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;somaxconn&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 1024
++unicorn&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;somaxconn&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 1024
+&lt;span class="c"&gt;# We do not recommend changing this setting&lt;/span&gt;
+&lt;span class="c"&gt;# unicorn[&amp;#39;log_directory&amp;#39;] = &amp;quot;/var/log/gitlab/unicorn&amp;quot;&lt;/span&gt;
+
+@@ -290,11 +290,11 @@
+&lt;span class="c"&gt;# GitLab PostgreSQL #&lt;/span&gt;
+&lt;span class="c"&gt;#####################&lt;/span&gt;
+
+-# postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+-# postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;listen_address&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
+-# postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 5432
+-# postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;data_dir&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/postgresql/data&amp;quot;&lt;/span&gt;
+-# postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;shared_buffers&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;256MB&amp;quot;&lt;/span&gt; &lt;span class="c"&gt;# recommend value is 1/4 of total RAM, up to 14GB.&lt;/span&gt;
++postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;listen_address&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
++postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 5432
++postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;data_dir&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;/var/opt/gitlab/postgresql/data&amp;quot;&lt;/span&gt;
++postgresql&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;shared_buffers&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;256MB&amp;quot;&lt;/span&gt; &lt;span class="c"&gt;# recommend value is 1/4 of total RAM, up to 14GB.&lt;/span&gt;
+
+&lt;span class="c"&gt;## Advanced settings&lt;/span&gt;
+&lt;span class="c"&gt;# postgresql[&amp;#39;ha&amp;#39;] = false&lt;/span&gt;
+@@ -326,7 +326,7 @@
+&lt;span class="c"&gt;################&lt;/span&gt;
+&lt;span class="c"&gt;## Can be disabled if you are using your own redis instance.&lt;/span&gt;
+
+-# redis&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++redis&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="c"&gt;# redis[&amp;#39;username&amp;#39;] = &amp;quot;gitlab-redis&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# redis[&amp;#39;uid&amp;#39;] = nil&lt;/span&gt;
+&lt;span class="c"&gt;# redis[&amp;#39;gid&amp;#39;] = nil&lt;/span&gt;
+@@ -470,14 +470,14 @@
+&lt;span class="c"&gt;## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/database.md#database-settings&lt;/span&gt;
+&lt;span class="c"&gt;## Only needed if you use an external database.&lt;/span&gt;
+
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_adapter&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;postgresql&amp;quot;&lt;/span&gt;
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_encoding&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;unicode&amp;quot;&lt;/span&gt;
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_database&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab_ci_production&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_adapter&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;postgresql&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_encoding&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;unicode&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_database&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab_ci_production&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;db_pool&amp;#39;] = 10&lt;/span&gt;
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_username&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab_ci&amp;quot;&lt;/span&gt;
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_host&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
+-# gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 5432
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_username&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;gitlab_ci&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_host&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; nil
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;db_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 5432
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;db_socket&amp;#39;] = nil&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;db_sslmode&amp;#39;] = nil&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;db_sslrootcert&amp;#39;] = nil&lt;/span&gt;
+@@ -497,6 +497,15 @@
+&lt;span class="c"&gt;###################################&lt;/span&gt;
+&lt;span class="c"&gt;## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings&lt;/span&gt;
+
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_address&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;smtp.xxx.com&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_port&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 25
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_user_name&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;noreply@yourdomain&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_password&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;yourpassword&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_domain&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;yourdomain&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_authentication&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;login&amp;quot;&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_enable_starttls_auto&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
++gitlab_ci&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;smtp_tls&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;false&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;smtp_enable&amp;#39;] = true&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;smtp_address&amp;#39;] = &amp;quot;smtp.server&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# gitlab_ci[&amp;#39;smtp_port&amp;#39;] = 456&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;根据/etc/gitlab/gitlab.rb重新配置gitlab。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo gitlab-ctl reconfigure
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用默认用户名:&lt;code&gt;root&lt;/code&gt; 密码:&lt;code&gt;5iveL!fe&lt;/code&gt;登陆，登陆后修改默认密码。&lt;/p&gt;
+&lt;h2&gt;备份&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo crontab -l
+&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt; * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="gitlab"></category></entry></feed>
