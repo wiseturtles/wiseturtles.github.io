@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/redis.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T23:48:00+08:00</updated><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 下载&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;wget http://download.redis.io/releases/redis-3.0.4.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;tar -zxvf redis-3.0.4.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;redis-3.0.4
+
+&lt;span class="c"&gt;# 编译&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;make
+
+&lt;span class="c"&gt;# 检查依赖， 如果有错误就修复&lt;/span&gt;
+&lt;span class="c"&gt;# 如果遇到错误“Test replication partial resync: ok psync”, 可以忽略或再重复执&lt;/span&gt;
+&lt;span class="c"&gt;# 行几次make test就可以通过了&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;make &lt;span class="nb"&gt;test&lt;/span&gt;
+
+&lt;span class="c"&gt;# 安装&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo make install
+
+&lt;span class="c"&gt;# 添加开机启动, 会有一些交互提问，按需选择即可&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo utils/install_server.sh
+Welcome to the redis service installer
+This script will &lt;span class="nb"&gt;help &lt;/span&gt;you easily &lt;span class="nb"&gt;set &lt;/span&gt;up a running redis server
+
+Please &lt;span class="k"&gt;select&lt;/span&gt; the redis port &lt;span class="k"&gt;for&lt;/span&gt; this instance: &lt;span class="o"&gt;[&lt;/span&gt;6379&lt;span class="o"&gt;]&lt;/span&gt; 
+Selecting default: &lt;span class="m"&gt;6379&lt;/span&gt; 
+Please &lt;span class="k"&gt;select&lt;/span&gt; the redis config file name &lt;span class="o"&gt;[&lt;/span&gt;/etc/redis/6379.conf&lt;span class="o"&gt;]&lt;/span&gt; 
+Selected default - /etc/redis/6379.conf
+Please &lt;span class="k"&gt;select&lt;/span&gt; the redis log file name &lt;span class="o"&gt;[&lt;/span&gt;/var/log/redis_6379.log&lt;span class="o"&gt;]&lt;/span&gt; 
+Selected default - /var/log/redis_6379.log
+Please &lt;span class="k"&gt;select&lt;/span&gt; the data directory &lt;span class="k"&gt;for&lt;/span&gt; this instance &lt;span class="o"&gt;[&lt;/span&gt;/var/lib/redis/6379&lt;span class="o"&gt;]&lt;/span&gt; 
+Selected default - /var/lib/redis/6379
+Please &lt;span class="k"&gt;select&lt;/span&gt; the redis executable path &lt;span class="o"&gt;[&lt;/span&gt;/usr/local/bin/redis-server&lt;span class="o"&gt;]&lt;/span&gt; 
+Selected config:
+Port           : &lt;span class="m"&gt;6379&lt;/span&gt; 
+Config file    : /etc/redis/6379.conf
+Log file       : /var/log/redis_6379.log
+Data dir       : /var/lib/redis/6379
+Executable     : /usr/local/bin/redis-server
+Cli Executable : /usr/local/bin/redis-cli
+Is this ok? Then press ENTER to go on or Ctrl-C to abort.
+Copied /tmp/6379.conf &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; /etc/init.d/redis_6379
+Installing service...
+ Adding system startup &lt;span class="k"&gt;for&lt;/span&gt; /etc/init.d/redis_6379 ...
+   /etc/rc0.d/K20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc1.d/K20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc6.d/K20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc2.d/S20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc3.d/S20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc4.d/S20redis_6379 -&amp;gt; ../init.d/redis_6379
+   /etc/rc5.d/S20redis_6379 -&amp;gt; ../init.d/redis_6379
+Success!
+Starting Redis server...
+Installation successful!
+
+
+&lt;span class="c"&gt;# 因为要搭建单机集群，重复执行上面的命令，同时设置6380, 6381&lt;/span&gt;
+&lt;span class="c"&gt;# 完成后，可以看到如下文件&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ls /etc/init.d/redis_*
+/etc/init.d/redis_6379  /etc/init.d/redis_6380  /etc/init.d/redis_6381
+&lt;span class="nv"&gt;$ &lt;/span&gt;ls /etc/redis/
+6379.conf  6380.conf  6381.conf
+
+
+&lt;span class="c"&gt;# 开启集群&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo sed -i &lt;span class="s1"&gt;&amp;#39;s/# cluster-enabled yes/cluster-enabled yes/&amp;#39;&lt;/span&gt; /etc/redis/*.conf
+
+&lt;span class="c"&gt;# 同时去掉/etc/redis/*.conf 文件的`cluster-config-file` 的注释，并分别设置为&lt;/span&gt;
+&lt;span class="c"&gt;# cluster-config-file /etc/redis/nodes-6379.conf&lt;/span&gt;
+&lt;span class="c"&gt;# cluster-config-file /etc/redis/nodes-6380.conf&lt;/span&gt;
+&lt;span class="c"&gt;# cluster-config-file /etc/redis/nodes-6381.conf&lt;/span&gt;
+
+&lt;span class="c"&gt;# 重启redis服务&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt;grep redis
+root     &lt;span class="m"&gt;31033&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt; 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6379 &lt;span class="o"&gt;[&lt;/span&gt;cluster&lt;span class="o"&gt;]&lt;/span&gt;    
+root     &lt;span class="m"&gt;31072&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt; 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6380 &lt;span class="o"&gt;[&lt;/span&gt;cluster&lt;span class="o"&gt;]&lt;/span&gt;    
+root     &lt;span class="m"&gt;31111&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt; 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6381 &lt;span class="o"&gt;[&lt;/span&gt;cluster&lt;span class="o"&gt;]&lt;/span&gt;    
+
+&lt;span class="c"&gt;# 安装redis client需要的依赖&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install ruby
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo gem install redis
+
+&lt;span class="c"&gt;# 查看可用的命令&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;src/redis-trib.rb &lt;span class="nb"&gt;help &lt;/span&gt;
+Usage: redis-trib &amp;lt;&lt;span class="nb"&gt;command&lt;/span&gt;&amp;gt; &amp;lt;options&amp;gt; &amp;lt;arguments ...&amp;gt;
+
+  create          host1:port1 ... hostN:portN
+                  --replicas &amp;lt;arg&amp;gt;
+  check           host:port
+  fix             host:port
+  reshard         host:port
+                  --from &amp;lt;arg&amp;gt;
+                  --to &amp;lt;arg&amp;gt;
+                  --slots &amp;lt;arg&amp;gt;
+                  --yes
+  add-node        new_host:new_port existing_host:existing_port
+                  --slave
+                  --master-id &amp;lt;arg&amp;gt;
+  del-node        host:port node_id
+  &lt;span class="nb"&gt;set&lt;/span&gt;-timeout     host:port milliseconds
+  call            host:port &lt;span class="nb"&gt;command &lt;/span&gt;arg arg .. arg
+  import          host:port
+                  --from &amp;lt;arg&amp;gt;
+  &lt;span class="nb"&gt;help&lt;/span&gt;            &lt;span class="o"&gt;(&lt;/span&gt;show this &lt;span class="nb"&gt;help&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+
+For check, fix, reshard, del-node, &lt;span class="nb"&gt;set&lt;/span&gt;-timeout you can specify the host and port of any working node in the cluster.
+
+
+&lt;span class="c"&gt;# 创建集群&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo src/redis-trib.rb create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381
+&amp;gt;&amp;gt;&amp;gt; Creating cluster
+Connecting to node 127.0.0.1:6379: OK
+Connecting to node 127.0.0.1:6380: OK
+Connecting to node 127.0.0.1:6381: OK
+&amp;gt;&amp;gt;&amp;gt; Performing &lt;span class="nb"&gt;hash &lt;/span&gt;slots allocation on &lt;span class="m"&gt;3&lt;/span&gt; nodes...
+Using &lt;span class="m"&gt;3&lt;/span&gt; masters:
+127.0.0.1:6379
+127.0.0.1:6380
+127.0.0.1:6381
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5462&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+Can I &lt;span class="nb"&gt;set &lt;/span&gt;the above configuration? &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yes&amp;#39;&lt;/span&gt; to accept&lt;span class="o"&gt;)&lt;/span&gt;: yes
+&amp;gt;&amp;gt;&amp;gt; Nodes configuration updated
+&amp;gt;&amp;gt;&amp;gt; Assign a different config epoch to each node
+&amp;gt;&amp;gt;&amp;gt; Sending CLUSTER MEET messages to join the cluster
+Waiting &lt;span class="k"&gt;for&lt;/span&gt; the cluster to join.
+&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o"&gt;(&lt;/span&gt;using node 127.0.0.1:6379&lt;span class="o"&gt;)&lt;/span&gt;
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5462&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+&lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt; All nodes agree about slots configuration.
+&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k"&gt;for&lt;/span&gt; open slots...
+&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt; All &lt;span class="m"&gt;16384&lt;/span&gt; slots covered.
+
+&lt;span class="c"&gt;# 也可以设置主从, 但是需要注意，如果设置了replicas，则需要更多的结点&lt;/span&gt;
+&lt;span class="c"&gt;# --replicas 1 需要6个结点&lt;/span&gt;
+&lt;span class="c"&gt;# --replicas 2 需要12个结点&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo src/redis-trib.rb create --replicas &lt;span class="m"&gt;1&lt;/span&gt; 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 ip:port....
+
+
+&lt;span class="c"&gt;# 检查集群状态&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo src/redis-trib.rb check 127.0.0.1:6379
+Connecting to node 127.0.0.1:6379: OK
+Connecting to node 127.0.0.1:6380: OK
+Connecting to node 127.0.0.1:6381: OK
+&amp;gt;&amp;gt;&amp;gt; Performing Cluster Check &lt;span class="o"&gt;(&lt;/span&gt;using node 127.0.0.1:6379&lt;span class="o"&gt;)&lt;/span&gt;
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+   &lt;span class="m"&gt;0&lt;/span&gt; additional replica&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5462&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+   &lt;span class="m"&gt;0&lt;/span&gt; additional replica&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;5461&lt;/span&gt; slots&lt;span class="o"&gt;)&lt;/span&gt; master
+   &lt;span class="m"&gt;0&lt;/span&gt; additional replica&lt;span class="o"&gt;(&lt;/span&gt;s&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt; All nodes agree about slots configuration.
+&amp;gt;&amp;gt;&amp;gt; Check &lt;span class="k"&gt;for&lt;/span&gt; open slots...
+&amp;gt;&amp;gt;&amp;gt; Check slots coverage...
+&lt;span class="o"&gt;[&lt;/span&gt;OK&lt;span class="o"&gt;]&lt;/span&gt; All &lt;span class="m"&gt;16384&lt;/span&gt; slots covered.
+
+&lt;span class="c"&gt;# 使用了集群之后，不能像以前一样使用命令行客户端了, 需要加参数`-c`&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;redis-cli
+127.0.0.1:6379&amp;gt; ping
+PONG
+127.0.0.1:6379&amp;gt; &lt;span class="nb"&gt;set &lt;/span&gt;a b
+&lt;span class="o"&gt;(&lt;/span&gt;error&lt;span class="o"&gt;)&lt;/span&gt; MOVED &lt;span class="m"&gt;15495&lt;/span&gt; 127.0.0.1:6381   &lt;span class="c"&gt;# 设置失败&lt;/span&gt;
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;redis-cli -c
+127.0.0.1:6379&amp;gt; &lt;span class="nb"&gt;set &lt;/span&gt;a b
+-&amp;gt; Redirected to slot &lt;span class="o"&gt;[&lt;/span&gt;15495&lt;span class="o"&gt;]&lt;/span&gt; located at 127.0.0.1:6381
+OK
+
+&lt;span class="c"&gt;# 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块&lt;/span&gt;
+&lt;span class="c"&gt;# 完毕&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry></feed>

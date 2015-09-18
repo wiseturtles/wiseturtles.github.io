@@ -289,7 +289,14 @@ gerrit
 
 <h2>更多信息</h2>
 <p>关于gerrit主题设置，使用方法等更多信息，官方文档上已有详细描述,&nbsp;请参考:</p>
-<p><a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html">https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html</a></p></div>
+<p><a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html">https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html</a></p>
+<h2>更新</h2>
+<p><em>最近因工作需要，又重新搭建了一次gerrit, 遇到一些坑, 记录一下</em>.</p>
+<ol>
+<li>如果用MySQL作为数据库，Gerrit数据库的引擎应该是Innodb.</li>
+<li>配置邮件时，一直认证失败，除了在<code>etc/gerrt.conf</code>文件里指定<code>sendmail.smtpUser</code>, 还需要指定<code>sendmail.from</code>为发送邮件的用户信息, 格式为<code>username &lt;youmail@mail.com&gt;</code></li>
+<li>认证可以使用github oauth认证<a href="https://github.com/davido/gerrit-oauth-provider">gerrit-oauth-provider</a></li>
+</ol></div>
 
         <hr>
 
@@ -344,6 +351,7 @@ var duoshuoQuery = {short_name:"wiseturtles"};
                 <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
                 <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>

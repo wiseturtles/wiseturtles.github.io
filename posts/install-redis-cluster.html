@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Redis集群搭建
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="redis" />
+      <meta name="tags" contents="cluster" />
+      <meta name="tags" contents="install" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Redis集群搭建</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/redis.html">redis</a> <a href="http://blog.wiseturtles.com/tag/cluster.html">cluster</a> <a href="http://blog.wiseturtles.com/tag/install.html">install</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-09-18
+
+        </div>
+
+        <div><h2>Redis集群搭建</h2>
+<div class="highlight"><pre><span class="c"># 下载</span>
+<span class="nv">$ </span>wget http://download.redis.io/releases/redis-3.0.4.tar.gz
+<span class="nv">$ </span>tar -zxvf redis-3.0.4.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>redis-3.0.4
+
+<span class="c"># 编译</span>
+<span class="nv">$ </span>make
+
+<span class="c"># 检查依赖， 如果有错误就修复</span>
+<span class="c"># 如果遇到错误“Test replication partial resync: ok psync”, 可以忽略或再重复执</span>
+<span class="c"># 行几次make test就可以通过了</span>
+<span class="nv">$ </span>make <span class="nb">test</span>
+
+<span class="c"># 安装</span>
+<span class="nv">$ </span>sudo make install
+
+<span class="c"># 添加开机启动, 会有一些交互提问，按需选择即可</span>
+<span class="nv">$ </span>sudo utils/install_server.sh
+Welcome to the redis service installer
+This script will <span class="nb">help </span>you easily <span class="nb">set </span>up a running redis server
+
+Please <span class="k">select</span> the redis port <span class="k">for</span> this instance: <span class="o">[</span>6379<span class="o">]</span> 
+Selecting default: <span class="m">6379</span> 
+Please <span class="k">select</span> the redis config file name <span class="o">[</span>/etc/redis/6379.conf<span class="o">]</span> 
+Selected default - /etc/redis/6379.conf
+Please <span class="k">select</span> the redis log file name <span class="o">[</span>/var/log/redis_6379.log<span class="o">]</span> 
+Selected default - /var/log/redis_6379.log
+Please <span class="k">select</span> the data directory <span class="k">for</span> this instance <span class="o">[</span>/var/lib/redis/6379<span class="o">]</span> 
+Selected default - /var/lib/redis/6379
+Please <span class="k">select</span> the redis executable path <span class="o">[</span>/usr/local/bin/redis-server<span class="o">]</span> 
+Selected config:
+Port           : <span class="m">6379</span> 
+Config file    : /etc/redis/6379.conf
+Log file       : /var/log/redis_6379.log
+Data dir       : /var/lib/redis/6379
+Executable     : /usr/local/bin/redis-server
+Cli Executable : /usr/local/bin/redis-cli
+Is this ok? Then press ENTER to go on or Ctrl-C to abort.
+Copied /tmp/6379.conf <span class="o">=</span>&gt; /etc/init.d/redis_6379
+Installing service...
+ Adding system startup <span class="k">for</span> /etc/init.d/redis_6379 ...
+   /etc/rc0.d/K20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc1.d/K20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc6.d/K20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc2.d/S20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc3.d/S20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc4.d/S20redis_6379 -&gt; ../init.d/redis_6379
+   /etc/rc5.d/S20redis_6379 -&gt; ../init.d/redis_6379
+Success!
+Starting Redis server...
+Installation successful!
+
+
+<span class="c"># 因为要搭建单机集群，重复执行上面的命令，同时设置6380, 6381</span>
+<span class="c"># 完成后，可以看到如下文件</span>
+<span class="nv">$ </span>ls /etc/init.d/redis_*
+/etc/init.d/redis_6379  /etc/init.d/redis_6380  /etc/init.d/redis_6381
+<span class="nv">$ </span>ls /etc/redis/
+6379.conf  6380.conf  6381.conf
+
+
+<span class="c"># 开启集群</span>
+<span class="nv">$ </span>sudo sed -i <span class="s1">&#39;s/# cluster-enabled yes/cluster-enabled yes/&#39;</span> /etc/redis/*.conf
+
+<span class="c"># 同时去掉/etc/redis/*.conf 文件的`cluster-config-file` 的注释，并分别设置为</span>
+<span class="c"># cluster-config-file /etc/redis/nodes-6379.conf</span>
+<span class="c"># cluster-config-file /etc/redis/nodes-6380.conf</span>
+<span class="c"># cluster-config-file /etc/redis/nodes-6381.conf</span>
+
+<span class="c"># 重启redis服务</span>
+<span class="nv">$ </span>ps -ef <span class="p">|</span>grep redis
+root     <span class="m">31033</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6379 <span class="o">[</span>cluster<span class="o">]</span>    
+root     <span class="m">31072</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6380 <span class="o">[</span>cluster<span class="o">]</span>    
+root     <span class="m">31111</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6381 <span class="o">[</span>cluster<span class="o">]</span>    
+
+<span class="c"># 安装redis client需要的依赖</span>
+<span class="nv">$ </span>sudo apt-get install ruby
+<span class="nv">$ </span>sudo gem install redis
+
+<span class="c"># 查看可用的命令</span>
+<span class="nv">$ </span>src/redis-trib.rb <span class="nb">help </span>
+Usage: redis-trib &lt;<span class="nb">command</span>&gt; &lt;options&gt; &lt;arguments ...&gt;
+
+  create          host1:port1 ... hostN:portN
+                  --replicas &lt;arg&gt;
+  check           host:port
+  fix             host:port
+  reshard         host:port
+                  --from &lt;arg&gt;
+                  --to &lt;arg&gt;
+                  --slots &lt;arg&gt;
+                  --yes
+  add-node        new_host:new_port existing_host:existing_port
+                  --slave
+                  --master-id &lt;arg&gt;
+  del-node        host:port node_id
+  <span class="nb">set</span>-timeout     host:port milliseconds
+  call            host:port <span class="nb">command </span>arg arg .. arg
+  import          host:port
+                  --from &lt;arg&gt;
+  <span class="nb">help</span>            <span class="o">(</span>show this <span class="nb">help</span><span class="o">)</span>
+
+For check, fix, reshard, del-node, <span class="nb">set</span>-timeout you can specify the host and port of any working node in the cluster.
+
+
+<span class="c"># 创建集群</span>
+<span class="nv">$ </span>sudo src/redis-trib.rb create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381
+&gt;&gt;&gt; Creating cluster
+Connecting to node 127.0.0.1:6379: OK
+Connecting to node 127.0.0.1:6380: OK
+Connecting to node 127.0.0.1:6381: OK
+&gt;&gt;&gt; Performing <span class="nb">hash </span>slots allocation on <span class="m">3</span> nodes...
+Using <span class="m">3</span> masters:
+127.0.0.1:6379
+127.0.0.1:6380
+127.0.0.1:6381
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 <span class="o">(</span><span class="m">5462</span> slots<span class="o">)</span> master
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+Can I <span class="nb">set </span>the above configuration? <span class="o">(</span><span class="nb">type</span> <span class="s1">&#39;yes&#39;</span> to accept<span class="o">)</span>: yes
+&gt;&gt;&gt; Nodes configuration updated
+&gt;&gt;&gt; Assign a different config epoch to each node
+&gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
+Waiting <span class="k">for</span> the cluster to join.
+&gt;&gt;&gt; Performing Cluster Check <span class="o">(</span>using node 127.0.0.1:6379<span class="o">)</span>
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 <span class="o">(</span><span class="m">5462</span> slots<span class="o">)</span> master
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+<span class="o">[</span>OK<span class="o">]</span> All nodes agree about slots configuration.
+&gt;&gt;&gt; Check <span class="k">for</span> open slots...
+&gt;&gt;&gt; Check slots coverage...
+<span class="o">[</span>OK<span class="o">]</span> All <span class="m">16384</span> slots covered.
+
+<span class="c"># 也可以设置主从, 但是需要注意，如果设置了replicas，则需要更多的结点</span>
+<span class="c"># --replicas 1 需要6个结点</span>
+<span class="c"># --replicas 2 需要12个结点</span>
+<span class="nv">$ </span>sudo src/redis-trib.rb create --replicas <span class="m">1</span> 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 ip:port....
+
+
+<span class="c"># 检查集群状态</span>
+<span class="nv">$ </span>sudo src/redis-trib.rb check 127.0.0.1:6379
+Connecting to node 127.0.0.1:6379: OK
+Connecting to node 127.0.0.1:6380: OK
+Connecting to node 127.0.0.1:6381: OK
+&gt;&gt;&gt; Performing Cluster Check <span class="o">(</span>using node 127.0.0.1:6379<span class="o">)</span>
+M: 50eee84811854ce707bb25ce05f1688eafa46c8d 127.0.0.1:6379
+   slots:0-5460 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+   <span class="m">0</span> additional replica<span class="o">(</span>s<span class="o">)</span>
+M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
+   slots:5461-10922 <span class="o">(</span><span class="m">5462</span> slots<span class="o">)</span> master
+   <span class="m">0</span> additional replica<span class="o">(</span>s<span class="o">)</span>
+M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
+   slots:10923-16383 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
+   <span class="m">0</span> additional replica<span class="o">(</span>s<span class="o">)</span>
+<span class="o">[</span>OK<span class="o">]</span> All nodes agree about slots configuration.
+&gt;&gt;&gt; Check <span class="k">for</span> open slots...
+&gt;&gt;&gt; Check slots coverage...
+<span class="o">[</span>OK<span class="o">]</span> All <span class="m">16384</span> slots covered.
+
+<span class="c"># 使用了集群之后，不能像以前一样使用命令行客户端了, 需要加参数`-c`</span>
+<span class="nv">$ </span>redis-cli
+127.0.0.1:6379&gt; ping
+PONG
+127.0.0.1:6379&gt; <span class="nb">set </span>a b
+<span class="o">(</span>error<span class="o">)</span> MOVED <span class="m">15495</span> 127.0.0.1:6381   <span class="c"># 设置失败</span>
+
+<span class="nv">$ </span>redis-cli -c
+127.0.0.1:6379&gt; <span class="nb">set </span>a b
+-&gt; Redirected to slot <span class="o">[</span>15495<span class="o">]</span> located at 127.0.0.1:6381
+OK
+
+<span class="c"># 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块</span>
+<span class="c"># 完毕</span>
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="install-redis-cluster" data-title="Redis集群搭建" data-url="http://blog.wiseturtles.com/posts/install-redis-cluster.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

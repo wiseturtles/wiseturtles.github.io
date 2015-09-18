@@ -584,4 +584,11 @@ gerrit
 
 &lt;h2&gt;更多信息&lt;/h2&gt;
 &lt;p&gt;关于gerrit主题设置，使用方法等更多信息，官方文档上已有详细描述,&amp;nbsp;请参考:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html"&gt;https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html&lt;/a&gt;&lt;/p&gt;</summary><category term="git"></category><category term="gerrit"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html"&gt;https://gerrit-documentation.storage.googleapis.com/Documentation/2.9.4/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;更新&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;最近因工作需要，又重新搭建了一次gerrit, 遇到一些坑, 记录一下&lt;/em&gt;.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;如果用MySQL作为数据库，Gerrit数据库的引擎应该是Innodb.&lt;/li&gt;
+&lt;li&gt;配置邮件时，一直认证失败，除了在&lt;code&gt;etc/gerrt.conf&lt;/code&gt;文件里指定&lt;code&gt;sendmail.smtpUser&lt;/code&gt;, 还需要指定&lt;code&gt;sendmail.from&lt;/code&gt;为发送邮件的用户信息, 格式为&lt;code&gt;username &amp;lt;youmail@mail.com&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;认证可以使用github oauth认证&lt;a href="https://github.com/davido/gerrit-oauth-provider"&gt;gerrit-oauth-provider&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="git"></category><category term="gerrit"></category></entry></feed>
