@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - OOM</title>
+    <title>Wise Turtles - Node.js入门
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,10 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="node.js" />
 
 </head>
 
@@ -51,17 +56,85 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html"><h2>Python下载大文件</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/python.html">Python</a> <a href="http://blog.wiseturtles.com/tag/oom.html">OOM</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2015-05-22
+    <div class='article'>
+        <div class="content-title">
+            <h1>Node.js入门</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/nodejs.html">node.js</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-09-18
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Python下载大文件</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html">阅读</a></div>
-      </div>
+        </div>
 
-  
+        <div><h2>为啥学Node.js</h2>
+<ul>
+<li>公司项目需要</li>
+<li>JavaScript程序员之多社区之活跃</li>
+<li>Node.js发展非常快</li>
+<li>更容易成为全栈工程师 (前端、后台、客户端[React&nbsp;Native])</li>
+</ul>
+<h2>nvm</h2>
+<p>nvm (Node Version Manager)类似Python中的<code>virtualenv</code>，是管理Node.js版本的工具，&nbsp;方便在主机上安装多个Node.js版本，安装方法如下：</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl https://raw.githubusercontent.com/creationix/nvm/v0.23.2/install.sh <span class="p">|</span> bash
+</pre></div>
+
+
+<p>常用命令:</p>
+<div class="highlight"><pre><span class="nv">$ </span>nvm --version  <span class="c"># 查看nvm版本</span>
+<span class="nv">$ </span>nvm -h  <span class="c"># 查看nvm帮助文档</span>
+<span class="nv">$ </span>nvm current  <span class="c"># 查看当前使用的node.js版本</span>
+<span class="nv">$ </span>nvm install stable
+<span class="nv">$ </span>nvm install &lt;version&gt;  <span class="c"># 安装指定版本的node.js</span>
+<span class="nv">$ </span>nvm uninstall &lt;version&gt;  <span class="c"># 卸载指定版本的node.js</span>
+<span class="nv">$ </span>nvm use &lt;version&gt;  <span class="c"># 将默认node.js版本切换到指定版本</span>
+</pre></div>
+
+
+<h2>npm</h2>
+<p>npm (Node Package Manager)是Node.js默认的模块管理器，用来安装管理Node.js模块。&nbsp;npm已经集成到Node.js中了，所以装完Node.js就不再需要单独安装npm。</p>
+<p>常用命令如下：</p>
+<div class="highlight"><pre><span class="nv">$ </span>npm <span class="nb">help</span>  <span class="c"># 查看帮助</span>
+<span class="nv">$ </span>npm -l  <span class="c"># npm命令列表</span>
+<span class="nv">$ </span>npm install npm@latest -g  <span class="c"># 将npm更新到最新版本</span>
+<span class="nv">$ </span>npm -v  <span class="c"># 查看npm版本</span>
+<span class="nv">$ </span>npm config list -l <span class="c"># 查看npm配置</span>
+<span class="nv">$ </span>npm info
+<span class="nv">$ </span>npm search
+<span class="nv">$ </span>npm list
+<span class="nv">$ </span>npm install
+<span class="nv">$ </span>npm update
+<span class="nv">$ </span>npm uninstall
+</pre></div>
+
+
+<p>更多信息请参考阮一峰的<a href="http://javascript.ruanyifeng.com/nodejs/npm.html">npm模块管理器</a></p>
+<h2>Node.js学习</h2>
+<ul>
+<li><a href="http://www.nodebeginner.org/index-zh-cn.html">Node.js入门</a></li>
+<li><a href="http://blog.fens.me/series-nodejs/">从零开始Node.js系列</a></li>
+<li><a href="https://github.com/alsotang/node-lessons">Node.js包教不包会</a></li>
+<li><a href="http://javascript.ruanyifeng.com/#nodejs">JavaScript标准参考教程</a>有些章节专门介绍Node.js。</li>
+</ul>
+<p>还在看上面文章学习的阶段&nbsp;:D</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="Getstarted-Node.js" data-title="Node.js入门" data-url="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

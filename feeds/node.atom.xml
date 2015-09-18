@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/node.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T13:49:00+08:00</updated><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;h2&gt;为啥学Node.js&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;公司项目需要&lt;/li&gt;
+&lt;li&gt;JavaScript程序员之多社区之活跃&lt;/li&gt;
+&lt;li&gt;Node.js发展非常快&lt;/li&gt;
+&lt;li&gt;更容易成为全栈工程师 (前端、后台、客户端[React&amp;nbsp;Native])&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;nvm&lt;/h2&gt;
+&lt;p&gt;nvm (Node Version Manager)类似Python中的&lt;code&gt;virtualenv&lt;/code&gt;，是管理Node.js版本的工具，&amp;nbsp;方便在主机上安装多个Node.js版本，安装方法如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl https://raw.githubusercontent.com/creationix/nvm/v0.23.2/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;常用命令:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;nvm --version  &lt;span class="c"&gt;# 查看nvm版本&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm -h  &lt;span class="c"&gt;# 查看nvm帮助文档&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm current  &lt;span class="c"&gt;# 查看当前使用的node.js版本&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm install stable
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm install &amp;lt;version&amp;gt;  &lt;span class="c"&gt;# 安装指定版本的node.js&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm uninstall &amp;lt;version&amp;gt;  &lt;span class="c"&gt;# 卸载指定版本的node.js&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;nvm use &amp;lt;version&amp;gt;  &lt;span class="c"&gt;# 将默认node.js版本切换到指定版本&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;npm&lt;/h2&gt;
+&lt;p&gt;npm (Node Package Manager)是Node.js默认的模块管理器，用来安装管理Node.js模块。&amp;nbsp;npm已经集成到Node.js中了，所以装完Node.js就不再需要单独安装npm。&lt;/p&gt;
+&lt;p&gt;常用命令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;npm &lt;span class="nb"&gt;help&lt;/span&gt;  &lt;span class="c"&gt;# 查看帮助&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm -l  &lt;span class="c"&gt;# npm命令列表&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm install npm@latest -g  &lt;span class="c"&gt;# 将npm更新到最新版本&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm -v  &lt;span class="c"&gt;# 查看npm版本&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm config list -l &lt;span class="c"&gt;# 查看npm配置&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm info
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm search
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm list
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm install
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm update
+&lt;span class="nv"&gt;$ &lt;/span&gt;npm uninstall
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;更多信息请参考阮一峰的&lt;a href="http://javascript.ruanyifeng.com/nodejs/npm.html"&gt;npm模块管理器&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Node.js学习&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.nodebeginner.org/index-zh-cn.html"&gt;Node.js入门&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://blog.fens.me/series-nodejs/"&gt;从零开始Node.js系列&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/alsotang/node-lessons"&gt;Node.js包教不包会&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://javascript.ruanyifeng.com/#nodejs"&gt;JavaScript标准参考教程&lt;/a&gt;有些章节专门介绍Node.js。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还在看上面文章学习的阶段&amp;nbsp;:D&lt;/p&gt;</summary><category term="node.js"></category></entry></feed>
