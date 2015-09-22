@@ -67,6 +67,7 @@ On 2015-09-22
         </div>
 
         <div><p>Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, <span class="caps">PHP</span>, Ruby, Java,&nbsp;Go以及Android、iOS。</p>
+<p><a href="http://sentry.readthedocs.org/en/stable/index.html#">官方安装文档</a></p>
 <h2>系统环境</h2>
 <p>查看系统版本。</p>
 <div class="highlight"><pre><span class="nv">$ </span>lsb_release -a
@@ -79,7 +80,6 @@ Codename:   jessie
 
 
 <h2>准备数据库环境</h2>
-<p><a href="">官方安装文档</a></p>
 <p>virtualenv的安装、配置就不再介绍了。</p>
 <div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install postgresql libpq-dev
 <span class="nv">$ </span>mkvirtualenv sentry
@@ -224,7 +224,10 @@ Enter it again:
 </pre></div>
 
 
-<p>重启nginx，并通过http://your-ip&nbsp;访问。</p></div>
+<p>重启nginx，并通过http://your-ip&nbsp;访问。</p>
+<h2>测试</h2>
+<p>开始我们就提到过sentry支持目前所有主流语言，
+参考<a href="https://docs.getsentry.com/hosted/clients/python/">这里</a>&nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。</p></div>
 
         <hr>
 

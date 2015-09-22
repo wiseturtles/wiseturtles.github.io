@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-22T15:55:00+08:00</updated><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;lsb_release -a
@@ -12,7 +13,6 @@ Codename:   jessie
 
 
 &lt;h2&gt;准备数据库环境&lt;/h2&gt;
-&lt;p&gt;&lt;a href=""&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;virtualenv的安装、配置就不再介绍了。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install postgresql libpq-dev
 &lt;span class="nv"&gt;$ &lt;/span&gt;mkvirtualenv sentry
@@ -157,7 +157,10 @@ Enter it again:
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
+&lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;p&gt;开始我们就提到过sentry支持目前所有主流语言，
+参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 下载&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;wget http://download.redis.io/releases/redis-3.0.4.tar.gz
 &lt;span class="nv"&gt;$ &lt;/span&gt;tar -zxvf redis-3.0.4.tar.gz
