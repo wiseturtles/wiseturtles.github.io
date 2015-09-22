@@ -1,5 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T13:13:00+08:00</updated><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-22T15:55:00+08:00</updated><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+&lt;h2&gt;系统环境&lt;/h2&gt;
+&lt;p&gt;查看系统版本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description:    Debian GNU/Linux 8.2 &lt;span class="o"&gt;(&lt;/span&gt;jessie&lt;span class="o"&gt;)&lt;/span&gt;
+Release:    8.2
+Codename:   jessie
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;准备数据库环境&lt;/h2&gt;
+&lt;p&gt;&lt;a href=""&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;virtualenv的安装、配置就不再介绍了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install postgresql libpq-dev
+&lt;span class="nv"&gt;$ &lt;/span&gt;mkvirtualenv sentry
+&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install psycopg2
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在PostgreSQL中为sentry创建数据库。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo -u postgre createuser --superuser sentry
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo -u sentry psql
+&lt;span class="nv"&gt;postgres&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="c"&gt;# \password sentry&lt;/span&gt;
+Enter new password:
+Enter it again:
+&lt;span class="nv"&gt;postgres&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="c"&gt;# \q&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo -u sentry createdb -E utf8 sentry
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;安装sentry&lt;/h2&gt;
+&lt;p&gt;数据库使用的是PostgreSQL，使用公司邮件服务器发送邮件。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;workon sentry
+&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install sentry
+&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry init /tmp/settings.py
+&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo mv /tmp/settings.py /etc/sentry/sentry.conf.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;/etc/sentry/sentry.conf.py中的数据库配置如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="c"&gt;# You can swap out the engine for MySQL easily by changing this value&lt;/span&gt;
+        &lt;span class="c"&gt;# to ``django.db.backends.mysql`` or to PostgreSQL with&lt;/span&gt;
+        &lt;span class="c"&gt;# ``sentry.db.postgres``&lt;/span&gt;
+
+        &lt;span class="c"&gt;# If you change this, you&amp;#39;ll also need to install the appropriate python&lt;/span&gt;
+        &lt;span class="c"&gt;# package: psycopg2 (Postgres) or mysql-python&lt;/span&gt;
+        &lt;span class="s1"&gt;&amp;#39;ENGINE&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;django.db.backends.postgresql_psycopg2&amp;#39;&lt;/span&gt;,
+
+        &lt;span class="s1"&gt;&amp;#39;NAME&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;sentry&amp;#39;&lt;/span&gt;,
+        &lt;span class="s1"&gt;&amp;#39;USER&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;sentry&amp;#39;&lt;/span&gt;,
+        &lt;span class="s1"&gt;&amp;#39;PASSWORD&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;xxxx&amp;#39;&lt;/span&gt;,
+        &lt;span class="s1"&gt;&amp;#39;HOST&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;,
+        &lt;span class="s1"&gt;&amp;#39;PORT&amp;#39;&lt;/span&gt;: &lt;span class="s1"&gt;&amp;#39;5432&amp;#39;&lt;/span&gt;,
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;/etc/sentry/sentry.conf.py中的Web服务配置如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# You MUST configure the absolute URI root for Sentry:&lt;/span&gt;
+&lt;span class="nv"&gt;SENTRY_URL_PREFIX&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://your-ip&amp;#39;&lt;/span&gt;  &lt;span class="c"&gt;# No trailing slash!&lt;/span&gt;
+
+&lt;span class="nv"&gt;SENTRY_WEB_HOST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;
+&lt;span class="nv"&gt;SENTRY_WEB_PORT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 9000
+&lt;span class="nv"&gt;SENTRY_WEB_OPTIONS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;workers&amp;#39;&lt;/span&gt;: 4,  &lt;span class="c"&gt;# the number of gunicorn workers&lt;/span&gt;
+    &lt;span class="c"&gt;# &amp;#39;secure_scheme_headers&amp;#39;: {&amp;#39;X-FORWARDED-PROTO&amp;#39;: &amp;#39;https&amp;#39;},&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;/etc/sentry/sentry.conf.py中的邮件配置根据个人情况修改。&lt;/p&gt;
+&lt;p&gt;修改完配置运行如下命令:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py upgrade
+&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py repair
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;创建sentry超级用户:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py createsuperuser
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动Web服务命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动后就可以访问 http://your-ip:9000&amp;nbsp;了，用刚才创建的超级用户登录。&lt;/p&gt;
+&lt;p&gt;启动sentry&amp;nbsp;worker:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py celery worker -B -l WARNING
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;正式环境运行sentry&lt;/h2&gt;
+&lt;h3&gt;supervisor管理sentry,&amp;nbsp;sentry_worker&lt;/h3&gt;
+&lt;p&gt;通过supervisor管理sentry,&amp;nbsp;sentry_worker；并用nginx做反向代理。&lt;/p&gt;
+&lt;p&gt;supervisor的安装也不再介绍。&lt;/p&gt;
+&lt;p&gt;supervisor管理sentry:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/supervisor/conf.d/sentry.conf
+&lt;span class="o"&gt;[&lt;/span&gt;program:sentry&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="c"&gt;#directory=/var/www/.virtualenvs/sentry/bin/&lt;/span&gt;
+&lt;span class="nv"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;VIRTUAL_ENV_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/www/.virtualenvs/sentry/bin/&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/www/.virtualenvs/sentry/bin/sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py start
+&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;develop
+&lt;span class="nv"&gt;stdout_logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/sentry.stdout
+&lt;span class="nv"&gt;stderr_logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/sentry.stderr
+&lt;span class="nv"&gt;autostart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="nv"&gt;autorestart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="nv"&gt;killasgroup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;supervisor管理sentry_worker:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/supervisor/conf.d/sentry_worker.conf
+&lt;span class="o"&gt;[&lt;/span&gt;program:sentry_worker&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="c"&gt;#directory=/var/www/.virtualenvs/sentry/bin/&lt;/span&gt;
+&lt;span class="nv"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;VIRTUAL_ENV_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/www/.virtualenvs/sentry/bin/&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;command&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/www/.virtualenvs/sentry/bin/sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py celery worker -B -l WARNING
+&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;develop
+&lt;span class="nv"&gt;stdout_logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/sentry_worker.stdout
+&lt;span class="nv"&gt;stderr_logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/sentry_worker.stderr
+&lt;span class="nv"&gt;autostart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="nv"&gt;autorestart&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="nv"&gt;killasgroup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动sentry,&amp;nbsp;sentry_worker:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo service supervisor restart
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo supervisorctl  &lt;span class="c"&gt;# 查看sentry, sentry_worker运行情况&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置Nginx&lt;/h3&gt;
+&lt;p&gt;/etc/nginx/sites-available/default的server配置中增加如下内容:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;```&lt;/span&gt;
+&lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;Host&lt;/span&gt;                 &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;http_host&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;X-Real-IP&lt;/span&gt;            &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;remote_addr&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;X-Forwarded-For&lt;/span&gt;      &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;X-Forwarded-Proto&lt;/span&gt;    &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;scheme&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;proxy_redirect&lt;/span&gt;     &lt;span class="nt"&gt;off&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+
+&lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_pass&lt;/span&gt;         &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;9000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;location&lt;/span&gt; &lt;span class="o"&gt;~*&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nt"&gt;api&lt;/span&gt;&lt;span class="o"&gt;/(?&lt;/span&gt;&lt;span class="nt"&gt;P&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;projectid&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="nt"&gt;d&lt;/span&gt;&lt;span class="o"&gt;+/)?&lt;/span&gt;&lt;span class="nt"&gt;store&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_pass&lt;/span&gt;        &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;9000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;```&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/issue

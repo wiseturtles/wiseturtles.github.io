@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Debian&nbsp;8.2上安装Sentry
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="sentry" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Debian&nbsp;8.2上安装Sentry</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/sentry.html">sentry</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-09-22
+
+        </div>
+
+        <div><p>Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, <span class="caps">PHP</span>, Ruby, Java,&nbsp;Go以及Android、iOS。</p>
+<h2>系统环境</h2>
+<p>查看系统版本。</p>
+<div class="highlight"><pre><span class="nv">$ </span>lsb_release -a
+No LSB modules are available.
+Distributor ID: Debian
+Description:    Debian GNU/Linux 8.2 <span class="o">(</span>jessie<span class="o">)</span>
+Release:    8.2
+Codename:   jessie
+</pre></div>
+
+
+<h2>准备数据库环境</h2>
+<p><a href="">官方安装文档</a></p>
+<p>virtualenv的安装、配置就不再介绍了。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install postgresql libpq-dev
+<span class="nv">$ </span>mkvirtualenv sentry
+<span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>pip install psycopg2
+</pre></div>
+
+
+<p>在PostgreSQL中为sentry创建数据库。</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo -u postgre createuser --superuser sentry
+<span class="nv">$ </span>sudo -u sentry psql
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># \password sentry</span>
+Enter new password:
+Enter it again:
+<span class="nv">postgres</span><span class="o">=</span><span class="c"># \q</span>
+<span class="nv">$ </span>sudo -u sentry createdb -E utf8 sentry
+</pre></div>
+
+
+<h2>安装sentry</h2>
+<p>数据库使用的是PostgreSQL，使用公司邮件服务器发送邮件。</p>
+<div class="highlight"><pre><span class="nv">$ </span>workon sentry
+<span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>pip install sentry
+<span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry init /tmp/settings.py
+<span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sudo mv /tmp/settings.py /etc/sentry/sentry.conf.py
+</pre></div>
+
+
+<p>/etc/sentry/sentry.conf.py中的数据库配置如下：</p>
+<div class="highlight"><pre><span class="nv">DATABASES</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s1">&#39;default&#39;</span>: <span class="o">{</span>
+        <span class="c"># You can swap out the engine for MySQL easily by changing this value</span>
+        <span class="c"># to ``django.db.backends.mysql`` or to PostgreSQL with</span>
+        <span class="c"># ``sentry.db.postgres``</span>
+
+        <span class="c"># If you change this, you&#39;ll also need to install the appropriate python</span>
+        <span class="c"># package: psycopg2 (Postgres) or mysql-python</span>
+        <span class="s1">&#39;ENGINE&#39;</span>: <span class="s1">&#39;django.db.backends.postgresql_psycopg2&#39;</span>,
+
+        <span class="s1">&#39;NAME&#39;</span>: <span class="s1">&#39;sentry&#39;</span>,
+        <span class="s1">&#39;USER&#39;</span>: <span class="s1">&#39;sentry&#39;</span>,
+        <span class="s1">&#39;PASSWORD&#39;</span>: <span class="s1">&#39;xxxx&#39;</span>,
+        <span class="s1">&#39;HOST&#39;</span>: <span class="s1">&#39;localhost&#39;</span>,
+        <span class="s1">&#39;PORT&#39;</span>: <span class="s1">&#39;5432&#39;</span>,
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>/etc/sentry/sentry.conf.py中的Web服务配置如下：</p>
+<div class="highlight"><pre><span class="c"># You MUST configure the absolute URI root for Sentry:</span>
+<span class="nv">SENTRY_URL_PREFIX</span> <span class="o">=</span> <span class="s1">&#39;http://your-ip&#39;</span>  <span class="c"># No trailing slash!</span>
+
+<span class="nv">SENTRY_WEB_HOST</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+<span class="nv">SENTRY_WEB_PORT</span> <span class="o">=</span> 9000
+<span class="nv">SENTRY_WEB_OPTIONS</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="s1">&#39;workers&#39;</span>: 4,  <span class="c"># the number of gunicorn workers</span>
+    <span class="c"># &#39;secure_scheme_headers&#39;: {&#39;X-FORWARDED-PROTO&#39;: &#39;https&#39;},</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>/etc/sentry/sentry.conf.py中的邮件配置根据个人情况修改。</p>
+<p>修改完配置运行如下命令:</p>
+<div class="highlight"><pre><span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py upgrade
+<span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py repair
+</pre></div>
+
+
+<p>创建sentry超级用户:</p>
+<div class="highlight"><pre><span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py createsuperuser
+</pre></div>
+
+
+<p>启动Web服务命令如下:</p>
+<div class="highlight"><pre><span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py start
+</pre></div>
+
+
+<p>启动后就可以访问 http://your-ip:9000&nbsp;了，用刚才创建的超级用户登录。</p>
+<p>启动sentry&nbsp;worker:</p>
+<div class="highlight"><pre><span class="o">(</span>sentry<span class="o">)</span><span class="nv">$ </span>sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py celery worker -B -l WARNING
+</pre></div>
+
+
+<h2>正式环境运行sentry</h2>
+<h3>supervisor管理sentry,&nbsp;sentry_worker</h3>
+<p>通过supervisor管理sentry,&nbsp;sentry_worker；并用nginx做反向代理。</p>
+<p>supervisor的安装也不再介绍。</p>
+<p>supervisor管理sentry:</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/supervisor/conf.d/sentry.conf
+<span class="o">[</span>program:sentry<span class="o">]</span>
+<span class="c">#directory=/var/www/.virtualenvs/sentry/bin/</span>
+<span class="nv">environment</span><span class="o">=</span><span class="nv">VIRTUAL_ENV_PATH</span><span class="o">=</span><span class="s2">&quot;/var/www/.virtualenvs/sentry/bin/&quot;</span>
+<span class="nb">command</span><span class="o">=</span>/var/www/.virtualenvs/sentry/bin/sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py start
+<span class="nv">user</span><span class="o">=</span>develop
+<span class="nv">stdout_logfile</span><span class="o">=</span>/data/log/supervisor/sentry.stdout
+<span class="nv">stderr_logfile</span><span class="o">=</span>/data/log/supervisor/sentry.stderr
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">killasgroup</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<p>supervisor管理sentry_worker:</p>
+<div class="highlight"><pre><span class="nv">$ </span>cat /etc/supervisor/conf.d/sentry_worker.conf
+<span class="o">[</span>program:sentry_worker<span class="o">]</span>
+<span class="c">#directory=/var/www/.virtualenvs/sentry/bin/</span>
+<span class="nv">environment</span><span class="o">=</span><span class="nv">VIRTUAL_ENV_PATH</span><span class="o">=</span><span class="s2">&quot;/var/www/.virtualenvs/sentry/bin/&quot;</span>
+<span class="nb">command</span><span class="o">=</span>/var/www/.virtualenvs/sentry/bin/sentry --config<span class="o">=</span>/etc/sentry/sentry.conf.py celery worker -B -l WARNING
+<span class="nv">user</span><span class="o">=</span>develop
+<span class="nv">stdout_logfile</span><span class="o">=</span>/data/log/supervisor/sentry_worker.stdout
+<span class="nv">stderr_logfile</span><span class="o">=</span>/data/log/supervisor/sentry_worker.stderr
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span>
+<span class="nv">killasgroup</span><span class="o">=</span><span class="nb">true</span>
+</pre></div>
+
+
+<p>启动sentry,&nbsp;sentry_worker:</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo service supervisor restart
+<span class="nv">$ </span>sudo supervisorctl  <span class="c"># 查看sentry, sentry_worker运行情况</span>
+</pre></div>
+
+
+<h3>配置Nginx</h3>
+<p>/etc/nginx/sites-available/default的server配置中增加如下内容:</p>
+<div class="highlight"><pre><span class="err">```</span>
+<span class="nt">proxy_set_header</span>   <span class="nt">Host</span>                 <span class="o">$</span><span class="nt">http_host</span><span class="o">;</span>
+<span class="nt">proxy_set_header</span>   <span class="nt">X-Real-IP</span>            <span class="o">$</span><span class="nt">remote_addr</span><span class="o">;</span>
+<span class="nt">proxy_set_header</span>   <span class="nt">X-Forwarded-For</span>      <span class="o">$</span><span class="nt">proxy_add_x_forwarded_for</span><span class="o">;</span>
+<span class="nt">proxy_set_header</span>   <span class="nt">X-Forwarded-Proto</span>    <span class="o">$</span><span class="nt">scheme</span><span class="o">;</span>
+<span class="nt">proxy_redirect</span>     <span class="nt">off</span><span class="o">;</span>
+
+<span class="nt">location</span> <span class="o">/</span> <span class="p">{</span>
+    <span class="n">proxy_pass</span>         <span class="n">http</span><span class="o">://</span><span class="n">localhost</span><span class="o">:</span><span class="m">9000</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">location</span> <span class="o">~*</span> <span class="o">/</span><span class="nt">api</span><span class="o">/(?</span><span class="nt">P</span><span class="o">&lt;</span><span class="nt">projectid</span><span class="o">&gt;</span><span class="err">\</span><span class="nt">d</span><span class="o">+/)?</span><span class="nt">store</span><span class="o">/</span> <span class="p">{</span>
+        <span class="n">proxy_pass</span>        <span class="n">http</span><span class="o">://</span><span class="m">127</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">1</span><span class="o">:</span><span class="m">9000</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="err">```</span>
+</pre></div>
+
+
+<p>重启nginx，并通过http://your-ip&nbsp;访问。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="setup-sentry-on-debian-8.2" data-title="Debian&nbsp;8.2上安装Sentry" data-url="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
