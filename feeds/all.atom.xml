@@ -179,7 +179,8 @@ OK
 
 &lt;span class="c"&gt;# 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块&lt;/span&gt;
 &lt;span class="c"&gt;# 完毕&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;h2&gt;为啥学Node.js&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;p&gt;大家都知道Node.js是基于JavaScript的，使JavaScript可以用于后台开发。&lt;/p&gt;
+&lt;h2&gt;为啥学JavaScript&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;公司项目需要&lt;/li&gt;
 &lt;li&gt;JavaScript程序员之多社区之活跃&lt;/li&gt;
