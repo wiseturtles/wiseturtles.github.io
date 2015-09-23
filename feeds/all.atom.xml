@@ -1,5 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-22T15:55:00+08:00</updated><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-23T16:40:00+08:00</updated><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;安装iptables&lt;/h2&gt;
+&lt;h3&gt;Debian&lt;/h3&gt;
+&lt;p&gt;安装:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install iptables
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Debian系统中不需要启动iptables。&lt;/p&gt;
+&lt;h3&gt;CentOS&lt;/h3&gt;
+&lt;p&gt;安装:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo yum install iptables -y
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;启动:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo service iptables start
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置iptables&lt;/h3&gt;
+&lt;p&gt;配置指令Debian、CentOS都一样。&lt;/p&gt;
+&lt;p&gt;这两段抄的&lt;a href="http://blog.kkyun.com/?p=50"&gt;kkyun&amp;nbsp;blog&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;清除防火墙规则:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;```
+#首先在清除前要将policy INPUT改成ACCEPT,表示接受一切请求。
+#这个一定要先做，不然清空后可能会悲剧
+$ sudo iptables -P INPUT ACCEPT
+
+#清空默认所有规则
+$ sudo iptables -F
+
+#清空自定义的所有规则
+$ sudo iptables -X
+
+#计数器置0
+$ sudo iptables -Z
+```
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;常用配置:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;```
+# 允许来自于lo接口的数据包
+# 如果没有此规则，你将不能通过127.0.0.1访问本地服务，例如ping 127.0.0.1
+$ sudo iptables -A INPUT -i lo -j ACCEPT
+
+# ssh端口22
+$ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# FTP端口21
+$ sudo iptables -A INPUT -p tcp --dport 21 -j ACCEPT
+
+# web服务端口80
+$ sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+
+# tomcat
+$ sudo iptables -A INPUT -p tcp --dport xxxx -j ACCEPT
+
+# mysql
+$ sudo iptables -A INPUT -p tcp --dport xxxx -j ACCEPT
+
+#允许icmp包通过,也就是允许ping
+$ sudo iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+
+#允许所有对外请求的返回包
+#本机对外请求相当于OUTPUT,对于返回数据包必须接收啊，这相当于INPUT了
+$ sudo iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
+
+#如果要添加内网ip信任（接受其所有TCP请求）
+$ sudo iptables -A INPUT -p tcp -s 45.96.174.68 -j ACCEPT
+
+#过滤所有非以上规则的请求
+$ sudo iptables -P INPUT DROP
+
+#要封停一个IP，使用下面这条命令：
+$ sudo iptables -I INPUT -s ***.***.***.*** -j DROP
+
+#要解封一个IP，使用下面这条命令:
+$ sudo iptables -D INPUT -s ***.***.***.*** -j DROP
+```
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;保存iptables配置&lt;/h3&gt;
+&lt;p&gt;iptables配置好在当前环境生效，但，重启系统就不再可用。&amp;nbsp;所以，我们需要将iptables配置信息保存下来，并在下次系统开机时自动加载。&lt;/p&gt;
+&lt;h4&gt;Debian&lt;/h4&gt;
+&lt;p&gt;保存iptables配置到/etc/iptables:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo bash -c &lt;span class="s1"&gt;&amp;#39;iptables-save &amp;gt; /etc/iptables&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重启时/etc/iptables加载配置，修改/etc/network/if-pre-up.d/iptables内容如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/network/if-pre-up.d/iptables
+&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
+
+/sbin/iptables-restore &amp;lt; /etc/iptables
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chmod +x /etc/network/if-pre-up.d/iptables
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;CentOS&lt;/h4&gt;
+&lt;p&gt;保存iptables配置信息:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo service iptables save
+iptables: Saving firewall rules to /etc/sysconfig/iptables:&lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重启自动运行iptables:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chkconfig iptables on
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
