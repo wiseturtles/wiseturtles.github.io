@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - android</title>
+    <title>Wise Turtles - Gradle代理设置
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,10 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="gradle" />
 
 </head>
 
@@ -51,36 +56,44 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html"><h2>Gradle代理设置</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/gradle.html">gradle</a> 
+    <div class='article'>
+        <div class="content-title">
+            <h1>Gradle代理设置</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/gradle.html">gradle</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
 On 2015-09-29
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Gradle代理设置</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html">阅读</a></div>
-      </div>
+        </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html"><h2>export Android cantacts with vCard format via&nbsp;adb</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/android.html">Android</a> <a href="http://blog.wiseturtles.com/tag/vcard.html">vCard</a> <a href="http://blog.wiseturtles.com/tag/adb.html">adb</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2015-01-11
+        <div><p>Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。</p>
+<h2>Gradle代理设置</h2>
+<div class="highlight"><pre><span class="nv">$ </span>cat ~/.gradle/gradle.properties
+systemProp.http.proxyHost<span class="o">=</span>your-proxy
+systemProp.http.proxyPort<span class="o">=</span>proxy-port
+<span class="c">#systemProp.http.proxyUser=userid</span>
+<span class="c">#systemProp.http.proxyPassword=password</span>
+<span class="c">#systemProp.http.nonProxyHosts=*.nonproxyrepos.com|localhost</span>
+</pre></div></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>export Android contacts with vCard format via&nbsp;adb</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html">阅读</a></div>
-      </div>
+        <hr>
 
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
-
-    <li class="active"><a href="http://blog.wiseturtles.com/category/android.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
-
-</ul>
-</div>  
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="set-gradle-proxy" data-title="Gradle代理设置" data-url="http://blog.wiseturtles.com/posts/set-gradle-proxy.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

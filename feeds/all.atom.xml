@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-23T16:40:00+08:00</updated><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-29T14:45:00+08:00</updated><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
+&lt;h2&gt;Gradle代理设置&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat ~/.gradle/gradle.properties
+systemProp.http.proxyHost&lt;span class="o"&gt;=&lt;/span&gt;your-proxy
+systemProp.http.proxyPort&lt;span class="o"&gt;=&lt;/span&gt;proxy-port
+&lt;span class="c"&gt;#systemProp.http.proxyUser=userid&lt;/span&gt;
+&lt;span class="c"&gt;#systemProp.http.proxyPassword=password&lt;/span&gt;
+&lt;span class="c"&gt;#systemProp.http.nonProxyHosts=*.nonproxyrepos.com|localhost&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="gradle"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
