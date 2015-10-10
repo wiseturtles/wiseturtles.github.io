@@ -7,6 +7,7 @@
 &lt;li&gt;&lt;a href="http://op.baidu.com/2015/04/https-s01a01/"&gt;http://op.baidu.com/2015/04/https-s01a01/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://oncenote.com/2014/10/21/Security-1-HTTPS/"&gt;http://oncenote.com/2014/10/21/Security-1-&lt;span class="caps"&gt;HTTPS&lt;/span&gt;/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://oncenote.com/2015/09/16/Security-2-HTTPS2/"&gt;http://oncenote.com/2015/09/16/Security-2-&lt;span class="caps"&gt;HTTPS2&lt;/span&gt;/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.vobe.io/114"&gt;https://www.vobe.io/114&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1&gt;Nginx配置&lt;span class="caps"&gt;SSL&lt;/span&gt;证书, 启用&lt;span class="caps"&gt;HTTPS&lt;/span&gt;&lt;/h1&gt;
 &lt;blockquote&gt;
@@ -27,15 +28,24 @@
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;同时，启用了spdy，参考: &lt;a href="https://www.vobe.io/114"&gt;https://www.vobe.io/114&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Nginx配置文件(&lt;code&gt;/etc/nginx/sites-avaiable/default&lt;/code&gt;)如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="m"&gt;#listen&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;443&lt;/span&gt; &lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nf"&gt;#server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Strict&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Transport&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Security&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;15768000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;return&lt;/span&gt; &lt;span class="m"&gt;301&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;request_uri&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="err"&gt;#&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;如果希望&lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="err"&gt;直接跳转到&lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="err"&gt;，删除该行，并去掉上面的注释&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;443&lt;/span&gt; &lt;span class="n"&gt;ssl&lt;/span&gt; &lt;span class="n"&gt;spdy&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;spdy_headers_comp&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="n"&gt;ssl&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;ssl_certificate&lt;/span&gt;      &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;crt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    &lt;span class="n"&gt;ssl_certificate_key&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_certificate&lt;/span&gt;      &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;crt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_certificate_key&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="n"&gt;ssl_protocols&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
@@ -45,16 +55,21 @@
     &lt;span class="n"&gt;ssl_prefer_server_ciphers&lt;/span&gt;  &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;ssl_dhparam&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dhparam&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="n"&gt;ssl_session_cache&lt;/span&gt;    &lt;span class="n"&gt;shared&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;SSL&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_session_cache&lt;/span&gt;    &lt;span class="n"&gt;shared&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;SSL&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;20&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_session_timeout&lt;/span&gt;  &lt;span class="m"&gt;60&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="n"&gt;ssl_stapling&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;ssl_stapling_verify&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;#ssl&lt;/span&gt;&lt;span class="n"&gt;_trusted_certificate&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cert&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;trustchain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;crt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="m"&gt;#resolv&lt;/span&gt;&lt;span class="n"&gt;er&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt; &lt;span class="n"&gt;valid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;300s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="m"&gt;#resolv&lt;/span&gt;&lt;span class="n"&gt;er_timeout&lt;/span&gt; &lt;span class="m"&gt;10s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
-    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Strict&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Transport&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Security&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;63072000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Strict&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Transport&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Security&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;15768000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
     &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Frame&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt; &lt;span class="n"&gt;DENY&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Content&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt; &lt;span class="n"&gt;nosniff&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Alternate&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Protocol&lt;/span&gt; &lt;span class="m"&gt;443&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;npn&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;spdy&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 
     &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;Host&lt;/span&gt;                 &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;http_host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
     &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Forwarded&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Proto&lt;/span&gt;    &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;scheme&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -75,7 +90,9 @@
 
 
 &lt;p&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;配置的是否安全：&lt;a href="https://www.ssllabs.com/ssltest/"&gt;https://www.ssllabs.com/ssltest/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+&lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;测试&lt;span class="caps"&gt;SPDY&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;spdycheck.org&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
