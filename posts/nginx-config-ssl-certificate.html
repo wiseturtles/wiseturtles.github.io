@@ -70,21 +70,19 @@ On 2015-10-10
 
         <div><p>本文参考:</p>
 <ul>
-<li>http://www.cocoachina.com/ios/20150703/12392.html</li>
-<li>https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/</li>
-<li>http://note.sdo.com/u/634668972018478681/n/<span class="caps">Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3</span></li>
-<li>http://op.baidu.com/2015/04/https-s01a01/</li>
-<li>http://oncenote.com/2014/10/21/Security-1-<span class="caps">HTTPS</span>/</li>
-<li>http://oncenote.com/2015/09/16/Security-2-<span class="caps">HTTPS2</span>/</li>
+<li><a href="http://www.cocoachina.com/ios/20150703/12392.html">http://www.cocoachina.com/ios/20150703/12392.html</a></li>
+<li><a href="https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/">https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/</a></li>
+<li><a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3">http://note.sdo.com/u/634668972018478681/n/<span class="caps">Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3</span></a></li>
+<li><a href="http://op.baidu.com/2015/04/https-s01a01/">http://op.baidu.com/2015/04/https-s01a01/</a></li>
+<li><a href="http://oncenote.com/2014/10/21/Security-1-HTTPS/">http://oncenote.com/2014/10/21/Security-1-<span class="caps">HTTPS</span>/</a></li>
+<li><a href="http://oncenote.com/2015/09/16/Security-2-HTTPS2/">http://oncenote.com/2015/09/16/Security-2-<span class="caps">HTTPS2</span>/</a></li>
 </ul>
 <h1>Nginx配置<span class="caps">SSL</span>证书, 启用<span class="caps">HTTPS</span></h1>
-<blockquote>
 <blockquote>
 <p>iOS9把所有的http请求都改为https了：iOS9系统发送的网络请求将统一使用<span class="caps">TLS</span> 1.2 <span class="caps">SSL</span>。
 采用<span class="caps">TLS</span> 1.2 协议，目的是 强制增强数据访问安全，而且 系统 Foundation 框架下的相关网络请求，
 将不再默认使用 Http 等不安全的网络协议，而默认采用 <span class="caps">TLS</span> 1.2。服务器因此需要更新，以解析相关数据。
 如不更新，可通过在 Info.plist&nbsp;中声明，倒退回不安全的网络请求。</p>
-</blockquote>
 </blockquote>
 <p>为了客户端接口更加安全，申请免费<span class="caps">SSL</span>证书，启用<span class="caps">HTTPS</span>。</p>
 <h2>申请证书</h2>
@@ -99,8 +97,7 @@ On 2015-10-10
 
 
 <p>Nginx配置文件(<code>/etc/nginx/sites-avaiable/default</code>)如下:</p>
-<div class="highlight"><pre><span class="err">```</span>
-<span class="nt">server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
     <span class="m">#listen</span> <span class="m">80</span><span class="p">;</span>
     <span class="n">listen</span> <span class="m">443</span> <span class="n">ssl</span><span class="p">;</span>
     <span class="n">server_name</span> <span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="p">;</span>
@@ -137,7 +134,6 @@ On 2015-10-10
         <span class="n">proxy_pass</span>         <span class="n">http</span><span class="o">://</span><span class="n">localhost</span><span class="o">:</span><span class="m">8888</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="err">}</span>
-<span class="err">```</span>
 </pre></div>
 
 
