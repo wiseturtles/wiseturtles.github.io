@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Nginx配置<span class="caps">SSL</span>证书
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="nginx" />
+      <meta name="tags" contents="ssl" />
+      <meta name="tags" contents="https" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Nginx配置<span class="caps">SSL</span>证书</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/nginx.html">nginx</a> <a href="http://blog.wiseturtles.com/tag/ssl.html">ssl</a> <a href="http://blog.wiseturtles.com/tag/https.html">https</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-10-10
+
+        </div>
+
+        <div><p>本文参考:</p>
+<ul>
+<li>http://www.cocoachina.com/ios/20150703/12392.html</li>
+<li>https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/</li>
+<li>http://note.sdo.com/u/634668972018478681/n/<span class="caps">Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3</span></li>
+<li>http://op.baidu.com/2015/04/https-s01a01/</li>
+<li>http://oncenote.com/2014/10/21/Security-1-<span class="caps">HTTPS</span>/</li>
+<li>http://oncenote.com/2015/09/16/Security-2-<span class="caps">HTTPS2</span>/</li>
+</ul>
+<h1>Nginx配置<span class="caps">SSL</span>证书, 启用<span class="caps">HTTPS</span></h1>
+<blockquote>
+<blockquote>
+<p>iOS9把所有的http请求都改为https了：iOS9系统发送的网络请求将统一使用<span class="caps">TLS</span> 1.2 <span class="caps">SSL</span>。
+采用<span class="caps">TLS</span> 1.2 协议，目的是 强制增强数据访问安全，而且 系统 Foundation 框架下的相关网络请求，
+将不再默认使用 Http 等不安全的网络协议，而默认采用 <span class="caps">TLS</span> 1.2。服务器因此需要更新，以解析相关数据。
+如不更新，可通过在 Info.plist&nbsp;中声明，倒退回不安全的网络请求。</p>
+</blockquote>
+</blockquote>
+<p>为了客户端接口更加安全，申请免费<span class="caps">SSL</span>证书，启用<span class="caps">HTTPS</span>。</p>
+<h2>申请证书</h2>
+<p>从Wosign申请免费证书，<a href="https://www.wosign.com/DVSSL/DV_KuaiSSL_Free.htm">地址</a></p>
+<h2>配置Nginx</h2>
+<p>证书申请到会提示下载一个zip文件，解压缩后有 <code>for Nginx.zip</code>，解压缩<code>for Nginx.zip</code>得到 <code>*.crt</code> 和 <code>*.key</code>。
+将<code>.crt</code> 和 <code>.key</code> 文件放入Nginx主机的 /etc/ssl&nbsp;目录。</p>
+<p>生成dhparam.pem:</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /etc/ssl/certs
+<span class="nv">$ </span>openssl dhparam -out dhparam.pem 4096
+</pre></div>
+
+
+<p>Nginx配置文件(<code>/etc/nginx/sites-avaiable/default</code>)如下:</p>
+<div class="highlight"><pre><span class="err">```</span>
+<span class="nt">server</span> <span class="p">{</span>
+    <span class="m">#listen</span> <span class="m">80</span><span class="p">;</span>
+    <span class="n">listen</span> <span class="m">443</span> <span class="n">ssl</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="p">;</span>
+
+    <span class="n">ssl</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">ssl_certificate</span>      <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">your</span><span class="o">.</span><span class="n">crt</span><span class="p">;</span>
+    <span class="n">ssl_certificate_key</span>  <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">your</span><span class="o">.</span><span class="n">key</span><span class="p">;</span>
+
+    <span class="n">ssl_protocols</span> <span class="n">TLSv1</span> <span class="n">TLSv1</span><span class="o">.</span><span class="m">1</span> <span class="n">TLSv1</span><span class="o">.</span><span class="m">2</span><span class="p">;</span>
+
+    <span class="n">ssl_ciphers</span> <span class="s1">&#39;AES256+EECDH:AES256+EDH:!aNULL&#39;</span><span class="p">;</span>
+    <span class="m">#ssl</span><span class="n">_ciphers</span> <span class="s2">&quot;ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4&quot;</span>
+
+    <span class="n">ssl_prefer_server_ciphers</span>  <span class="n">on</span><span class="p">;</span>
+    <span class="n">ssl_dhparam</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">dhparam</span><span class="o">.</span><span class="n">pem</span><span class="p">;</span>
+
+    <span class="n">ssl_session_cache</span>    <span class="n">shared</span><span class="o">:</span><span class="n">SSL</span><span class="o">:</span><span class="m">10</span><span class="n">m</span><span class="p">;</span>
+
+    <span class="n">ssl_stapling</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">ssl_stapling_verify</span> <span class="n">on</span><span class="p">;</span>
+    <span class="m">#resolv</span><span class="n">er</span> <span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">4</span><span class="o">.</span><span class="m">4</span> <span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">8</span> <span class="n">valid</span><span class="o">=</span><span class="m">300s</span><span class="p">;</span>
+    <span class="m">#resolv</span><span class="n">er_timeout</span> <span class="m">10s</span><span class="p">;</span>
+
+    <span class="n">add_header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="m">63072000</span><span class="p">;</span>
+    <span class="n">add_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Frame</span><span class="o">-</span><span class="n">Options</span> <span class="n">DENY</span><span class="p">;</span>
+    <span class="n">add_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">-</span><span class="n">Options</span> <span class="n">nosniff</span><span class="p">;</span>
+
+    <span class="n">proxy_set_header</span>   <span class="n">Host</span>                 <span class="err">$</span><span class="n">http_host</span><span class="p">;</span>
+    <span class="n">proxy_set_header</span>   <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">Proto</span>    <span class="err">$</span><span class="n">scheme</span><span class="p">;</span>
+    <span class="n">proxy_set_header</span>   <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">For</span>      <span class="err">$</span><span class="n">remote_addr</span><span class="p">;</span>
+    <span class="n">proxy_redirect</span>     <span class="n">off</span><span class="p">;</span>
+
+    <span class="n">location</span> <span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">service</span> <span class="err">{</span>
+        <span class="n">proxy_pass</span>         <span class="n">http</span><span class="o">://</span><span class="n">localhost</span><span class="o">:</span><span class="m">8888</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+<span class="err">```</span>
+</pre></div>
+
+
+<h2>测试<span class="caps">HTTPS</span></h2>
+<p>curl测试服务器上的https接口:</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl https://your-domain/your-services
+</pre></div>
+
+
+<p>测试<span class="caps">HTTPS</span>配置的是否安全：<a href="https://www.ssllabs.com/ssltest/">https://www.ssllabs.com/ssltest/</a></p>
+<p>注：如果安全评分比较低，请认真阅读<a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3">Strong <span class="caps">SSL</span> Security on&nbsp;nginx</a></p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="nginx-config-ssl-certificate" data-title="Nginx配置<span class="caps">SSL</span>证书" data-url="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

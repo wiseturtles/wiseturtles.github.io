@@ -1,5 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-29T14:45:00+08:00</updated><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-10T13:27:00+08:00</updated><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;http://www.cocoachina.com/ios/20150703/12392.html&lt;/li&gt;
+&lt;li&gt;https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/&lt;/li&gt;
+&lt;li&gt;http://note.sdo.com/u/634668972018478681/n/&lt;span class="caps"&gt;Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;http://op.baidu.com/2015/04/https-s01a01/&lt;/li&gt;
+&lt;li&gt;http://oncenote.com/2014/10/21/Security-1-&lt;span class="caps"&gt;HTTPS&lt;/span&gt;/&lt;/li&gt;
+&lt;li&gt;http://oncenote.com/2015/09/16/Security-2-&lt;span class="caps"&gt;HTTPS2&lt;/span&gt;/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;Nginx配置&lt;span class="caps"&gt;SSL&lt;/span&gt;证书, 启用&lt;span class="caps"&gt;HTTPS&lt;/span&gt;&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;iOS9把所有的http请求都改为https了：iOS9系统发送的网络请求将统一使用&lt;span class="caps"&gt;TLS&lt;/span&gt; 1.2 &lt;span class="caps"&gt;SSL&lt;/span&gt;。
+采用&lt;span class="caps"&gt;TLS&lt;/span&gt; 1.2 协议，目的是 强制增强数据访问安全，而且 系统 Foundation 框架下的相关网络请求，
+将不再默认使用 Http 等不安全的网络协议，而默认采用 &lt;span class="caps"&gt;TLS&lt;/span&gt; 1.2。服务器因此需要更新，以解析相关数据。
+如不更新，可通过在 Info.plist&amp;nbsp;中声明，倒退回不安全的网络请求。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为了客户端接口更加安全，申请免费&lt;span class="caps"&gt;SSL&lt;/span&gt;证书，启用&lt;span class="caps"&gt;HTTPS&lt;/span&gt;。&lt;/p&gt;
+&lt;h2&gt;申请证书&lt;/h2&gt;
+&lt;p&gt;从Wosign申请免费证书，&lt;a href="https://www.wosign.com/DVSSL/DV_KuaiSSL_Free.htm"&gt;地址&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;配置Nginx&lt;/h2&gt;
+&lt;p&gt;证书申请到会提示下载一个zip文件，解压缩后有 &lt;code&gt;for Nginx.zip&lt;/code&gt;，解压缩&lt;code&gt;for Nginx.zip&lt;/code&gt;得到 &lt;code&gt;*.crt&lt;/code&gt; 和 &lt;code&gt;*.key&lt;/code&gt;。
+将&lt;code&gt;.crt&lt;/code&gt; 和 &lt;code&gt;.key&lt;/code&gt; 文件放入Nginx主机的 /etc/ssl&amp;nbsp;目录。&lt;/p&gt;
+&lt;p&gt;生成dhparam.pem:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /etc/ssl/certs
+&lt;span class="nv"&gt;$ &lt;/span&gt;openssl dhparam -out dhparam.pem 4096
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Nginx配置文件(&lt;code&gt;/etc/nginx/sites-avaiable/default&lt;/code&gt;)如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;```&lt;/span&gt;
+&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="m"&gt;#listen&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;443&lt;/span&gt; &lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_certificate&lt;/span&gt;      &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;crt&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_certificate_key&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;key&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl_protocols&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="n"&gt;TLSv1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl_ciphers&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;AES256+EECDH:AES256+EDH:!aNULL&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;#ssl&lt;/span&gt;&lt;span class="n"&gt;_ciphers&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4&amp;quot;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl_prefer_server_ciphers&lt;/span&gt;  &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_dhparam&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ssl&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;certs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;dhparam&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl_session_cache&lt;/span&gt;    &lt;span class="n"&gt;shared&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;SSL&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;ssl_stapling&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;ssl_stapling_verify&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;#resolv&lt;/span&gt;&lt;span class="n"&gt;er&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt; &lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;8&lt;/span&gt; &lt;span class="n"&gt;valid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;300s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="m"&gt;#resolv&lt;/span&gt;&lt;span class="n"&gt;er_timeout&lt;/span&gt; &lt;span class="m"&gt;10s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Strict&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Transport&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Security&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;63072000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Frame&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt; &lt;span class="n"&gt;DENY&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Content&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Type&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Options&lt;/span&gt; &lt;span class="n"&gt;nosniff&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;Host&lt;/span&gt;                 &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;http_host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Forwarded&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Proto&lt;/span&gt;    &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;scheme&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="n"&gt;X&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Forwarded&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;For&lt;/span&gt;      &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;proxy_redirect&lt;/span&gt;     &lt;span class="n"&gt;off&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+    &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;proxy_pass&lt;/span&gt;         &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;8888&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;```&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;curl测试服务器上的https接口:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl https://your-domain/your-services
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;配置的是否安全：&lt;a href="https://www.ssllabs.com/ssltest/"&gt;https://www.ssllabs.com/ssltest/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
 &lt;h2&gt;Gradle代理设置&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat ~/.gradle/gradle.properties
 systemProp.http.proxyHost&lt;span class="o"&gt;=&lt;/span&gt;your-proxy
