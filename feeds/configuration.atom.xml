@@ -180,18 +180,8 @@ $ sudo iptables -D INPUT -s ***.***.***.*** -j DROP
 &lt;h3&gt;保存iptables配置&lt;/h3&gt;
 &lt;p&gt;iptables配置好在当前环境生效，但，重启系统就不再可用。&amp;nbsp;所以，我们需要将iptables配置信息保存下来，并在下次系统开机时自动加载。&lt;/p&gt;
 &lt;h4&gt;Debian&lt;/h4&gt;
-&lt;p&gt;保存iptables配置到/etc/iptables:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo bash -c &lt;span class="s1"&gt;&amp;#39;iptables-save &amp;gt; /etc/iptables&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;重启时/etc/iptables加载配置，修改/etc/network/if-pre-up.d/iptables内容如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/network/if-pre-up.d/iptables
-&lt;span class="c"&gt;#!/bin/sh&lt;/span&gt;
-
-/sbin/iptables-restore &amp;lt; /etc/iptables
-
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chmod +x /etc/network/if-pre-up.d/iptables
+&lt;p&gt;重启时自动加载iptables配置信息:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install iptables-persistent
 &lt;/pre&gt;&lt;/div&gt;
 
 
