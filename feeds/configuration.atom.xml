@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-10T13:27:00+08:00</updated><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-15T21:52:00+08:00</updated><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget https://bootstrap.pypa.io/get-pip.py
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo python get-pip.py
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者，直接使用发行版的包管理安装:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install python-pip  &lt;span class="c"&gt;# Debian/Ubuntu&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;pip配置&lt;/h2&gt;
+&lt;p&gt;官方源比较慢，上面是一些国内源。&lt;/p&gt;
+&lt;h3&gt;国内pypi源&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;https://pypi.mirrors.ustc.edu.cn/simple/&lt;/li&gt;
+&lt;li&gt;http://mirrors.aliyun.com/pypi/simple/&lt;/li&gt;
+&lt;li&gt;http://pypi.v2ex.com/simple&lt;/li&gt;
+&lt;li&gt;http://pypi.douban.com/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;修改pip默认源&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat .pip/pip.conf
+&lt;span class="o"&gt;[&lt;/span&gt;global&lt;span class="o"&gt;]&lt;/span&gt;
+trusted-host &lt;span class="o"&gt;=&lt;/span&gt; mirrors.aliyun.com
+index-url &lt;span class="o"&gt;=&lt;/span&gt; http://mirrors.aliyun.com/pypi/simple/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果使用阿里云主机，请用下面的地址:
+index-url =&amp;nbsp;http://mirrors.aliyuncs.com/pypi/simple/&lt;/p&gt;
+&lt;p&gt;不加trusted-host会报下面的警告:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The repository located at mirrors.aliyun.com is not a trusted or secure host and is being ignored. If this repository is available via &lt;span class="caps"&gt;HTTPS&lt;/span&gt; it is recommended to use &lt;span class="caps"&gt;HTTPS&lt;/span&gt; instead, otherwise you may silence this warning and allow it anyways with &amp;#8216;&amp;#8212;trusted-host&amp;nbsp;mirrors.aliyun.com&amp;#8217;.&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cocoachina.com/ios/20150703/12392.html"&gt;http://www.cocoachina.com/ios/20150703/12392.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/"&gt;https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/&lt;/a&gt;&lt;/li&gt;
