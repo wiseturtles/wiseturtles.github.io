@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-15T21:52:00+08:00</updated><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-27T19:52:00+08:00</updated><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+&lt;h3&gt;android&lt;/h3&gt;
+&lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
+&lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;获取所有可用的包:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;android list sdk -a -u
+&lt;span class="nv"&gt;$ &lt;/span&gt;android list sdk -a -u --proxy-host proxy-host --proxy-port proxy-port  &lt;span class="c"&gt;# 设置代理&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;安装指定的包：(num1,&amp;nbsp;num2是上面命令返回的序号)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget https://bootstrap.pypa.io/get-pip.py
 &lt;span class="nv"&gt;$ &lt;/span&gt;sudo python get-pip.py
 &lt;/pre&gt;&lt;/div&gt;
