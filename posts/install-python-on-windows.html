@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Windows环境下搭建python开发环境
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="windows" />
+      <meta name="tags" contents="python" />
+      <meta name="tags" contents="pypi mirrors" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Windows环境下搭建python开发环境</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/windows.html">windows</a> <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/pypi-mirrors.html">pypi mirrors</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2013-11-25
+
+        </div>
+
+        <div><ol class="arabic">
+<li><p class="first">从 <a class="reference external" href="http://www.python.org/download/">Python官网下载</a>&nbsp;下载自己所需版本的windows安装包并进行安装。</p>
+</li>
+<li><p class="first">将安装包的路径添加到系统环境变量,  <code>C:\Python27</code> ， 同时为了后面使 <code>easy_install</code> ，也 <code>C:\Python27\Scripts</code> 添加到环境变量里（现在这个目录还不存在).</p>
+</li>
+<li><p class="first">安装python包管理工具 <em>setuptools</em> ,&nbsp;安装方法如下:</p>
+<blockquote>
+<ol class="loweralpha simple">
+<li>下载 <a class="reference external" href="https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py">ez_setup.py</a>  脚本，并运行 <code>python easy_install.py</code> .</li>
+<li>如果cmd命令支持curl命令(如机器上安装过git或一些带linux命令的包时），则可以直接执 <code>curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python</code> 进行安装.</li>
+</ol>
+</blockquote>
+</li>
+<li><p class="first">安装另一个python包的管理工具 <em>pip</em> , <code>easy_install pip</code> .</p>
+</li>
+<li><p class="first">让pip使用国内的pypi源。我们在使用pip进行包安装的时候，默认是从官方下载包的，下载速度相当地慢，而且经常还会出现一些包无法下载的情况。这个时候，让pip使用国内原则能解决这个问题。在这里我选择使用 <a class="reference external" href="http://e.pypi.python.org/">清华大学的源</a>  。使用pip命令的时候，只需要加 <code>-i 源地址即可</code> 。如 <code>pip install flask -i http://e.pypi.python.org/simple</code> .也可以进行如下配置，&nbsp;让以后每次安装的时候都自动使用指定的源</p>
+<blockquote>
+<pre class="literal-block">
+使用pip的用户可以如下配置：
+
+在unix和macos，配置文件为：$HOME/.pip/pip.conf
+在windows上，配置文件为：%HOME%\pip\pip.ini
+
+需要在配置文件内加上：
+
+[global]
+index-url=http://e.pypi.python.org/simple
+</pre>
+<p>使用清华大学的源之后，下载安装python包时真是可以体会到飞一般的感觉。</p>
+</blockquote>
+</li>
+<li><p class="first">如果有需要，也可以在本地自己做pypi的镜像。</p>
+<blockquote>
+<ol class="loweralpha">
+<li><p class="first">使用bandersnatch， 具体方法可以参考 <a class="reference external" href="https://pypi.python.org/mirrors">PyPI Mirrors</a>&nbsp;.</p>
+</li>
+<li><p class="first">使用pep381client, 具体方法可以参考 <a class="reference external" href="http://www.python.org/dev/peps/pep-0381/">pep381client</a>&nbsp;.</p>
+<blockquote>
+<p>在使用pep381cient搭建本地镜像时发现它本身没有下载包，只是同步了包名，
+Google了一下，在 <a class="reference external" href="http://stackoverflow.com/questions/17667835/pep381clientpep381run-wont-download-packages-from-the-official-pypi-server">这里</a> 发现了答案，原因是pep381cient用的是http下载，而pypi只支持hppts.
+因此需要修改一下pep381cient程序代码。
+修改文件: <code>(YOUR INSALLED DIRECTORY)/pep381client/__init__.py</code></p>
+<p>如 <code>/usr/local/lib/python2.6/dist-packages/pep381client/__init__.py</code></p>
+<div class="highlight"><pre>9:  -BASE = &#39;http://&#39;+pypi
+    +BASE = &#39;https://&#39;+pypi
+
+28: -        _conn = httplib.HTTPConnection(pypi)
+    +        _conn = httplib.HTTPSConnection(pypi)
+
+37: -        _conn = httplib.HTTPConnection(pypi)
+    +        _conn = httplib.HTTPSConnection(pypi)
+</pre></div>
+</blockquote>
+</li>
+<li><p class="first">更多可以参考 <a class="reference external" href="http://www.worldhello.net/2011/03/14/2357.html">http://www.worldhello.net/2011/03/14/2357.html</a>&nbsp;.</p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p class="first">好了，现在可以开始python之旅了。</p>
+</li>
+</ol>
+</div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="install-python-on-windows" data-title="Windows环境下搭建python开发环境" data-url="http://blog.wiseturtles.com/posts/install-python-on-windows.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

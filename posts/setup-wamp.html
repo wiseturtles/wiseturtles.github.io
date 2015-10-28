@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - <span class="caps">WAMP</span>(Windows + Apache + Mysql + <span class="caps">PHP</span>)&nbsp;环境搭建
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="php" />
+      <meta name="tags" contents="wamp" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1><span class="caps">WAMP</span>(Windows + Apache + Mysql + <span class="caps">PHP</span>)&nbsp;环境搭建</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/php.html">php</a> <a href="http://blog.wiseturtles.com/tag/wamp.html">wamp</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2013-09-30
+
+        </div>
+
+        <div><p>最近开始学习<span class="caps">PHP</span>，工欲善其事，必先利其器。第一步当然是环境搭建啦！</p>
+<p><span class="caps">PHP</span>开发基本也就是在不同平台下，要么是<span class="caps">LAMP</span>(Linux + Apache + Mysql + <span class="caps">PHP</span>)，要么就是<span class="caps">WAMP</span>(Windows + Apache + Mysql +<span class="caps">PHP</span>),&nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
+</pre></div>
+
+
+<p>然后通过少许配置， <span class="caps">LAMP</span>环境就基本上搭建好了。系统默认帮我们做了很多事情，但是为了学习，我们还是尝试下在windows下搭建吧！虽然在windows下面也有很多<span class="caps">WAMP</span>的集成环境，如：</p>
+<blockquote>
+<p><span class="caps">XAMPP</span> - <span class="caps">XAMPP</span>是一款具有中文说明的功能全面的集成环境，<span class="caps">XAMPP</span>并不仅仅针对Windows，而是一个适用于Linux、Windows、Mac <span class="caps">OS</span> X 和Solaris 的易于安装的Apache 发行版。软件包中包含Apache 服务器、MySQL、SQLite、<span class="caps">PHP</span>、Perl、FileZilla <span class="caps">FTP</span>&nbsp;Server、Tomcat等等。默认安装开放了所有功能，安全性有问题，需要进行额外的安全设定。</p>
+<p>WampServer - WampServe集成了Apache、MySQL、<span class="caps">PHP</span>、phpmyadmin，支持Apache的mod_rewrite，<span class="caps">PHP</span>扩展、Apache模块只需要在菜单“开启/关闭”上点点就搞定，省去了修改配置文件的麻烦。</p>
+<p>AppServ - 集成了Apache、<span class="caps">PHP</span>、MySQL、phpMyAdmin，较为轻量。</p>
+<p>总的来说，无论从安全性和性能上来讲，<span class="caps">LAMP</span>（Linux + Apache + MySQL + <span class="caps">PHP</span>）都优于<span class="caps">WAMP</span>（Windows + Apache + MySQL + <span class="caps">PHP</span>），不过由于Windows具有易用的特点，<span class="caps">WAMP</span>也未尝不是初学者的一个不错的选择。 
+</p>
+</blockquote>
+<p>上面<span class="caps">WAMP</span>集成环境的内容介绍引用自<br />
+<a href="http://www.williamlong.info/archives/1281.html">http://www.williamlong.info/archives/1281.html</a></p>
+<p>关于集成的开发环境，还不得不提到ZendServer， 这个也是一个相当不错的环境，相比<span class="caps">XAMPP</span>更加精简一些。</p>
+<p>如果我们可以自己搭建一次整个开发环境的话，对这个过程将会更加熟悉。废话不多说，下面就让我们开始搭建吧！</p>
+<h2>Apache安装</h2>
+<h3>1.下载安装Apache包</h3>
+<p>根据http://httpd.apache.org/docs/2.4/platform/windows.html中如下一段话：</p>
+<blockquote>
+<p>The Apache <span class="caps">HTTP</span> Server Project itself does not provide binary releases of software, only source code. If you cannot compile the Apache <span class="caps">HTTP</span> Server yourself, you can obtain a binary package from numerous binary &gt;distributions available on the Internet.
+Popular options for deploying Apache httpd, and, optionally, <span class="caps">PHP</span> and MySQL, on Microsoft Windows,&nbsp;include:</p>
+<p>•&nbsp;ApacheHaus</p>
+<p>•  Apache&nbsp;Lounge</p>
+<p>•&nbsp;WampServer</p>
+<p>•  <span class="caps">XAMPP</span></p>
+</blockquote>
+<p>从上面可以知道，Apache官方并没有提供windows下的二进制安装包，
+可以从它推荐的站点下载apache二进制安装包。
+在此选择<br />
+<a href="https://www.apachelounge.com/download/">https://www.apachelounge.com/download/</a> 
+网站上的<br />
+<a href="https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip">https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip</a></p>
+<p>由于上面这个安装包是根据Visual Studio C++ 2010 <span class="caps">SP1</span> <span class="caps">VC10</span>&nbsp;环境下编译的。</p>
+<blockquote>
+<p>Be sure that you have installed the Visual C++ 2010 <span class="caps">SP1</span> Redistributable Package x86 : <span class="caps">VC10</span> <span class="caps">SP1</span>&nbsp;vcredist_x86.exe</p>
+</blockquote>
+<p>因此需要额外从&nbsp;http://www.microsoft.com/en-us/download/confirmation.aspx?id=8328  </p>
+<p>下载vcredist_x86.exe（这里根据自己的系统类型选择安装，我的是32位的系统，因此选择这个）</p>
+<h3>2.&nbsp;安装和修改Apache配置文件</h3>
+<p>首先安装vcredist_x86.exe。再将下载的httpd-2.4.4-win32.zip解压到任意目录下，如：<code>D:\wamp\Apache24</code>.
+修改配置文件<code>D:\wamp\Apache24\conf\httpd.conf</code>.</p>
+<p>由于在<code>httpd.conf</code>中默认为httpd-2.4.4-win32.zip解压是解压到<code>c:\Apache24</code>目录下面的。
+因此需要将<code>httpd.conf</code>文件中所有的<code>c:/Apache24</code>替换成<code>D:/wamp/Apache24</code>（<strong>注意</strong>:在<code>httpd.conf</code>文件中表示文件路径都是用的正斜杠，而不是反斜杠）。跟大部分网上讲的配置方法一样，在<code>httpd.conf</code> 中有如下几处是需要注意修改的</p>
+<pre>
+    ServerRoot "D:/wamp/Apache24"  # apache服务器安装路径
+    Listen 80                      # 服务器监听的端口
+    ServerName localhost:80        # 服务器的域名，测试环境下一般是localhost
+    ServerAdmin lianglin999@gmail.com   # 服务器维护人员的邮箱
+    DocumentRoot "D:/wamp/Apache24/htdocs"  # 服务器的根目录
+    &lt;Directory "D:/wamp/Apache24/htdocs"&gt;    # 这里和服务器的根目录路径一致
+</pre>
+
+<h3>3.&nbsp;安装和启动Apache服务</h3>
+<p>先将<code>D:\wamp\Apache24\bin\</code>添加到系统环境变量中。方便后面安装和启动服务。&nbsp;运行cmd窗口，执行如下命令</p>
+<div class="highlight"><pre>httpd -k install -n service_name            # 安装apache服务 -n 是可选的，表示指定服务名字，不加-n使用默认的服务名字
+httpd -k start/stop/restart -n service_name # 运行/停止/重启 apache服务, 同样，如果上面没有使用-n参数，这里也可以省去
+httpd -k uninstall -n service_name          # 卸载apache服务
+net start/stop service_name                 # 也可以运行/停止 apache服务
+httpd -help                                 # 查看更多帮助信息
+</pre></div>
+
+
+<p>安装并运行Apache服务</p>
+<div class="highlight"><pre>httpd -k install
+httpd -k start
+</pre></div>
+
+
+<p>如果没有修改配置文件中的默认80端口的话，访问<br />
+<a href="http://localhost/">http://localhost/</a>
+如果修改了端口号为8000，则访问  <br />
+<a href="http://localhost:8000">http://localhost:8000</a></p>
+<p>最后看到It works页面。表示apache服务器安装成功。&nbsp;如果没有，请检查上述步骤是不是有什么错误。</p>
+<h2>Mysql安装</h2>
+<h3>1.&nbsp;下载安装包</h3>
+<p>从<a href="http://dev.mysql.com/downloads/">http://dev.mysql.com/downloads/</a>上面，可以获取Mysql的安装包，在Windows下面，Mysql的安装包主要有两种：一种是MySQL Community Server Windows msi安装包， 另一种是自己配置的zip包。&nbsp;msi类型的的安装简单方面，根据需求选择，直接一直“下一步”就可以了。zip包您想的需要自己修改配置文件，在安装包解压路径下，复制my-default.ini到my.ini进行配置，具体配置内容可以网上查询。</p>
+<p>在这里可以查看一篇别人介绍的<a href="http://www.chenyudong.com/archives/installing-mysql-on-microsoft-windows-using-a-noinstall-zip-archive.html">配置方法</a></p>
+<p>其实，也可以暂时不管配置什么的，先把Mysql用起来，需要的配置等要用时再来修改也不迟，那样印象更深刻，直接借鉴别人的配置，有些地方也不知道为什么要那么做。&nbsp;所以，我的做法就是不管配置什么的，直接用吧。</p>
+<h3>2.&nbsp;安装Mysql服务和使用</h3>
+<p>假设我使用的是zip包类型的Mysql，解压在<code>D:\wamp\mysql-5.6.13-win32\</code>目录下, 先把<code>D:\wamp\mysql-5.6.13-win32\bin</code>添加到环境变量，方便使用命令行。</p>
+<p>运行<span class="caps">CMD</span>窗口，跟安装Apache服务类似，直接运行</p>
+<div class="highlight"><pre>mysqld --install MySQL5.5(service_name)  # Mysql5.5 是service_name，是可选的，不指定的话它会默认使用一个服务名
+net start/stop MySQL5.5                  # 启动/停止Mysql服务
+mysqld --remove MySQL5.5                 # 移除Mysql服务
+
+# 更改Mysql数据库密码，第一次使用时，密码默认为空
+mysql -u root -p                        # 从命令行中进入mysql的客户端
+use mysql;                              # 使用mysql这个数据库
+update user set password=password(&quot;root_passwd&quot;) where user=&quot;root&quot;;      # 对root密码进行更改
+FLUSH PRIVILEGES;                       
+# 现在退出，便可以使用root_passwd密码登录了
+</pre></div>
+
+
+<p>更多安装细节可以查看<a href="http://dev.mysql.com/doc/refman/5.6/en/windows-installation.html">Mysql手册</a>。</p>
+<p>为了方便对数据库进行管理，我们可以安装phpmyadmin，一个web版本的Mysql数据库管理工具，具体安装方法网上比较多，也比较简单这里就不在讲解咯。</p>
+<h2><span class="caps">PHP</span>安装</h2>
+<h3>1.&nbsp;下载并配置</h3>
+<p><span class="caps">PHP</span>安装包的版本分线程安全和非线程安全两种，具体两种有什么区别，网上有一大推讲解，本人也不是很了解，但是如果要使用apache服务器的话，只有下载线程安全的版本，非线程安全的版本没有php5apache2_4.dll文件。</p>
+<p>根据<span class="caps">PHP</span>安装手册，在安装<span class="caps">PHP</span>的时候，需要先进行一些配置。假设我们将安装包解压在<code>D:\wamp\php-5.5.3-Win32-VC11-x86</code>。
+首先复制<code>php.ini-development</code>为<code>php.ini</code>, 然后修改<code>php.ini</code>进行如下配置：</p>
+<pre>
+# 把;error_log = php_errors.log 修改为
+    error_log = D:\wamp\php-5.5.3-Win32-VC11-x86\logs
+
+# ;date.timezone =修改为
+    date.timezone = PRC
+
+# 下面这2个,自己决定了
+    post_max_size = 100M
+# upload_max_filesize通常比post_max_size小
+    upload_max_filesize = 50M
+
+# 修改相关路径
+# 上传暂存路径,别忘了创建对应的文件夹
+    upload_tmp_dir = D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\upload
+    session.save_path = D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\session
+    extension_dir = D:\wamp\php-5.5.3-Win32-VC11-x86\ext
+
+# 取消常用的扩展前面的分号注释
+    extension=php_curl.dll
+    extension=php_gd2.dll
+    extension=php_mbstring.dll
+    extension=php_mysql.dll
+    extension=php_mysqli.dll
+    extension=php_pdo_mysql.dll
+</pre>
+
+<p>最后再创建相对应的目录<code>D:\wamp\php-5.5.3-Win32-VC11-x86\logs</code>,<code>D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\upload</code>,<code>D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\session</code></p>
+<p>最后，让apache认识php，修改apache的配置文件<code>D:\wamp\Apache24\conf\httpd.conf</code>添加下面的内容</p>
+<div class="highlight"><pre># php配置 
+LoadModule php5_module &quot;E:/wamp_x64/php-5.5.3-Win32-VC11-x64/php5apache2_4.dll&quot;
+AddHandler application/x-httpd-php .php
+
+# 配置 php.ini 的路径
+PHPIniDir &quot;E:/wamp_x64/php-5.5.3-Win32-VC11-x64
+
+# 同时修改
+DirectoryIndex index.html index.php
+</pre></div>
+
+
+<p>在apache根目录下创建<code>D:/wamp/Apache24/htdocs/phpinfo.php</code>文件，内容如下:
+<pre>
+    &lt;?php phpinfo() ?&gt;
+</pre></p>
+<p>重启apache服务，访问 http://localhost/phpinfo.php,&nbsp;如果看到php相关信息，表示php安装成功。</p>
+<h2>Xdebug安装</h2>
+<p>Xdebug 是一个<span class="caps">PHP</span>开发的调试工具，跟它齐名的另一个叫<code>Zend Debugger</code>, 也是一个很不错的东西。
+安装xdebug，首先需要下载适合版本的xdebug，如果不知道自己应该下载哪个版本的话，可以将你phpinfo();方法得到的页面内容粘贴到<a href="http://xdebug.org/wizard.php">这里</a>，它会自动分析出哪个版本的xdebug插件适合你。
+将下载下来的dll文件保存到php的安装路径<code>D:\wamp\php-5.5.3-Win32-VC11-x86\ext</code>目录下，然后修改<code>D:\wamp\php-5.5.3-Win32-VC11-x86\php.ini</code>文件，添加如下内容：</p>
+<div class="highlight"><pre><span class="k">[XDebug]</span>
+<span class="na">zend_extension</span> <span class="o">=</span> <span class="s">&quot;D:\wamp\php-5.5.3-Win32-VC11-x86\extphp_xdebug.dll&quot;</span>
+<span class="na">xdebug.auto_trace</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">xdebug.collect_params</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">xdebug.collect_return</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">xdebug.profiler_append</span> <span class="o">=</span> <span class="s">0</span>
+<span class="na">xdebug.profiler_enable</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">xdebug.profiler_enable_trigger</span> <span class="o">=</span> <span class="s">0</span>
+<span class="na">xdebug.profiler_output_dir</span> <span class="o">=</span> <span class="s">&quot;D:\wamp\php-5.5.3-Win32-VC11-x86\tmp&quot;</span>
+<span class="na">xdebug.profiler_output_name</span> <span class="o">=</span> <span class="s">&quot;cachegrind.out.%t-%s&quot;</span>
+<span class="na">xdebug.remote_enable</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">xdebug.remote_handler</span> <span class="o">=</span> <span class="s">&quot;dbgp&quot;</span>
+<span class="na">xdebug.remote_host</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
+<span class="na">xdebug.remote_port</span> <span class="o">=</span> <span class="s">9000</span>
+<span class="na">xdebug.trace_output_dir</span> <span class="o">=</span> <span class="s">&quot;D:\wamp\php-5.5.3-Win32-VC11-x86\tmp&quot;</span>
+</pre></div>
+
+
+<p>最后，重新启动apache即可。访问phpinfo();页面检查是否有xdebug，如果有，表示安装成功。</p>
+<h2><span class="caps">PHP</span>集成开发环境</h2>
+<p><span class="caps">PHP</span>的集成开发环境比较多: 如Zend Studio，Eclipse + <span class="caps">PDT</span>， Eclipse + PHPEclipse等。这些环境经过简单的配置之后都支持远程调试，还有一些浏览器的工具，如FireFox浏览器的&#8221;FireBug +&nbsp;FirePHP&#8221;插件，这些资料比较多，就不在这里重复了。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="setup-wamp" data-title="<span class="caps">WAMP</span>(Windows + Apache + Mysql + <span class="caps">PHP</span>)&nbsp;环境搭建" data-url="http://blog.wiseturtles.com/posts/setup-wamp.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

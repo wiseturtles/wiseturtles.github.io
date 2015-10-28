@@ -228,4 +228,66 @@ connected_clients:232
 &lt;li&gt;level设置时, logger的level等级应该小于handler的level等级，最终是以handler的设置为准，&amp;nbsp;反之，则起作用的是logger的level&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="flask"></category><category term="logging"></category></entry></feed>
+&lt;/ol&gt;</summary><category term="flask"></category><category term="logging"></category></entry><entry><title>Windows环境下搭建python开发环境</title><link href="http://blog.wiseturtles.com/posts/install-python-on-windows.html" rel="alternate"></link><updated>2013-11-25T23:14:34+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-25:posts/install-python-on-windows.html</id><summary type="html">&lt;ol class="arabic"&gt;
+&lt;li&gt;&lt;p class="first"&gt;从 &lt;a class="reference external" href="http://www.python.org/download/"&gt;Python官网下载&lt;/a&gt;&amp;nbsp;下载自己所需版本的windows安装包并进行安装。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;将安装包的路径添加到系统环境变量,  &lt;code&gt;C:\Python27&lt;/code&gt; ， 同时为了后面使 &lt;code&gt;easy_install&lt;/code&gt; ，也 &lt;code&gt;C:\Python27\Scripts&lt;/code&gt; 添加到环境变量里（现在这个目录还不存在).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;安装python包管理工具 &lt;em&gt;setuptools&lt;/em&gt; ,&amp;nbsp;安装方法如下:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="loweralpha simple"&gt;
+&lt;li&gt;下载 &lt;a class="reference external" href="https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py"&gt;ez_setup.py&lt;/a&gt;  脚本，并运行 &lt;code&gt;python easy_install.py&lt;/code&gt; .&lt;/li&gt;
+&lt;li&gt;如果cmd命令支持curl命令(如机器上安装过git或一些带linux命令的包时），则可以直接执 &lt;code&gt;curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python&lt;/code&gt; 进行安装.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;安装另一个python包的管理工具 &lt;em&gt;pip&lt;/em&gt; , &lt;code&gt;easy_install pip&lt;/code&gt; .&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;让pip使用国内的pypi源。我们在使用pip进行包安装的时候，默认是从官方下载包的，下载速度相当地慢，而且经常还会出现一些包无法下载的情况。这个时候，让pip使用国内原则能解决这个问题。在这里我选择使用 &lt;a class="reference external" href="http://e.pypi.python.org/"&gt;清华大学的源&lt;/a&gt;  。使用pip命令的时候，只需要加 &lt;code&gt;-i 源地址即可&lt;/code&gt; 。如 &lt;code&gt;pip install flask -i http://e.pypi.python.org/simple&lt;/code&gt; .也可以进行如下配置，&amp;nbsp;让以后每次安装的时候都自动使用指定的源&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;pre class="literal-block"&gt;
+使用pip的用户可以如下配置：
+
+在unix和macos，配置文件为：$HOME/.pip/pip.conf
+在windows上，配置文件为：%HOME%\pip\pip.ini
+
+需要在配置文件内加上：
+
+[global]
+index-url=http://e.pypi.python.org/simple
+&lt;/pre&gt;
+&lt;p&gt;使用清华大学的源之后，下载安装python包时真是可以体会到飞一般的感觉。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;如果有需要，也可以在本地自己做pypi的镜像。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol class="loweralpha"&gt;
+&lt;li&gt;&lt;p class="first"&gt;使用bandersnatch， 具体方法可以参考 &lt;a class="reference external" href="https://pypi.python.org/mirrors"&gt;PyPI Mirrors&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;使用pep381client, 具体方法可以参考 &lt;a class="reference external" href="http://www.python.org/dev/peps/pep-0381/"&gt;pep381client&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在使用pep381cient搭建本地镜像时发现它本身没有下载包，只是同步了包名，
+Google了一下，在 &lt;a class="reference external" href="http://stackoverflow.com/questions/17667835/pep381clientpep381run-wont-download-packages-from-the-official-pypi-server"&gt;这里&lt;/a&gt; 发现了答案，原因是pep381cient用的是http下载，而pypi只支持hppts.
+因此需要修改一下pep381cient程序代码。
+修改文件: &lt;code&gt;(YOUR INSALLED DIRECTORY)/pep381client/__init__.py&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如 &lt;code&gt;/usr/local/lib/python2.6/dist-packages/pep381client/__init__.py&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;9:  -BASE = &amp;#39;http://&amp;#39;+pypi
+    +BASE = &amp;#39;https://&amp;#39;+pypi
+
+28: -        _conn = httplib.HTTPConnection(pypi)
+    +        _conn = httplib.HTTPSConnection(pypi)
+
+37: -        _conn = httplib.HTTPConnection(pypi)
+    +        _conn = httplib.HTTPSConnection(pypi)
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;更多可以参考 &lt;a class="reference external" href="http://www.worldhello.net/2011/03/14/2357.html"&gt;http://www.worldhello.net/2011/03/14/2357.html&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p class="first"&gt;好了，现在可以开始python之旅了。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</summary><category term="windows"></category><category term="python"></category><category term="pypi mirrors"></category></entry></feed>

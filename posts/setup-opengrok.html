@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - OpenGrok安装使用指南
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="opengrok" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>OpenGrok安装使用指南</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/opengrok.html">opengrok</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2012-12-14
+
+        </div>
+
+        <div><p>本文主要参考了下面的文章:</p>
+<ul>
+<li><a href="http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription">http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription</a></li>
+<li><a href="http://src.opensolaris.org/source/xref/opengrok/trunk/README.txt">http://src.opensolaris.org/source/xref/opengrok/trunk/<span class="caps">README</span>.txt</a></li>
+</ul>
+<p>注意：最好是单独建立一个用户，并保证该用户对代码和后面创建索引的目录读写权限</p>
+<h2>准备工作</h2>
+<p>以opengrok用户身份登录安装jdk和Exuberant&nbsp;Ctags.</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install sun-java6-jdk ctags
+</pre></div>
+
+
+<p>获取opengrok安装包（opengrok-0.11.1.tar.gz）和tomcat安装包(apachetomcat-7.0.6.tar.gz)解压安装包到任意目录下面</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /var/local/
+<span class="nv">$ </span>tar -zxvf /path/to/opengrok-0.11.1.tar.gz
+<span class="nv">$ </span>tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
+</pre></div>
+
+
+<p>下载需要使用的代码到一个目录下面</p>
+<div class="highlight"><pre><span class="nv">$ </span>mkdir -p ~/opengrok/projects/project1
+<span class="nv">$ </span>mkdir -p ~/opnegrok/projects/project2
+<span class="nv">$ </span><span class="nb">cd</span> ~/opengrok/projects/project1
+<span class="nv">$ </span>download code of project1 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
+<span class="nv">$ </span><span class="nb">cd</span> ~/opengrok/projects/project2
+<span class="nv">$ </span>download code of project2 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
+</pre></div>
+
+
+<p>目录结构如下:</p>
+<pre>
+opengrok/projects----project1
+            |----project2
+            |----project3
+            |----.......
+</pre>
+
+<p>启动tomcat，确认tomcat没有问题</p>
+<div class="highlight"><pre><span class="nv">$ </span>/var/local/apache-tomcat-7.0.6/bin/startup.sh
+</pre></div>
+
+
+<p>访问<a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>检查tomcat&nbsp;是否正常工作</p>
+<h2>部署OpenGrok</h2>
+<p>执行命令</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo <span class="nv">OPENGROK_TOMCAT_BASE</span><span class="o">=</span>/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
+</pre></div>
+
+
+<p>这一步实际操作是<code>/var/local/opengrok-0.11.1/lib/source.war</code>部署到<code>/var/local/apache-tomcat-7.0.6/webapps/</code>
+访问
+<a href="http://127.0.0.1:8080/source">http://127.0.0.1:8080/source</a>
+已经可以看到opengrok页面了，但是没有项目的数据信息。
+在<code>/var/local/apache-tomcat-7.0.6/webapps/</code>目录下面可以看到一个source目录和source.war，就是刚刚部属的产物。&nbsp;source.war已经没有什么用了，可以删除。</p>
+<h3>创建索引</h3>
+<p>创建索引时，会创建三个目录，一个data目录来存放索引信息，一个etc目录创建配置信息和一个log目录。
+ 如想让~/opengrok/来存放索引,则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code>, 则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code></p>
+<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+</pre></div>
+
+
+<p>这一步命令的执行时间视~/opengrok/projects/的代码数量决定。 最后会在~/opengrok 目录下面看到data,etc,log&nbsp;三个目录</p>
+<p>访问<a href="http://127.0.0.1:8080/source">http://127.0.0.1:8080/source</a>,enjoy&nbsp;it!</p>
+<h3>项目代码更新或者添加新的项目</h3>
+<p>首先更新项目代码或者下载新的项目到~/opengrok/projects目录下面。&nbsp;然后重新执行</p>
+<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+</pre></div>
+
+
+<p>命令即可。</p>
+<h3>可选操作</h3>
+<p>可以通过修改<code>/var/local/apache-tomcat-7.0.6/webapps/source/index_body.html</code>来定制化你的OpenGrok首页。
+如添加公司<span class="caps">LOGO</span>或一些有用的帮助信息。</p>
+<h3>直接调用命令行接口</h3>
+<p>上面创建索引的命令其实</p>
+<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+</pre></div>
+
+
+<p>其实调用的是opengrok&nbsp;lib目录下的jar包：</p>
+<div class="highlight"><pre>java -Xmx2048m -Dorg.opensolaris.opengrok.history.cvs=/usr/bin/cvs
+-Dorg.opensolaris.opengrok.history.git=/usr/bin/git
+-Djava.util.logging.config.file=/data/opengrok/opengrok_data/logging.properties
+-jar /data/opengrok/opengrok-0.11.1/bin/../lib/opengrok.jar
+-P -S -r on -v -c /usr/bin/ctags-exuberant -a on
+-W /data/opengrok/opengrok_data/etc/configuration.xml
+-U localhost:2424 -s /data/opengrok/projects/
+-d /data/opengrok/opengrok_data/data -H..
+</pre></div>
+
+
+<p>上面各个参数的意思如下:</p>
+<div class="highlight"><pre><span class="nv">$ </span>java -jar opengrok.jar
+
+Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
+-?
+    Help
+
+-A ext:analyzer
+    Files with the named extension should be analyzed with the specified class
+
+-a on/off
+    Allow or disallow leading wildcards in a search
+
+-B url
+    Base URL of the user Information provider. Default: <span class="s2">&quot;http://www.opensolaris.org/viewProfile.jspa?username=&quot;</span>
+
+-C
+    Print per project percentage progress information<span class="o">(</span>I/O extensive, since one <span class="nb">read </span>through dir structure is made before indexing, needs -v, otherwise it just goes to the log<span class="o">)</span>
+
+-c /path/to/ctags
+    Path to Exuberant Ctags from http://ctags.sf.net by default takes the Exuberant Ctags in PATH.
+
+-D
+    Store <span class="nb">history </span>cache in a database <span class="o">(</span>needs the JDBC driver in the classpath, typically derbyclient.jar or derby.jar<span class="o">)</span>
+
+-d /path/to/data/root
+    The directory where OpenGrok stores the generated data
+
+-e
+    Economical - consumes less disk space. It does not generate hyper text cross reference files offline, but will <span class="k">do</span> so on demand - which could be sightly slow.
+
+-H
+    Generate <span class="nb">history </span>cache <span class="k">for</span> all repositories
+
+-h /path/to/repository
+    just generate <span class="nb">history </span>cache <span class="k">for</span> the specified repos <span class="o">(</span>absolute path from <span class="nb">source </span>root<span class="o">)</span>
+
+-I pattern
+    Only files matching this pattern will be examined <span class="o">(</span>supports wildcards, example: -I *.java -I *.c<span class="o">)</span>
+
+-i pattern
+    Ignore the named files or directories <span class="o">(</span>supports wildcards, example: -i *.so -i *.dll<span class="o">)</span>
+
+-j class
+    Name of the JDBC driver class used by the <span class="nb">history </span>cache. Can use one of the shorthands <span class="s2">&quot;client&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.ClientDriver<span class="o">)</span> or <span class="s2">&quot;embedded&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.EmbeddedDriver<span class="o">)</span>. Default: <span class="s2">&quot;client&quot;</span>
+
+-k /path/to/repository
+    Kill the <span class="nb">history </span>cache <span class="k">for</span> the given repository and exit. Use <span class="s1">&#39;*&#39;</span> to delete the cache <span class="k">for</span> all repositories.
+
+-K
+    List all repository pathes and exit.
+
+-L path
+    Path to the subdirectory in the web-application containing the requested stylesheet. The following factory-defaults exist: <span class="s2">&quot;default&quot;</span>, <span class="s2">&quot;offwhite&quot;</span> and <span class="s2">&quot;polished&quot;</span>
+
+-l on/off
+    Turn on/off locking of the Lucene database during index generation
+
+-m number
+    The maximum words to index in a file
+
+-N /path/to/symlink
+    Allow this symlink to be followed. Option may be repeated.
+
+-n
+    Do not generate indexes, but process all other <span class="nb">command </span>line options
+
+-O on/off
+    Turn on/off the optimization of the index database as part of the indexing step
+
+-P
+    Generate a project <span class="k">for</span> each of the top-level directories in <span class="nb">source </span>root
+
+-p /path/to/default/project
+    This is the path to the project that should be selected by default in the web application<span class="o">(</span>when no other project <span class="nb">set </span>either in cookie or in parameter<span class="o">)</span>. You should strip off the <span class="nb">source </span>root.
+
+-Q on/off
+    Turn on/off quick context scan. By default only the first 32k of a file is scanned, and a <span class="s1">&#39;[..all..]&#39;</span> link is inserted <span class="k">if</span> the file is bigger. Activating this may slow the server down <span class="o">(</span>Note: this is setting only affects the web application<span class="o">)</span>
+
+-q
+    Run as quietly as possible
+
+-R /path/to/configuration
+    Read configuration from the specified file
+
+-r on/off
+    Turn on/off support <span class="k">for</span> remote SCM systems
+
+-S
+    Search <span class="k">for</span> <span class="s2">&quot;external&quot;</span> <span class="nb">source </span>repositories and add them
+
+-s /path/to/source/root
+    The root directory of the <span class="nb">source </span>tree
+
+-T number
+    The number of threads to use <span class="k">for</span> index generation. By default the number of threads will be <span class="nb">set </span>to the number of available CPUs
+
+-t number
+    Default tabsize to use <span class="o">(</span>number of spaces per tab character<span class="o">)</span>
+
+-U host:port
+    Send the current configuration to the specified address <span class="o">(</span>This is most likely the web-app configured with ConfigAddress<span class="o">)</span>
+
+-u url
+    URL to the database that contains the <span class="nb">history </span>cache. Default: If -j specifies <span class="s2">&quot;embedded&quot;</span>, <span class="s2">&quot;jdbc:derby:</span><span class="nv">$DATA_ROOT</span><span class="s2">/cachedb;create=true&quot;</span><span class="p">;</span> otherwise, <span class="s2">&quot;jdbc:derby://localhost/cachedb;create=true&quot;</span>
+
+-V
+    Print version and quit
+
+-v
+    Print progress information as we go along
+
+-W /path/to/configuration
+    Write the current configuration to the specified file <span class="o">(</span>so that the web application can use the same configuration
+
+-w webapp-context
+    Context of webapp. Default is /source. If you specify a different name, make sure to rename source.war to that name.
+
+-X url:suffix
+    URL Suffix <span class="k">for</span> the user Information provider. Default: <span class="s2">&quot;&quot;</span>
+
+-z number
+    depth of scanning <span class="k">for</span> repositories in directory structure relative to <span class="nb">source </span>root
+</pre></div>
+
+
+<hr />
+<p><strong><span class="caps">PS</span>:默认情况下，调用OpenGork脚本是会生成项目的历史记录的，如果不想生成脚本的历史记录, 可以修改
+OpenGrok脚本的<code>UpdateGeneratedData</code> 方法，去掉<code>StdInvocation -H</code>的<code>-H</code></strong></p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="setup-opengrok" data-title="OpenGrok安装使用指南" data-url="http://blog.wiseturtles.com/posts/setup-opengrok.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
