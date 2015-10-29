@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - scrapyd和scrapyd-client使用教程
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="scrapyd" />
+      <meta name="tags" contents="scrapy" />
+      <meta name="tags" contents="scrapyd-client" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+            <li><a href="http://blog.wiseturtles.com/about-us.html">关于我们</a></li>
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>scrapyd和scrapyd-client使用教程</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/scrapyd.html">scrapyd</a> <a href="http://blog.wiseturtles.com/tag/scrapy.html">scrapy</a> <a href="http://blog.wiseturtles.com/tag/scrapyd-client.html">scrapyd-client</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
+On 2015-10-29
+
+        </div>
+
+        <div><p>scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过<span class="caps">JSON</span> <span class="caps">API</span>来部署爬虫项目和控制爬虫运行</p>
+<h2>概览</h2>
+<h3>项目和版本</h3>
+<p>scrapyd可以管理多个项目，并且每个项目允许有多个版本，但是只有最新的版本会被用来运行爬虫.</p>
+<p>最方便的版本管理就是利用<span class="caps">VCS</span>工具来记录你的爬虫代码，版本比较不是简单的通过字母排序，而是通过智能的算法，和<a href="https://docs.python.org/2/library/distutils.html">distutils</a>一样，例如:&nbsp;r10比r９更大.</p>
+<h3>工作原理</h3>
+<p>scrapyd是一个守护进程，监听爬虫的运行和请求，然后启动进程来执行它们</p>
+<h3>启动服务</h3>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd
+</pre></div>
+
+
+<h3>调度爬虫运行</h3>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>spider2
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>: <span class="s2">&quot;ok&quot;</span>, <span class="s2">&quot;jobid&quot;</span>: <span class="s2">&quot;26d1b1a6d6f111e0be5c001e648c57f8&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<h3>web接口</h3>
+<p><a href="http://localhost:6800/">http://localhost:6800/</a></p>
+<h2>安装</h2>
+<h3>需求</h3>
+<ul>
+<li>Python&nbsp;2.6+</li>
+<li>Twisted&nbsp;8.0+</li>
+<li>Scrapy&nbsp;0.17+</li>
+</ul>
+<h3>安装</h3>
+<div class="highlight"><pre><span class="nv">$ </span>pip install scrapyd
+</pre></div>
+
+
+<p>或</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install scrapyd
+</pre></div>
+
+
+<h2>项目部署</h2>
+<p>直接使用<a href="https://github.com/scrapy/scrapyd-client">scrapyd-client</a>提供的<code>scrapyd-deploy</code>工具.</p>
+<h3>安装scrapyd-client</h3>
+<div class="highlight"><pre><span class="nv">$ </span>pip install scrapyd-client
+</pre></div>
+
+
+<h3>scrapyd-client工作原理</h3>
+<p>打包项目，然后调用<code>scrapyd</code>的<a href="https://scrapyd.readthedocs.org/en/latest/api.html#addversion-json"><code>addversion.json</code></a>接口部署项目</p>
+<h3>配置服务器信息</h3>
+<p>为了方便叙述，整个部署流程以部署<a href="https://github.com/crazygit/scrapy_demo/tree/master/douban_movie">豆瓣电影</a>爬虫为例。
+配置服务器和项目信息, 需要编辑<code>scrapy.cfg</code>文件，添加如下内容</p>
+<div class="highlight"><pre><span class="k">[deploy:server-douban]</span>
+<span class="na">url</span> <span class="o">=</span> <span class="s">http://localhost:6800/</span>
+</pre></div>
+
+
+<p>其中<code>server-douban</code>为服务器名称, <code>url</code>为服务器地址，即运行了<code>scrapyd</code>命令的服务器。</p>
+<p>检查配置,&nbsp;列出当前可用的服务器</p>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -l
+server-douban        http://localhost:6800/
+</pre></div>
+
+
+<p>列出服务器上所有的项目, 需要确保服务器上的<code>scrapyd</code>命令正在执行，否则会报连接失败.首次运行的话，可以看到只有一个<code>default</code>项目</p>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -L server-douban
+default
+</pre></div>
+
+
+<p>打开<a href="http://localhost:6800/">http://localhost:6800/</a>, 可以看到<code>Available projects: default</code></p>
+<h3>部署项目</h3>
+<p>在爬虫项目根目录下执行下面的命令, 其中<code>target</code>为上一步配置的服务器名称，<code>project</code>为项目名称，可以根据实际情况自己指定。</p>
+<div class="highlight"><pre>scrapyd-deploy &lt;target&gt; -p &lt;project&gt;
+</pre></div>
+
+
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies
+Packing version 1446102534
+Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
+Server response <span class="o">(</span>200<span class="o">)</span>:
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>: <span class="s2">&quot;ok&quot;</span>, <span class="s2">&quot;project&quot;</span>: <span class="s2">&quot;douban-movies&quot;</span>, <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;1446102534&quot;</span>, <span class="s2">&quot;spiders&quot;</span>: 1, <span class="s2">&quot;node_name&quot;</span>: <span class="s2">&quot;sky&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<p>部署操作会打包你的当前项目，如果当前项目下有<code>setup.py</code>文件，就会使用它，没有的会就会自动创建一个。(如果后期项目需要打包的话，可以根据自己的需要修改里面的信息，也可以暂时不管它).&nbsp;从返回的结果里面，我们可以看到部署的状态，项目名称，版本号和爬虫个数，以及当前的主机名称.</p>
+<p>检查部署结果</p>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -L server-douban
+default
+douban-movies
+</pre></div>
+
+
+<p>或再次打开<a href="http://localhost:6800/">http://localhost:6800/</a>, 也可以看到<code>Available projects: default, douban-movies</code></p>
+<p>我们也可以把项目信息写入到配置文件中，部署时就不用指定项目信息，编辑<code>scrapy.cfg</code>文件，添加项目信息</p>
+<div class="highlight"><pre><span class="k">[deploy:server-douban]</span>
+<span class="na">url</span> <span class="o">=</span> <span class="s">http://localhost:6800/</span>
+<span class="na">project</span> <span class="o">=</span> <span class="s">douban-movies</span>
+</pre></div>
+
+
+<p>下次部署可以直接执行</p>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy
+</pre></div>
+
+
+<p>如果配置了多个服务器的话，可以将项目直接部署到多台服务器</p>
+<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -a -p &lt;project&gt;
+</pre></div>
+
+
+<h3>指定版本号</h3>
+<p>默认情况下, <code>scrapyd-deploy</code>使用当前的时间戳作为版本号，我们可以使用<code>--version</code>来指定版本号</p>
+<div class="highlight"><pre>scrapyd-deploy &lt;target&gt; -p &lt;project&gt; --version &lt;version&gt;
+</pre></div>
+
+
+<p>版本号的格式必须满足<a href="http://epydoc.sourceforge.net/stdlib/distutils.version.LooseVersion-class.html">LooseVersion</a></p>
+<p>如：</p>
+<div class="highlight"><pre><span class="c"># 设置版本号为0.1</span>
+<span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies --version 0.1
+Packing version 0.1
+Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
+Server response <span class="o">(</span>200<span class="o">)</span>:
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>: <span class="s2">&quot;ok&quot;</span>, <span class="s2">&quot;project&quot;</span>: <span class="s2">&quot;douban-movies&quot;</span>, <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;0.1&quot;</span>, <span class="s2">&quot;spiders&quot;</span>: 1, <span class="s2">&quot;node_name&quot;</span>: <span class="s2">&quot;sky&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<p>如果使用了<code>Mercurial</code>或<code>Git</code>管理代码，　可以使用<code>HG</code>和<code>GIT</code>作为version的参数，也可以将它写入<code>scrapy.cfg</code>文件，那么就会使用当前的reversion作为版本号。</p>
+<div class="highlight"><pre><span class="k">[deploy:target]</span>
+<span class="err">...</span>
+<span class="na">version</span> <span class="o">=</span> <span class="s">GIT</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span class="nv">$ </span>cat scrapy.cfg
+...
+<span class="o">[</span>deploy:server-douban<span class="o">]</span>
+<span class="nv">url</span> <span class="o">=</span> http://localhost:6800/
+<span class="nv">project</span> <span class="o">=</span> douban-movies
+<span class="nv">version</span> <span class="o">=</span> GIT
+
+<span class="c"># 当前版本号为r7-master</span>
+<span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies 
+fatal: No names found, cannot describe anything.
+Packing version r7-master
+Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
+Server response <span class="o">(</span>200<span class="o">)</span>:
+<span class="o">{</span><span class="s2">&quot;status&quot;</span>: <span class="s2">&quot;ok&quot;</span>, <span class="s2">&quot;project&quot;</span>: <span class="s2">&quot;douban-movies&quot;</span>, <span class="s2">&quot;version&quot;</span>: <span class="s2">&quot;r7-master&quot;</span>, <span class="s2">&quot;spiders&quot;</span>: 1, <span class="s2">&quot;node_name&quot;</span>: <span class="s2">&quot;sky&quot;</span><span class="o">}</span>
+</pre></div>
+
+
+<p>关于从<span class="caps">GIT</span>获取版本号的方式，可以参看<code>scrapyd-client</code>源码部分</p>
+<div class="highlight"><pre>  <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="s">&#39;GIT&#39;</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;describe&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-list&#39;</span><span class="p">,</span> <span class="s">&#39;--count&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="s">&#39;r</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-parse&#39;</span><span class="p">,</span> <span class="s">&#39;--abbrev-ref&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+
+<h3>服务器添加认证信息</h3>
+<p>我们也可以在scrapyd前面加一层反向代理来实现用户认证。以nginx为例,&nbsp;配置nginx</p>
+<div class="highlight"><pre><span class="nt">server</span> <span class="p">{</span>
+       <span class="n">listen</span> <span class="m">6801</span><span class="p">;</span>
+       <span class="n">location</span> <span class="o">/</span> <span class="err">{</span>
+            <span class="n">proxy_pass</span>            <span class="n">http</span><span class="o">://</span><span class="m">127</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">0</span><span class="o">.</span><span class="m">1</span><span class="o">:</span><span class="m">6800</span><span class="o">/</span><span class="p">;</span>
+            <span class="n">auth_basic</span>            <span class="s2">&quot;Restricted&quot;</span><span class="p">;</span>
+            <span class="n">auth_basic_user_file</span>  <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">htpasswd</span><span class="o">/</span><span class="n">user</span><span class="o">.</span><span class="n">htpasswd</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="err">}</span>
+</pre></div>
+
+
+<p><code>/etc/nginx/htpasswd/user.htpasswd</code>里设置的用户名和密码都是<code>test</code>
+修改配置文件，添加用户信息信息</p>
+<div class="highlight"><pre>...
+[deploy:server-douban]
+url = http://localhost:6801/
+project = douban-movies
+version = GIT
+username = test
+password = test
+</pre></div>
+
+
+<p>注意上面的<code>url</code>已经修改为了nginx监听的端口。</p>
+<p><strong>提醒</strong>: 记得修改服务器上scrapyd的配置<code>bind_address</code>字段为<code>127.0.0.1</code>，以免可以从外面绕过nginx, 直接访问6800端口。&nbsp;关于配置可以参看本文后面的配置文件设置.</p>
+<h2><span class="caps">API</span></h2>
+<p>scrapyd的web界面比较简单，主要用于监控，所有的调度工作全部依靠接口实现.
+具体可以参考<a href="http://scrapyd.readthedocs.org/en/stable/api.html">官方文档</a></p>
+<p>常用接口:</p>
+<ul>
+<li>
+<p>调度爬虫</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d
+<span class="nv">spider</span><span class="o">=</span>somespider
+<span class="c"># 带上参数</span>
+<span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>somespider -d <span class="nv">setting</span><span class="o">=</span><span class="nv">DOWNLOAD_DELAY</span><span class="o">=</span><span class="m">2</span> -d <span class="nv">arg1</span><span class="o">=</span>val1
+</pre></div>
+
+
+</li>
+<li>
+<p>取消</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/cancel.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">job</span><span class="o">=</span>6487ec79947edab326d6db28a2d86511e8247444
+</pre></div>
+
+
+</li>
+<li>
+<p>列出项目</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listprojects.json
+</pre></div>
+
+
+</li>
+<li>
+<p>列出版本</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listversions.json?project<span class="o">=</span>myproject
+</pre></div>
+
+
+</li>
+<li>
+<p>列出爬虫</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listspiders.json?project<span class="o">=</span>myproject
+</pre></div>
+
+
+</li>
+<li>
+<p>列出job</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listjobs.json?project<span class="o">=</span>myproject
+</pre></div>
+
+
+</li>
+<li>
+<p>删除版本</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/delversion.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">version</span><span class="o">=</span>r99
+</pre></div>
+
+
+</li>
+<li>
+<p>删除项目</p>
+<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/delproject.json -d <span class="nv">project</span><span class="o">=</span>myproject
+</pre></div>
+
+
+</li>
+</ul>
+<h2>配置文件</h2>
+<p><code>scrapyd</code>启动的时候会自动搜索配置文件，配置文件的加载顺序为</p>
+<ul>
+<li><code>/etc/scrapyd/scrapyd.conf</code></li>
+<li><code>/etc/scrapyd/conf.d/*</code></li>
+<li><code>scrapyd.conf</code></li>
+<li><code>~/.scrapyd.conf</code></li>
+</ul>
+<p>最后加载的会覆盖前面的设置</p>
+<p>默认配置文件如下,&nbsp;可以根据需要修改</p>
+<div class="highlight"><pre><span class="k">[scrapyd]</span>
+<span class="na">eggs_dir</span>    <span class="o">=</span> <span class="s">eggs</span>
+<span class="na">logs_dir</span>    <span class="o">=</span> <span class="s">logs</span>
+<span class="na">items_dir</span>   <span class="o">=</span> <span class="s">items</span>
+<span class="na">jobs_to_keep</span> <span class="o">=</span> <span class="s">5</span>
+<span class="na">dbs_dir</span>     <span class="o">=</span> <span class="s">dbs</span>
+<span class="na">max_proc</span>    <span class="o">=</span> <span class="s">0</span>
+<span class="na">max_proc_per_cpu</span> <span class="o">=</span> <span class="s">4</span>
+<span class="na">finished_to_keep</span> <span class="o">=</span> <span class="s">100</span>
+<span class="na">poll_interval</span> <span class="o">=</span> <span class="s">5</span>
+<span class="na">http_port</span>   <span class="o">=</span> <span class="s">6800</span>
+<span class="na">debug</span>       <span class="o">=</span> <span class="s">off</span>
+<span class="na">runner</span>      <span class="o">=</span> <span class="s">scrapyd.runner</span>
+<span class="na">application</span> <span class="o">=</span> <span class="s">scrapyd.app.application</span>
+<span class="na">launcher</span>    <span class="o">=</span> <span class="s">scrapyd.launcher.Launcher</span>
+
+<span class="k">[services]</span>
+<span class="na">schedule.json</span>     <span class="o">=</span> <span class="s">scrapyd.webservice.Schedule</span>
+<span class="na">cancel.json</span>       <span class="o">=</span> <span class="s">scrapyd.webservice.Cancel</span>
+<span class="na">addversion.json</span>   <span class="o">=</span> <span class="s">scrapyd.webservice.AddVersion</span>
+<span class="na">listprojects.json</span> <span class="o">=</span> <span class="s">scrapyd.webservice.ListProjects</span>
+<span class="na">listversions.json</span> <span class="o">=</span> <span class="s">scrapyd.webservice.ListVersions</span>
+<span class="na">listspiders.json</span>  <span class="o">=</span> <span class="s">scrapyd.webservice.ListSpiders</span>
+<span class="na">delproject.json</span>   <span class="o">=</span> <span class="s">scrapyd.webservice.DeleteProject</span>
+<span class="na">delversion.json</span>   <span class="o">=</span> <span class="s">scrapyd.webservice.DeleteVersion</span>
+<span class="na">listjobs.json</span>     <span class="o">=</span> <span class="s">scrapyd.webservice.ListJobs</span>
+</pre></div>
+
+
+<p>关于配置的各个参数具体含义，可以参考<a href="http://scrapyd.readthedocs.org/en/stable/config.html">官方文档</a></p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="scrapyd" data-title="scrapyd和scrapyd-client使用教程" data-url="http://blog.wiseturtles.com/posts/scrapyd.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>

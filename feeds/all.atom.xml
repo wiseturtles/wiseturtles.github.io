@@ -1,5 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-27T19:52:00+08:00</updated><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-29T17:42:00+08:00</updated><entry><title>scrapyd和scrapyd-client使用教程</title><link href="http://blog.wiseturtles.com/posts/scrapyd.html" rel="alternate"></link><updated>2015-10-29T17:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-10-29:posts/scrapyd.html</id><summary type="html">&lt;p&gt;scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过&lt;span class="caps"&gt;JSON&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt;来部署爬虫项目和控制爬虫运行&lt;/p&gt;
+&lt;h2&gt;概览&lt;/h2&gt;
+&lt;h3&gt;项目和版本&lt;/h3&gt;
+&lt;p&gt;scrapyd可以管理多个项目，并且每个项目允许有多个版本，但是只有最新的版本会被用来运行爬虫.&lt;/p&gt;
+&lt;p&gt;最方便的版本管理就是利用&lt;span class="caps"&gt;VCS&lt;/span&gt;工具来记录你的爬虫代码，版本比较不是简单的通过字母排序，而是通过智能的算法，和&lt;a href="https://docs.python.org/2/library/distutils.html"&gt;distutils&lt;/a&gt;一样，例如:&amp;nbsp;r10比r９更大.&lt;/p&gt;
+&lt;h3&gt;工作原理&lt;/h3&gt;
+&lt;p&gt;scrapyd是一个守护进程，监听爬虫的运行和请求，然后启动进程来执行它们&lt;/p&gt;
+&lt;h3&gt;启动服务&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;调度爬虫运行&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;spider2
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;status&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;ok&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;jobid&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;26d1b1a6d6f111e0be5c001e648c57f8&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;web接口&lt;/h3&gt;
+&lt;p&gt;&lt;a href="http://localhost:6800/"&gt;http://localhost:6800/&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;h3&gt;需求&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Python&amp;nbsp;2.6+&lt;/li&gt;
+&lt;li&gt;Twisted&amp;nbsp;8.0+&lt;/li&gt;
+&lt;li&gt;Scrapy&amp;nbsp;0.17+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;安装&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install scrapyd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install scrapyd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;项目部署&lt;/h2&gt;
+&lt;p&gt;直接使用&lt;a href="https://github.com/scrapy/scrapyd-client"&gt;scrapyd-client&lt;/a&gt;提供的&lt;code&gt;scrapyd-deploy&lt;/code&gt;工具.&lt;/p&gt;
+&lt;h3&gt;安装scrapyd-client&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pip install scrapyd-client
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;scrapyd-client工作原理&lt;/h3&gt;
+&lt;p&gt;打包项目，然后调用&lt;code&gt;scrapyd&lt;/code&gt;的&lt;a href="https://scrapyd.readthedocs.org/en/latest/api.html#addversion-json"&gt;&lt;code&gt;addversion.json&lt;/code&gt;&lt;/a&gt;接口部署项目&lt;/p&gt;
+&lt;h3&gt;配置服务器信息&lt;/h3&gt;
+&lt;p&gt;为了方便叙述，整个部署流程以部署&lt;a href="https://github.com/crazygit/scrapy_demo/tree/master/douban_movie"&gt;豆瓣电影&lt;/a&gt;爬虫为例。
+配置服务器和项目信息, 需要编辑&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，添加如下内容&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
+&lt;span class="na"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://localhost:6800/&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中&lt;code&gt;server-douban&lt;/code&gt;为服务器名称, &lt;code&gt;url&lt;/code&gt;为服务器地址，即运行了&lt;code&gt;scrapyd&lt;/code&gt;命令的服务器。&lt;/p&gt;
+&lt;p&gt;检查配置,&amp;nbsp;列出当前可用的服务器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy -l
+server-douban        http://localhost:6800/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;列出服务器上所有的项目, 需要确保服务器上的&lt;code&gt;scrapyd&lt;/code&gt;命令正在执行，否则会报连接失败.首次运行的话，可以看到只有一个&lt;code&gt;default&lt;/code&gt;项目&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy -L server-douban
+default
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;打开&lt;a href="http://localhost:6800/"&gt;http://localhost:6800/&lt;/a&gt;, 可以看到&lt;code&gt;Available projects: default&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;部署项目&lt;/h3&gt;
+&lt;p&gt;在爬虫项目根目录下执行下面的命令, 其中&lt;code&gt;target&lt;/code&gt;为上一步配置的服务器名称，&lt;code&gt;project&lt;/code&gt;为项目名称，可以根据实际情况自己指定。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy server-douban -p douban-movies
+Packing version 1446102534
+Deploying to project &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt; in http://localhost:6800/addversion.json
+Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;status&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;ok&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;project&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;1446102534&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;spiders&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;node_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;sky&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;部署操作会打包你的当前项目，如果当前项目下有&lt;code&gt;setup.py&lt;/code&gt;文件，就会使用它，没有的会就会自动创建一个。(如果后期项目需要打包的话，可以根据自己的需要修改里面的信息，也可以暂时不管它).&amp;nbsp;从返回的结果里面，我们可以看到部署的状态，项目名称，版本号和爬虫个数，以及当前的主机名称.&lt;/p&gt;
+&lt;p&gt;检查部署结果&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy -L server-douban
+default
+douban-movies
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或再次打开&lt;a href="http://localhost:6800/"&gt;http://localhost:6800/&lt;/a&gt;, 也可以看到&lt;code&gt;Available projects: default, douban-movies&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;我们也可以把项目信息写入到配置文件中，部署时就不用指定项目信息，编辑&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，添加项目信息&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
+&lt;span class="na"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://localhost:6800/&lt;/span&gt;
+&lt;span class="na"&gt;project&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;douban-movies&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;下次部署可以直接执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果配置了多个服务器的话，可以将项目直接部署到多台服务器&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy -a -p &amp;lt;project&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;指定版本号&lt;/h3&gt;
+&lt;p&gt;默认情况下, &lt;code&gt;scrapyd-deploy&lt;/code&gt;使用当前的时间戳作为版本号，我们可以使用&lt;code&gt;--version&lt;/code&gt;来指定版本号&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt; --version &amp;lt;version&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;版本号的格式必须满足&lt;a href="http://epydoc.sourceforge.net/stdlib/distutils.version.LooseVersion-class.html"&gt;LooseVersion&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;如：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 设置版本号为0.1&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy server-douban -p douban-movies --version 0.1
+Packing version 0.1
+Deploying to project &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt; in http://localhost:6800/addversion.json
+Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;status&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;ok&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;project&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;0.1&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;spiders&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;node_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;sky&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果使用了&lt;code&gt;Mercurial&lt;/code&gt;或&lt;code&gt;Git&lt;/code&gt;管理代码，　可以使用&lt;code&gt;HG&lt;/code&gt;和&lt;code&gt;GIT&lt;/code&gt;作为version的参数，也可以将它写入&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，那么就会使用当前的reversion作为版本号。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:target]&lt;/span&gt;
+&lt;span class="err"&gt;...&lt;/span&gt;
+&lt;span class="na"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;GIT&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat scrapy.cfg
+...
+&lt;span class="o"&gt;[&lt;/span&gt;deploy:server-douban&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;span class="nv"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; http://localhost:6800/
+&lt;span class="nv"&gt;project&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; douban-movies
+&lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; GIT
+
+&lt;span class="c"&gt;# 当前版本号为r7-master&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd-deploy server-douban -p douban-movies 
+fatal: No names found, cannot describe anything.
+Packing version r7-master
+Deploying to project &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt; in http://localhost:6800/addversion.json
+Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;status&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;ok&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;project&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;r7-master&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;spiders&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;node_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;sky&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;关于从&lt;span class="caps"&gt;GIT&lt;/span&gt;获取版本号的方式，可以参看&lt;code&gt;scrapyd-client&lt;/code&gt;源码部分&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;GIT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;git&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;describe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;communicate&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;git&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;rev-list&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--count&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;HEAD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;r&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;communicate&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+        &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;git&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;rev-parse&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;--abbrev-ref&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;HEAD&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;b&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;communicate&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;-&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;服务器添加认证信息&lt;/h3&gt;
+&lt;p&gt;我们也可以在scrapyd前面加一层反向代理来实现用户认证。以nginx为例,&amp;nbsp;配置nginx&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+       &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;6801&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+       &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
+            &lt;span class="n"&gt;proxy_pass&lt;/span&gt;            &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;6800&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;auth_basic&lt;/span&gt;            &lt;span class="s2"&gt;&amp;quot;Restricted&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+            &lt;span class="n"&gt;auth_basic_user_file&lt;/span&gt;  &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;htpasswd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;htpasswd&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="err"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;/etc/nginx/htpasswd/user.htpasswd&lt;/code&gt;里设置的用户名和密码都是&lt;code&gt;test&lt;/code&gt;
+修改配置文件，添加用户信息信息&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;...
+[deploy:server-douban]
+url = http://localhost:6801/
+project = douban-movies
+version = GIT
+username = test
+password = test
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注意上面的&lt;code&gt;url&lt;/code&gt;已经修改为了nginx监听的端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;提醒&lt;/strong&gt;: 记得修改服务器上scrapyd的配置&lt;code&gt;bind_address&lt;/code&gt;字段为&lt;code&gt;127.0.0.1&lt;/code&gt;，以免可以从外面绕过nginx, 直接访问6800端口。&amp;nbsp;关于配置可以参看本文后面的配置文件设置.&lt;/p&gt;
+&lt;h2&gt;&lt;span class="caps"&gt;API&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;scrapyd的web界面比较简单，主要用于监控，所有的调度工作全部依靠接口实现.
+具体可以参考&lt;a href="http://scrapyd.readthedocs.org/en/stable/api.html"&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;常用接口:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;调度爬虫&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d
+&lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider
+&lt;span class="c"&gt;# 带上参数&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider -d &lt;span class="nv"&gt;setting&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;DOWNLOAD_DELAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; -d &lt;span class="nv"&gt;arg1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;val1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;取消&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/cancel.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;job&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;6487ec79947edab326d6db28a2d86511e8247444
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;列出项目&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/listprojects.json
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;列出版本&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/listversions.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;列出爬虫&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/listspiders.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;列出job&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/listjobs.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除版本&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/delversion.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r99
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;删除项目&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/delproject.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;配置文件&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;scrapyd&lt;/code&gt;启动的时候会自动搜索配置文件，配置文件的加载顺序为&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/etc/scrapyd/scrapyd.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc/scrapyd/conf.d/*&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;scrapyd.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;~/.scrapyd.conf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最后加载的会覆盖前面的设置&lt;/p&gt;
+&lt;p&gt;默认配置文件如下,&amp;nbsp;可以根据需要修改&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[scrapyd]&lt;/span&gt;
+&lt;span class="na"&gt;eggs_dir&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;eggs&lt;/span&gt;
+&lt;span class="na"&gt;logs_dir&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;logs&lt;/span&gt;
+&lt;span class="na"&gt;items_dir&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;items&lt;/span&gt;
+&lt;span class="na"&gt;jobs_to_keep&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;dbs_dir&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;dbs&lt;/span&gt;
+&lt;span class="na"&gt;max_proc&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;0&lt;/span&gt;
+&lt;span class="na"&gt;max_proc_per_cpu&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;4&lt;/span&gt;
+&lt;span class="na"&gt;finished_to_keep&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;100&lt;/span&gt;
+&lt;span class="na"&gt;poll_interval&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;5&lt;/span&gt;
+&lt;span class="na"&gt;http_port&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;6800&lt;/span&gt;
+&lt;span class="na"&gt;debug&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;off&lt;/span&gt;
+&lt;span class="na"&gt;runner&lt;/span&gt;      &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.runner&lt;/span&gt;
+&lt;span class="na"&gt;application&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.app.application&lt;/span&gt;
+&lt;span class="na"&gt;launcher&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.launcher.Launcher&lt;/span&gt;
+
+&lt;span class="k"&gt;[services]&lt;/span&gt;
+&lt;span class="na"&gt;schedule.json&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.Schedule&lt;/span&gt;
+&lt;span class="na"&gt;cancel.json&lt;/span&gt;       &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.Cancel&lt;/span&gt;
+&lt;span class="na"&gt;addversion.json&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.AddVersion&lt;/span&gt;
+&lt;span class="na"&gt;listprojects.json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.ListProjects&lt;/span&gt;
+&lt;span class="na"&gt;listversions.json&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.ListVersions&lt;/span&gt;
+&lt;span class="na"&gt;listspiders.json&lt;/span&gt;  &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.ListSpiders&lt;/span&gt;
+&lt;span class="na"&gt;delproject.json&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.DeleteProject&lt;/span&gt;
+&lt;span class="na"&gt;delversion.json&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.DeleteVersion&lt;/span&gt;
+&lt;span class="na"&gt;listjobs.json&lt;/span&gt;     &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;scrapyd.webservice.ListJobs&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;关于配置的各个参数具体含义，可以参考&lt;a href="http://scrapyd.readthedocs.org/en/stable/config.html"&gt;官方文档&lt;/a&gt;&lt;/p&gt;</summary><category term="scrapyd"></category><category term="scrapy"></category><category term="scrapyd-client"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
 &lt;h3&gt;android&lt;/h3&gt;
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
