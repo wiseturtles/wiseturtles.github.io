@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-29T17:42:00+08:00</updated><entry><title>scrapyd和scrapyd-client使用教程</title><link href="http://blog.wiseturtles.com/posts/scrapyd.html" rel="alternate"></link><updated>2015-10-29T17:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-10-29:posts/scrapyd.html</id><summary type="html">&lt;p&gt;scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过&lt;span class="caps"&gt;JSON&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt;来部署爬虫项目和控制爬虫运行&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-31T20:46:00+08:00</updated><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;libev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;ev&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;c&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;1029&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;42&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;_Noreturn&amp;#39;&lt;/span&gt; &lt;span class="nx"&gt;keyword&lt;/span&gt; &lt;span class="nx"&gt;must&lt;/span&gt; &lt;span class="nx"&gt;precede&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;declarator&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;解决：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-std=c99&amp;#39;&lt;/span&gt; pip install gevent
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>scrapyd和scrapyd-client使用教程</title><link href="http://blog.wiseturtles.com/posts/scrapyd.html" rel="alternate"></link><updated>2015-10-29T17:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-10-29:posts/scrapyd.html</id><summary type="html">&lt;p&gt;scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过&lt;span class="caps"&gt;JSON&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt;来部署爬虫项目和控制爬虫运行&lt;/p&gt;
 &lt;h2&gt;概览&lt;/h2&gt;
 &lt;h3&gt;项目和版本&lt;/h3&gt;
 &lt;p&gt;scrapyd可以管理多个项目，并且每个项目允许有多个版本，但是只有最新的版本会被用来运行爬虫.&lt;/p&gt;
