@@ -56,6 +56,33 @@
 &lt;p&gt;安装powerline: https://powerline.readthedocs.org/en/latest/installation/linux.html
 powerline font:&amp;nbsp;https://github.com/powerline/fonts&lt;/p&gt;
 &lt;p&gt;字体安装后需要在iTerm2中选用刚安装的打过powerline&amp;nbsp;patch的字体。&lt;/p&gt;
+&lt;h2&gt;CocoaPods&lt;/h2&gt;
+&lt;p&gt;&lt;a href="https://cocoapods.org/"&gt;CocoaPods&lt;/a&gt;是Xcode项目的依赖库管理工具。&lt;/p&gt;
+&lt;p&gt;我将它安装到自己的$&lt;span class="caps"&gt;HOME&lt;/span&gt;目录下，也可以直接安装到系统目录。&lt;/p&gt;
+&lt;p&gt;将下面内容添加到 $&lt;span class="caps"&gt;HOME&lt;/span&gt;/.zshrc中&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;export GEM_HOME=$&lt;span class="caps"&gt;HOME&lt;/span&gt;/.gem
+export &lt;span class="caps"&gt;PATH&lt;/span&gt;=$GEM_HOME/ruby/2.0.0/bin:$&lt;span class="caps"&gt;PATH&lt;/span&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;通过下面命令安装CocoaPods:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.zshrc  &lt;span class="c"&gt;# 获取GEM_HOME, PATH配置&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources -l  &lt;span class="c"&gt;# 列出当前ruby gem源地址&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources --remove https://rubygems.org/  &lt;span class="c"&gt;# 删除官方源&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources -a https://ruby.taobao.org/  &lt;span class="c"&gt;# 使用淘宝ruby gem镜像&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;gem install cocoapods --user-install  &lt;span class="c"&gt;# 安装CocoaPods&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pod install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用CocoaPods国内镜像索引:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo  &lt;span class="c"&gt;# 查看repo信息，下面修改repo master git URL&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo remove master
+&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo add master https://gitcafe.com/akuandev/Specs.git
+&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo update
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;CocoaPods的更多介绍请阅读&lt;a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/"&gt;用CocoaPods做iOS程序的依赖管理&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;vim&lt;/h2&gt;
 &lt;p&gt;常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/wklken/k-vim.git ~/k-vim
