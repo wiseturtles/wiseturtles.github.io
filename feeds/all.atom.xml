@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-11T10:12:00+08:00</updated><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-11T15:42:00+08:00</updated><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
+&lt;h2&gt;编译环境&lt;/h2&gt;
+&lt;p&gt;为了构建iOS应用，必须找台Mac电脑做slave。
+安装很简单，貌似brew install&amp;nbsp;jenkins就可以了，然后，Jenkins页面上将它加入作为slave。&lt;/p&gt;
+&lt;h2&gt;开发者证书&lt;/h2&gt;
+&lt;p&gt;为了可以编译、打包，需要制作开发者证书，并导出为.p12, .cer, .mobileprovision&amp;nbsp;生成过程自己Google吧。&lt;/p&gt;
+&lt;h2&gt;编译、打包命令&lt;/h2&gt;
+&lt;p&gt;同意Xcode和Apple &lt;span class="caps"&gt;SDK&lt;/span&gt;协议:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo xcodebuild -license
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我用Facebook开源的xctool编译iOS应用，安装xctool。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install xctool
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;我没有使用Jenkins的Xcode插件，直接通过如下命令编译:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;xctool -workspace &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;WORKSPACE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; -scheme &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SCHEME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; archive -archivePath &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;xcrun -sdk iphoneos PackageApplication -v &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PROJECT_BUILDDIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;/*.app -o &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.ipa&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;生成dSYM:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_INPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; zip -r -X &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_ZIP_OUTPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; *.dSYM &lt;span class="o"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# zipping dSYM for testflight upload&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;碰到的问题&lt;/h2&gt;
+&lt;h3&gt;User interaction is not&amp;nbsp;allowed&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;security unlock-keychain -p &amp;lt;your-passwd&amp;gt; /Users/wlw/Library/Keychains/login.keychain
+&lt;span class="nv"&gt;$ &lt;/span&gt;security show-keychain-info ~/Library/Keychains/login.keychain
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/Keychains/login.keychain
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;开始在命令行运行完还是一直报这个错误，后来，将unlock-keychain命令放在编译命令前就好了。&lt;/p&gt;
+&lt;p&gt;记得编译前先运行:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;security unlock-keychain -p &amp;lt;your-passwd&amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/Library/Keychains/login.keychain&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;参考文章&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/"&gt;http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
 &lt;h2&gt;ssh&lt;/h2&gt;
 &lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
 &lt;p&gt;避免输入用户密码，可以先运行:&lt;/p&gt;
