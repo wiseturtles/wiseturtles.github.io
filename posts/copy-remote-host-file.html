@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Linux</title>
+    <title>Wise Turtles - Linux远程文件拷贝
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,14 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Linux" />
+      <meta name="tags" contents="ssh" />
+      <meta name="tags" contents="sync" />
+      <meta name="tags" contents="python" />
+      <meta name="tags" contents="tar" />
 
 </head>
 
@@ -52,86 +61,76 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html"><h2>Linux远程文件拷贝</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">Linux</a> <a href="http://blog.wiseturtles.com/tag/ssh.html">ssh</a> <a href="http://blog.wiseturtles.com/tag/sync.html">sync</a> <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/tar.html">tar</a> 
+    <div class='article'>
+        <div class="content-title">
+            <h1>Linux远程文件拷贝</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/linux.html">Linux</a> <a href="http://blog.wiseturtles.com/tag/ssh.html">ssh</a> <a href="http://blog.wiseturtles.com/tag/sync.html">sync</a> <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/tar.html">tar</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
 On 2015-11-11
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Linux远程文件拷贝</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html">阅读</a></div>
-      </div>
+        </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-tips.html"><h2>linux&nbsp;小贴士</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/tips.html">tips</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-20
+        <div><p>我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。</p>
+<h2>ssh</h2>
+<p>提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&nbsp;搭建个ftp好麻烦&#8230;)</p>
+<p>避免输入用户密码，可以先运行:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ssh-copy-id &lt;user@remote-host&gt;  <span class="c"># 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys</span>
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the tips of use&nbsp;linux</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-tips.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h2>netstat</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/netstat.html">netstat</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-14
+<p>通过scp做文件拷贝:</p>
+<div class="highlight"><pre><span class="nv">$ </span>scp <span class="o">[</span>-r<span class="o">]</span> <span class="o">[</span>-P port<span class="o">]</span> &lt;your-local-file&gt; <span class="o">[]</span>&lt;user&gt;@<span class="o">]</span>&lt;remote-host&gt;:&lt;remote-file-path&gt;
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;netstat</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-netstat.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h2>ps</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/ps.html">ps</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-13
+<p>如果网络比较慢可以先压缩再拷贝:</p>
+<div class="highlight"><pre><span class="nv">$ </span>ssh user@remote-host <span class="s2">&quot;tar zcf - /file/path/to/copy&quot;</span> <span class="p">|</span> tar zxf - -C /file/path/to/receive  <span class="c"># 从remote-host拷贝文件回来</span>
+<span class="nv">$ </span>tar zcf - /file/path/to/copy <span class="p">|</span> ssh user@remote-host <span class="s2">&quot;tar zxf - -C /file/path/to/receive&quot;</span>  <span class="c"># 将本地文件拷贝到remote-host</span>
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;ps</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-ps.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-free.html"><h2>free</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/free.html">free</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-09
+<h2><span class="caps">HTTP</span></h2>
+<p>也可以通过<span class="caps">HTTP</span>协议拷贝，如果本地正好有nginx/apache，ln -s 创建个软链接到外部可以访问的路径，从其它机器可以通过wget下载。
+但，不是所有机器都装了nginx/apache，可以通过Python自带模块快速启动一个<span class="caps">HTTP</span> Simple&nbsp;Server。</p>
+<div class="highlight"><pre><span class="nv">$ </span>python -mSimpleHTTPServer  <span class="c"># 默认监听8000端口，你当然可以自己指定端口</span>
+<span class="nv">$ </span>python -mSimpleHTTPServer <span class="m">8888</span>  <span class="c"># 指定监听端口为8888</span>
+<span class="nv">$ </span>wget listen-ip:port/&lt;file/path&gt; <span class="c"># 从其它主机拷贝文件</span>
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;free</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-free.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-htop.html"><h2>htop</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/htop.html">htop</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-09
+<p>既然已经有了<span class="caps">HTTP</span>&nbsp;Server，你当然可以通过浏览器访问了。</p>
+<p><span class="caps">HTTP</span>完全可以支持断点续传，wget -c&nbsp;就可以。</p>
+<h2>rsync</h2>
+<p>大家可能都体会过scp传输过程中，网络、主机异常导致必须重新传，小文件、网络快还好，不然真的想打人。&nbsp;你一定想如果可以断点续传就好了，rsync可以完成你的心愿。</p>
+<div class="highlight"><pre><span class="nv">$ </span>rsync -P --rsh<span class="o">=</span>ssh --progress &lt;your-local-file&gt; user@remote-host:&lt;receive-file-path&gt;
+<span class="nv">$ </span>rsync -P -v -e ssh &lt;<span class="nb">local</span>-file&gt; user@remote-host:receive-file-path  <span class="c"># 本地同步文件到remote-host</span>
+<span class="nv">$ </span>rsync -P -v -e ssh user@remote-host:receive-file-path &lt;<span class="nb">local</span>-file-path&gt;  <span class="c"># remote-host文件同步到本地</span>
+</pre></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;htop</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-htop.html">阅读</a></div>
-      </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-uptime.html"><h2>uptime</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/uptime.html">uptime</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2014-12-15
+<p>rsync功能强大，以后再补充。</p>
+<h2>zsync</h2>
+<p>先安装后看文档吧，基于<span class="caps">HTTP</span>的rsync，使用有一定限制，必须服务端有 .zsync&nbsp;才行。优点是速度非常快。</p></div>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;uptime</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-uptime.html">阅读</a></div>
-      </div>
+        <hr>
 
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
-
-    <li class="active"><a href="http://blog.wiseturtles.com/tag/linux.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
-
-</ul>
-</div>  
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="copy-remote-host-file" data-title="Linux远程文件拷贝" data-url="http://blog.wiseturtles.com/posts/copy-remote-host-file.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

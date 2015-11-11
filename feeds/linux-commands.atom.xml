@@ -1,5 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/linux-commands.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-01-14T10:35:00+08:00</updated><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/linux-commands.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-11T10:12:00+08:00</updated><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
+&lt;h2&gt;ssh&lt;/h2&gt;
+&lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
+&lt;p&gt;避免输入用户密码，可以先运行:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh-copy-id &amp;lt;user@remote-host&amp;gt;  &lt;span class="c"&gt;# 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;通过scp做文件拷贝:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scp &lt;span class="o"&gt;[&lt;/span&gt;-r&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;-P port&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;your-local-file&amp;gt; &lt;span class="o"&gt;[]&lt;/span&gt;&amp;lt;user&amp;gt;@&lt;span class="o"&gt;]&lt;/span&gt;&amp;lt;remote-host&amp;gt;:&amp;lt;remote-file-path&amp;gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果网络比较慢可以先压缩再拷贝:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zcf - /file/path/to/copy&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tar zxf - -C /file/path/to/receive  &lt;span class="c"&gt;# 从remote-host拷贝文件回来&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;tar zcf - /file/path/to/copy &lt;span class="p"&gt;|&lt;/span&gt; ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zxf - -C /file/path/to/receive&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# 将本地文件拷贝到remote-host&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;&lt;span class="caps"&gt;HTTP&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;也可以通过&lt;span class="caps"&gt;HTTP&lt;/span&gt;协议拷贝，如果本地正好有nginx/apache，ln -s 创建个软链接到外部可以访问的路径，从其它机器可以通过wget下载。
+但，不是所有机器都装了nginx/apache，可以通过Python自带模块快速启动一个&lt;span class="caps"&gt;HTTP&lt;/span&gt; Simple&amp;nbsp;Server。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -mSimpleHTTPServer  &lt;span class="c"&gt;# 默认监听8000端口，你当然可以自己指定端口&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;python -mSimpleHTTPServer &lt;span class="m"&gt;8888&lt;/span&gt;  &lt;span class="c"&gt;# 指定监听端口为8888&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;wget listen-ip:port/&amp;lt;file/path&amp;gt; &lt;span class="c"&gt;# 从其它主机拷贝文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;既然已经有了&lt;span class="caps"&gt;HTTP&lt;/span&gt;&amp;nbsp;Server，你当然可以通过浏览器访问了。&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;HTTP&lt;/span&gt;完全可以支持断点续传，wget -c&amp;nbsp;就可以。&lt;/p&gt;
+&lt;h2&gt;rsync&lt;/h2&gt;
+&lt;p&gt;大家可能都体会过scp传输过程中，网络、主机异常导致必须重新传，小文件、网络快还好，不然真的想打人。&amp;nbsp;你一定想如果可以断点续传就好了，rsync可以完成你的心愿。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P --rsh&lt;span class="o"&gt;=&lt;/span&gt;ssh --progress &amp;lt;your-local-file&amp;gt; user@remote-host:&amp;lt;receive-file-path&amp;gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P -v -e ssh &amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt;-file&amp;gt; user@remote-host:receive-file-path  &lt;span class="c"&gt;# 本地同步文件到remote-host&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt;-file-path&amp;gt;  &lt;span class="c"&gt;# remote-host文件同步到本地&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;rsync功能强大，以后再补充。&lt;/p&gt;
+&lt;h2&gt;zsync&lt;/h2&gt;
+&lt;p&gt;先安装后看文档吧，基于&lt;span class="caps"&gt;HTTP&lt;/span&gt;的rsync，使用有一定限制，必须服务端有 .zsync&amp;nbsp;才行。优点是速度非常快。&lt;/p&gt;</summary><category term="Linux"></category><category term="ssh"></category><category term="sync"></category><category term="python"></category><category term="tar"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html"&gt;http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-netstat-command-examples/"&gt;http://www.binarytides.com/linux-netstat-command-examples/&lt;/a&gt;&lt;/li&gt;
