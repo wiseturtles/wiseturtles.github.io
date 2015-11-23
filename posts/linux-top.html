@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - linux-commands</title>
+    <title>Wise Turtles - top
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,12 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="crazygit" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="linux" />
+      <meta name="tags" contents="command" />
+      <meta name="tags" contents="top" />
 
 </head>
 
@@ -52,86 +59,47 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-top.html"><h2>top</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/top.html">top</a> 
+    <div class='article'>
+        <div class="content-title">
+            <h1>top</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/top.html">top</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
 On 2015-11-23
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;top</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-top.html">阅读</a></div>
-      </div>
+        </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html"><h2>Linux远程文件拷贝</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">Linux</a> <a href="http://blog.wiseturtles.com/tag/ssh.html">ssh</a> <a href="http://blog.wiseturtles.com/tag/sync.html">sync</a> <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/tar.html">tar</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
-On 2015-11-11
+        <div><h2>简介</h2>
+<p>top命令的具体就不解释了，记录一些实用的命令</p>
+<div class="highlight"><pre><span class="c"># redis用户此时所使用的内存总数</span>
+<span class="c"># 这里的内存使用</span>
+top -bn1 -u redis <span class="p">|</span>  awk <span class="s1">&#39;{mem += $10} END {print mem}&#39;</span>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Linux远程文件拷贝</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html">阅读</a></div>
-      </div>
+<span class="c"># 查看服务器所有进程的内容使用总数</span>
+<span class="c"># 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考</span>
+<span class="c"># http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100</span>
+<span class="nv">$ </span>top -bn1 <span class="p">|</span>  awk <span class="s1">&#39;{mem += $10} END {print mem}&#39;</span>
+135.6
+</pre></div></div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-netstat.html"><h2>netstat</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/netstat.html">netstat</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-14
+        <hr>
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;netstat</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-netstat.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-ps.html"><h2>ps</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/ps.html">ps</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-13
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;ps</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-ps.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-free.html"><h2>free</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/free.html">free</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-09
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;free</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-free.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-htop.html"><h2>htop</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/htop.html">htop</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2015-01-09
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;htop</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-htop.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/linux-uptime.html"><h2>uptime</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">linux</a> <a href="http://blog.wiseturtles.com/tag/command.html">command</a> <a href="http://blog.wiseturtles.com/tag/uptime.html">uptime</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2014-12-15
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>the usage of&nbsp;uptime</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/linux-uptime.html">阅读</a></div>
-      </div>
-
-<div class="pagination">
-<ul>
-    <li class="prev disabled"><a href="#">&larr; 上一页</a></li>
-
-    <li class="active"><a href="http://blog.wiseturtles.com/category/linux-commands.html">1</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
-
-</ul>
-</div>  
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="linux-top" data-title="top" data-url="http://blog.wiseturtles.com/posts/linux-top.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

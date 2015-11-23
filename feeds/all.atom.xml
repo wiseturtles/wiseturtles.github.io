@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-11T15:42:00+08:00</updated><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-23T14:21:00+08:00</updated><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><updated>2015-11-23T14:21:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
+&lt;p&gt;top命令的具体就不解释了，记录一些实用的命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# redis用户此时所使用的内存总数&lt;/span&gt;
+&lt;span class="c"&gt;# 这里的内存使用&lt;/span&gt;
+top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
+
+&lt;span class="c"&gt;# 查看服务器所有进程的内容使用总数&lt;/span&gt;
+&lt;span class="c"&gt;# 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考&lt;/span&gt;
+&lt;span class="c"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
+135.6
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
 &lt;h2&gt;编译环境&lt;/h2&gt;
 &lt;p&gt;为了构建iOS应用，必须找台Mac电脑做slave。
 安装很简单，貌似brew install&amp;nbsp;jenkins就可以了，然后，Jenkins页面上将它加入作为slave。&lt;/p&gt;
@@ -102,7 +113,8 @@
 &lt;h3&gt;工作原理&lt;/h3&gt;
 &lt;p&gt;scrapyd是一个守护进程，监听爬虫的运行和请求，然后启动进程来执行它们&lt;/p&gt;
 &lt;h3&gt;启动服务&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 注意，启动scrapyd的目录会保存整个scrapyd运行期间生成的log, item文件，所以请选择合适的位置运行该命令&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;scrapyd
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -291,8 +303,7 @@ password = test
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;调度爬虫&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d
-&lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider
 &lt;span class="c"&gt;# 带上参数&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider -d &lt;span class="nv"&gt;setting&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;DOWNLOAD_DELAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; -d &lt;span class="nv"&gt;arg1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;val1
 &lt;/pre&gt;&lt;/div&gt;
@@ -388,7 +399,20 @@ password = test
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;关于配置的各个参数具体含义，可以参考&lt;a href="http://scrapyd.readthedocs.org/en/stable/config.html"&gt;官方文档&lt;/a&gt;&lt;/p&gt;</summary><category term="scrapyd"></category><category term="scrapy"></category><category term="scrapyd-client"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+&lt;p&gt;关于配置的各个参数具体含义，可以参考&lt;a href="http://scrapyd.readthedocs.org/en/stable/config.html"&gt;官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;更新&lt;/h2&gt;
+&lt;p&gt;上面的对于&lt;code&gt;scrapyd&lt;/code&gt;默认项目(即是启动&lt;code&gt;scrapyd&lt;/code&gt;命令后看到的&lt;code&gt;default&lt;/code&gt;项目.)的理解有些错误，只有在scrapy项目里启动&lt;code&gt;scrapyd&lt;/code&gt;命令
+时才有默认项目，默认项目就是当前的&lt;code&gt;scrapy&lt;/code&gt;项目，如果在非scrapy项目下执行&lt;code&gt;scrapyd&lt;/code&gt;, 是看不到&lt;code&gt;default&lt;/code&gt;的，　
+在爬虫里项目里直接使用&lt;code&gt;scrapyd&lt;/code&gt;命令的好处是: 直接通调度爬虫运行, 比较适用于当前爬虫项目代码结构不规范，没法&lt;code&gt;Eggifying&lt;/code&gt;的情况，因为在使用&lt;code&gt;scrapyd-client&lt;/code&gt;部署爬虫的前提就是爬虫项目必须满足下面的条件:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Deploying your project to a Scrapyd server typically involves two&amp;nbsp;steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Eggifying your project. You&amp;#8217;ll need to install setuptools for this. See Egg Caveats&amp;nbsp;below.&lt;/li&gt;
+&lt;li&gt;Uploading the egg to the Scrapyd server through the addversion.json&amp;nbsp;endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;小结&lt;/h2&gt;
+&lt;p&gt;关于scrapyd，个人感觉比较适合单机部署爬虫和调度使用，分布式的爬虫调度可能不太合适，需要每台机器上都启动这样一个服务，日志也没有办法集中，用jenkins来做可能更合适.&lt;/p&gt;</summary><category term="scrapyd"></category><category term="scrapy"></category><category term="scrapyd-client"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
 &lt;h3&gt;android&lt;/h3&gt;
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
@@ -4560,6 +4584,16 @@ PID TTY          TIME CMD
 &lt;p&gt;列出僵尸进程&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -A -o stat,ppid,pid,cmd &lt;span class="p"&gt;|&lt;/span&gt;grep -e &lt;span class="s1"&gt;&amp;#39;^[Zz]&amp;#39;&lt;/span&gt;
 &lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt; grep defunct &lt;span class="p"&gt;|&lt;/span&gt; grep -v grep
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;指定用户, 程序的&lt;span class="caps"&gt;CPU&lt;/span&gt;和内存使用情况统计&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# redis用户所使用的cpu和内存信息统计&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
+&lt;span class="c"&gt;# 查看只是监听在6000端口的redis使用cpu和内存信息&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="m"&gt;6000&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 

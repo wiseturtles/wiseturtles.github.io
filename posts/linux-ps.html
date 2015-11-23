@@ -247,6 +247,16 @@ PID TTY          TIME CMD
 
 </li>
 <li>
+<p>指定用户, 程序的<span class="caps">CPU</span>和内存使用情况统计</p>
+<div class="highlight"><pre><span class="c"># redis用户所使用的cpu和内存信息统计</span>
+<span class="nv">$ </span>ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
+<span class="c"># 查看只是监听在6000端口的redis使用cpu和内存信息</span>
+<span class="nv">$ </span>ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> grep <span class="m">6000</span> <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
+</pre></div>
+
+
+</li>
+<li>
 <p>部分选项解释</p>
 </li>
 </ol>
