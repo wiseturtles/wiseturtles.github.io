@@ -151,7 +151,9 @@ export &lt;span class="caps"&gt;PATH&lt;/span&gt;=$GEM_HOME/ruby/2.0.0/bin:$&lt;
 &lt;p&gt;CocoaPods的更多介绍请阅读&lt;a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/"&gt;用CocoaPods做iOS程序的依赖管理&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;vim&lt;/h2&gt;
 &lt;p&gt;常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/wklken/k-vim.git ~/k-vim
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install macvim  &lt;span class="c"&gt;# 只使用了macvim，没有用原生vim&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;ln -s /usr/local/bin/mvim /usr/local/bin/vim  &lt;span class="c"&gt;# 否则YouCompleteMe等plugin会报无法安装需要 vim 7.4 之类的&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/wklken/k-vim.git ~/k-vim
 &lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash -x install.sh
 &lt;/pre&gt;&lt;/div&gt;
 
