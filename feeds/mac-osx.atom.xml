@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mac-osx.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-11T15:42:00+08:00</updated><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mac-osx.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-12-13T08:39:00+08:00</updated><entry><title>Mac Python ValueError: unknown locale: UTF-8</title><link href="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html" rel="alternate"></link><updated>2015-12-13T08:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-12-13:posts/mac-python-ValueError-unknown-locale-utf-8.html</id><summary type="html">&lt;p&gt;Mac brew更新软件报locale utf-8&amp;nbsp;unknown。&lt;/p&gt;
+&lt;h2&gt;问题描述&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt;，更新 mpv 时报错: &lt;code&gt;ValueError: unknown locale: UTF-8&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;确定当前locale&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;locale
+&lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;span class="nv"&gt;LC_COLLATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_MESSAGES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_MONETARY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_NUMERIC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_TIME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_ALL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Python获取当前locale&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
+Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
+File &lt;span class="s2"&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, line 1, in &amp;lt;module&amp;gt;
+File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line 543, in getdefaultlocale &lt;span class="k"&gt;return&lt;/span&gt; _parse_localename&lt;span class="o"&gt;(&lt;/span&gt;localename&lt;span class="o"&gt;)&lt;/span&gt;
+File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line 475, in _parse_localename raise ValueError, &lt;span class="s1"&gt;&amp;#39;unknown locale: %s&amp;#39;&lt;/span&gt; % localename
+ValueError: unknown locale: UTF-8
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;解决&lt;/h4&gt;
+&lt;p&gt;设置locale为en_US.&lt;span class="caps"&gt;UTF&lt;/span&gt;-8，我使用的zsh，所以在&lt;code&gt;~/.zshrc&lt;/code&gt;中添加locale设置：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;再通过Python获取当前locale：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
+&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en_US&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;UTF-8&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;code&gt;brew upgrade&lt;/code&gt;也正常工作了。&lt;/p&gt;</summary><category term="Python"></category><category term="Shell"></category><category term="Mac"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
 &lt;h2&gt;编译环境&lt;/h2&gt;
 &lt;p&gt;为了构建iOS应用，必须找台Mac电脑做slave。
 安装很简单，貌似brew install&amp;nbsp;jenkins就可以了，然后，Jenkins页面上将它加入作为slave。&lt;/p&gt;

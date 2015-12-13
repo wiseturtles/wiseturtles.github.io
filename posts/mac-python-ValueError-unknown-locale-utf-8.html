@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Authors</title>
+    <title>Wise Turtles - Mac Python ValueError: unknown locale: <span class="caps">UTF</span>-8
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,12 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Python" />
+      <meta name="tags" contents="Shell" />
+      <meta name="tags" contents="Mac" />
 
 </head>
 
@@ -52,13 +59,75 @@
     <div class="row">
 
         <div class="span9">
-    <h1>Authors on Wise Turtles</h1>
+    <div class='article'>
+        <div class="content-title">
+            <h1>Mac Python ValueError: unknown locale: <span class="caps">UTF</span>-8</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/python.html">Python</a> <a href="http://blog.wiseturtles.com/tag/shell.html">Shell</a> <a href="http://blog.wiseturtles.com/tag/mac.html">Mac</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2015-12-13
 
-    <ul>        <li><a href="http://blog.wiseturtles.com/author/craygit.html">craygit</a> (2)</li>
-        <li><a href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a> (31)</li>
-        <li><a href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a> (15)</li>
-        <li><a href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a> (7)</li>
-    </ul>
+        </div>
+
+        <div><p>Mac brew更新软件报locale utf-8&nbsp;unknown。</p>
+<h2>问题描述</h2>
+<p><code>brew update &amp;&amp; brew upgrade</code>，更新 mpv 时报错: <code>ValueError: unknown locale: UTF-8</code></p>
+<h4>确定当前locale</h4>
+<div class="highlight"><pre><span class="nv">$ </span>locale
+<span class="nv">LANG</span><span class="o">=</span>
+<span class="nv">LC_COLLATE</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+<span class="nv">LC_CTYPE</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>
+<span class="nv">LC_MESSAGES</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+<span class="nv">LC_MONETARY</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+<span class="nv">LC_NUMERIC</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+<span class="nv">LC_TIME</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
+<span class="nv">LC_ALL</span><span class="o">=</span>
+</pre></div>
+
+
+<h4>Python获取当前locale</h4>
+<div class="highlight"><pre><span class="nv">$ </span>python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
+Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
+File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1, in &lt;module&gt;
+File <span class="s2">&quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&quot;</span>, line 543, in getdefaultlocale <span class="k">return</span> _parse_localename<span class="o">(</span>localename<span class="o">)</span>
+File <span class="s2">&quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&quot;</span>, line 475, in _parse_localename raise ValueError, <span class="s1">&#39;unknown locale: %s&#39;</span> % localename
+ValueError: unknown locale: UTF-8
+</pre></div>
+
+
+<h4>解决</h4>
+<p>设置locale为en_US.<span class="caps">UTF</span>-8，我使用的zsh，所以在<code>~/.zshrc</code>中添加locale设置：</p>
+<div class="highlight"><pre><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export </span><span class="nv">LC_CTYPE</span><span class="o">=</span>en_US.UTF-8
+</pre></div>
+
+
+<p>再通过Python获取当前locale：</p>
+<div class="highlight"><pre><span class="nv">$ </span>python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
+<span class="o">(</span><span class="s1">&#39;en_US&#39;</span>, <span class="s1">&#39;UTF-8&#39;</span><span class="o">)</span>
+</pre></div>
+
+
+<p><code>brew upgrade</code>也正常工作了。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="mac-python-ValueError-unknown-locale-utf-8" data-title="Mac Python ValueError: unknown locale: <span class="caps">UTF</span>-8" data-url="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">
