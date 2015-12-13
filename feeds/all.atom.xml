@@ -1684,7 +1684,10 @@ curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 
 
 &lt;h2&gt;iTerm2&lt;/h2&gt;
-&lt;p&gt;从苹果App&amp;nbsp;Store上搜索安装iTerm2.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从&lt;a href="https://www.iterm2.com/"&gt;官网&lt;/a&gt;下载、安装iTerm2。&lt;/li&gt;
+&lt;li&gt;关闭烦人的bell: &lt;code&gt;iTerm 2: Preferences -&amp;gt; Profiles -&amp;gt; Tab: Terminal -&amp;gt; Notifications -&amp;gt; Silence Bell&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2&gt;Zsh&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install zsh zsh-completions
 &lt;span class="nv"&gt;$ &lt;/span&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
