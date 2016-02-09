@@ -70,41 +70,41 @@ On 2015-07-06
 
         <div><p>工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。</p>
 <h2>安装</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install ssmtp
+<div class="highlight"><pre>$ sudo apt-get install ssmtp
 </pre></div>
 
 
 <h2>配置</h2>
 <p>/etc/ssmtp/revaliases</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/ssmtp/revaliases
-<span class="c"># sSMTP aliases</span>
-<span class="c">#</span>
-<span class="c"># Format:   local_account:outgoing_address:mailhub</span>
-<span class="c">#</span>
-<span class="c"># Example: root:your_login@your.domain:mailhub.your.domain[:port]</span>
-<span class="c"># where [:port] is an optional port number that defaults to 25.</span>
+<div class="highlight"><pre>$ cat /etc/ssmtp/revaliases
+<span class="c1"># sSMTP aliases</span>
+<span class="c1">#</span>
+<span class="c1"># Format:   local_account:outgoing_address:mailhub</span>
+<span class="c1">#</span>
+<span class="c1"># Example: root:your_login@your.domain:mailhub.your.domain[:port]</span>
+<span class="c1"># where [:port] is an optional port number that defaults to 25.</span>
 nagios:no-reply@example.com:mail.example.com:587
 root:no-reply@example.com:mail.example.com:587
 </pre></div>
 
 
 <p>/etc/ssmtp/ssmtp.conf</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="c">#</span>
-<span class="c"># Config file for sSMTP sendmail</span>
-<span class="c">#</span>
-<span class="c"># The person who gets all mail for userids &lt; 1000</span>
-<span class="c"># Make this empty to disable rewriting.</span>
+<div class="highlight"><pre>$ <span class="c1">#</span>
+<span class="c1"># Config file for sSMTP sendmail</span>
+<span class="c1">#</span>
+<span class="c1"># The person who gets all mail for userids &lt; 1000</span>
+<span class="c1"># Make this empty to disable rewriting.</span>
 <span class="nv">root</span><span class="o">=</span>&lt;your-email@example.com&gt;
-<span class="c"># The place where the mail goes. The actual machine name is required no</span>
-<span class="c"># MX records are consulted. Commonly mailhosts are named mail.domain.com</span>
+<span class="c1"># The place where the mail goes. The actual machine name is required no</span>
+<span class="c1"># MX records are consulted. Commonly mailhosts are named mail.domain.com</span>
 <span class="nv">mailhub</span><span class="o">=</span>&lt;mail.example.com&gt;
-<span class="c"># Where will the mail seem to come from?</span>
-<span class="c">#rewriteDomain=</span>
-<span class="c"># The full hostname</span>
+<span class="c1"># Where will the mail seem to come from?</span>
+<span class="c1">#rewriteDomain=</span>
+<span class="c1"># The full hostname</span>
 <span class="nv">hostname</span><span class="o">=</span>&lt;mail.example.com&gt;
-<span class="c"># Are users allowed to set their own From: address?</span>
-<span class="c"># YES - Allow the user to specify their own From: address</span>
-<span class="c"># NO - Use the system generated From: address</span>
+<span class="c1"># Are users allowed to set their own From: address?</span>
+<span class="c1"># YES - Allow the user to specify their own From: address</span>
+<span class="c1"># NO - Use the system generated From: address</span>
 <span class="nv">FromLineOverride</span><span class="o">=</span>YES
 <span class="nv">UseSTARTTLS</span><span class="o">=</span>yes
 <span class="nv">UseTLS</span><span class="o">=</span>yes
@@ -114,7 +114,7 @@ root:no-reply@example.com:mail.example.com:587
 
 
 <h2>测试</h2>
-<div class="highlight"><pre><span class="nv">$ </span>/usr/sbin/sendmail -t -F your-domain-name <span class="s">&lt;&lt;EOF</span>
+<div class="highlight"><pre>$ /usr/sbin/sendmail -t -F your-domain-name <span class="s">&lt;&lt;EOF</span>
 <span class="s">SUBJECT: $YOUR-SUBJECT</span>
 <span class="s">TO: A@example.com,B@example.com</span>
 <span class="s">MIME-VERSION: 1.0</span>

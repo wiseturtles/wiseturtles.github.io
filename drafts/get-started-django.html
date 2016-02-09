@@ -69,20 +69,20 @@ On 2015-08-18
         </div>
 
         <div><h2>常用命令</h2>
-<div class="highlight"><pre><span class="c"># 安装</span>
-<span class="nv">$ </span>pip install Django
+<div class="highlight"><pre><span class="c1"># 安装</span>
+$ pip install Django
 
-<span class="c"># 创建项目</span>
-<span class="nv">$ </span>django-admin startproject mysite
+<span class="c1"># 创建项目</span>
+$ django-admin startproject mysite
 
-<span class="c"># 创建app</span>
-<span class="nv">$ </span>python manage.py startapp myapp
+<span class="c1"># 创建app</span>
+$ python manage.py startapp myapp
 
-<span class="c"># 生成migration文件</span>
-<span class="nv">$ </span>python manage.py makemigrations polls
+<span class="c1"># 生成migration文件</span>
+$ python manage.py makemigrations polls
 
-<span class="c"># 打印Sql语句</span>
-<span class="nv">$ </span>python manage.py sqlmigrate polls 0001
+<span class="c1"># 打印Sql语句</span>
+$ python manage.py sqlmigrate polls 0001
 </pre></div>
 
 
@@ -97,11 +97,11 @@ On 2015-08-18
     <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="n">Fruit</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Apple&#39;</span><span class="p">)</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&#39;Pear&#39;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span> <span class="o">=</span> <span class="n">Fruit</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Apple&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Pear&#39;</span>
 <span class="o">&gt;&gt;&gt;</span> <span class="n">fruit</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<span class="o">&gt;&gt;&gt;</span> <span class="n">Fruit</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="p">[</span><span class="s">&#39;Apple&#39;</span><span class="p">,</span> <span class="s">&#39;Pear&#39;</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Fruit</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">values_list</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;Apple&#39;</span><span class="p">,</span> <span class="s1">&#39;Pear&#39;</span><span class="p">]</span>
 </pre></div>
 
 

@@ -96,7 +96,7 @@ On 2015-08-12
 </ul>
 <p>通常选择注册第一种形式。</p>
 <p>任意选择一个节点，执行如下命令</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d <span class="s1">&#39;</span>
+<div class="highlight"><pre>$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d <span class="s1">&#39;</span>
 <span class="s1">{</span>
 <span class="s1">    &quot;type&quot;: &quot;fs&quot;,</span>
 <span class="s1">    &quot;settings&quot;: {</span>
@@ -131,18 +131,18 @@ On 2015-08-12
 
 <p>这里需要注意一点是，注册仓库用的是<code>PUT</code>, 而更新仓库设置用的是<code>POST</code>.</p>
 <h3>检查注册的仓库信息</h3>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
+<div class="highlight"><pre>$ curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
 </pre></div>
 
 
 <h3>开始备份</h3>
 <p>指定快照名称为<code>snapshot_20150812</code></p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+<div class="highlight"><pre>$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
 </pre></div>
 
 
 <p>执行上面的上面的命令会马上返回，并在后台执行备份操作, 如果想等到备份完成，可以加上参数<code>wait_for_completion=true</code></p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion<span class="o">=</span><span class="nb">true</span>
+<div class="highlight"><pre>$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion<span class="o">=</span><span class="nb">true</span>
 </pre></div>
 
 
@@ -200,10 +200,10 @@ On 2015-08-12
 <li>rename_replacement:&nbsp;表示将所有的索引重命名为&#8217;restored_index_xxx&#8217;.如index_1会被重命名为restored_index_1.</li>
 </ul>
 <h3>查看恢复进度</h3>
-<div class="highlight"><pre><span class="c"># 查看所有索引的恢复进度</span>
+<div class="highlight"><pre><span class="c1"># 查看所有索引的恢复进度</span>
 curl -XGET http://192.168.0.1:9200/_recovery/
 
-<span class="c"># 查看索引restored_index_1的恢复进度</span>
+<span class="c1"># 查看索引restored_index_1的恢复进度</span>
 curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 </pre></div>
 

@@ -73,7 +73,7 @@ On 2015-12-13
 <h2>问题描述</h2>
 <p><code>brew update &amp;&amp; brew upgrade</code>，更新 mpv 时报错: <code>ValueError: unknown locale: UTF-8</code></p>
 <h4>确定当前locale</h4>
-<div class="highlight"><pre><span class="nv">$ </span>locale
+<div class="highlight"><pre>$ locale
 <span class="nv">LANG</span><span class="o">=</span>
 <span class="nv">LC_COLLATE</span><span class="o">=</span><span class="s2">&quot;C&quot;</span>
 <span class="nv">LC_CTYPE</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span>
@@ -86,7 +86,7 @@ On 2015-12-13
 
 
 <h4>Python获取当前locale</h4>
-<div class="highlight"><pre><span class="nv">$ </span>python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
+<div class="highlight"><pre>$ python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
 Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
 File <span class="s2">&quot;&lt;string&gt;&quot;</span>, line 1, in &lt;module&gt;
 File <span class="s2">&quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&quot;</span>, line 543, in getdefaultlocale <span class="k">return</span> _parse_localename<span class="o">(</span>localename<span class="o">)</span>
@@ -97,13 +97,13 @@ ValueError: unknown locale: UTF-8
 
 <h4>解决</h4>
 <p>设置locale为en_US.<span class="caps">UTF</span>-8，我使用的zsh，所以在<code>~/.zshrc</code>中添加locale设置：</p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
-<span class="nb">export </span><span class="nv">LC_CTYPE</span><span class="o">=</span>en_US.UTF-8
+<div class="highlight"><pre><span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export</span> <span class="nv">LC_CTYPE</span><span class="o">=</span>en_US.UTF-8
 </pre></div>
 
 
 <p>再通过Python获取当前locale：</p>
-<div class="highlight"><pre><span class="nv">$ </span>python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
+<div class="highlight"><pre>$ python -c <span class="s1">&#39;import locale; print(locale.getdefaultlocale());&#39;</span>
 <span class="o">(</span><span class="s1">&#39;en_US&#39;</span>, <span class="s1">&#39;UTF-8&#39;</span><span class="o">)</span>
 </pre></div>
 

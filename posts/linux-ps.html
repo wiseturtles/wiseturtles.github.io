@@ -89,37 +89,37 @@ On 2015-01-13
 <ol>
 <li>
 <p>显示所有进程</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps aux
-<span class="nv">$ </span>ps -ef
+<div class="highlight"><pre>$ ps aux
+$ ps -ef
 </pre></div>
 
 
 </li>
 <li>
 <p>显示指定用户的进程</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f -u www-data
+<div class="highlight"><pre>$ ps -f -u www-data
 
-<span class="c"># 多个用户用&#39;,&#39;隔开</span>
-<span class="nv">$ </span>ps -f -u www-data,root
+<span class="c1"># 多个用户用&#39;,&#39;隔开</span>
+$ ps -f -u www-data,root
 </pre></div>
 
 
 </li>
 <li>
 <p>按照进程名来指定</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -C nginx
+<div class="highlight"><pre>$ ps -C nginx
 </pre></div>
 
 
 <p>-C&nbsp;选项必须提供精确的进程名，不提供模糊匹配，一般使用grep来搜索</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -ef <span class="p">|</span>grep nginx
+<div class="highlight"><pre>$ ps -ef <span class="p">|</span>grep nginx
 </pre></div>
 
 
 </li>
 <li>
 <p>按照进程id来查找</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f -p 3150,7298,6455
+<div class="highlight"><pre>$ ps -f -p 3150,7298,6455
 </pre></div>
 
 
@@ -127,14 +127,14 @@ On 2015-01-13
 <li>
 <p>按照<span class="caps">CPU</span>或内存使用情况排序</p>
 <p>使用&#8212;sort选项可以按照一定的顺序排序，并且可以在指定的排序列前添加&#8217;-&#8216;或&#8217;+&#8217;&nbsp;来指定降序或升序排列</p>
-<div class="highlight"><pre><span class="c"># cpu 使用前５</span>
-<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pcpu <span class="p">|</span> head -5
+<div class="highlight"><pre><span class="c1"># cpu 使用前５</span>
+$ ps aux --sort<span class="o">=</span>-pcpu <span class="p">|</span> head -5
 
-<span class="c"># 内存 使用前５</span>
-<span class="nv">$ </span>ps aux --sort<span class="o">=</span>-pmem <span class="p">|</span> head -5
+<span class="c1"># 内存 使用前５</span>
+$ ps aux --sort<span class="o">=</span>-pmem <span class="p">|</span> head -5
 
-<span class="c"># 指定多个排序</span>
-<span class="nv">$ </span>ps jax --sort<span class="o">=</span>uid,-ppid,+pid
+<span class="c1"># 指定多个排序</span>
+$ ps jax --sort<span class="o">=</span>uid,-ppid,+pid
 </pre></div>
 
 
@@ -177,7 +177,7 @@ priority     kernel scheduling priority
 <li>
 <p>按照树状结构显示</p>
 <p>使用<code>--forest</code>选项</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -f --forest -C nginx
+<div class="highlight"><pre>$ ps -f --forest -C nginx
 UID        PID  PPID  C STIME TTY          TIME CMD
 root      <span class="m">1344</span>     <span class="m">1</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:00:00 nginx: master process /usr/sbin/nginx
 www-data  <span class="m">1345</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:01:52  <span class="se">\_</span> nginx: worker process
@@ -192,7 +192,7 @@ www-data  <span class="m">1349</span>  <span class="m">1344</span>  <span class=
 <li>
 <p>列出子进程</p>
 <div class="highlight"><pre>＃先列出所有nginx进程
-<span class="nv">$ </span>ps -o pid,uname,comm -C nginx
+$ ps -o pid,uname,comm -C nginx
 PID USER     COMMAND
 <span class="m">1344</span> root     nginx
 <span class="m">1345</span> www-data nginx
@@ -200,8 +200,8 @@ PID USER     COMMAND
 <span class="m">1348</span> www-data nginx
 <span class="m">1349</span> www-data nginx
 
-<span class="c"># 使用--ppid选项列出子进程</span>
-<span class="nv">$ </span>ps --ppid 2359
+<span class="c1"># 使用--ppid选项列出子进程</span>
+$ ps --ppid 2359
 PID TTY          TIME CMD
 <span class="m">4524</span> ?        00:00:00 apache2
 <span class="m">4525</span> ?        00:00:00 apache2
@@ -215,7 +215,7 @@ PID TTY          TIME CMD
 <li>
 <p>列出进程的线程</p>
 <p>使用<code>-L</code>选项</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -p <span class="m">3150</span> -L
+<div class="highlight"><pre>$ ps -p <span class="m">3150</span> -L
 </pre></div>
 
 
@@ -223,35 +223,35 @@ PID TTY          TIME CMD
 <li>
 <p>指定输出结果的列</p>
 <p>可以输出的列信息与<code>--sort</code>选项一样，可以查看man page 的<code>STANDARD FORMAT SPECIFIERS</code>部分</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -e -o pid,uname,pcpu,pmem,comm
+<div class="highlight"><pre>$ ps -e -o pid,uname,pcpu,pmem,comm
 
-<span class="c"># 显示指定的列并给出别名</span>
-<span class="nv">$ </span>ps -e -o pid,uname<span class="o">=</span>USERNAME,pcpu<span class="o">=</span>CPU_USAGE,pmem,comm
+<span class="c1"># 显示指定的列并给出别名</span>
+$ ps -e -o pid,uname<span class="o">=</span>USERNAME,pcpu<span class="o">=</span>CPU_USAGE,pmem,comm
 </pre></div>
 
 
 </li>
 <li>
 <p>将ps转变为实时更新的效果</p>
-<div class="highlight"><pre><span class="nv">$ </span> watch -n <span class="m">1</span> <span class="s1">&#39;ps -e -o pid,uname,cmd,pmem,pcpu --sort=-pmem,-pcpu | head -15&#39;</span>
+<div class="highlight"><pre>$  watch -n <span class="m">1</span> <span class="s1">&#39;ps -e -o pid,uname,cmd,pmem,pcpu --sort=-pmem,-pcpu | head -15&#39;</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>列出僵尸进程</p>
-<div class="highlight"><pre><span class="nv">$ </span>ps -A -o stat,ppid,pid,cmd <span class="p">|</span>grep -e <span class="s1">&#39;^[Zz]&#39;</span>
-<span class="nv">$ </span>ps -ef <span class="p">|</span> grep defunct <span class="p">|</span> grep -v grep
+<div class="highlight"><pre>$ ps -A -o stat,ppid,pid,cmd <span class="p">|</span>grep -e <span class="s1">&#39;^[Zz]&#39;</span>
+$ ps -ef <span class="p">|</span> grep defunct <span class="p">|</span> grep -v grep
 </pre></div>
 
 
 </li>
 <li>
 <p>指定用户, 程序的<span class="caps">CPU</span>和内存使用情况统计</p>
-<div class="highlight"><pre><span class="c"># redis用户所使用的cpu和内存信息统计</span>
-<span class="nv">$ </span>ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
-<span class="c"># 查看只是监听在6000端口的redis使用cpu和内存信息</span>
-<span class="nv">$ </span>ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> grep <span class="m">6000</span> <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
+<div class="highlight"><pre><span class="c1"># redis用户所使用的cpu和内存信息统计</span>
+$ ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
+<span class="c1"># 查看只是监听在6000端口的redis使用cpu和内存信息</span>
+$ ps --no-headers -u redis -o pcpu,pmem,command <span class="p">|</span> grep <span class="m">6000</span> <span class="p">|</span> awk <span class="s1">&#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&#39;</span>
 </pre></div>
 
 

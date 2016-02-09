@@ -70,26 +70,26 @@ On 2015-09-18
         </div>
 
         <div><h2>Redis集群搭建</h2>
-<div class="highlight"><pre><span class="c"># 下载</span>
-<span class="nv">$ </span>wget http://download.redis.io/releases/redis-3.0.4.tar.gz
-<span class="nv">$ </span>tar -zxvf redis-3.0.4.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>redis-3.0.4
+<div class="highlight"><pre><span class="c1"># 下载</span>
+$ wget http://download.redis.io/releases/redis-3.0.4.tar.gz
+$ tar -zxvf redis-3.0.4.tar.gz
+$ <span class="nb">cd</span> redis-3.0.4
 
-<span class="c"># 编译</span>
-<span class="nv">$ </span>make
+<span class="c1"># 编译</span>
+$ make
 
-<span class="c"># 检查依赖， 如果有错误就修复</span>
-<span class="c"># 如果遇到错误“Test replication partial resync: ok psync”, 可以忽略或再重复执</span>
-<span class="c"># 行几次make test就可以通过了</span>
-<span class="nv">$ </span>make <span class="nb">test</span>
+<span class="c1"># 检查依赖， 如果有错误就修复</span>
+<span class="c1"># 如果遇到错误“Test replication partial resync: ok psync”, 可以忽略或再重复执</span>
+<span class="c1"># 行几次make test就可以通过了</span>
+$ make <span class="nb">test</span>
 
-<span class="c"># 安装</span>
-<span class="nv">$ </span>sudo make install
+<span class="c1"># 安装</span>
+$ sudo make install
 
-<span class="c"># 添加开机启动, 会有一些交互提问，按需选择即可</span>
-<span class="nv">$ </span>sudo utils/install_server.sh
+<span class="c1"># 添加开机启动, 会有一些交互提问，按需选择即可</span>
+$ sudo utils/install_server.sh
 Welcome to the redis service installer
-This script will <span class="nb">help </span>you easily <span class="nb">set </span>up a running redis server
+This script will <span class="nb">help</span> you easily <span class="nb">set</span> up a running redis server
 
 Please <span class="k">select</span> the redis port <span class="k">for</span> this instance: <span class="o">[</span>6379<span class="o">]</span> 
 Selecting default: <span class="m">6379</span> 
@@ -123,35 +123,35 @@ Starting Redis server...
 Installation successful!
 
 
-<span class="c"># 因为要搭建单机集群，重复执行上面的命令，同时设置6380, 6381</span>
-<span class="c"># 完成后，可以看到如下文件</span>
-<span class="nv">$ </span>ls /etc/init.d/redis_*
+<span class="c1"># 因为要搭建单机集群，重复执行上面的命令，同时设置6380, 6381</span>
+<span class="c1"># 完成后，可以看到如下文件</span>
+$ ls /etc/init.d/redis_*
 /etc/init.d/redis_6379  /etc/init.d/redis_6380  /etc/init.d/redis_6381
-<span class="nv">$ </span>ls /etc/redis/
+$ ls /etc/redis/
 6379.conf  6380.conf  6381.conf
 
 
-<span class="c"># 开启集群</span>
-<span class="nv">$ </span>sudo sed -i <span class="s1">&#39;s/# cluster-enabled yes/cluster-enabled yes/&#39;</span> /etc/redis/*.conf
+<span class="c1"># 开启集群</span>
+$ sudo sed -i <span class="s1">&#39;s/# cluster-enabled yes/cluster-enabled yes/&#39;</span> /etc/redis/*.conf
 
-<span class="c"># 同时去掉/etc/redis/*.conf 文件的`cluster-config-file` 的注释，并分别设置为</span>
-<span class="c"># cluster-config-file /etc/redis/nodes-6379.conf</span>
-<span class="c"># cluster-config-file /etc/redis/nodes-6380.conf</span>
-<span class="c"># cluster-config-file /etc/redis/nodes-6381.conf</span>
+<span class="c1"># 同时去掉/etc/redis/*.conf 文件的`cluster-config-file` 的注释，并分别设置为</span>
+<span class="c1"># cluster-config-file /etc/redis/nodes-6379.conf</span>
+<span class="c1"># cluster-config-file /etc/redis/nodes-6380.conf</span>
+<span class="c1"># cluster-config-file /etc/redis/nodes-6381.conf</span>
 
-<span class="c"># 重启redis服务</span>
-<span class="nv">$ </span>ps -ef <span class="p">|</span>grep redis
+<span class="c1"># 重启redis服务</span>
+$ ps -ef <span class="p">|</span>grep redis
 root     <span class="m">31033</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6379 <span class="o">[</span>cluster<span class="o">]</span>    
 root     <span class="m">31072</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6380 <span class="o">[</span>cluster<span class="o">]</span>    
 root     <span class="m">31111</span>     <span class="m">1</span>  <span class="m">0</span> 00:18 ?        00:00:00 /usr/local/bin/redis-server *:6381 <span class="o">[</span>cluster<span class="o">]</span>    
 
-<span class="c"># 安装redis client需要的依赖</span>
-<span class="nv">$ </span>sudo apt-get install ruby
-<span class="nv">$ </span>sudo gem install redis
+<span class="c1"># 安装redis client需要的依赖</span>
+$ sudo apt-get install ruby
+$ sudo gem install redis
 
-<span class="c"># 查看可用的命令</span>
-<span class="nv">$ </span>src/redis-trib.rb <span class="nb">help </span>
-Usage: redis-trib &lt;<span class="nb">command</span>&gt; &lt;options&gt; &lt;arguments ...&gt;
+<span class="c1"># 查看可用的命令</span>
+$ src/redis-trib.rb <span class="nb">help</span> 
+Usage: redis-trib &lt;command&gt; &lt;options&gt; &lt;arguments ...&gt;
 
   create          host1:port1 ... hostN:portN
                   --replicas &lt;arg&gt;
@@ -166,22 +166,22 @@ Usage: redis-trib &lt;<span class="nb">command</span>&gt; &lt;options&gt; &lt;ar
                   --slave
                   --master-id &lt;arg&gt;
   del-node        host:port node_id
-  <span class="nb">set</span>-timeout     host:port milliseconds
-  call            host:port <span class="nb">command </span>arg arg .. arg
+  set-timeout     host:port milliseconds
+  call            host:port <span class="nb">command</span> arg arg .. arg
   import          host:port
                   --from &lt;arg&gt;
   <span class="nb">help</span>            <span class="o">(</span>show this <span class="nb">help</span><span class="o">)</span>
 
-For check, fix, reshard, del-node, <span class="nb">set</span>-timeout you can specify the host and port of any working node in the cluster.
+For check, fix, reshard, del-node, set-timeout you can specify the host and port of any working node in the cluster.
 
 
-<span class="c"># 创建集群</span>
-<span class="nv">$ </span>sudo src/redis-trib.rb create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381
+<span class="c1"># 创建集群</span>
+$ sudo src/redis-trib.rb create 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381
 &gt;&gt;&gt; Creating cluster
 Connecting to node 127.0.0.1:6379: OK
 Connecting to node 127.0.0.1:6380: OK
 Connecting to node 127.0.0.1:6381: OK
-&gt;&gt;&gt; Performing <span class="nb">hash </span>slots allocation on <span class="m">3</span> nodes...
+&gt;&gt;&gt; Performing <span class="nb">hash</span> slots allocation on <span class="m">3</span> nodes...
 Using <span class="m">3</span> masters:
 127.0.0.1:6379
 127.0.0.1:6380
@@ -192,7 +192,7 @@ M: 3cdc94999a66c325dd91ca4af70fa9a9fe1bc623 127.0.0.1:6380
    slots:5461-10922 <span class="o">(</span><span class="m">5462</span> slots<span class="o">)</span> master
 M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
    slots:10923-16383 <span class="o">(</span><span class="m">5461</span> slots<span class="o">)</span> master
-Can I <span class="nb">set </span>the above configuration? <span class="o">(</span><span class="nb">type</span> <span class="s1">&#39;yes&#39;</span> to accept<span class="o">)</span>: yes
+Can I <span class="nb">set</span> the above configuration? <span class="o">(</span><span class="nb">type</span> <span class="s1">&#39;yes&#39;</span> to accept<span class="o">)</span>: yes
 &gt;&gt;&gt; Nodes configuration updated
 &gt;&gt;&gt; Assign a different config epoch to each node
 &gt;&gt;&gt; Sending CLUSTER MEET messages to join the cluster
@@ -209,14 +209,14 @@ M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
 &gt;&gt;&gt; Check slots coverage...
 <span class="o">[</span>OK<span class="o">]</span> All <span class="m">16384</span> slots covered.
 
-<span class="c"># 也可以设置主从, 但是需要注意，如果设置了replicas，则需要更多的结点</span>
-<span class="c"># --replicas 1 需要6个结点</span>
-<span class="c"># --replicas 2 需要12个结点</span>
-<span class="nv">$ </span>sudo src/redis-trib.rb create --replicas <span class="m">1</span> 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 ip:port....
+<span class="c1"># 也可以设置主从, 但是需要注意，如果设置了replicas，则需要更多的结点</span>
+<span class="c1"># --replicas 1 需要6个结点</span>
+<span class="c1"># --replicas 2 需要12个结点</span>
+$ sudo src/redis-trib.rb create --replicas <span class="m">1</span> 127.0.0.1:6379 127.0.0.1:6380 127.0.0.1:6381 ip:port....
 
 
-<span class="c"># 检查集群状态</span>
-<span class="nv">$ </span>sudo src/redis-trib.rb check 127.0.0.1:6379
+<span class="c1"># 检查集群状态</span>
+$ sudo src/redis-trib.rb check 127.0.0.1:6379
 Connecting to node 127.0.0.1:6379: OK
 Connecting to node 127.0.0.1:6380: OK
 Connecting to node 127.0.0.1:6381: OK
@@ -235,20 +235,20 @@ M: 059fd2e13499b22aedfa0f0ad3707fe7534d96db 127.0.0.1:6381
 &gt;&gt;&gt; Check slots coverage...
 <span class="o">[</span>OK<span class="o">]</span> All <span class="m">16384</span> slots covered.
 
-<span class="c"># 使用了集群之后，不能像以前一样使用命令行客户端了, 需要加参数`-c`</span>
-<span class="nv">$ </span>redis-cli
+<span class="c1"># 使用了集群之后，不能像以前一样使用命令行客户端了, 需要加参数`-c`</span>
+$ redis-cli
 127.0.0.1:6379&gt; ping
 PONG
-127.0.0.1:6379&gt; <span class="nb">set </span>a b
-<span class="o">(</span>error<span class="o">)</span> MOVED <span class="m">15495</span> 127.0.0.1:6381   <span class="c"># 设置失败</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> a b
+<span class="o">(</span>error<span class="o">)</span> MOVED <span class="m">15495</span> 127.0.0.1:6381   <span class="c1"># 设置失败</span>
 
-<span class="nv">$ </span>redis-cli -c
-127.0.0.1:6379&gt; <span class="nb">set </span>a b
+$ redis-cli -c
+127.0.0.1:6379&gt; <span class="nb">set</span> a b
 -&gt; Redirected to slot <span class="o">[</span>15495<span class="o">]</span> located at 127.0.0.1:6381
 OK
 
-<span class="c"># 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块</span>
-<span class="c"># 完毕</span>
+<span class="c1"># 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块</span>
+<span class="c1"># 完毕</span>
 </pre></div></div>
 
         <hr>

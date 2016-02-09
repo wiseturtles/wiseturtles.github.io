@@ -77,13 +77,13 @@ On 2015-10-29
 <h3>工作原理</h3>
 <p>scrapyd是一个守护进程，监听爬虫的运行和请求，然后启动进程来执行它们</p>
 <h3>启动服务</h3>
-<div class="highlight"><pre><span class="c"># 注意，启动scrapyd的目录会保存整个scrapyd运行期间生成的log, item文件，所以请选择合适的位置运行该命令</span>
-<span class="nv">$ </span>scrapyd
+<div class="highlight"><pre><span class="c1"># 注意，启动scrapyd的目录会保存整个scrapyd运行期间生成的log, item文件，所以请选择合适的位置运行该命令</span>
+$ scrapyd
 </pre></div>
 
 
 <h3>调度爬虫运行</h3>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>spider2
+<div class="highlight"><pre>$ curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>spider2
 <span class="o">{</span><span class="s2">&quot;status&quot;</span>: <span class="s2">&quot;ok&quot;</span>, <span class="s2">&quot;jobid&quot;</span>: <span class="s2">&quot;26d1b1a6d6f111e0be5c001e648c57f8&quot;</span><span class="o">}</span>
 </pre></div>
 
@@ -98,19 +98,19 @@ On 2015-10-29
 <li>Scrapy&nbsp;0.17+</li>
 </ul>
 <h3>安装</h3>
-<div class="highlight"><pre><span class="nv">$ </span>pip install scrapyd
+<div class="highlight"><pre>$ pip install scrapyd
 </pre></div>
 
 
 <p>或</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install scrapyd
+<div class="highlight"><pre>$ sudo apt-get install scrapyd
 </pre></div>
 
 
 <h2>项目部署</h2>
 <p>直接使用<a href="https://github.com/scrapy/scrapyd-client">scrapyd-client</a>提供的<code>scrapyd-deploy</code>工具.</p>
 <h3>安装scrapyd-client</h3>
-<div class="highlight"><pre><span class="nv">$ </span>pip install scrapyd-client
+<div class="highlight"><pre>$ pip install scrapyd-client
 </pre></div>
 
 
@@ -126,13 +126,13 @@ On 2015-10-29
 
 <p>其中<code>server-douban</code>为服务器名称, <code>url</code>为服务器地址，即运行了<code>scrapyd</code>命令的服务器。</p>
 <p>检查配置,&nbsp;列出当前可用的服务器</p>
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -l
+<div class="highlight"><pre>$ scrapyd-deploy -l
 server-douban        http://localhost:6800/
 </pre></div>
 
 
 <p>列出服务器上所有的项目, 需要确保服务器上的<code>scrapyd</code>命令正在执行，否则会报连接失败.首次运行的话，可以看到只有一个<code>default</code>项目</p>
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -L server-douban
+<div class="highlight"><pre>$ scrapyd-deploy -L server-douban
 default
 </pre></div>
 
@@ -144,7 +144,7 @@ default
 </pre></div>
 
 
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies
+<div class="highlight"><pre>$ scrapyd-deploy server-douban -p douban-movies
 Packing version 1446102534
 Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
 Server response <span class="o">(</span>200<span class="o">)</span>:
@@ -154,7 +154,7 @@ Server response <span class="o">(</span>200<span class="o">)</span>:
 
 <p>部署操作会打包你的当前项目，如果当前项目下有<code>setup.py</code>文件，就会使用它，没有的会就会自动创建一个。(如果后期项目需要打包的话，可以根据自己的需要修改里面的信息，也可以暂时不管它).&nbsp;从返回的结果里面，我们可以看到部署的状态，项目名称，版本号和爬虫个数，以及当前的主机名称.</p>
 <p>检查部署结果</p>
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -L server-douban
+<div class="highlight"><pre>$ scrapyd-deploy -L server-douban
 default
 douban-movies
 </pre></div>
@@ -169,12 +169,12 @@ douban-movies
 
 
 <p>下次部署可以直接执行</p>
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy
+<div class="highlight"><pre>$ scrapyd-deploy
 </pre></div>
 
 
 <p>如果配置了多个服务器的话，可以将项目直接部署到多台服务器</p>
-<div class="highlight"><pre><span class="nv">$ </span>scrapyd-deploy -a -p &lt;project&gt;
+<div class="highlight"><pre>$ scrapyd-deploy -a -p &lt;project&gt;
 </pre></div>
 
 
@@ -186,8 +186,8 @@ douban-movies
 
 <p>版本号的格式必须满足<a href="http://epydoc.sourceforge.net/stdlib/distutils.version.LooseVersion-class.html">LooseVersion</a></p>
 <p>如：</p>
-<div class="highlight"><pre><span class="c"># 设置版本号为0.1</span>
-<span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies --version 0.1
+<div class="highlight"><pre><span class="c1"># 设置版本号为0.1</span>
+$ scrapyd-deploy server-douban -p douban-movies --version 0.1
 Packing version 0.1
 Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
 Server response <span class="o">(</span>200<span class="o">)</span>:
@@ -202,15 +202,15 @@ Server response <span class="o">(</span>200<span class="o">)</span>:
 </pre></div>
 
 
-<div class="highlight"><pre><span class="nv">$ </span>cat scrapy.cfg
+<div class="highlight"><pre>$ cat scrapy.cfg
 ...
 <span class="o">[</span>deploy:server-douban<span class="o">]</span>
 <span class="nv">url</span> <span class="o">=</span> http://localhost:6800/
 <span class="nv">project</span> <span class="o">=</span> douban-movies
 <span class="nv">version</span> <span class="o">=</span> GIT
 
-<span class="c"># 当前版本号为r7-master</span>
-<span class="nv">$ </span>scrapyd-deploy server-douban -p douban-movies 
+<span class="c1"># 当前版本号为r7-master</span>
+$ scrapyd-deploy server-douban -p douban-movies 
 fatal: No names found, cannot describe anything.
 Packing version r7-master
 Deploying to project <span class="s2">&quot;douban-movies&quot;</span> in http://localhost:6800/addversion.json
@@ -220,16 +220,16 @@ Server response <span class="o">(</span>200<span class="o">)</span>:
 
 
 <p>关于从<span class="caps">GIT</span>获取版本号的方式，可以参看<code>scrapyd-client</code>源码部分</p>
-<div class="highlight"><pre>  <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="s">&#39;GIT&#39;</span><span class="p">:</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;describe&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-        <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<div class="highlight"><pre>  <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="s1">&#39;GIT&#39;</span><span class="p">:</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;describe&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-list&#39;</span><span class="p">,</span> <span class="s">&#39;--count&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="s">&#39;r</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;rev-list&#39;</span><span class="p">,</span> <span class="s1">&#39;--count&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;r</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s">&#39;git&#39;</span><span class="p">,</span> <span class="s">&#39;rev-parse&#39;</span><span class="p">,</span> <span class="s">&#39;--abbrev-ref&#39;</span><span class="p">,</span> <span class="s">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">-</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;git&#39;</span><span class="p">,</span> <span class="s1">&#39;rev-parse&#39;</span><span class="p">,</span> <span class="s1">&#39;--abbrev-ref&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">],</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">-</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 
 
@@ -267,58 +267,58 @@ password = test
 <ul>
 <li>
 <p>调度爬虫</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>somespider
-<span class="c"># 带上参数</span>
-<span class="nv">$ </span>curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>somespider -d <span class="nv">setting</span><span class="o">=</span><span class="nv">DOWNLOAD_DELAY</span><span class="o">=</span><span class="m">2</span> -d <span class="nv">arg1</span><span class="o">=</span>val1
+<div class="highlight"><pre>$ curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>somespider
+<span class="c1"># 带上参数</span>
+$ curl http://localhost:6800/schedule.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">spider</span><span class="o">=</span>somespider -d <span class="nv">setting</span><span class="o">=</span><span class="nv">DOWNLOAD_DELAY</span><span class="o">=</span><span class="m">2</span> -d <span class="nv">arg1</span><span class="o">=</span>val1
 </pre></div>
 
 
 </li>
 <li>
 <p>取消</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/cancel.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">job</span><span class="o">=</span>6487ec79947edab326d6db28a2d86511e8247444
+<div class="highlight"><pre>$ curl http://localhost:6800/cancel.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">job</span><span class="o">=</span>6487ec79947edab326d6db28a2d86511e8247444
 </pre></div>
 
 
 </li>
 <li>
 <p>列出项目</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listprojects.json
+<div class="highlight"><pre>$ curl http://localhost:6800/listprojects.json
 </pre></div>
 
 
 </li>
 <li>
 <p>列出版本</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listversions.json?project<span class="o">=</span>myproject
+<div class="highlight"><pre>$ curl http://localhost:6800/listversions.json?project<span class="o">=</span>myproject
 </pre></div>
 
 
 </li>
 <li>
 <p>列出爬虫</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listspiders.json?project<span class="o">=</span>myproject
+<div class="highlight"><pre>$ curl http://localhost:6800/listspiders.json?project<span class="o">=</span>myproject
 </pre></div>
 
 
 </li>
 <li>
 <p>列出job</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/listjobs.json?project<span class="o">=</span>myproject
+<div class="highlight"><pre>$ curl http://localhost:6800/listjobs.json?project<span class="o">=</span>myproject
 </pre></div>
 
 
 </li>
 <li>
 <p>删除版本</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/delversion.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">version</span><span class="o">=</span>r99
+<div class="highlight"><pre>$ curl http://localhost:6800/delversion.json -d <span class="nv">project</span><span class="o">=</span>myproject -d <span class="nv">version</span><span class="o">=</span>r99
 </pre></div>
 
 
 </li>
 <li>
 <p>删除项目</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl http://localhost:6800/delproject.json -d <span class="nv">project</span><span class="o">=</span>myproject
+<div class="highlight"><pre>$ curl http://localhost:6800/delproject.json -d <span class="nv">project</span><span class="o">=</span>myproject
 </pre></div>
 
 

@@ -70,12 +70,12 @@ On 2013-11-03
 
         <div><p>Ubuntu上面自己手动安装<span class="caps">JDK</span>的方法如下:
 首先下载jdk-7u45-linux-i586.tar.gz压缩包，并解压到 <code>/usr/local/lib/jdk1.7.0_45</code> ,&nbsp;再执行下面的脚本</p>
-<div class="highlight"><pre><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><span class="ch">#!/bin/bash</span>
 <span class="nv">JDK_BIN_PATH</span><span class="o">=</span>/usr/local/lib/jdk1.7.0_45/bin
-<span class="k">for</span> x in <span class="k">$(</span>find <span class="nv">$JDK_BIN_PATH</span><span class="k">)</span>
+<span class="k">for</span> x in <span class="k">$(</span>find $JDK_BIN_PATH<span class="k">)</span>
 <span class="k">do</span>
-    <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$x</span><span class="k">)</span>
-    sudo update-alternatives --install /usr/bin/<span class="nv">$name</span> <span class="nv">$name</span> <span class="nv">$x</span> 300
+    <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename $x<span class="k">)</span>
+    sudo update-alternatives --install /usr/bin/$name $name $x 300
 <span class="k">done</span>
 </pre></div>
 </div>

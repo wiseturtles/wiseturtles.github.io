@@ -74,88 +74,88 @@ On 2015-05-23
 <p>我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&nbsp;4。</p>
 <h1>监控主机安装Nagios</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
+<div class="highlight"><pre>$ sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
 </pre></div>
 
 
 <h2>创建用户、组</h2>
-<div class="highlight"><pre><span class="nv">$ </span>sudo useradd nagios
-<span class="nv">$ </span>sudo groupadd nagcmd
-<span class="nv">$ </span>sudo usermod -a -G nagcmd nagios
+<div class="highlight"><pre>$ sudo useradd nagios
+$ sudo groupadd nagcmd
+$ sudo usermod -a -G nagcmd nagios
 </pre></div>
 
 
 <h2>安装nagios&nbsp;4</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
-<span class="nv">$ </span>wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
-<span class="nv">$ </span>tar zxf nagios-4.0.8.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>nagios-4.0.8
-<span class="nv">$ </span>./configure --with-nagios-group<span class="o">=</span>nagios --with-command-group<span class="o">=</span>nagcmd --with-mail<span class="o">=</span><span class="k">$(</span>which sendmail<span class="k">)</span>
-<span class="nv">$ </span>sudo make all
-<span class="nv">$ </span>sudo make install <span class="o">&amp;&amp;</span> make install-commandmode <span class="o">&amp;&amp;</span> make install-init <span class="o">&amp;&amp;</span> make install-config
-<span class="nv">$ </span>sudo ln -s /etc/init.d/nagios /etc/rcS.d/S99nagios <span class="c"># 开机自启动</span>
-<span class="nv">$ </span>sudo service nagios restart
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+$ wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
+$ tar zxf nagios-4.0.8.tar.gz
+$ <span class="nb">cd</span> nagios-4.0.8
+$ ./configure --with-nagios-group<span class="o">=</span>nagios --with-command-group<span class="o">=</span>nagcmd --with-mail<span class="o">=</span><span class="k">$(</span>which sendmail<span class="k">)</span>
+$ sudo make all
+$ sudo make install <span class="o">&amp;&amp;</span> make install-commandmode <span class="o">&amp;&amp;</span> make install-init <span class="o">&amp;&amp;</span> make install-config
+$ sudo ln -s /etc/init.d/nagios /etc/rcS.d/S99nagios <span class="c1"># 开机自启动</span>
+$ sudo service nagios restart
 </pre></div>
 
 
 <p>配置apache2</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo /usr/bin/install -c -m <span class="m">644</span> sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
-<span class="nv">$ </span>sudo ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/
-<span class="nv">$ </span>sudo a2enmod rewrite
-<span class="nv">$ </span>sudo a2enmod cgi
-<span class="nv">$ </span>sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
-<span class="nv">$ </span>sudo service apache2 restart
+<div class="highlight"><pre>$ sudo /usr/bin/install -c -m <span class="m">644</span> sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
+$ sudo ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/
+$ sudo a2enmod rewrite
+$ sudo a2enmod cgi
+$ sudo htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
+$ sudo service apache2 restart
 </pre></div>
 
 
 <p>浏览器访问 http://监控主机<span class="caps">IP</span>/nagios 查看监控情况, 登录用户名、密码就是 htpasswd 设置的。
 nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&nbsp;是配置文件夹。</p>
 <h2>安装nagios-plugins-2.0.3</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
-<span class="nv">$ </span>wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
-<span class="nv">$ </span>tar zxf nagios-plugins-2.0.3.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>nagios-plugins-2.0.3
-<span class="nv">$ </span>./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-openssl
-<span class="nv">$ </span>make all <span class="o">&amp;&amp;</span> make install
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+$ wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
+$ tar zxf nagios-plugins-2.0.3.tar.gz
+$ <span class="nb">cd</span> nagios-plugins-2.0.3
+$ ./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-openssl
+$ make all <span class="o">&amp;&amp;</span> make install
 </pre></div>
 
 
 <p>nagios-plugins 命令安装在 /usr/local/nagios/libexec&nbsp;目录。</p>
 <h2>安装nagios-nrpe-2.15</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
-<span class="nv">$ </span>wget -O nrpe-2.15.tar.gz <span class="s2">&quot;http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fnagios%2Ffiles%2Fnrpe-2.x%2Fnrpe-2.15%2F&amp;ts=1432369927&amp;use_mirror=liquidtelecom&quot;</span>
-<span class="nv">$ </span>tar zxf nrpe-2.15.tar.gz
-<span class="nv">$ </span><span class="nb">cd </span>nrpe-2.15
-<span class="nv">$ </span>./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-ssl<span class="o">=</span>/usr/bin/openssl --with-ssl-lib<span class="o">=</span>/usr/lib/x86_64-linux-gnu 
-<span class="nv">$ </span>make all
-<span class="nv">$ </span>find -iname <span class="s1">&#39;check_nrpe&#39;</span>
-<span class="nv">$ </span>sudo /usr/bin/install -c -m <span class="m">755</span> ./src/check_nrpe /usr/local/nagios/libexec/
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+$ wget -O nrpe-2.15.tar.gz <span class="s2">&quot;http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fnagios%2Ffiles%2Fnrpe-2.x%2Fnrpe-2.15%2F&amp;ts=1432369927&amp;use_mirror=liquidtelecom&quot;</span>
+$ tar zxf nrpe-2.15.tar.gz
+$ <span class="nb">cd</span> nrpe-2.15
+$ ./configure --with-nagios-user<span class="o">=</span>nagios --with-nagios-group<span class="o">=</span>nagios --with-ssl<span class="o">=</span>/usr/bin/openssl --with-ssl-lib<span class="o">=</span>/usr/lib/x86_64-linux-gnu 
+$ make all
+$ find -iname <span class="s1">&#39;check_nrpe&#39;</span>
+$ sudo /usr/bin/install -c -m <span class="m">755</span> ./src/check_nrpe /usr/local/nagios/libexec/
 </pre></div>
 
 
 <p>测试是否可以工作:</p>
-<div class="highlight"><pre><span class="nv">$ </span>/usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 <span class="c"># 该IP是被监控主机的IP</span>
+<div class="highlight"><pre>$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 <span class="c1"># 该IP是被监控主机的IP</span>
 NRPE v2.13
 </pre></div>
 
 
 <h1>被监控主机安装Nagios <span class="caps">NRPE</span></h1>
 <p>安装nagios-plugins,&nbsp;nagios-nrpe-server</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install nagios-plugins nagios-nrpe-server
+<div class="highlight"><pre>$ sudo apt-get install nagios-plugins nagios-nrpe-server
 </pre></div>
 
 
 <p>配置nagios-nrpe-server，允许监控主机连接该被监控主机。</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo vim /etc/nagios/nrpe.cfg
-<span class="nv">$ </span>将 监控主机IP 填入 allowed_hosts 字段，如: <span class="nv">allowed_hosts</span><span class="o">=</span>127.0.0.1,10.4.22.22
-<span class="nv">$ </span>sudo service nagios-nrpe-server restart
+<div class="highlight"><pre>$ sudo vim /etc/nagios/nrpe.cfg
+$ 将 监控主机IP 填入 allowed_hosts 字段，如: <span class="nv">allowed_hosts</span><span class="o">=</span>127.0.0.1,10.4.22.22
+$ sudo service nagios-nrpe-server restart
 </pre></div>
 
 
 <h1>配置</h1>
 <h2>配置监控主机</h2>
 <p>/usr/local/nagios/etc/nagios.cfg</p>
-<div class="highlight"><pre><span class="nv">$ </span>diff -u nagios.cfg.back nagios.cfg
+<div class="highlight"><pre>$ diff -u nagios.cfg.back nagios.cfg
 --- nagios.cfg.back2015-05-23 11:07:51.436491931 +0800
 +++ nagios.cfg2015-05-23 22:08:09.872618927 +0800
 @@ -30,6 +30,9 @@
@@ -166,11 +166,11 @@ NRPE v2.13
 +cfg_file<span class="o">=</span>/usr/local/nagios/etc/objects/groups.cfg
 +cfg_file<span class="o">=</span>/usr/local/nagios/etc/objects/services.cfg
 
-<span class="c"># Definitions for monitoring the local (Linux) host</span>
+<span class="c1"># Definitions for monitoring the local (Linux) host</span>
 <span class="nv">cfg_file</span><span class="o">=</span>/usr/local/nagios/etc/objects/localhost.cfg
 @@ -1174,7 +1177,7 @@
-<span class="c"># using the $ADMINEMAIL$ and $ADMINPAGER$ macros in your notification</span>
-<span class="c"># commands.</span>
+<span class="c1"># using the $ADMINEMAIL$ and $ADMINPAGER$ macros in your notification</span>
+<span class="c1"># commands.</span>
 
 -admin_email<span class="o">=</span>nagios@localhost
 +admin_email<span class="o">=</span>your-emai-address
@@ -179,76 +179,76 @@ NRPE v2.13
 
 
 <p>/usr/local/nagios/etc/objects/hosts.cfg</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="c"># Define a host for the local machine</span>
-<span class="c">##############</span>
-<span class="c"># appstore01 #</span>
-<span class="c">##############</span>
+<div class="highlight"><pre>$ <span class="c1"># Define a host for the local machine</span>
+<span class="c1">##############</span>
+<span class="c1"># appstore01 #</span>
+<span class="c1">##############</span>
 define host<span class="o">{</span>
     use                             linux-server  <span class="p">;</span> Name of host template to use
                                     <span class="p">;</span> This host definition will inherit all variables that are defined
                                     <span class="p">;</span> in <span class="o">(</span>or inherited by<span class="o">)</span> the linux-server host template definition.
     host_name                       appstore01
-    <span class="nb">alias                           </span>appstore01 on ucloud
+    <span class="nb">alias</span>                           appstore01 on ucloud
     address                         10.4.2.2
     <span class="o">}</span>
 
-<span class="c">##############</span>
-<span class="c"># appstore02 #</span>
-<span class="c">##############</span>
+<span class="c1">##############</span>
+<span class="c1"># appstore02 #</span>
+<span class="c1">##############</span>
 define host<span class="o">{</span>
     use                             linux-server  <span class="p">;</span> Name of host template to use
                                     <span class="p">;</span> This host definition will inherit all variables that are defined
                                     <span class="p">;</span> in <span class="o">(</span>or inherited by<span class="o">)</span> the linux-server host template definition.
     host_name                       appstore02
-    <span class="nb">alias                           </span>appstore02 on ucloud
+    <span class="nb">alias</span>                           appstore02 on ucloud
     address                         10.4.2.22
     <span class="o">}</span>
 </pre></div>
 
 
 <p>/usr/local/nagios/etc/objects/groups.cfg</p>
-<div class="highlight"><pre><span class="c"># Define an optional hostgroup for Linux machines</span>
+<div class="highlight"><pre><span class="c1"># Define an optional hostgroup for Linux machines</span>
 define hostgroup<span class="o">{</span>
     hostgroup_name  appstore-group <span class="p">;</span> The name of the hostgroup
-    <span class="nb">alias           </span>appstore server group <span class="p">;</span> Long name of the group
+    <span class="nb">alias</span>           appstore server group <span class="p">;</span> Long name of the group
     members         appstore01,appstore02     <span class="p">;</span> Comma separated list of hosts that belong to this group
     <span class="o">}</span>
 </pre></div>
 
 
 <p>/etc/local/nagios/etc/objects/commands.cfg</p>
-<div class="highlight"><pre><span class="nv">$ </span>diff -u objects/commands.cfg.back objects/commands.cfg
+<div class="highlight"><pre>$ diff -u objects/commands.cfg.back objects/commands.cfg
 +########################
-+# add by zhang wanming <span class="c">#</span>
++# add by zhang wanming <span class="c1">#</span>
 +########################
-+# <span class="s1">&#39;check_mysql&#39;</span> <span class="nb">command </span>definition
-+define <span class="nb">command</span><span class="o">{</span>
++# <span class="s1">&#39;check_mysql&#39;</span> <span class="nb">command</span> definition
++define command<span class="o">{</span>
 +   command_name    check_mysql
-+   command_line    <span class="nv">$USER1$/</span>check_mysql -H <span class="nv">$HOSTADDRESS$ </span>-u <span class="nv">$ARG1$ </span>-p <span class="nv">$ARG2$ </span>-d <span class="nv">$ARG3$ </span>-P 3306
++   command_line    $USER1$/check_mysql -H $HOSTADDRESS$ -u <span class="nv">$A</span>RG1$ -p <span class="nv">$A</span>RG2$ -d <span class="nv">$A</span>RG3$ -P 3306
 +   <span class="o">}</span>
 
-+# <span class="s1">&#39;check_http_with_url_port&#39;</span> <span class="nb">command </span>definition
-+define <span class="nb">command</span><span class="o">{</span>
++# <span class="s1">&#39;check_http_with_url_port&#39;</span> <span class="nb">command</span> definition
++define command<span class="o">{</span>
 +        command_name    check_http_with_url_port
-+        command_line    <span class="nv">$USER1$/</span>check_http -I <span class="nv">$HOSTADDRESS$ </span>-u <span class="nv">$ARG1$ </span>-p <span class="nv">$ARG2</span><span class="err">$</span>
++        command_line    $USER1$/check_http -I $HOSTADDRESS$ -u <span class="nv">$A</span>RG1$ -p <span class="nv">$A</span>RG2$
 +        <span class="o">}</span>
 +
-+# <span class="s1">&#39;check_nrpe&#39;</span> <span class="nb">command </span>definition
-+define <span class="nb">command</span><span class="o">{</span>
++# <span class="s1">&#39;check_nrpe&#39;</span> <span class="nb">command</span> definition
++define command<span class="o">{</span>
 +        command_name check_nrpe
-+        command_line <span class="nv">$USER1$/</span>check_nrpe -H <span class="nv">$HOSTADDRESS$ </span>-c <span class="nv">$ARG1</span><span class="err">$</span>
++        command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c <span class="nv">$A</span>RG1$
 +        <span class="o">}</span>
 +
-+# <span class="s1">&#39;check_memcached&#39;</span> <span class="nb">command </span>definition
-+define <span class="nb">command</span><span class="o">{</span>
++# <span class="s1">&#39;check_memcached&#39;</span> <span class="nb">command</span> definition
++define command<span class="o">{</span>
 +        command_name check_memcached
-+        command_line <span class="nv">$USER1$/</span>check_tcp -H <span class="nv">$HOSTADDRESS$ </span>-p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
++        command_line $USER1$/check_tcp -H $HOSTADDRESS$ -p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
 +        <span class="o">}</span>
 </pre></div>
 
 
 <p>/etc/local/nagios/etc/objects/services.cfg</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat objects/services.cfg 
+<div class="highlight"><pre>$ cat objects/services.cfg 
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -263,9 +263,9 @@ define service <span class="o">{</span>
         check_command                   check_ssh!-p 1122
 <span class="o">}</span>
 
-<span class="c">#################</span>
-<span class="c"># HTTP services #</span>
-<span class="c">#################</span>
+<span class="c1">#################</span>
+<span class="c1"># HTTP services #</span>
+<span class="c1">#################</span>
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -294,9 +294,9 @@ define service <span class="o">{</span>
         check_command                   check_nrpe!check_http_launcher
 <span class="o">}</span>
 
-<span class="c">#########</span>
-<span class="c"># Redis #</span>
-<span class="c">#########</span>
+<span class="c1">#########</span>
+<span class="c1"># Redis #</span>
+<span class="c1">#########</span>
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -304,9 +304,9 @@ define service <span class="o">{</span>
         check_command                   check_nrpe!check_redis
 <span class="o">}</span>
 
-<span class="c">#############</span>
-<span class="c"># Memcached #</span>
-<span class="c">#############</span>
+<span class="c1">#############</span>
+<span class="c1"># Memcached #</span>
+<span class="c1">#############</span>
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -314,9 +314,9 @@ define service <span class="o">{</span>
         check_command                   check_nrpe!check_memcached
 <span class="o">}</span>
 
-<span class="c">#########</span>
-<span class="c"># MySQL #</span>
-<span class="c">#########</span>
+<span class="c1">#########</span>
+<span class="c1"># MySQL #</span>
+<span class="c1">#########</span>
 define service <span class="o">{</span>
         use                             generic-service
         host_name                       appstore01
@@ -324,9 +324,9 @@ define service <span class="o">{</span>
         check_command                   check_nrpe!check_mysql
 <span class="o">}</span>
 
-<span class="c">################</span>
-<span class="c"># disk/partion #</span>
-<span class="c">################</span>
+<span class="c1">################</span>
+<span class="c1"># disk/partion #</span>
+<span class="c1">################</span>
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -344,18 +344,18 @@ define service <span class="o">{</span>
 
 
 <h2>配置被监控主机</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/nagios/nrpe_local.cfg 
-<span class="c">######################################</span>
-<span class="c"># Do any local nrpe configuration here</span>
-<span class="c">######################################</span>
-<span class="nb">command</span><span class="o">[</span>check_disk_root<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /
-<span class="nb">command</span><span class="o">[</span>check_disk_data<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /data
-<span class="nb">command</span><span class="o">[</span>check_redis<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">6379</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;info\r\n&#39;</span> -q <span class="s1">&#39;quit\r\n&#39;</span> -e <span class="s1">&#39;uptime_in_days&#39;</span> -M crit
-<span class="nb">command</span><span class="o">[</span>check_memcached<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
-<span class="nb">command</span><span class="o">[</span>check_mysql<span class="o">]=</span>/usr/lib/nagios/plugins/check_mysql -H localhost -u user -p passwd -d your-database
-<span class="nb">command</span><span class="o">[</span>check_http_tdanceweb<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">6688</span> -t 3
-<span class="nb">command</span><span class="o">[</span>check_http_appstore<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">8888</span> -t <span class="m">3</span> -u /m3/subjects
-<span class="nb">command</span><span class="o">[</span>check_http_launcher<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">9999</span> -t 3
+<div class="highlight"><pre>$ cat /etc/nagios/nrpe_local.cfg 
+<span class="c1">######################################</span>
+<span class="c1"># Do any local nrpe configuration here</span>
+<span class="c1">######################################</span>
+command<span class="o">[</span>check_disk_root<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /
+command<span class="o">[</span>check_disk_data<span class="o">]=</span>/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /data
+command<span class="o">[</span>check_redis<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">6379</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;info\r\n&#39;</span> -q <span class="s1">&#39;quit\r\n&#39;</span> -e <span class="s1">&#39;uptime_in_days&#39;</span> -M crit
+command<span class="o">[</span>check_memcached<span class="o">]=</span>/usr/lib/nagios/plugins/check_tcp -H localhost -p <span class="m">11211</span> -t <span class="m">5</span> -E -s <span class="s1">&#39;stats\r\nquit\r\n&#39;</span> -e <span class="s1">&#39;uptime&#39;</span> -M crit
+command<span class="o">[</span>check_mysql<span class="o">]=</span>/usr/lib/nagios/plugins/check_mysql -H localhost -u user -p passwd -d your-database
+command<span class="o">[</span>check_http_tdanceweb<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">6688</span> -t 3
+command<span class="o">[</span>check_http_appstore<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">8888</span> -t <span class="m">3</span> -u /m3/subjects
+command<span class="o">[</span>check_http_launcher<span class="o">]=</span>/usr/lib/nagios/plugins/check_http -H localhost -p <span class="m">9999</span> -t 3
 </pre></div>
 
 
@@ -366,7 +366,7 @@ define service <span class="o">{</span>
 <p>编辑/etc/nagios/nrpe.cfg, 确定 allowed_hosts 中加入监控主机<span class="caps">IP</span>，多个<span class="caps">IP</span>以 &#8220;,&#8221; 分隔。
 如:&nbsp;allowed_hosts=127.0.0.1,10.4.13.14</p>
 <p>然后，重新加载 nagios-nrpe-server&nbsp;配置文件，如下：</p>
-<div class="highlight"><pre><span class="nv">$ </span>service nagios-nrpe-server reload
+<div class="highlight"><pre>$ service nagios-nrpe-server reload
 </pre></div>
 
 

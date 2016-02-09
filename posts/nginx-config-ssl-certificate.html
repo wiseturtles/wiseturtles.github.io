@@ -93,14 +93,14 @@ On 2015-10-10
 <p>证书申请到会提示下载一个zip文件，解压缩后有 <code>for Nginx.zip</code>，解压缩<code>for Nginx.zip</code>得到 <code>*.crt</code> 和 <code>*.key</code>。
 将<code>.crt</code> 和 <code>.key</code> 文件放入Nginx主机的 /etc/ssl&nbsp;目录。</p>
 <p>生成dhparam.pem:</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /etc/ssl/certs
-<span class="nv">$ </span>openssl dhparam -out dhparam.pem 4096
+<div class="highlight"><pre>$ <span class="nb">cd</span> /etc/ssl/certs
+$ openssl dhparam -out dhparam.pem 4096
 </pre></div>
 
 
 <p>同时，启用了spdy，参考: <a href="https://www.vobe.io/114">https://www.vobe.io/114</a></p>
 <p>Nginx配置文件(<code>/etc/nginx/sites-avaiable/default</code>)如下:</p>
-<div class="highlight"><pre><span class="nf">#server</span> <span class="p">{</span>
+<div class="highlight"><pre><span class="nn">#server</span> <span class="p">{</span>
 <span class="err">#</span>   <span class="n">listen</span> <span class="m">80</span><span class="p">;</span>
 <span class="err">#</span>   <span class="n">server_name</span> <span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="p">;</span>
 <span class="err">#</span>   <span class="n">add_header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="m">15768000</span><span class="p">;</span>
@@ -155,7 +155,7 @@ On 2015-10-10
 
 <h2>测试<span class="caps">HTTPS</span></h2>
 <p>curl测试服务器上的https接口:</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl https://your-domain/your-services
+<div class="highlight"><pre>$ curl https://your-domain/your-services
 </pre></div>
 
 

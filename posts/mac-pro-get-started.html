@@ -70,12 +70,12 @@ On 2015-07-18
         <div><p>貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&nbsp;下面记录下环境配置和最近使用感受。</p>
 <h2>Xcode</h2>
 <h3>安装Xcode命令行工具:</h3>
-<div class="highlight"><pre><span class="nv">$ </span>xcode-select --install
+<div class="highlight"><pre>$ xcode-select --install
 </pre></div>
 
 
 <h3>Xcode包管理工具<a href="http://alcatraz.io/">Alcatraz</a>安装:</h3>
-<div class="highlight"><pre><span class="nv">$ </span>curl -fsSL https://raw.githubusercontent.com/supermarin/Alcatraz/deploy/Scripts/install.sh <span class="p">|</span> sh
+<div class="highlight"><pre>$ curl -fsSL https://raw.githubusercontent.com/supermarin/Alcatraz/deploy/Scripts/install.sh <span class="p">|</span> sh
 </pre></div>
 
 
@@ -90,24 +90,24 @@ On 2015-07-18
 </blockquote>
 <h2>Homebrew</h2>
 <p><a href="http://brew.sh">Homebrew</a>是Mac中非常受欢迎的包管理工具，熟悉Linux的朋友一定知道rpm/yum,&nbsp;dpkg/apt等。</p>
-<div class="highlight"><pre><span class="nv">$ </span>ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nv">$ </span>brew doctor
-<span class="nv">$ </span>man brew                     <span class="c"># manpage for brew</span>
-<span class="nv">$ </span>brew install &lt;package-name&gt;  <span class="c"># install package</span>
-<span class="nv">$ </span>brew update
-<span class="nv">$ </span>brew outdated
-<span class="nv">$ </span>brew upgrade &lt;package-name&gt;
-<span class="nv">$ </span>brew cleanup
-<span class="nv">$ </span>brew list --versions
+<div class="highlight"><pre>$ ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">&quot;</span>
+$ brew doctor
+$ man brew                     <span class="c1"># manpage for brew</span>
+$ brew install &lt;package-name&gt;  <span class="c1"># install package</span>
+$ brew update
+$ brew outdated
+$ brew upgrade &lt;package-name&gt;
+$ brew cleanup
+$ brew list --versions
 </pre></div>
 
 
 <h2>Homebrew&nbsp;Cask</h2>
 <p>通过Homebrew可以方便的管理命令行程序，Homebrew&nbsp;Cask可以管理图形界面程序。</p>
-<div class="highlight"><pre><span class="nv">$ </span>brew tap caskroom/cask
-<span class="nv">$ </span>brew install brew-cask
-<span class="nv">$ </span>brew cask install google-chrome
-<span class="nv">$ </span>brew update <span class="o">&amp;&amp;</span> brew upgrade brew-cask <span class="o">&amp;&amp;</span> brew cleanup
+<div class="highlight"><pre>$ brew tap caskroom/cask
+$ brew install brew-cask
+$ brew cask install google-chrome
+$ brew update <span class="o">&amp;&amp;</span> brew upgrade brew-cask <span class="o">&amp;&amp;</span> brew cleanup
 </pre></div>
 
 
@@ -117,9 +117,9 @@ On 2015-07-18
 <li>关闭烦人的bell: <code>iTerm 2: Preferences -&gt; Profiles -&gt; Tab: Terminal -&gt; Notifications -&gt; Silence Bell</code></li>
 </ul>
 <h2>Zsh</h2>
-<div class="highlight"><pre><span class="nv">$ </span>brew install zsh zsh-completions
-<span class="nv">$ </span>sh -c <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="k">)</span><span class="s2">&quot;</span>
-<span class="nv">$ </span>chsh -s /bin/zsh
+<div class="highlight"><pre>$ brew install zsh zsh-completions
+$ sh -c <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+$ chsh -s /bin/zsh
 </pre></div>
 
 
@@ -157,30 +157,30 @@ brew install wget
 export <span class="caps">PATH</span>=$GEM_HOME/ruby/2.0.0/bin:$<span class="caps">PATH</span></p>
 </blockquote>
 <p>通过下面命令安装CocoaPods:</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">source</span> ~/.zshrc  <span class="c"># 获取GEM_HOME, PATH配置</span>
-<span class="nv">$ </span>gem sources -l  <span class="c"># 列出当前ruby gem源地址</span>
-<span class="nv">$ </span>gem sources --remove https://rubygems.org/  <span class="c"># 删除官方源</span>
-<span class="nv">$ </span>gem sources -a https://ruby.taobao.org/  <span class="c"># 使用淘宝ruby gem镜像</span>
-<span class="nv">$ </span>gem install cocoapods --user-install  <span class="c"># 安装CocoaPods</span>
-<span class="nv">$ </span>pod install
+<div class="highlight"><pre>$ <span class="nb">source</span> ~/.zshrc  <span class="c1"># 获取GEM_HOME, PATH配置</span>
+$ gem sources -l  <span class="c1"># 列出当前ruby gem源地址</span>
+$ gem sources --remove https://rubygems.org/  <span class="c1"># 删除官方源</span>
+$ gem sources -a https://ruby.taobao.org/  <span class="c1"># 使用淘宝ruby gem镜像</span>
+$ gem install cocoapods --user-install  <span class="c1"># 安装CocoaPods</span>
+$ pod install
 </pre></div>
 
 
 <p>使用CocoaPods国内镜像索引:</p>
-<div class="highlight"><pre><span class="nv">$ </span>pod repo  <span class="c"># 查看repo信息，下面修改repo master git URL</span>
-<span class="nv">$ </span>pod repo remove master
-<span class="nv">$ </span>pod repo add master https://gitcafe.com/akuandev/Specs.git
-<span class="nv">$ </span>pod repo update
+<div class="highlight"><pre>$ pod repo  <span class="c1"># 查看repo信息，下面修改repo master git URL</span>
+$ pod repo remove master
+$ pod repo add master https://gitcafe.com/akuandev/Specs.git
+$ pod repo update
 </pre></div>
 
 
 <p>CocoaPods的更多介绍请阅读<a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a></p>
 <h2>vim</h2>
 <p>常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。</p>
-<div class="highlight"><pre><span class="nv">$ </span>brew install macvim  <span class="c"># 只使用了macvim，没有用原生vim</span>
-<span class="nv">$ </span>ln -s /usr/local/bin/mvim /usr/local/bin/vim  <span class="c"># 否则YouCompleteMe等plugin会报无法安装需要 vim 7.4 之类的</span>
-<span class="nv">$ </span>git clone https://github.com/wklken/k-vim.git ~/k-vim
-<span class="nv">$ </span><span class="nb">cd</span> ~/k-vim <span class="o">&amp;&amp;</span> bash -x install.sh
+<div class="highlight"><pre>$ brew install macvim  <span class="c1"># 只使用了macvim，没有用原生vim</span>
+$ ln -s /usr/local/bin/mvim /usr/local/bin/vim  <span class="c1"># 否则YouCompleteMe等plugin会报无法安装需要 vim 7.4 之类的</span>
+$ git clone https://github.com/wklken/k-vim.git ~/k-vim
+$ <span class="nb">cd</span> ~/k-vim <span class="o">&amp;&amp;</span> bash -x install.sh
 </pre></div>
 
 
@@ -191,22 +191,22 @@ export <span class="caps">PATH</span>=$GEM_HOME/ruby/2.0.0/bin:$<span class="cap
 <p><span class="caps">IDEA</span>运行需要<span class="caps">JDK</span>，从oracle官网下载、安装Java 1.8 <span class="caps">JDK</span>。</p>
 <p>从<span class="caps">IDEA</span> -&gt; Project Default -&gt; Project Structure -&gt; <span class="caps">SDKS</span>中添加<span class="caps">JDK</span>和Intellij Platform Plugin <span class="caps">SDK</span>。（需要选择<span class="caps">JDK</span>、Intellij的目录）</p>
 <p>安装go-lang-idea-plugin插件，可以从<a href="https://plugins.jetbrains.com/plugin/5047">官网</a>下载安装；也可以通过下面方式编译安装。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
+<div class="highlight"><pre>$ git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
 </pre></div>
 
 
 <p><span class="caps">IDEA</span>中打开该plugin代码，配置<span class="caps">IDEA</span> Platform <span class="caps">SDK</span>版本，Build出jar包。然后，选择jar包安装。</p>
 <p>配置<span class="caps">IDEA</span>的golang开发环境浪费了很多时间，尝试了不同版本的<a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin">go-lang-idea-plugin</a>，总是报错“The selected directory is not a valid home for Go <span class="caps">SDK</span>”。
 最后运行下面命令再选择<span class="caps">GO</span> <span class="caps">SDK</span>目录终于可以了。</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$GOROOT</span>
+<div class="highlight"><pre>$ <span class="nb">echo</span> $GOROOT
 /Users/&lt;my-home&gt;/Projects/golang/sdk
-<span class="nv">$ </span><span class="nb">echo</span> <span class="nv">$GOPATH</span>
+$ <span class="nb">echo</span> $GOPATH
 /Users/&lt;my-home&gt;/Projects/golang/mygo
-<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOROOT</span>
-<span class="nv">$ </span>git checkout -b go1.4.2 go1.4.2
-<span class="nv">$ </span><span class="nb">cd </span>src <span class="o">&amp;&amp;</span> ./all.bash
-<span class="nv">$ </span>cp <span class="nv">$GOPATH</span>/bin/go <span class="nv">$GOROOT</span>/bin/
-<span class="nv">$ </span>cp <span class="nv">$GOPATH</span>/bin/gofmt <span class="nv">$GOROOT</span>/bin/
+$ <span class="nb">cd</span> $GOROOT
+$ git checkout -b go1.4.2 go1.4.2
+$ <span class="nb">cd</span> src <span class="o">&amp;&amp;</span> ./all.bash
+$ cp $GOPATH/bin/go $GOROOT/bin/
+$ cp $GOPATH/bin/gofmt $GOROOT/bin/
 </pre></div>
 
 

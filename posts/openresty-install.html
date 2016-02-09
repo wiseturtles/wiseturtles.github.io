@@ -77,106 +77,106 @@ On 2015-02-06
 <ol>
 <li>
 <p>创建如下文件:</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/init.d/nginx
+<div class="highlight"><pre>$ cat /etc/init.d/nginx
 
-<span class="c">#!/bin/bash</span>
-<span class="c">#</span>
-<span class="c"># chkconfig: 2345 55 25</span>
-<span class="c"># Description: Nginx init.d script, put in /etc/init.d, chmod +x /etc/init.d/nginx</span>
-<span class="c">#              For Debian, run: update-rc.d -f nginx defaults</span>
-<span class="c">#              For CentOS, run: chkconfig --add nginx</span>
-<span class="c">#</span>
-<span class="c">### BEGIN INIT INFO</span>
-<span class="c"># Provides:          nginx</span>
-<span class="c"># Required-Start:    $all</span>
-<span class="c"># Required-Stop:     $all</span>
-<span class="c"># Default-Start:     2 3 4 5</span>
-<span class="c"># Default-Stop:      0 1 6</span>
-<span class="c"># Short-Description: nginx init.d script</span>
-<span class="c"># Description:       OpenResty (aka. ngx_openresty) is a full-fledged web application server by bundling the standard Nginx core,</span>
-<span class="c">#                    lots of 3rd-party Nginx modules, as well as most of their external dependencies.</span>
-<span class="c">### END INIT INFO</span>
-<span class="c">#</span>
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#</span>
+<span class="c1"># chkconfig: 2345 55 25</span>
+<span class="c1"># Description: Nginx init.d script, put in /etc/init.d, chmod +x /etc/init.d/nginx</span>
+<span class="c1">#              For Debian, run: update-rc.d -f nginx defaults</span>
+<span class="c1">#              For CentOS, run: chkconfig --add nginx</span>
+<span class="c1">#</span>
+<span class="c1">### BEGIN INIT INFO</span>
+<span class="c1"># Provides:          nginx</span>
+<span class="c1"># Required-Start:    $all</span>
+<span class="c1"># Required-Stop:     $all</span>
+<span class="c1"># Default-Start:     2 3 4 5</span>
+<span class="c1"># Default-Stop:      0 1 6</span>
+<span class="c1"># Short-Description: nginx init.d script</span>
+<span class="c1"># Description:       OpenResty (aka. ngx_openresty) is a full-fledged web application server by bundling the standard Nginx core,</span>
+<span class="c1">#                    lots of 3rd-party Nginx modules, as well as most of their external dependencies.</span>
+<span class="c1">### END INIT INFO</span>
+<span class="c1">#</span>
 
 <span class="nv">PATH</span><span class="o">=</span>/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 <span class="nv">DESC</span><span class="o">=</span><span class="s2">&quot;Nginx Daemon&quot;</span>
 <span class="nv">NAME</span><span class="o">=</span>nginx
 <span class="nv">PREFIX</span><span class="o">=</span>/etc/openresty/nginx
-<span class="nv">DAEMON</span><span class="o">=</span><span class="nv">$PREFIX</span>/sbin/<span class="nv">$NAME</span>
-<span class="nv">CONF</span><span class="o">=</span><span class="nv">$PREFIX</span>/conf/<span class="nv">$NAME</span>.conf
-<span class="nv">PID</span><span class="o">=</span><span class="nv">$PREFIX</span>/logs/<span class="nv">$NAME</span>.pid
-<span class="nv">SCRIPT</span><span class="o">=</span>/etc/init.d/<span class="nv">$NAME</span>
+<span class="nv">DAEMON</span><span class="o">=</span>$PREFIX/sbin/$NAME
+<span class="nv">CONF</span><span class="o">=</span>$PREFIX/conf/$NAME.conf
+<span class="nv">PID</span><span class="o">=</span>$PREFIX/logs/$NAME.pid
+<span class="nv">SCRIPT</span><span class="o">=</span>/etc/init.d/$NAME
 
-<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$DAEMON</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$CONF</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DAEMON</span><span class="s2"> has no permission to run. \033[0m&quot;</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m Or </span><span class="nv">$CONF</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$DAE</span><span class="s2">MON&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$C</span><span class="s2">ONF&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DAE</span><span class="s2">MON has no permission to run. \033[0m&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m Or </span><span class="nv">$C</span><span class="s2">ONF doesn&#39;t exist. \033[0m&quot;</span>
     sleep 1
-    <span class="nb">exit </span>1
+    <span class="nb">exit</span> 1
 <span class="k">fi</span>
 
 do_start<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> already exists. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> is already running or crashed. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reopening </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -s reopen -c <span class="nv">$CONF</span>
+    <span class="k">if</span> <span class="o">[</span> -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID already exists. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC is already running or crashed. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Reopening </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -s reopen -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reopened. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC reopened. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Starting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC started. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_stop<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
+    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Stopping </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -s stop -c <span class="nv">$CONF</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Stopping </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -s stop -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> stopped. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC stopped. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_reload<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
+    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Starting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC started. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reloading </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -s reload -c <span class="nv">$CONF</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Reloading </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -s reload -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reloaded. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC reloaded. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_quit<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
+    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Quitting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-        <span class="nv">$DAEMON</span> -s quit -c <span class="nv">$CONF</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Quitting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+        <span class="nv">$DAE</span>MON -s quit -c <span class="nv">$C</span>ONF
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> quitted. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC quitted. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_test<span class="o">()</span> <span class="o">{</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Testing </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
-    <span class="nv">$DAEMON</span> -t -c <span class="nv">$CONF</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Testing </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
+    <span class="nv">$DAE</span>MON -t -c <span class="nv">$C</span>ONF
 <span class="o">}</span>
 
 do_info<span class="o">()</span> <span class="o">{</span>
-    <span class="nv">$DAEMON</span> -V
+    <span class="nv">$DAE</span>MON -V
 <span class="o">}</span>
 
 <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
@@ -203,12 +203,12 @@ info<span class="o">)</span>
 do_info
 <span class="p">;;</span>
 *<span class="o">)</span>
-<span class="nb">echo</span> <span class="s2">&quot;Usage: </span><span class="nv">$SCRIPT</span><span class="s2"> {start|stop|reload|restart|quit|test|info}&quot;</span>
-<span class="nb">exit </span>2
+<span class="nb">echo</span> <span class="s2">&quot;Usage: </span>$<span class="s2">SCRIPT {start|stop|reload|restart|quit|test|info}&quot;</span>
+<span class="nb">exit</span> 2
 <span class="p">;;</span>
 <span class="k">esac</span>
 
-<span class="nb">exit </span>0
+<span class="nb">exit</span> 0
 </pre></div>
 
 
@@ -221,17 +221,17 @@ do_info
 <ul>
 <li>
 <p>CentOS系统</p>
-<div class="highlight"><pre>chkconfig --list nginx   <span class="c"># 列出系统nginx服务启动情况</span>
-chkconfig --add nginx    <span class="c"># 添加nginx服务</span>
-chkconfig --level <span class="m">35</span> nginx on <span class="c"># 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭</span>
+<div class="highlight"><pre>chkconfig --list nginx   <span class="c1"># 列出系统nginx服务启动情况</span>
+chkconfig --add nginx    <span class="c1"># 添加nginx服务</span>
+chkconfig --level <span class="m">35</span> nginx on <span class="c1"># 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>Debian系统</p>
-<div class="highlight"><pre>sudo update-rc.d -f nginx remove  <span class="c"># 删除nginx服务</span>
-sudo update-rc.d apache2 defaults <span class="c"># 添加nginx服务</span>
+<div class="highlight"><pre>sudo update-rc.d -f nginx remove  <span class="c1"># 删除nginx服务</span>
+sudo update-rc.d apache2 defaults <span class="c1"># 添加nginx服务</span>
 </pre></div>
 
 
@@ -241,7 +241,7 @@ sudo update-rc.d apache2 defaults <span class="c"># 添加nginx服务</span>
 </ol>
 <h2>使用logrotate切割日志</h2>
 <p>创建如下文件</p>
-<div class="highlight"><pre><span class="nv">$ </span>cat /etc/logrotate.d/nginx
+<div class="highlight"><pre>$ cat /etc/logrotate.d/nginx
 /etc/openresty/nginx/logs/*.log <span class="o">{</span>
     daily
     missingok
@@ -274,7 +274,7 @@ sudo update-rc.d apache2 defaults <span class="c"># 添加nginx服务</span>
 <li>/etc/openresty/nginx/logs/nginx.pid：nginx主进程pid</li>
 </ul>
 <p>测试:</p>
-<div class="highlight"><pre><span class="nv">$ </span>logroate -f /etc/logrotate.d/nginx
+<div class="highlight"><pre>$ logroate -f /etc/logrotate.d/nginx
 </pre></div></div>
 
         <hr>

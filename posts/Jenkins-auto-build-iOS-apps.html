@@ -77,37 +77,37 @@ On 2015-11-11
 <p>为了可以编译、打包，需要制作开发者证书，并导出为.p12, .cer, .mobileprovision&nbsp;生成过程自己Google吧。</p>
 <h2>编译、打包命令</h2>
 <p>同意Xcode和Apple <span class="caps">SDK</span>协议:</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo xcodebuild -license
+<div class="highlight"><pre>$ sudo xcodebuild -license
 </pre></div>
 
 
 <p>我用Facebook开源的xctool编译iOS应用，安装xctool。</p>
-<div class="highlight"><pre><span class="nv">$ </span>brew install xctool
+<div class="highlight"><pre>$ brew install xctool
 </pre></div>
 
 
 <p>我没有使用Jenkins的Xcode插件，直接通过如下命令编译:</p>
-<div class="highlight"><pre><span class="nv">$ </span>xctool -workspace <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span> -scheme <span class="si">${</span><span class="nv">SCHEME</span><span class="si">}</span> archive -archivePath <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARCHIVEPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">IPA_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="nv">$ </span>xcrun -sdk iphoneos PackageApplication -v <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_BUILDDIR</span><span class="si">}</span><span class="s2">&quot;</span>/*.app -o <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARCHIVEPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">IPA_NAME</span><span class="si">}</span><span class="s2">.ipa&quot;</span>
+<div class="highlight"><pre>$ xctool -workspace <span class="si">${</span><span class="nv">WORKSPACE</span><span class="si">}</span> -scheme <span class="si">${</span><span class="nv">SCHEME</span><span class="si">}</span> archive -archivePath <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARCHIVEPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">IPA_NAME</span><span class="si">}</span><span class="s2">&quot;</span>
+$ xcrun -sdk iphoneos PackageApplication -v <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROJECT_BUILDDIR</span><span class="si">}</span><span class="s2">&quot;</span>/*.app -o <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ARCHIVEPATH</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">IPA_NAME</span><span class="si">}</span><span class="s2">.ipa&quot;</span>
 </pre></div>
 
 
 <p>生成dSYM:</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="o">(</span> <span class="nb">cd</span> <span class="si">${</span><span class="nv">DSYM_INPUT_PATH</span><span class="si">}</span> <span class="p">;</span> zip -r -X <span class="si">${</span><span class="nv">DSYM_ZIP_OUTPUT_PATH</span><span class="si">}</span> *.dSYM <span class="o">)</span>  <span class="c"># zipping dSYM for testflight upload</span>
+<div class="highlight"><pre>$ <span class="o">(</span> <span class="nb">cd</span> <span class="si">${</span><span class="nv">DSYM_INPUT_PATH</span><span class="si">}</span> <span class="p">;</span> zip -r -X <span class="si">${</span><span class="nv">DSYM_ZIP_OUTPUT_PATH</span><span class="si">}</span> *.dSYM <span class="o">)</span>  <span class="c1"># zipping dSYM for testflight upload</span>
 </pre></div>
 
 
 <h2>碰到的问题</h2>
 <h3>User interaction is not&nbsp;allowed</h3>
-<div class="highlight"><pre><span class="nv">$ </span>security unlock-keychain -p &lt;your-passwd&gt; /Users/wlw/Library/Keychains/login.keychain
-<span class="nv">$ </span>security show-keychain-info ~/Library/Keychains/login.keychain
-<span class="nv">$ </span><span class="nb">set</span>-keychain-settings -t <span class="m">3600</span> -l ~/Library/Keychains/login.keychain
+<div class="highlight"><pre>$ security unlock-keychain -p &lt;your-passwd&gt; /Users/wlw/Library/Keychains/login.keychain
+$ security show-keychain-info ~/Library/Keychains/login.keychain
+$ set-keychain-settings -t <span class="m">3600</span> -l ~/Library/Keychains/login.keychain
 </pre></div>
 
 
 <p>开始在命令行运行完还是一直报这个错误，后来，将unlock-keychain命令放在编译命令前就好了。</p>
 <p>记得编译前先运行:</p>
-<div class="highlight"><pre><span class="nv">$ </span>security unlock-keychain -p &lt;your-passwd&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Keychains/login.keychain&quot;</span>
+<div class="highlight"><pre>$ security unlock-keychain -p &lt;your-passwd&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/Library/Keychains/login.keychain&quot;</span>
 </pre></div>
 
 

@@ -18,10 +18,10 @@
 &lt;li&gt;压力测试工具ab&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;代码及相关python包准备&amp;nbsp;创建虚一个新的虚拟环境并安装需要的包&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkvirtualenv &lt;span class="nb"&gt;test&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;workon &lt;span class="nb"&gt;test&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ mkvirtualenv &lt;span class="nb"&gt;test&lt;/span&gt;
+$ workon &lt;span class="nb"&gt;test&lt;/span&gt;
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;cat requirements.txt
+$ cat requirements.txt
 &lt;span class="nv"&gt;gunicorn&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;19.3.0
 &lt;span class="nv"&gt;flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.10.1
 flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
@@ -29,7 +29,7 @@ flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
 &lt;span class="nv"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;4.2
 &lt;span class="nv"&gt;eventlet&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.17.4
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;pip install -r requirements.txt
+$ pip install -r requirements.txt
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -37,18 +37,18 @@ flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;
 
-&lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;redis://:password-string@localhost:6379/0&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;redis://:password-string@localhost:6379/0&amp;quot;&lt;/span&gt;
 &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;redis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;@app.route&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;index&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
-    &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -59,17 +59,17 @@ flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;使用ab工具,并行500个客户端,&amp;nbsp;发送50000次请求&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;500&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ab -c &lt;span class="m"&gt;500&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;分别使用四种方式启动使用服务，&amp;nbsp;并开启４个worker&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class sync
-&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class gevent
-&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class tornado
-&lt;span class="nv"&gt;$ &lt;/span&gt;gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class eventlet
+&lt;div class="highlight"&gt;&lt;pre&gt;$ gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class sync
+$ gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class gevent
+$ gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class tornado
+$ gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --worker-class eventlet
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -278,37 +278,37 @@ flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
 &lt;p&gt;eventlet&amp;nbsp;和gevent两种方式效果最好，数据基本差不多.&lt;/p&gt;</summary><category term="gunicorn"></category><category term="flask"></category><category term="gevent"></category><category term="eventlet"></category><category term="tornado"></category></entry><entry><title>压力测试工具ab webbench</title><link href="http://blog.wiseturtles.com/posts/server-benchmarkingt-tool-ab-and-webbench.html" rel="alternate"></link><updated>2015-06-26T07:29:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/server-benchmarkingt-tool-ab-and-webbench.html</id><summary type="html">&lt;h2&gt;ab&lt;/h2&gt;
 &lt;p&gt;ab是apache自带的压力测试工具。使用简单，便于一些简单的压力测试.&lt;/p&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install apache2-utils
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install apache2-utils
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;使用帮助&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ab -h
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ab -h
 Usage: ab &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;http&lt;span class="o"&gt;[&lt;/span&gt;s&lt;span class="o"&gt;]&lt;/span&gt;://&lt;span class="o"&gt;]&lt;/span&gt;hostname&lt;span class="o"&gt;[&lt;/span&gt;:port&lt;span class="o"&gt;]&lt;/span&gt;/path
 Options are:
-    -n requests     Number of requests to perform &lt;span class="c"&gt;# 请求次数&lt;/span&gt;
-    -c concurrency  Number of multiple requests to make at a &lt;span class="nb"&gt;time&lt;/span&gt; &lt;span class="c"&gt;# 并发数&lt;/span&gt;
-    -t timelimit    Seconds to max. to spend on benchmarking &lt;span class="c"&gt;# 压力测试的最大时间&lt;/span&gt;
+    -n requests     Number of requests to perform &lt;span class="c1"&gt;# 请求次数&lt;/span&gt;
+    -c concurrency  Number of multiple requests to make at a &lt;span class="nb"&gt;time&lt;/span&gt; &lt;span class="c1"&gt;# 并发数&lt;/span&gt;
+    -t timelimit    Seconds to max. to spend on benchmarking &lt;span class="c1"&gt;# 压力测试的最大时间&lt;/span&gt;
                     This implies -n 50000
-    -s timeout      Seconds to max. &lt;span class="nb"&gt;wait &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; each response
+    -s timeout      Seconds to max. &lt;span class="nb"&gt;wait&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; each response
                     Default is &lt;span class="m"&gt;30&lt;/span&gt; seconds
     -b windowsize   Size of TCP send/receive buffer, in bytes
-    -B address      Address to &lt;span class="nb"&gt;bind &lt;/span&gt;to when making outgoing connections
-    -p postfile     File containing data to POST. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T  &lt;span class="c"&gt;# POST方式，同时必须使用-T指定“Content-Type”&lt;/span&gt;
-    -u putfile      File containing data to PUT. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T   &lt;span class="c"&gt;# PUT方式&lt;/span&gt;
+    -B address      Address to &lt;span class="nb"&gt;bind&lt;/span&gt; to when making outgoing connections
+    -p postfile     File containing data to POST. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T  &lt;span class="c1"&gt;# POST方式，同时必须使用-T指定“Content-Type”&lt;/span&gt;
+    -u putfile      File containing data to PUT. Remember also to &lt;span class="nb"&gt;set&lt;/span&gt; -T   &lt;span class="c1"&gt;# PUT方式&lt;/span&gt;
     -T content-type Content-type header to use &lt;span class="k"&gt;for&lt;/span&gt; POST/PUT data, eg.
                     &lt;span class="s1"&gt;&amp;#39;application/x-www-form-urlencoded&amp;#39;&lt;/span&gt;
                     Default is &lt;span class="s1"&gt;&amp;#39;text/plain&amp;#39;&lt;/span&gt;
     -v verbosity    How much troubleshooting info to print
-    -w              Print out results in HTML tables &lt;span class="c"&gt;# 以html表格形式输出结果&lt;/span&gt;
-    -i              Use HEAD instead of GET &lt;span class="c"&gt;# 使用Head请求&lt;/span&gt;
+    -w              Print out results in HTML tables &lt;span class="c1"&gt;# 以html表格形式输出结果&lt;/span&gt;
+    -i              Use HEAD instead of GET &lt;span class="c1"&gt;# 使用Head请求&lt;/span&gt;
     -x attributes   String to insert as table attributes
     -y attributes   String to insert as tr attributes
     -z attributes   String to insert as td or th attributes
     -C attribute    Add cookie, eg. &lt;span class="s1"&gt;&amp;#39;Apache=1234&amp;#39;&lt;/span&gt;. &lt;span class="o"&gt;(&lt;/span&gt;repeatable&lt;span class="o"&gt;)&lt;/span&gt;
-    -H attribute    Add Arbitrary header line, eg. &lt;span class="s1"&gt;&amp;#39;Accept-Encoding: gzip&amp;#39;&lt;/span&gt;  &lt;span class="c"&gt;# 添加HTTP头信息&lt;/span&gt;
+    -H attribute    Add Arbitrary header line, eg. &lt;span class="s1"&gt;&amp;#39;Accept-Encoding: gzip&amp;#39;&lt;/span&gt;  &lt;span class="c1"&gt;# 添加HTTP头信息&lt;/span&gt;
                     Inserted after all normal header lines. &lt;span class="o"&gt;(&lt;/span&gt;repeatable&lt;span class="o"&gt;)&lt;/span&gt;
-    -A attribute    Add Basic WWW Authentication, the attributes   &lt;span class="c"&gt;# 添加认证信息&lt;/span&gt;
+    -A attribute    Add Basic WWW Authentication, the attributes   &lt;span class="c1"&gt;# 添加认证信息&lt;/span&gt;
                     are a colon separated username and password.
     -P attribute    Add Basic Proxy Authentication, the attributes
                     are a colon separated username and password.
@@ -321,7 +321,7 @@ Options are:
     -l              Accept variable document length &lt;span class="o"&gt;(&lt;/span&gt;use this &lt;span class="k"&gt;for&lt;/span&gt; dynamic pages&lt;span class="o"&gt;)&lt;/span&gt;
     -g filename     Output collected data to gnuplot format file.
     -e filename     Output CSV file with percentages served
-    -r              Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;exit &lt;/span&gt;on socket receive errors.   &lt;span class="c"&gt;# 在接收到socket错误时不退出&lt;/span&gt;
+    -r              Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;exit&lt;/span&gt; on socket receive errors.   &lt;span class="c1"&gt;# 在接收到socket错误时不退出&lt;/span&gt;
     -h              Display usage information &lt;span class="o"&gt;(&lt;/span&gt;this message&lt;span class="o"&gt;)&lt;/span&gt;
     -Z ciphersuite  Specify SSL/TLS cipher suite &lt;span class="o"&gt;(&lt;/span&gt;See openssl ciphers&lt;span class="o"&gt;)&lt;/span&gt;
     -f protocol     Specify SSL/TLS protocol
@@ -330,20 +330,20 @@ Options are:
 
 
 &lt;h3&gt;使用示例&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# GET&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# GET&lt;/span&gt;
 
-&lt;span class="c"&gt;# 30秒内并行1000个客户端，请求默认的50000次请求&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t  &lt;span class="m"&gt;30&lt;/span&gt; http://www.baidu.com/
-&lt;span class="c"&gt;# 并发100个客户端，请求10000次&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;100&lt;/span&gt; -n &lt;span class="m"&gt;10000&lt;/span&gt; http://www.baidu.com/
+&lt;span class="c1"&gt;# 30秒内并行1000个客户端，请求默认的50000次请求&lt;/span&gt;
+$ ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t  &lt;span class="m"&gt;30&lt;/span&gt; http://www.baidu.com/
+&lt;span class="c1"&gt;# 并发100个客户端，请求10000次&lt;/span&gt;
+$ ab -c &lt;span class="m"&gt;100&lt;/span&gt; -n &lt;span class="m"&gt;10000&lt;/span&gt; http://www.baidu.com/
 
-&lt;span class="c"&gt;# POST&lt;/span&gt;
+&lt;span class="c1"&gt;# POST&lt;/span&gt;
 
-&lt;span class="nv"&gt;$ &lt;/span&gt;cat data.json
+$ cat data.json
 &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;apps&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;package_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;com.baidu.browser.apps&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;app_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;百度浏览器&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version_code&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;version_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;5.3.4.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;pm_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;TCL M2M&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="c"&gt;# post json 数据&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -p data.json -T &lt;span class="s2"&gt;&amp;quot;application/json&amp;quot;&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;127.0.0.1:8888/m3/apps/update&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# post json 数据&lt;/span&gt;
+$ ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -p data.json -T &lt;span class="s2"&gt;&amp;quot;application/json&amp;quot;&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;127.0.0.1:8888/m3/apps/update&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -354,20 +354,20 @@ Options are:
 &lt;p&gt;另一个轻量级的压力测试工具，据说比ab好用，但是好像不支持模拟&lt;span class="caps"&gt;POST&lt;/span&gt;请求&lt;/p&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
 &lt;p&gt;可以到&lt;a href="http://home.tiscali.cz/~cz210552/webbench.html"&gt;http://home.tiscali.cz/~cz210552/webbench.html&lt;/a&gt;获取最新版本的下载地址&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;$ wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;解压之后&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo make install
+&lt;div class="highlight"&gt;&lt;pre&gt;$ make &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo make install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;使用帮助&lt;/h3&gt;
 &lt;p&gt;使用上和ab差不多，具体参数可以参考下面&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;webbench
+&lt;div class="highlight"&gt;&lt;pre&gt;$ webbench
 webbench &lt;span class="o"&gt;[&lt;/span&gt;option&lt;span class="o"&gt;]&lt;/span&gt;... URL
--f&lt;span class="p"&gt;|&lt;/span&gt;--force               Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;wait &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt; reply from server.
+-f&lt;span class="p"&gt;|&lt;/span&gt;--force               Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;wait&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; reply from server.
 -r&lt;span class="p"&gt;|&lt;/span&gt;--reload              Send reload request - Pragma: no-cache.
 -t&lt;span class="p"&gt;|&lt;/span&gt;--time &amp;lt;sec&amp;gt;          Run benchmark &lt;span class="k"&gt;for&lt;/span&gt; &amp;lt;sec&amp;gt; seconds. Default 30.
 -p&lt;span class="p"&gt;|&lt;/span&gt;--proxy &amp;lt;server:port&amp;gt; Use proxy server &lt;span class="k"&gt;for&lt;/span&gt; request.

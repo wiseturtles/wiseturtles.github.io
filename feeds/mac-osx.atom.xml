@@ -3,7 +3,7 @@
 &lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt;，更新 mpv 时报错: &lt;code&gt;ValueError: unknown locale: UTF-8&lt;/code&gt;&lt;/p&gt;
 &lt;h4&gt;确定当前locale&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;locale
+&lt;div class="highlight"&gt;&lt;pre&gt;$ locale
 &lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
 &lt;span class="nv"&gt;LC_COLLATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;UTF-8&amp;quot;&lt;/span&gt;
@@ -16,7 +16,7 @@
 
 
 &lt;h4&gt;Python获取当前locale&lt;/h4&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
 Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
 File &lt;span class="s2"&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, line 1, in &amp;lt;module&amp;gt;
 File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line 543, in getdefaultlocale &lt;span class="k"&gt;return&lt;/span&gt; _parse_localename&lt;span class="o"&gt;(&lt;/span&gt;localename&lt;span class="o"&gt;)&lt;/span&gt;
@@ -27,13 +27,13 @@ ValueError: unknown locale: UTF-8
 
 &lt;h4&gt;解决&lt;/h4&gt;
 &lt;p&gt;设置locale为en_US.&lt;span class="caps"&gt;UTF&lt;/span&gt;-8，我使用的zsh，所以在&lt;code&gt;~/.zshrc&lt;/code&gt;中添加locale设置：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
-&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;en_US.UTF-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;再通过Python获取当前locale：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;en_US&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;UTF-8&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -46,37 +46,37 @@ ValueError: unknown locale: UTF-8
 &lt;p&gt;为了可以编译、打包，需要制作开发者证书，并导出为.p12, .cer, .mobileprovision&amp;nbsp;生成过程自己Google吧。&lt;/p&gt;
 &lt;h2&gt;编译、打包命令&lt;/h2&gt;
 &lt;p&gt;同意Xcode和Apple &lt;span class="caps"&gt;SDK&lt;/span&gt;协议:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo xcodebuild -license
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo xcodebuild -license
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;我用Facebook开源的xctool编译iOS应用，安装xctool。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install xctool
+&lt;div class="highlight"&gt;&lt;pre&gt;$ brew install xctool
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;我没有使用Jenkins的Xcode插件，直接通过如下命令编译:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;xctool -workspace &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;WORKSPACE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; -scheme &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SCHEME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; archive -archivePath &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;xcrun -sdk iphoneos PackageApplication -v &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PROJECT_BUILDDIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;/*.app -o &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.ipa&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ xctool -workspace &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;WORKSPACE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; -scheme &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SCHEME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; archive -archivePath &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+$ xcrun -sdk iphoneos PackageApplication -v &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;PROJECT_BUILDDIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;/*.app -o &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ARCHIVEPATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;IPA_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.ipa&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;生成dSYM:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_INPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; zip -r -X &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_ZIP_OUTPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; *.dSYM &lt;span class="o"&gt;)&lt;/span&gt;  &lt;span class="c"&gt;# zipping dSYM for testflight upload&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="o"&gt;(&lt;/span&gt; &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_INPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="p"&gt;;&lt;/span&gt; zip -r -X &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DSYM_ZIP_OUTPUT_PATH&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; *.dSYM &lt;span class="o"&gt;)&lt;/span&gt;  &lt;span class="c1"&gt;# zipping dSYM for testflight upload&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;碰到的问题&lt;/h2&gt;
 &lt;h3&gt;User interaction is not&amp;nbsp;allowed&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;security unlock-keychain -p &amp;lt;your-passwd&amp;gt; /Users/wlw/Library/Keychains/login.keychain
-&lt;span class="nv"&gt;$ &lt;/span&gt;security show-keychain-info ~/Library/Keychains/login.keychain
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/Keychains/login.keychain
+&lt;div class="highlight"&gt;&lt;pre&gt;$ security unlock-keychain -p &amp;lt;your-passwd&amp;gt; /Users/wlw/Library/Keychains/login.keychain
+$ security show-keychain-info ~/Library/Keychains/login.keychain
+$ set-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/Keychains/login.keychain
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;开始在命令行运行完还是一直报这个错误，后来，将unlock-keychain命令放在编译命令前就好了。&lt;/p&gt;
 &lt;p&gt;记得编译前先运行:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;security unlock-keychain -p &amp;lt;your-passwd&amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/Library/Keychains/login.keychain&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ security unlock-keychain -p &amp;lt;your-passwd&amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;HOME/Library/Keychains/login.keychain&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -86,12 +86,12 @@ ValueError: unknown locale: UTF-8
 &lt;/ul&gt;</summary><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
 &lt;h2&gt;Xcode&lt;/h2&gt;
 &lt;h3&gt;安装Xcode命令行工具:&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;xcode-select --install
+&lt;div class="highlight"&gt;&lt;pre&gt;$ xcode-select --install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Xcode包管理工具&lt;a href="http://alcatraz.io/"&gt;Alcatraz&lt;/a&gt;安装:&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/supermarin/Alcatraz/deploy/Scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
+&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -fsSL https://raw.githubusercontent.com/supermarin/Alcatraz/deploy/Scripts/install.sh &lt;span class="p"&gt;|&lt;/span&gt; sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -106,24 +106,24 @@ ValueError: unknown locale: UTF-8
 &lt;/blockquote&gt;
 &lt;h2&gt;Homebrew&lt;/h2&gt;
 &lt;p&gt;&lt;a href="http://brew.sh"&gt;Homebrew&lt;/a&gt;是Mac中非常受欢迎的包管理工具，熟悉Linux的朋友一定知道rpm/yum,&amp;nbsp;dpkg/apt等。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ruby -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew doctor
-&lt;span class="nv"&gt;$ &lt;/span&gt;man brew                     &lt;span class="c"&gt;# manpage for brew&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew install &amp;lt;package-name&amp;gt;  &lt;span class="c"&gt;# install package&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew update
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew outdated
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew upgrade &amp;lt;package-name&amp;gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew cleanup
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew list --versions
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ruby -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+$ brew doctor
+$ man brew                     &lt;span class="c1"&gt;# manpage for brew&lt;/span&gt;
+$ brew install &amp;lt;package-name&amp;gt;  &lt;span class="c1"&gt;# install package&lt;/span&gt;
+$ brew update
+$ brew outdated
+$ brew upgrade &amp;lt;package-name&amp;gt;
+$ brew cleanup
+$ brew list --versions
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;Homebrew&amp;nbsp;Cask&lt;/h2&gt;
 &lt;p&gt;通过Homebrew可以方便的管理命令行程序，Homebrew&amp;nbsp;Cask可以管理图形界面程序。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew tap caskroom/cask
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew install brew-cask
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew cask install google-chrome
-&lt;span class="nv"&gt;$ &lt;/span&gt;brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew upgrade brew-cask &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew cleanup
+&lt;div class="highlight"&gt;&lt;pre&gt;$ brew tap caskroom/cask
+$ brew install brew-cask
+$ brew cask install google-chrome
+$ brew update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew upgrade brew-cask &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; brew cleanup
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -133,9 +133,9 @@ ValueError: unknown locale: UTF-8
 &lt;li&gt;关闭烦人的bell: &lt;code&gt;iTerm 2: Preferences -&amp;gt; Profiles -&amp;gt; Tab: Terminal -&amp;gt; Notifications -&amp;gt; Silence Bell&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Zsh&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install zsh zsh-completions
-&lt;span class="nv"&gt;$ &lt;/span&gt;sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;chsh -s /bin/zsh
+&lt;div class="highlight"&gt;&lt;pre&gt;$ brew install zsh zsh-completions
+$ sh -c &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+$ chsh -s /bin/zsh
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -173,30 +173,30 @@ brew install wget
 export &lt;span class="caps"&gt;PATH&lt;/span&gt;=$GEM_HOME/ruby/2.0.0/bin:$&lt;span class="caps"&gt;PATH&lt;/span&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;通过下面命令安装CocoaPods:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/.zshrc  &lt;span class="c"&gt;# 获取GEM_HOME, PATH配置&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources -l  &lt;span class="c"&gt;# 列出当前ruby gem源地址&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources --remove https://rubygems.org/  &lt;span class="c"&gt;# 删除官方源&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gem sources -a https://ruby.taobao.org/  &lt;span class="c"&gt;# 使用淘宝ruby gem镜像&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gem install cocoapods --user-install  &lt;span class="c"&gt;# 安装CocoaPods&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;pod install
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.zshrc  &lt;span class="c1"&gt;# 获取GEM_HOME, PATH配置&lt;/span&gt;
+$ gem sources -l  &lt;span class="c1"&gt;# 列出当前ruby gem源地址&lt;/span&gt;
+$ gem sources --remove https://rubygems.org/  &lt;span class="c1"&gt;# 删除官方源&lt;/span&gt;
+$ gem sources -a https://ruby.taobao.org/  &lt;span class="c1"&gt;# 使用淘宝ruby gem镜像&lt;/span&gt;
+$ gem install cocoapods --user-install  &lt;span class="c1"&gt;# 安装CocoaPods&lt;/span&gt;
+$ pod install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用CocoaPods国内镜像索引:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo  &lt;span class="c"&gt;# 查看repo信息，下面修改repo master git URL&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo remove master
-&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo add master https://gitcafe.com/akuandev/Specs.git
-&lt;span class="nv"&gt;$ &lt;/span&gt;pod repo update
+&lt;div class="highlight"&gt;&lt;pre&gt;$ pod repo  &lt;span class="c1"&gt;# 查看repo信息，下面修改repo master git URL&lt;/span&gt;
+$ pod repo remove master
+$ pod repo add master https://gitcafe.com/akuandev/Specs.git
+$ pod repo update
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;CocoaPods的更多介绍请阅读&lt;a href="http://blog.devtang.com/blog/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/"&gt;用CocoaPods做iOS程序的依赖管理&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;vim&lt;/h2&gt;
 &lt;p&gt;常用vim，在mac上配置下，曾经自己的vim配置有点乱了，发现［k-vim](https://github.com/wklken/k-vim)不错，就使用它了。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;brew install macvim  &lt;span class="c"&gt;# 只使用了macvim，没有用原生vim&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ln -s /usr/local/bin/mvim /usr/local/bin/vim  &lt;span class="c"&gt;# 否则YouCompleteMe等plugin会报无法安装需要 vim 7.4 之类的&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/wklken/k-vim.git ~/k-vim
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash -x install.sh
+&lt;div class="highlight"&gt;&lt;pre&gt;$ brew install macvim  &lt;span class="c1"&gt;# 只使用了macvim，没有用原生vim&lt;/span&gt;
+$ ln -s /usr/local/bin/mvim /usr/local/bin/vim  &lt;span class="c1"&gt;# 否则YouCompleteMe等plugin会报无法安装需要 vim 7.4 之类的&lt;/span&gt;
+$ git clone https://github.com/wklken/k-vim.git ~/k-vim
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; bash -x install.sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -207,22 +207,22 @@ export &lt;span class="caps"&gt;PATH&lt;/span&gt;=$GEM_HOME/ruby/2.0.0/bin:$&lt;
 &lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;运行需要&lt;span class="caps"&gt;JDK&lt;/span&gt;，从oracle官网下载、安装Java 1.8 &lt;span class="caps"&gt;JDK&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;从&lt;span class="caps"&gt;IDEA&lt;/span&gt; -&amp;gt; Project Default -&amp;gt; Project Structure -&amp;gt; &lt;span class="caps"&gt;SDKS&lt;/span&gt;中添加&lt;span class="caps"&gt;JDK&lt;/span&gt;和Intellij Platform Plugin &lt;span class="caps"&gt;SDK&lt;/span&gt;。（需要选择&lt;span class="caps"&gt;JDK&lt;/span&gt;、Intellij的目录）&lt;/p&gt;
 &lt;p&gt;安装go-lang-idea-plugin插件，可以从&lt;a href="https://plugins.jetbrains.com/plugin/5047"&gt;官网&lt;/a&gt;下载安装；也可以通过下面方式编译安装。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
+&lt;div class="highlight"&gt;&lt;pre&gt;$ git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;中打开该plugin代码，配置&lt;span class="caps"&gt;IDEA&lt;/span&gt; Platform &lt;span class="caps"&gt;SDK&lt;/span&gt;版本，Build出jar包。然后，选择jar包安装。&lt;/p&gt;
 &lt;p&gt;配置&lt;span class="caps"&gt;IDEA&lt;/span&gt;的golang开发环境浪费了很多时间，尝试了不同版本的&lt;a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin"&gt;go-lang-idea-plugin&lt;/a&gt;，总是报错“The selected directory is not a valid home for Go &lt;span class="caps"&gt;SDK&lt;/span&gt;”。
 最后运行下面命令再选择&lt;span class="caps"&gt;GO&lt;/span&gt; &lt;span class="caps"&gt;SDK&lt;/span&gt;目录终于可以了。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; $GOROOT
 /Users/&amp;lt;my-home&amp;gt;/Projects/golang/sdk
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; $GOPATH
 /Users/&amp;lt;my-home&amp;gt;/Projects/golang/mygo
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;git checkout -b go1.4.2 go1.4.2
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;src &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./all.bash
-&lt;span class="nv"&gt;$ &lt;/span&gt;cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/go &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
-&lt;span class="nv"&gt;$ &lt;/span&gt;cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/gofmt &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOROOT
+$ git checkout -b go1.4.2 go1.4.2
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; src &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./all.bash
+$ cp $GOPATH/bin/go $GOROOT/bin/
+$ cp $GOPATH/bin/gofmt $GOROOT/bin/
 &lt;/pre&gt;&lt;/div&gt;
 
 

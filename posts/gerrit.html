@@ -83,23 +83,23 @@ On 2015-01-15
 <ol>
 <li>
 <p>安装<span class="caps">JDK1</span>.7</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo add-apt-repository ppa:webupd8team/java
-<span class="nv">$ </span>sudo apt-get update
-<span class="nv">$ </span>sudo apt-get install oracle-java7-installer
+<div class="highlight"><pre>$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java7-installer
 </pre></div>
 
 
 </li>
 <li>
 <p>安装Git</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install git
+<div class="highlight"><pre>$ sudo apt-get install git
 </pre></div>
 
 
 </li>
 <li>
 <p>安装Nginx服务器, 用于作为Gerrit网站的反向代理以及<span class="caps">HTTP</span>认证</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install nginx
+<div class="highlight"><pre>$ sudo apt-get install nginx
 </pre></div>
 
 
@@ -108,11 +108,11 @@ On 2015-01-15
 <h2>数据库设置</h2>
 <p>Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&nbsp;Oracle.</p>
 <p>本文以MySQL为例，介绍数据库的设置。</p>
-<div class="highlight"><pre><span class="c"># 安装数据库</span>
-<span class="nv">$ </span>sudo apt-get install mysql-server
+<div class="highlight"><pre><span class="c1"># 安装数据库</span>
+$ sudo apt-get install mysql-server
 
-<span class="c"># 创建数据库reviewdb和用户gerrit2为后面做准备</span>
-<span class="c"># 数据库名和用户名可以根据实际的使用情况自己选择</span>
+<span class="c1"># 创建数据库reviewdb和用户gerrit2为后面做准备</span>
+<span class="c1"># 数据库名和用户名可以根据实际的使用情况自己选择</span>
 mysql&gt; CREATE USER <span class="s1">&#39;gerrit2&#39;</span>@<span class="s1">&#39;localhost&#39;</span> IDENTIFIED BY <span class="s1">&#39;secret&#39;</span><span class="p">;</span>
 mysql&gt; CREATE DATABASE reviewdb<span class="p">;</span>
 mysql&gt; GRANT ALL ON reviewdb.* TO <span class="s1">&#39;gerrit2&#39;</span>@<span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
@@ -122,14 +122,14 @@ mysql&gt; FLUSH PRIVILEGES<span class="p">;</span>
 
 <h2>初始化Gerrit站点</h2>
 <p>由于Gerrit创建中需要保存自己的<span class="caps">SSH</span> Keys,&nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。</p>
-<div class="highlight"><pre><span class="c"># 在系统上添加用户gerrit2</span>
-<span class="nv">$ </span>sudo adduser gerrit2
-<span class="c"># 切换到当前用户</span>
-<span class="nv">$ </span>sudo su gerrit2
-<span class="c"># 下载gerrit安装包</span>
-<span class="nv">$ </span>wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
-<span class="c"># -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例</span>
-<span class="nv">$ </span>java -jar gerrit-2.9.4.war init -d gerrit
+<div class="highlight"><pre><span class="c1"># 在系统上添加用户gerrit2</span>
+$ sudo adduser gerrit2
+<span class="c1"># 切换到当前用户</span>
+$ sudo su gerrit2
+<span class="c1"># 下载gerrit安装包</span>
+$ wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
+<span class="c1"># -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例</span>
+$ java -jar gerrit-2.9.4.war init -d gerrit
 
 *** Gerrit Code Review 2.9.4
 ***
@@ -138,7 +138,7 @@ Create <span class="s1">&#39;/home/gerrit2/gerrit&#39;</span>  <span class="o">[
 
 *** Git Repositories
 ***
-<span class="c"># 项目代码目录设置</span>
+<span class="c1"># 项目代码目录设置</span>
 Location of Git repositories   <span class="o">[</span>git<span class="o">]</span>:
 
 *** SQL Database
@@ -151,7 +151,7 @@ Gerrit Code Review is not shipped with MySQL Connector/J 5.1.21
 Download and install it now <span class="o">[</span>Y/n<span class="o">]</span>?
 Downloading http://repo2.maven.org/maven2/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar ... OK
 Checksum mysql-connector-java-5.1.21.jar OK
-Server hostname                <span class="o">[</span>localhost<span class="o">]</span>:           <span class="c"># 此处填写刚刚创建数据库时设置的信息</span>
+Server hostname                <span class="o">[</span>localhost<span class="o">]</span>:           <span class="c1"># 此处填写刚刚创建数据库时设置的信息</span>
 Server port                    <span class="o">[(</span>mysql default<span class="o">)]</span>:
 Database name                  <span class="o">[</span>reviewdb<span class="o">]</span>:
 Database username              <span class="o">[</span>gerrit2<span class="o">]</span>:
@@ -166,10 +166,10 @@ Type                           <span class="o">[</span>LUCENE/?<span class="o">]
 *** User Authentication
 ***
 
-<span class="c"># 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&quot;?&quot;查看</span>
+<span class="c1"># 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&quot;?&quot;查看</span>
 Authentication method          <span class="o">[</span>OPENID/?<span class="o">]</span>: http
 Get username from custom HTTP header <span class="o">[</span>y/N<span class="o">]</span>?
-SSO <span class="nb">logout </span>URL                 :
+SSO <span class="nb">logout</span> URL                 :
 
 *** Review Labels
 ***
@@ -179,7 +179,7 @@ Install Verified label         <span class="o">[</span>y/N<span class="o">]</spa
 *** Email Delivery
 ***
 
-<span class="c"># 邮件服务器设置, 根据实际情况自行选择</span>
+<span class="c1"># 邮件服务器设置, 根据实际情况自行选择</span>
 SMTP server hostname           <span class="o">[</span>localhost<span class="o">]</span>:
 SMTP server port               <span class="o">[(</span>default<span class="o">)]</span>:
 SMTP encryption                <span class="o">[</span>NONE/?<span class="o">]</span>:
@@ -216,12 +216,12 @@ Generating SSH host key ... rsa... dsa... <span class="k">done</span>
 *** HTTP Daemon
 ***
 
-<span class="c"># 启用反向代理</span>
+<span class="c1"># 启用反向代理</span>
 Behind reverse proxy           <span class="o">[</span>y/N<span class="o">]</span>? y
 Proxy uses SSL <span class="o">(</span>https://<span class="o">)</span>      <span class="o">[</span>y/N<span class="o">]</span>?
 Subdirectory on proxy server   <span class="o">[</span>/<span class="o">]</span>:
 Listen on address              <span class="o">[</span>*<span class="o">]</span>:
-Listen on port                 <span class="o">[</span>8081<span class="o">]</span>:     <span class="c"># 设置gerrit网站监听端口</span>
+Listen on port                 <span class="o">[</span>8081<span class="o">]</span>:     <span class="c1"># 设置gerrit网站监听端口</span>
 Canonical URL                  <span class="o">[</span>http://localhost/<span class="o">]</span>:
 
 *** Plugins
@@ -257,20 +257,20 @@ OK
 </pre>
 
 <p>创建用户密码文件</p>
-<div class="highlight"><pre><span class="c"># 创建用户名和密码都是admin的文件</span>
-<span class="nv">$ </span>htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
+<div class="highlight"><pre><span class="c1"># 创建用户名和密码都是admin的文件</span>
+$ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 </pre></div>
 
 
 <h2>测试</h2>
 <p>访问<a href="http://localhost/">http://localhost/</a>输入用户名和密码即可登陆到Gerrit</p>
 <h2>Gerrit目录结构</h2>
-<div class="highlight"><pre><span class="nv">$ </span>tree -L <span class="m">1</span> gerrit
+<div class="highlight"><pre>$ tree -L <span class="m">1</span> gerrit
 gerrit
 ├── bin
 ├── cache
 ├── data
-├── etc  <span class="c"># 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改</span>
+├── etc  <span class="c1"># 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改</span>
 ├── git
 ├── index
 ├── lib
@@ -282,9 +282,9 @@ gerrit
 
 
 <h2>常用命令</h2>
-<div class="highlight"><pre><span class="nv">$ </span>gerrit/bin/gerrit.sh start  <span class="c"># 启动gerrit服务</span>
-<span class="nv">$ </span>gerrit/bin/gerrit.sh stop   <span class="c"># 关闭gerrit服务</span>
-<span class="nv">$ </span>gerrit/bin/gerrit.sh restart <span class="c"># 重启gerrit服务</span>
+<div class="highlight"><pre>$ gerrit/bin/gerrit.sh start  <span class="c1"># 启动gerrit服务</span>
+$ gerrit/bin/gerrit.sh stop   <span class="c1"># 关闭gerrit服务</span>
+$ gerrit/bin/gerrit.sh restart <span class="c1"># 重启gerrit服务</span>
 </pre></div>
 
 

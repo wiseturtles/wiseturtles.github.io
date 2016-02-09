@@ -114,36 +114,36 @@ unix 1 [ ] STREAM CONNECTED 16182 @000000df
 </ul>
 <p><strong>提示</strong>：<span class="caps">LISTEN</span>和<span class="caps">LISTENING</span>的状态只有用-a或者-l才能看到</p>
 <h2>实用命令实例</h2>
-<div class="highlight"><pre><span class="c"># 列出所有连接（包括监听和未监听的)</span>
-<span class="nv">$ </span>netstat -a
+<div class="highlight"><pre><span class="c1"># 列出所有连接（包括监听和未监听的)</span>
+$ netstat -a
 
-<span class="c"># 列出所有tcp连接</span>
-<span class="nv">$ </span>netstat -at
+<span class="c1"># 列出所有tcp连接</span>
+$ netstat -at
 
-<span class="c"># 列出所有udp连接</span>
-<span class="nv">$ </span>netstat -au
+<span class="c1"># 列出所有udp连接</span>
+$ netstat -au
 
-<span class="c"># 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip</span>
-<span class="c"># 对应的主机名，这会降低输出速度，如果不需要，可以使用-n</span>
-<span class="c"># 在netstat输出中不显示主机，端口和用户名(host, port or user)</span>
-<span class="nv">$ </span>netstat -an
+<span class="c1"># 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip</span>
+<span class="c1"># 对应的主机名，这会降低输出速度，如果不需要，可以使用-n</span>
+<span class="c1"># 在netstat输出中不显示主机，端口和用户名(host, port or user)</span>
+$ netstat -an
 
-<span class="c"># 列出所有处于监听状态的</span>
-<span class="c"># -l选项不要与-a同时使用，不然也会列出未监听状态的连接</span>
-<span class="nv">$ </span>netstat -l
+<span class="c1"># 列出所有处于监听状态的</span>
+<span class="c1"># -l选项不要与-a同时使用，不然也会列出未监听状态的连接</span>
+$ netstat -l
 
-<span class="c"># 列出所有监听状态的tcp连击</span>
-<span class="nv">$ </span>netstat -lt
+<span class="c1"># 列出所有监听状态的tcp连击</span>
+$ netstat -lt
 
-<span class="c"># 列出所有监听状态的udp连击</span>
-<span class="nv">$ </span>netstat -lu
+<span class="c1"># 列出所有监听状态的udp连击</span>
+$ netstat -lu
 
-<span class="c"># 列出所有的unix连接</span>
-<span class="nv">$ </span>netstat -lx
+<span class="c1"># 列出所有的unix连接</span>
+$ netstat -lx
 
-<span class="c"># 在netstat输出中显示PID和进程名称(-p),用户名(-e)</span>
-<span class="c"># -p使用需要root权限,不然无法获取PID</span>
-<span class="nv">$ </span>sudo netstat -ltpe
+<span class="c1"># 在netstat输出中显示PID和进程名称(-p),用户名(-e)</span>
+<span class="c1"># -p使用需要root权限,不然无法获取PID</span>
+$ sudo netstat -ltpe
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
 tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     11684/adb
 tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    6663/java
@@ -151,10 +151,10 @@ tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200
 tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       1344/nginx
 tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         1481/dnsmasq
 
-<span class="c"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
+<span class="c1"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
 
-<span class="c"># 列出所有的网络统计信息</span>
-<span class="nv">$ </span>netstat -s
+<span class="c1"># 列出所有的网络统计信息</span>
+$ netstat -s
 Ip:
 <span class="m">14989101</span> total packets received
 <span class="m">0</span> forwarded
@@ -167,18 +167,18 @@ Icmp:
     ICMP input histogram:
         destination unreachable: 5774
         timeout in transit: 106
-        <span class="nb">echo </span>replies: 154
+        <span class="nb">echo</span> replies: 154
     <span class="m">6882</span> ICMP messages sent
     <span class="m">0</span> ICMP messages failed
     ICMP output histogram:
 ....
 
-<span class="c"># 显示TCP或UDP连接的统计信息</span>
-<span class="nv">$ </span>netstat -st
-<span class="nv">$ </span>netstat -su
+<span class="c1"># 显示TCP或UDP连接的统计信息</span>
+$ netstat -st
+$ netstat -su
 
-<span class="c"># 显示kernel的路由信息(-r)</span>
-<span class="nv">$ </span>netstat -rn
+<span class="c1"># 显示kernel的路由信息(-r)</span>
+$ netstat -rn
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 0.0.0.0         172.26.50.1     0.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
@@ -186,17 +186,17 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 172.26.50.0     0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
 192.168.56.0    0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
 
-<span class="c"># 打印网络接口(-i)</span>
-<span class="nv">$ </span>netstat -i
+<span class="c1"># 打印网络接口(-i)</span>
+$ netstat -i
 Kernel Interface table
 Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
 eth1       <span class="m">1500</span> <span class="m">0</span>  <span class="m">10650979</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>      <span class="m">10656895</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
 lo        <span class="m">65536</span> <span class="m">0</span>   <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>       <span class="m">5095802</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> LRU
 vboxnet0   <span class="m">1500</span> <span class="m">0</span>         <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>          <span class="m">1505</span>      <span class="m">0</span>      <span class="m">0</span>      <span class="m">0</span> BMRU
 
-<span class="c"># 上面的输出比较原始，为了获取友好输出，可以加上(-e)</span>
-<span class="c"># 达到与ifconfig命令类似的效果</span>
-<span class="nv">$ </span>netstat -ie
+<span class="c1"># 上面的输出比较原始，为了获取友好输出，可以加上(-e)</span>
+<span class="c1"># 达到与ifconfig命令类似的效果</span>
+$ netstat -ie
 Kernel Interface table
 eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
         inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0

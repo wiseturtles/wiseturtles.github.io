@@ -127,21 +127,21 @@ $ export PATH=<span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:
 
 <h3>包路径</h3>
 <p>无论你是否要发布你的程序, 你都应该以要发布的方式来构建你的程序,最好的包名是&nbsp;github.com/user</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/github.com/user
+<div class="highlight"><pre>$ mkdir -p $GOPATH/src/github.com/user
 </pre></div>
 
 
 <h3>第一个Go程序</h3>
 <p>下面，我将介绍如何将从头构建一个简单的go程序.
 首先, 我们以<code>/data/github/golang</code>为工作空间</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir -p /data/github/golang
-<span class="nv">$ </span><span class="nb">cd</span> /data/github/golang
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+<div class="highlight"><pre>$ mkdir -p /data/github/golang
+$ <span class="nb">cd</span> /data/github/golang
+$ <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
 </pre></div>
 
 
 <p>为了创建一个简单的程序. 首先要选择包路径, 如<code>github.com/crazygit/hello</code>,&nbsp;并创建对于的目录结构</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/github.com/crazygit/hello
+<div class="highlight"><pre>$ mkdir -p $GOPATH/src/github.com/crazygit/hello
 </pre></div>
 
 
@@ -157,26 +157,26 @@ $ export PATH=<span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:
 
 
 <p>使用go工具编译并安装程序</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
-<span class="nv">$ </span>go install github.com/crazygit/hello
+<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH
+$ go install github.com/crazygit/hello
 </pre></div>
 
 
 <p>或者</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>/github.com/crazygit/hello
-<span class="nv">$ </span>go install
+<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH/github.com/crazygit/hello
+$ go install
 </pre></div>
 
 
 <p>执行了之后，可以看到<code>$GOPATH</code>中多了一个<code>bin</code>目录，里面有一个名为<code>hello</code>的可执行文件</p>
-<div class="highlight"><pre><span class="nv">$ $GOPATH</span>/bin/hello
+<div class="highlight"><pre>$ $GOPATH/bin/hello
 Hello, world.
 </pre></div>
 
 
 <h3>第一个Go库</h3>
 <p>让我们再创建一个库，同样，先创建包路径<code>github.com/crazygit/stringutil</code></p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir <span class="nv">$GOPATH</span>/src/github.com/crazygit/stringutil
+<div class="highlight"><pre>$ mkdir $GOPATH/src/github.com/crazygit/stringutil
 </pre></div>
 
 
@@ -194,8 +194,8 @@ Hello, world.
 
 
 <p>编译</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
-<span class="nv">$ </span>go build github.com/crazygit/stringutil
+<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH
+$ go build github.com/crazygit/stringutil
 </pre></div>
 
 
@@ -215,12 +215,12 @@ Hello, world.
 
 
 <p>安装，当安装的的时候，它会自动根据安装依赖,所以安装<code>hello</code>时, 它会自动安装<code>stringutil</code></p>
-<div class="highlight"><pre><span class="nv">$ </span>go install github.com/crazygit/hello
+<div class="highlight"><pre>$ go install github.com/crazygit/hello
 </pre></div>
 
 
 <p>运行</p>
-<div class="highlight"><pre><span class="nv">$ $GOPATH</span>/bin/hello
+<div class="highlight"><pre>$ $GOPATH/bin/hello
 Hello, Go!
 </pre></div>
 
@@ -262,14 +262,14 @@ Hello, Go!
 
 
 <p>执行测试</p>
-<div class="highlight"><pre><span class="nv">$ </span>go <span class="nb">test </span>github.com/crazygit/stringutil
+<div class="highlight"><pre>$ go <span class="nb">test</span> github.com/crazygit/stringutil
 ok      github.com/crazygit/stringutil  0.002s
 </pre></div>
 
 
 <h2>第三方包</h2>
-<div class="highlight"><pre><span class="nv">$ </span>go get github.com/golang/example/hello
-<span class="nv">$ $GOPATH</span>/bin/hello
+<div class="highlight"><pre>$ go get github.com/golang/example/hello
+$ $GOPATH/bin/hello
 Hello, Go examples!
 </pre></div>
 

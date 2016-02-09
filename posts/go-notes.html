@@ -77,9 +77,9 @@ On 2015-07-22
 <li>
 <p><span class="caps">GOPATH</span>允许多个目录, 当<span class="caps">GOPATH</span>有多个目录时，为了让每个目录下的bin目录都加入环境变量
 可以设置<code>${GOPATH//://bin:}/bin</code></p>
-<div class="highlight"><pre><span class="nb">export </span><span class="nv">GOROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/go&quot;</span>
-<span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/golang:</span><span class="nv">$HOME</span><span class="s2">/github/golang&quot;</span>
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:<span class="si">${</span><span class="nv">GOPATH</span><span class="p">//://bin:</span><span class="si">}</span>/bin
+<div class="highlight"><pre><span class="nb">export</span> <span class="nv">GOROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/go&quot;</span>
+<span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">HOME/golang:</span>$<span class="s2">HOME/github/golang&quot;</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>$PATH:$GOROOT/bin:<span class="si">${</span><span class="nv">GOPATH</span><span class="p">//://bin:</span><span class="si">}</span>/bin
 </pre></div>
 
 

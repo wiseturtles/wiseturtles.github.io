@@ -70,12 +70,12 @@ On 2015-10-31
         </div>
 
         <div><p>Mac上pip安装gevent报错信息如下：</p>
-<div class="highlight"><pre><span class="nx">libev</span><span class="o">/</span><span class="nx">ev</span><span class="p">.</span><span class="nx">c</span><span class="o">:</span><span class="mi">1029</span><span class="o">:</span><span class="mi">42</span><span class="o">:</span> <span class="nx">error</span><span class="o">:</span> <span class="s1">&#39;_Noreturn&#39;</span> <span class="nx">keyword</span> <span class="nx">must</span> <span class="nx">precede</span> <span class="kd">function</span> <span class="nx">declarator</span>
+<div class="highlight"><pre>libev/ev.c:1029:42: error: &#39;_Noreturn&#39; keyword must precede function declarator
 </pre></div>
 
 
 <p>解决：</p>
-<div class="highlight"><pre><span class="nv">$ CFLAGS</span><span class="o">=</span><span class="s1">&#39;-std=c99&#39;</span> pip install gevent
+<div class="highlight"><pre>$ <span class="nv">CFLAGS</span><span class="o">=</span><span class="s1">&#39;-std=c99&#39;</span> pip install gevent
 </pre></div>
 
 

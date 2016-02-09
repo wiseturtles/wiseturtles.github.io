@@ -75,24 +75,24 @@ On 2012-12-14
 <p>注意：最好是单独建立一个用户，并保证该用户对代码和后面创建索引的目录读写权限</p>
 <h2>准备工作</h2>
 <p>以opengrok用户身份登录安装jdk和Exuberant&nbsp;Ctags.</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo apt-get install sun-java6-jdk ctags
+<div class="highlight"><pre>$ sudo apt-get install sun-java6-jdk ctags
 </pre></div>
 
 
 <p>获取opengrok安装包（opengrok-0.11.1.tar.gz）和tomcat安装包(apachetomcat-7.0.6.tar.gz)解压安装包到任意目录下面</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /var/local/
-<span class="nv">$ </span>tar -zxvf /path/to/opengrok-0.11.1.tar.gz
-<span class="nv">$ </span>tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
+<div class="highlight"><pre>$ <span class="nb">cd</span> /var/local/
+$ tar -zxvf /path/to/opengrok-0.11.1.tar.gz
+$ tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
 </pre></div>
 
 
 <p>下载需要使用的代码到一个目录下面</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir -p ~/opengrok/projects/project1
-<span class="nv">$ </span>mkdir -p ~/opnegrok/projects/project2
-<span class="nv">$ </span><span class="nb">cd</span> ~/opengrok/projects/project1
-<span class="nv">$ </span>download code of project1 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
-<span class="nv">$ </span><span class="nb">cd</span> ~/opengrok/projects/project2
-<span class="nv">$ </span>download code of project2 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
+<div class="highlight"><pre>$ mkdir -p ~/opengrok/projects/project1
+$ mkdir -p ~/opnegrok/projects/project2
+$ <span class="nb">cd</span> ~/opengrok/projects/project1
+$ download code of project1 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
+$ <span class="nb">cd</span> ~/opengrok/projects/project2
+$ download code of project2 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
 </pre></div>
 
 
@@ -105,14 +105,14 @@ opengrok/projects----project1
 </pre>
 
 <p>启动tomcat，确认tomcat没有问题</p>
-<div class="highlight"><pre><span class="nv">$ </span>/var/local/apache-tomcat-7.0.6/bin/startup.sh
+<div class="highlight"><pre>$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
 </pre></div>
 
 
 <p>访问<a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>检查tomcat&nbsp;是否正常工作</p>
 <h2>部署OpenGrok</h2>
 <p>执行命令</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo <span class="nv">OPENGROK_TOMCAT_BASE</span><span class="o">=</span>/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
+<div class="highlight"><pre>$ sudo <span class="nv">OPENGROK_TOMCAT_BASE</span><span class="o">=</span>/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
 </pre></div>
 
 
@@ -124,7 +124,7 @@ opengrok/projects----project1
 <h3>创建索引</h3>
 <p>创建索引时，会创建三个目录，一个data目录来存放索引信息，一个etc目录创建配置信息和一个log目录。
  如想让~/opengrok/来存放索引,则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code>, 则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code></p>
-<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
@@ -132,7 +132,7 @@ opengrok/projects----project1
 <p>访问<a href="http://127.0.0.1:8080/source">http://127.0.0.1:8080/source</a>,enjoy&nbsp;it!</p>
 <h3>项目代码更新或者添加新的项目</h3>
 <p>首先更新项目代码或者下载新的项目到~/opengrok/projects目录下面。&nbsp;然后重新执行</p>
-<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
@@ -142,7 +142,7 @@ opengrok/projects----project1
 如添加公司<span class="caps">LOGO</span>或一些有用的帮助信息。</p>
 <h3>直接调用命令行接口</h3>
 <p>上面创建索引的命令其实</p>
-<div class="highlight"><pre><span class="nv">$ OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true </span><span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
@@ -159,7 +159,7 @@ opengrok/projects----project1
 
 
 <p>上面各个参数的意思如下:</p>
-<div class="highlight"><pre><span class="nv">$ </span>java -jar opengrok.jar
+<div class="highlight"><pre>$ java -jar opengrok.jar
 
 Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
 -?
@@ -175,13 +175,13 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Base URL of the user Information provider. Default: <span class="s2">&quot;http://www.opensolaris.org/viewProfile.jspa?username=&quot;</span>
 
 -C
-    Print per project percentage progress information<span class="o">(</span>I/O extensive, since one <span class="nb">read </span>through dir structure is made before indexing, needs -v, otherwise it just goes to the log<span class="o">)</span>
+    Print per project percentage progress information<span class="o">(</span>I/O extensive, since one <span class="nb">read</span> through dir structure is made before indexing, needs -v, otherwise it just goes to the log<span class="o">)</span>
 
 -c /path/to/ctags
     Path to Exuberant Ctags from http://ctags.sf.net by default takes the Exuberant Ctags in PATH.
 
 -D
-    Store <span class="nb">history </span>cache in a database <span class="o">(</span>needs the JDBC driver in the classpath, typically derbyclient.jar or derby.jar<span class="o">)</span>
+    Store <span class="nb">history</span> cache in a database <span class="o">(</span>needs the JDBC driver in the classpath, typically derbyclient.jar or derby.jar<span class="o">)</span>
 
 -d /path/to/data/root
     The directory where OpenGrok stores the generated data
@@ -190,10 +190,10 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Economical - consumes less disk space. It does not generate hyper text cross reference files offline, but will <span class="k">do</span> so on demand - which could be sightly slow.
 
 -H
-    Generate <span class="nb">history </span>cache <span class="k">for</span> all repositories
+    Generate <span class="nb">history</span> cache <span class="k">for</span> all repositories
 
 -h /path/to/repository
-    just generate <span class="nb">history </span>cache <span class="k">for</span> the specified repos <span class="o">(</span>absolute path from <span class="nb">source </span>root<span class="o">)</span>
+    just generate <span class="nb">history</span> cache <span class="k">for</span> the specified repos <span class="o">(</span>absolute path from <span class="nb">source</span> root<span class="o">)</span>
 
 -I pattern
     Only files matching this pattern will be examined <span class="o">(</span>supports wildcards, example: -I *.java -I *.c<span class="o">)</span>
@@ -202,10 +202,10 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Ignore the named files or directories <span class="o">(</span>supports wildcards, example: -i *.so -i *.dll<span class="o">)</span>
 
 -j class
-    Name of the JDBC driver class used by the <span class="nb">history </span>cache. Can use one of the shorthands <span class="s2">&quot;client&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.ClientDriver<span class="o">)</span> or <span class="s2">&quot;embedded&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.EmbeddedDriver<span class="o">)</span>. Default: <span class="s2">&quot;client&quot;</span>
+    Name of the JDBC driver class used by the <span class="nb">history</span> cache. Can use one of the shorthands <span class="s2">&quot;client&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.ClientDriver<span class="o">)</span> or <span class="s2">&quot;embedded&quot;</span> <span class="o">(</span>org.apache.derby.jdbc.EmbeddedDriver<span class="o">)</span>. Default: <span class="s2">&quot;client&quot;</span>
 
 -k /path/to/repository
-    Kill the <span class="nb">history </span>cache <span class="k">for</span> the given repository and exit. Use <span class="s1">&#39;*&#39;</span> to delete the cache <span class="k">for</span> all repositories.
+    Kill the <span class="nb">history</span> cache <span class="k">for</span> the given repository and exit. Use <span class="s1">&#39;*&#39;</span> to delete the cache <span class="k">for</span> all repositories.
 
 -K
     List all repository pathes and exit.
@@ -223,16 +223,16 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Allow this symlink to be followed. Option may be repeated.
 
 -n
-    Do not generate indexes, but process all other <span class="nb">command </span>line options
+    Do not generate indexes, but process all other <span class="nb">command</span> line options
 
 -O on/off
     Turn on/off the optimization of the index database as part of the indexing step
 
 -P
-    Generate a project <span class="k">for</span> each of the top-level directories in <span class="nb">source </span>root
+    Generate a project <span class="k">for</span> each of the top-level directories in <span class="nb">source</span> root
 
 -p /path/to/default/project
-    This is the path to the project that should be selected by default in the web application<span class="o">(</span>when no other project <span class="nb">set </span>either in cookie or in parameter<span class="o">)</span>. You should strip off the <span class="nb">source </span>root.
+    This is the path to the project that should be selected by default in the web application<span class="o">(</span>when no other project <span class="nb">set</span> either in cookie or in parameter<span class="o">)</span>. You should strip off the <span class="nb">source</span> root.
 
 -Q on/off
     Turn on/off quick context scan. By default only the first 32k of a file is scanned, and a <span class="s1">&#39;[..all..]&#39;</span> link is inserted <span class="k">if</span> the file is bigger. Activating this may slow the server down <span class="o">(</span>Note: this is setting only affects the web application<span class="o">)</span>
@@ -247,13 +247,13 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Turn on/off support <span class="k">for</span> remote SCM systems
 
 -S
-    Search <span class="k">for</span> <span class="s2">&quot;external&quot;</span> <span class="nb">source </span>repositories and add them
+    Search <span class="k">for</span> <span class="s2">&quot;external&quot;</span> <span class="nb">source</span> repositories and add them
 
 -s /path/to/source/root
-    The root directory of the <span class="nb">source </span>tree
+    The root directory of the <span class="nb">source</span> tree
 
 -T number
-    The number of threads to use <span class="k">for</span> index generation. By default the number of threads will be <span class="nb">set </span>to the number of available CPUs
+    The number of threads to use <span class="k">for</span> index generation. By default the number of threads will be <span class="nb">set</span> to the number of available CPUs
 
 -t number
     Default tabsize to use <span class="o">(</span>number of spaces per tab character<span class="o">)</span>
@@ -262,7 +262,7 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     Send the current configuration to the specified address <span class="o">(</span>This is most likely the web-app configured with ConfigAddress<span class="o">)</span>
 
 -u url
-    URL to the database that contains the <span class="nb">history </span>cache. Default: If -j specifies <span class="s2">&quot;embedded&quot;</span>, <span class="s2">&quot;jdbc:derby:</span><span class="nv">$DATA_ROOT</span><span class="s2">/cachedb;create=true&quot;</span><span class="p">;</span> otherwise, <span class="s2">&quot;jdbc:derby://localhost/cachedb;create=true&quot;</span>
+    URL to the database that contains the <span class="nb">history</span> cache. Default: If -j specifies <span class="s2">&quot;embedded&quot;</span>, <span class="s2">&quot;jdbc:derby:</span><span class="nv">$DA</span><span class="s2">TA_ROOT/cachedb;create=true&quot;</span><span class="p">;</span> otherwise, <span class="s2">&quot;jdbc:derby://localhost/cachedb;create=true&quot;</span>
 
 -V
     Print version and quit
@@ -280,7 +280,7 @@ Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
     URL Suffix <span class="k">for</span> the user Information provider. Default: <span class="s2">&quot;&quot;</span>
 
 -z number
-    depth of scanning <span class="k">for</span> repositories in directory structure relative to <span class="nb">source </span>root
+    depth of scanning <span class="k">for</span> repositories in directory structure relative to <span class="nb">source</span> root
 </pre></div>
 
 

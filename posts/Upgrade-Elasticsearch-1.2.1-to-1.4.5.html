@@ -78,14 +78,14 @@ On 2015-06-19
 <p>注: Elasticsearch和Logstash都需要安装<span class="caps">JDK</span>, 我们用的<span class="caps">JDK</span>&nbsp;1.7</p>
 <h1>安装Logstash&nbsp;1.4.3</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
-<span class="nv">$ </span>wget https://download.elastic.co/logstash/logstash/logstash-1.4.3.tar.gz
-<span class="nv">$ </span>tar zxf logstash-1.4.3.tar.gz
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+$ wget https://download.elastic.co/logstash/logstash/logstash-1.4.3.tar.gz
+$ tar zxf logstash-1.4.3.tar.gz
 </pre></div>
 
 
 <h2>修改配置文件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /data/softwares/logstash-1.4.3/logstash.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+<div class="highlight"><pre>$ cat /data/softwares/logstash-1.4.3/logstash.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
 input <span class="o">{</span>
   redis <span class="o">{</span>
     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
@@ -199,38 +199,38 @@ output <span class="o">{</span>
 
 
 <h2>启动测试</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/softwares/logstash-1.4.3
-<span class="nv">$ </span>bin/logstash -f logstash.conf
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/softwares/logstash-1.4.3
+$ bin/logstash -f logstash.conf
 </pre></div>
 
 
 <h1>安装Elasticsearch&nbsp;1.4.5</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software
-<span class="nv">$ </span>wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz
-<span class="nv">$ </span>tar zxf elasticsearch-1.4.5.tar.gz
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+$ wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz
+$ tar zxf elasticsearch-1.4.5.tar.gz
 </pre></div>
 
 
 <p>安装插件：</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software <span class="c"># 安装分词插件</span>
-<span class="nv">$ </span>git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
-<span class="nv">$ </span><span class="nb">cd </span>elasticsearch-rtf
-<span class="nv">$ </span>cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
-<span class="nv">$ </span>cp -vrf config/ik config/mmseg /data/softwares/elasticsearch-1.4.5/config/
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software <span class="c1"># 安装分词插件</span>
+$ git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
+$ <span class="nb">cd</span> elasticsearch-rtf
+$ cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
+$ cp -vrf config/ik config/mmseg /data/softwares/elasticsearch-1.4.5/config/
 
 
 :::bash
 
-<span class="nv">$ </span><span class="nb">cd</span> /data/software <span class="c"># 监控插件</span>
-<span class="nv">$ </span><span class="nb">cd </span>elasticsearch-1.4.5
-<span class="nv">$ </span>bin/plugin -install mobz/elasticsearch-head <span class="c"># head插件</span>
-<span class="nv">$ </span>bin/plugin -install lukas-vlcek/bigdesk     <span class="c"># bigdesk插件</span>
+$ <span class="nb">cd</span> /data/software <span class="c1"># 监控插件</span>
+$ <span class="nb">cd</span> elasticsearch-1.4.5
+$ bin/plugin -install mobz/elasticsearch-head <span class="c1"># head插件</span>
+$ bin/plugin -install lukas-vlcek/bigdesk     <span class="c1"># bigdesk插件</span>
 </pre></div>
 
 
 <h2>修改配置文件</h2>
-<div class="highlight"><pre><span class="nv">$ </span>cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+<div class="highlight"><pre>$ cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
 cluster.name: elasticsearch_dashboard
 node.name: <span class="s2">&quot;es1&quot;</span>
 node.master: <span class="nb">true</span>
@@ -256,34 +256,34 @@ index:
   analysis:
     analyzer:
       standardPlusWordDelimiter:
-        <span class="nb">type</span>: custom
+        type: custom
         tokenizer: standard
         filter: <span class="o">[</span>standard, wordDelim, lowercase, stop, dict<span class="o">]</span>
       ik:
-        <span class="nb">alias</span>: <span class="o">[</span>ik_analyzer<span class="o">]</span>
-        <span class="nb">type</span>: ik
+        alias: <span class="o">[</span>ik_analyzer<span class="o">]</span>
+        type: ik
       ik_max_word:
-        <span class="nb">type</span>: ik
+        type: ik
         use_smart: <span class="nb">false</span>
-<span class="nb">      </span>ik_smart:
-        <span class="nb">type</span>: ik
+      ik_smart:
+        type: ik
         use_smart: <span class="nb">true</span>
-<span class="nb">      </span>pinyin_ngram_analyzer:
-        <span class="nb">type</span>: custom
+      pinyin_ngram_analyzer:
+        type: custom
         tokenizer: my_pinyin
         filter: <span class="o">[</span>standard,lowercase,nGram,trim,unique<span class="o">]</span>     
     tokenizer:
       my_pinyin:
-        <span class="nb">type</span>: pinyin
+        type: pinyin
         first_letter: prefix
         padding_char : <span class="s2">&quot;&quot;</span>
     filter:
       wordDelim:
-        <span class="nb">type</span>: word_delimiter
+        type: word_delimiter
         preserve_original: <span class="nb">true</span>
-<span class="nb">      </span>dict:
-        <span class="nb">type</span>: dictionary_decompounder
-        word_list: <span class="o">[</span>cool, iris, fire, bug, flag, fox, grease, monkey, flash, block, forecast, screen, grab, cookie, auto, fill, text, all, so, think, mega, upload, download, video, map, spring, fix, input, clip, fly, lang, up, down, persona, css, html, all, http, ball, firefox, bookmark, chat, zilla, edit, menu, menus, status, bar, with, easy, sync, search, google, <span class="nb">time</span>, window, js, super, scroll, title, close, undo, user, inspect, inspector, browser, context, dictionary, mail, button, url, password, secure, image, new, tab, delete, click, name, smart, down, manager, open, query, net, link, blog, this, color, <span class="k">select</span>, key, keys, foxy, translate, word<span class="o">]</span>
+      dict:
+        type: dictionary_decompounder
+        word_list: <span class="o">[</span>cool, iris, fire, bug, flag, fox, grease, monkey, flash, block, forecast, screen, grab, cookie, auto, fill, text, all, so, think, mega, upload, download, video, map, spring, fix, input, clip, fly, lang, up, down, persona, css, html, all, http, ball, firefox, bookmark, chat, zilla, edit, menu, menus, status, bar, with, easy, sync, search, google, time, window, js, super, scroll, title, close, undo, user, inspect, inspector, browser, context, dictionary, mail, button, url, password, secure, image, new, tab, delete, click, name, smart, down, manager, open, query, net, link, blog, this, color, <span class="k">select</span>, key, keys, foxy, translate, word<span class="o">]</span>
 </pre></div>
 
 
@@ -292,9 +292,9 @@ index:
 2. 其它机器配置文件类似，只需要修改和<span class="caps">IP</span>相关的字段值</p>
 <h2>启动Elasticsearch</h2>
 <p>测试能否正常启动：</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> /data/software/elasticsearch-1.4.5
-<span class="nv">$ </span>bin/elasticsearch  <span class="c"># 启动ES，测试是否可以正常启动</span>
-<span class="nv">$ </span>tail -f /data/log/elasticsearch/elasticsearch_dashboard.log <span class="c"># 查看日志</span>
+<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software/elasticsearch-1.4.5
+$ bin/elasticsearch  <span class="c1"># 启动ES，测试是否可以正常启动</span>
+$ tail -f /data/log/elasticsearch/elasticsearch_dashboard.log <span class="c1"># 查看日志</span>
 </pre></div>
 
 
@@ -305,13 +305,13 @@ index:
 </ul>
 <h1>配置supervisor</h1>
 <p>如果可以正常启动，我们通过supervisor管理Elasticsearch和Logstash。</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pip install supervisor <span class="c"># 后来拿到root权限，否则还要先弄Python virtual env</span>
-<span class="nv">$ </span>修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
+<div class="highlight"><pre>$ sudo pip install supervisor <span class="c1"># 后来拿到root权限，否则还要先弄Python virtual env</span>
+$ 修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
 
 
 :::bash
 
-<span class="nv">$ </span>cat /etc/supervisor/supervisord.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^;|^$&#39;</span>
+$ cat /etc/supervisor/supervisord.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^;|^$&#39;</span>
 <span class="o">[</span>unix_http_server<span class="o">]</span>
 <span class="nv">file</span><span class="o">=</span>/var/run/supervisor.sock    <span class="p">;</span> <span class="o">(</span>the path to the socket file<span class="o">)</span>
 <span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default 0700<span class="o">)</span>
@@ -319,15 +319,15 @@ index:
 supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface:make_main_rpcinterface
 <span class="o">[</span>supervisord<span class="o">]</span>
 <span class="nv">http_port</span><span class="o">=</span>/var/run/supervisor.sock <span class="p">;</span> <span class="o">(</span>default is to run a UNIX domain socket server<span class="o">)</span>
-<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
+<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$C</span>WD/supervisord.log<span class="o">)</span>
 <span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
 <span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
 <span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
 <span class="nv">pidfile</span><span class="o">=</span>/var/run/supervisord.pid <span class="p">;</span> <span class="o">(</span>supervisord pidfile<span class="p">;</span>default supervisord.pid<span class="o">)</span>
-<span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> <span class="nb">true</span><span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
+<span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> true<span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
 <span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
 <span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
-<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
+<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default $TEMP<span class="o">)</span>
 <span class="o">[</span>supervisorctl<span class="o">]</span>
 <span class="nv">serverurl</span><span class="o">=</span>unix:////var/run/supervisor.sock <span class="p">;</span> use a unix:// URL  <span class="k">for</span> a unix socket
 <span class="o">[</span>include<span class="o">]</span>
@@ -336,9 +336,9 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 :::bash
 
-<span class="nv">$ </span>cat /etc/supervisor/conf.d/elasticsearch.conf 
+$ cat /etc/supervisor/conf.d/elasticsearch.conf 
 <span class="o">[</span>program:elasticsearch<span class="o">]</span>
-<span class="nb">command</span><span class="o">=</span>/data/softwares/elasticsearch-1.4.5/bin/elasticsearch -Xmx6g -Xms6g -XX:PermSize<span class="o">=</span>512m -Des.max-open-files<span class="o">=</span><span class="nb">true</span>
+<span class="nv">command</span><span class="o">=</span>/data/softwares/elasticsearch-1.4.5/bin/elasticsearch -Xmx6g -Xms6g -XX:PermSize<span class="o">=</span>512m -Des.max-open-files<span class="o">=</span><span class="nb">true</span>
 <span class="nv">directory</span><span class="o">=</span>/data/softwares/elasticsearch-1.4.5
 <span class="nv">user</span><span class="o">=</span>work
 <span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
@@ -349,9 +349,9 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 :::bash
 
-<span class="nv">$ </span>cat /etc/supervisor/conf.d/logstash.conf 
+$ cat /etc/supervisor/conf.d/logstash.conf 
 <span class="o">[</span>program:logstash<span class="o">]</span>
-<span class="nb">command</span><span class="o">=</span>/data/softwares/logstash-1.4.3/bin/logstash -f logstash.conf
+<span class="nv">command</span><span class="o">=</span>/data/softwares/logstash-1.4.3/bin/logstash -f logstash.conf
 <span class="nv">directory</span><span class="o">=</span>/data/softwares/logstash-1.4.3
 <span class="nv">user</span><span class="o">=</span>work
 <span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span>
@@ -362,12 +362,12 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 
 <h1>常用的<span class="caps">ES</span>命令别名</h1>
-<div class="highlight"><pre><span class="nv">$ </span>tail -n3 ~/.bashrc 
-<span class="nb">alias </span><span class="nv">esh</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/health?pretty&quot;</span>
-<span class="nb">alias </span><span class="nv">esi</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/indices?pretty&quot;</span>
-<span class="nb">alias </span><span class="nv">ess</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/shards&quot;</span>
-<span class="nb">alias </span><span class="nv">esdownlocal</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/nodes/_local/_shutdown&quot;</span>
-<span class="nb">alias </span><span class="nv">esdownall</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_shutdown&quot;</span>
+<div class="highlight"><pre>$ tail -n3 ~/.bashrc 
+<span class="nb">alias</span> <span class="nv">esh</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/health?pretty&quot;</span>
+<span class="nb">alias</span> <span class="nv">esi</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/indices?pretty&quot;</span>
+<span class="nb">alias</span> <span class="nv">ess</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/shards&quot;</span>
+<span class="nb">alias</span> <span class="nv">esdownlocal</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/nodes/_local/_shutdown&quot;</span>
+<span class="nb">alias</span> <span class="nv">esdownall</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_shutdown&quot;</span>
 </pre></div>
 
 
@@ -377,7 +377,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 <h1>碰到的问题</h1>
 <h2>没有将shard同步到新加入的<span class="caps">ES</span>&nbsp;1.4.5机器上</h2>
 <p>修改number_of_replicas，根据机器个数修改。</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPUT <span class="s1">&#39;&lt;your-ip&gt;:9200/&lt;your-index&gt;/_settings&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre>$ curl -XPUT <span class="s1">&#39;&lt;your-ip&gt;:9200/&lt;your-index&gt;/_settings&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">     &quot;index&quot; : {</span>
 <span class="s1">         &quot;number_of_replicas&quot; : 2</span>
 <span class="s1">      }</span>
@@ -386,7 +386,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 
 <p>明确让某个index的某个shard分配到指定机器上。</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPOST <span class="s1">&#39;&lt;your-es-ip&gt;:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre>$ curl -XPOST <span class="s1">&#39;&lt;your-es-ip&gt;:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">    &quot;commands&quot; : [ {</span>
 <span class="s1">        &quot;move&quot; :</span>
 <span class="s1">            {</span>
@@ -405,7 +405,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 
 <p>比如：</p>
-<div class="highlight"><pre><span class="nv">$ </span>curl -XPOST <span class="s1">&#39;localhost:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre>$ curl -XPOST <span class="s1">&#39;localhost:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">    &quot;commands&quot; : [ {</span>
 <span class="s1">        &quot;move&quot; :</span>
 <span class="s1">            {</span>

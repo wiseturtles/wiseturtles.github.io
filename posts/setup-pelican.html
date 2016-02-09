@@ -88,7 +88,7 @@ On 2014-11-30
 <p>官方入门指南：<a href="http://docs.getpelican.com/en/latest/getting_started.html">http://docs.getpelican.com/en/latest/getting_started.html</a>.</p>
 </blockquote>
 <p>本文以Pelican3.5为例，使用Pelican需要python环境，官方推荐的python版本是2.7.X，因此开始之前，最好是检查一下当前系统的python版本是否满足情况。</p>
-<div class="highlight"><pre><span class="nv">$ </span>python --version
+<div class="highlight"><pre>$ python --version
 Python 2.7.6
 </pre></div>
 
@@ -97,67 +97,67 @@ Python 2.7.6
 <p>如果当前系统默认是2.7.X, 我们则可以直接创建一个虚拟环境来为安装pelican做准备。
 关于python虚拟环境的创建，详细可以参考: <a href="http://liuzhijun.iteye.com/blog/1872241">http://liuzhijun.iteye.com/blog/1872241</a>。</p>
 <p>下面说说主要步骤</p>
-<div class="highlight"><pre><span class="nv">$ </span>sudo pip install virtualenv virtualenvwrapper
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;[[ -s /usr/local/bin/virtualenvwrapper.sh ]] &amp;&amp; source /usr/local/bin/virtualenvwrapper.sh&#39;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
-<span class="nv">$ </span>mkvirtualenv pelican <span class="c"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
-<span class="nv">$ </span>workon pelican <span class="c"># 激活虚拟环境</span>
+<div class="highlight"><pre>$ sudo pip install virtualenv virtualenvwrapper
+$ <span class="nb">echo</span> <span class="s1">&#39;[[ -s /usr/local/bin/virtualenvwrapper.sh ]] &amp;&amp; source /usr/local/bin/virtualenvwrapper.sh&#39;</span> &gt;&gt; ~/.bashrc
+$ <span class="nb">source</span> ~/.bashrc
+$ mkvirtualenv pelican <span class="c1"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
+$ workon pelican <span class="c1"># 激活虚拟环境</span>
 </pre></div>
 
 
 <p>另一种情况是当前系统默认python版本不是2.7.X的，
 为了方便及不影响当前系统的python版本，可以使用<a href="https://github.com/utahta/pythonbrew">pythonbrew</a>来搭建Python2.7.x环境。
 安装步骤: <a href="https://github.com/utahta/pythonbrew/blob/master/README.rst">https://github.com/utahta/pythonbrew/blob/master/<span class="caps">README</span>.rst</a></p>
-<div class="highlight"><pre><span class="c"># 安装pythonbrew</span>
-<span class="nv">$ </span>curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <span class="c"># 这步执行成功后会生成目录: ~/.pythonbrew</span>
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;[[ -s </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
-<span class="nv">$ </span>pythonbrew --version      <span class="c"># 检查是否安装成功</span>
-<span class="nv">$ </span>pythonbrew install --verbose 2.7.5       <span class="c"># 安装python 2.7.5</span>
-<span class="nv">$ </span>pythonbrew use 2.7.5      <span class="c"># 临时在当前会话使用python 2.7.5</span>
-<span class="nv">$ </span>which python              <span class="c"># 检查python版本信息是否正确</span>
+<div class="highlight"><pre><span class="c1"># 安装pythonbrew</span>
+$ curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <span class="c1"># 这步执行成功后会生成目录: ~/.pythonbrew</span>
+$ <span class="nb">echo</span> <span class="s2">&quot;[[ -s </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
+$ <span class="nb">source</span> ~/.bashrc
+$ pythonbrew --version      <span class="c1"># 检查是否安装成功</span>
+$ pythonbrew install --verbose 2.7.5       <span class="c1"># 安装python 2.7.5</span>
+$ pythonbrew use 2.7.5      <span class="c1"># 临时在当前会话使用python 2.7.5</span>
+$ which python              <span class="c1"># 检查python版本信息是否正确</span>
 
-<span class="c"># 一些关于pythonbrew的常用命令</span>
-<span class="nv">$ </span>pythonbrew list           <span class="c"># 查看已经安装了的python版本</span>
-<span class="nv">$ </span>pythonbrew off            <span class="c"># 禁用pythonbrew，使用系统默认的python环境</span>
-<span class="nv">$ </span>pythonbrew list -k        <span class="c"># 查看pythonbrew提供了哪些python版本可以安装</span>
-<span class="nv">$ </span>pythonbrew switch 2.7.5   <span class="c"># 永久切换到python 2.7.5,与use有点不同</span>
-<span class="c"># 更多命令可以参考官方文档</span>
+<span class="c1"># 一些关于pythonbrew的常用命令</span>
+$ pythonbrew list           <span class="c1"># 查看已经安装了的python版本</span>
+$ pythonbrew off            <span class="c1"># 禁用pythonbrew，使用系统默认的python环境</span>
+$ pythonbrew list -k        <span class="c1"># 查看pythonbrew提供了哪些python版本可以安装</span>
+$ pythonbrew switch 2.7.5   <span class="c1"># 永久切换到python 2.7.5,与use有点不同</span>
+<span class="c1"># 更多命令可以参考官方文档</span>
 </pre></div>
 
 
 <p>使用pythonbrew自带的virtualenv</p>
-<div class="highlight"><pre><span class="nv">$ </span>pythonbrew use 2.7.5
-<span class="nv">$ </span>pythonbrew venv init       <span class="c"># 初始化虚拟环境</span>
-<span class="nv">$ </span>pythonbrew venv create pelican  <span class="c"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
-<span class="nv">$ </span>pythonbrew venv use pelican     <span class="c"># 开启虚拟环境</span>
+<div class="highlight"><pre>$ pythonbrew use 2.7.5
+$ pythonbrew venv init       <span class="c1"># 初始化虚拟环境</span>
+$ pythonbrew venv create pelican  <span class="c1"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
+$ pythonbrew venv use pelican     <span class="c1"># 开启虚拟环境</span>
 
-<span class="c"># 为了以后使用方便,设置penv为开启虚拟环境的别名</span>
-<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">&quot;alias  penv=&#39;pythonbrew use 2.7.5 &amp;&amp; pythonbrew venv use pelican&#39;&quot;</span> &gt;&gt; ~/.bashrc
-<span class="nv">$ </span><span class="nb">source</span> ~/.bashrc
+<span class="c1"># 为了以后使用方便,设置penv为开启虚拟环境的别名</span>
+$ <span class="nb">echo</span> <span class="s2">&quot;alias  penv=&#39;pythonbrew use 2.7.5 &amp;&amp; pythonbrew venv use pelican&#39;&quot;</span> &gt;&gt; ~/.bashrc
+$ <span class="nb">source</span> ~/.bashrc
 
-<span class="c"># 一些常用的命令</span>
-<span class="nv">$ </span>pythonbrew venv list
-<span class="nv">$ </span>pythonbrew venv use proj
-<span class="nv">$ </span>pythonbrew venv delete proj
-<span class="nv">$ </span>pythonbrew venv rename proj proj2
-<span class="nv">$ </span>pythonbrew venv clone proj proj2
+<span class="c1"># 一些常用的命令</span>
+$ pythonbrew venv list
+$ pythonbrew venv use proj
+$ pythonbrew venv delete proj
+$ pythonbrew venv rename proj proj2
+$ pythonbrew venv clone proj proj2
 </pre></div>
 
 
 <h3>安装pelican</h3>
 <p>在配置好了虚拟环境之后，就让我们进入虚拟环境安装pelican吧</p>
-<div class="highlight"><pre><span class="c"># 需要先激活虚拟环境</span>
-<span class="nv">$ </span>workon pelican  <span class="c"># 如果是使用的pythonbrew ,则是“penv”</span>
-<span class="nv">$ </span>pip install pelican markdown typogrif  <span class="c"># 安装必须的python包</span>
+<div class="highlight"><pre><span class="c1"># 需要先激活虚拟环境</span>
+$ workon pelican  <span class="c1"># 如果是使用的pythonbrew ,则是“penv”</span>
+$ pip install pelican markdown typogrif  <span class="c1"># 安装必须的python包</span>
 </pre></div>
 
 
 <h2>博客配置</h2>
 <p>现在一切环境都好了，就让我们开始动手写博客吧</p>
-<div class="highlight"><pre><span class="nv">$ </span>mkdir myblog           <span class="c"># 创建一个目录，用于存放博客</span>
-<span class="nv">$ </span><span class="nb">cd </span>myblog
-<span class="nv">$ </span>pelican-quickstart     <span class="c"># 开始创建博客的向导</span>
+<div class="highlight"><pre>$ mkdir myblog           <span class="c1"># 创建一个目录，用于存放博客</span>
+$ <span class="nb">cd</span> myblog
+$ pelican-quickstart     <span class="c1"># 开始创建博客的向导</span>
 </pre></div>
 
 
@@ -201,8 +201,8 @@ Summary: hello
 
 <p>将上面的内容保存到<code>content</code>目录下，取名为<code>test.md</code>
 。现在就要用到前面的命令了。</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
+<div class="highlight"><pre>$ make html
+$ make devserver
 </pre></div>
 
 
@@ -212,54 +212,54 @@ Summary: hello
 文件来实现，由于可以pelican比较灵活，可以配置的地方比较的多，就不介绍了，可以
 查看<a href="http://docs.getpelican.com/en/3.2/settings.html">官方文档</a>查找自己需要的
 。其实，默认的配置基本上已经很好了，我自己除了在配置文件里面加上了时区之外，其他的基本上没有修改什么了。&nbsp;给一个官方的配置文件示例:</p>
-<div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+<div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 
-<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s">&#39;Alexis Métaireau&#39;</span>
-<span class="n">SITENAME</span> <span class="o">=</span> <span class="s">&quot;Alexis&#39; log&quot;</span>
-<span class="n">SITEURL</span> <span class="o">=</span> <span class="s">&#39;http://blog.notmyidea.org&#39;</span>
-<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s">&quot;Europe/Paris&quot;</span>
+<span class="n">AUTHOR</span> <span class="o">=</span> <span class="s1">&#39;Alexis Métaireau&#39;</span>
+<span class="n">SITENAME</span> <span class="o">=</span> <span class="s2">&quot;Alexis&#39; log&quot;</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s1">&#39;http://blog.notmyidea.org&#39;</span>
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s2">&quot;Europe/Paris&quot;</span>
 
-<span class="c"># can be useful in development, but set to False when you&#39;re ready to publish</span>
+<span class="c1"># can be useful in development, but set to False when you&#39;re ready to publish</span>
 <span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="n">GITHUB_URL</span> <span class="o">=</span> <span class="s">&#39;http://github.com/ametaireau/&#39;</span>
-<span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s">&quot;blog-notmyidea&quot;</span>
+<span class="n">GITHUB_URL</span> <span class="o">=</span> <span class="s1">&#39;http://github.com/ametaireau/&#39;</span>
+<span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s2">&quot;blog-notmyidea&quot;</span>
 <span class="n">PDF_GENERATOR</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="n">REVERSE_CATEGORY_ORDER</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">LOCALE</span> <span class="o">=</span> <span class="s">&quot;C&quot;</span>
+<span class="n">LOCALE</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span>
 <span class="n">DEFAULT_PAGINATION</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">DEFAULT_DATE</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2012</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/all.rss.xml&#39;</span>
-<span class="n">CATEGORY_FEED_RSS</span> <span class="o">=</span> <span class="s">&#39;feeds/</span><span class="si">%s</span><span class="s">.rss.xml&#39;</span>
+<span class="n">FEED_ALL_RSS</span> <span class="o">=</span> <span class="s1">&#39;feeds/all.rss.xml&#39;</span>
+<span class="n">CATEGORY_FEED_RSS</span> <span class="o">=</span> <span class="s1">&#39;feeds/</span><span class="si">%s</span><span class="s1">.rss.xml&#39;</span>
 
-<span class="n">LINKS</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;Biologeek&#39;</span><span class="p">,</span> <span class="s">&#39;http://biologeek.org&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Filyb&#39;</span><span class="p">,</span> <span class="s">&quot;http://filyb.info/&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Libert-fr&#39;</span><span class="p">,</span> <span class="s">&quot;http://www.libert-fr.com&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;N1k0&#39;</span><span class="p">,</span> <span class="s">&quot;http://prendreuncafe.com/blog/&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Tarek Ziadé&#39;</span><span class="p">,</span> <span class="s">&quot;http://ziade.org/blog&quot;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;Zubin Mithra&#39;</span><span class="p">,</span> <span class="s">&quot;http://zubin71.wordpress.com/&quot;</span><span class="p">),)</span>
+<span class="n">LINKS</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;Biologeek&#39;</span><span class="p">,</span> <span class="s1">&#39;http://biologeek.org&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Filyb&#39;</span><span class="p">,</span> <span class="s2">&quot;http://filyb.info/&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Libert-fr&#39;</span><span class="p">,</span> <span class="s2">&quot;http://www.libert-fr.com&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;N1k0&#39;</span><span class="p">,</span> <span class="s2">&quot;http://prendreuncafe.com/blog/&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Tarek Ziadé&#39;</span><span class="p">,</span> <span class="s2">&quot;http://ziade.org/blog&quot;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;Zubin Mithra&#39;</span><span class="p">,</span> <span class="s2">&quot;http://zubin71.wordpress.com/&quot;</span><span class="p">),)</span>
 
-<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;twitter&#39;</span><span class="p">,</span> <span class="s">&#39;http://twitter.com/ametaireau&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;lastfm&#39;</span><span class="p">,</span> <span class="s">&#39;http://lastfm.com/user/akounet&#39;</span><span class="p">),</span>
-        <span class="p">(</span><span class="s">&#39;github&#39;</span><span class="p">,</span> <span class="s">&#39;http://github.com/ametaireau&#39;</span><span class="p">),)</span>
+<span class="n">SOCIAL</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;twitter&#39;</span><span class="p">,</span> <span class="s1">&#39;http://twitter.com/ametaireau&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;lastfm&#39;</span><span class="p">,</span> <span class="s1">&#39;http://lastfm.com/user/akounet&#39;</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">&#39;github&#39;</span><span class="p">,</span> <span class="s1">&#39;http://github.com/ametaireau&#39;</span><span class="p">),)</span>
 
-<span class="c"># global metadata to all the contents</span>
-<span class="n">DEFAULT_METADATA</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;yeah&#39;</span><span class="p">,</span> <span class="s">&#39;it is&#39;</span><span class="p">),)</span>
+<span class="c1"># global metadata to all the contents</span>
+<span class="n">DEFAULT_METADATA</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;yeah&#39;</span><span class="p">,</span> <span class="s1">&#39;it is&#39;</span><span class="p">),)</span>
 
-<span class="c"># static paths will be copied under the same name</span>
-<span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;pictures&quot;</span><span class="p">,</span> <span class="p">]</span>
+<span class="c1"># static paths will be copied under the same name</span>
+<span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pictures&quot;</span><span class="p">,</span> <span class="p">]</span>
 
-<span class="c"># A list of files to copy from the source to the destination</span>
-<span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">((</span><span class="s">&#39;extra/robots.txt&#39;</span><span class="p">,</span> <span class="s">&#39;robots.txt&#39;</span><span class="p">),)</span>
+<span class="c1"># A list of files to copy from the source to the destination</span>
+<span class="n">FILES_TO_COPY</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;extra/robots.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;robots.txt&#39;</span><span class="p">),)</span>
 
-<span class="c"># custom page generated with a jinja2 template</span>
-<span class="n">TEMPLATE_PAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;pages/jinja2_template.html&#39;</span><span class="p">:</span> <span class="s">&#39;jinja2_template.html&#39;</span><span class="p">}</span>
+<span class="c1"># custom page generated with a jinja2 template</span>
+<span class="n">TEMPLATE_PAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pages/jinja2_template.html&#39;</span><span class="p">:</span> <span class="s1">&#39;jinja2_template.html&#39;</span><span class="p">}</span>
 
-<span class="c"># foobar will not be used, because it&#39;s not in caps. All configuration keys</span>
-<span class="c"># have to be in caps</span>
-<span class="n">foobar</span> <span class="o">=</span> <span class="s">&quot;barbaz&quot;</span>
+<span class="c1"># foobar will not be used, because it&#39;s not in caps. All configuration keys</span>
+<span class="c1"># have to be in caps</span>
+<span class="n">foobar</span> <span class="o">=</span> <span class="s2">&quot;barbaz&quot;</span>
 </pre></div>
 
 
@@ -268,10 +268,10 @@ Summary: hello
 <p><a href="https://github.com/getpelican/pelican-themes">https://github.com/getpelican/pelican-themes</a></p>
 <p>已经有很多现成的主题了，打开每个主题的文件夹都有一张主题效果的截图，可以方便选择自己喜欢的主题。什么？这些主题都不满意。好吧，你还可以选择<a href="http://docs.getpelican.com/en/3.2/themes.html#theming-pelican">创建属于自己独有的主题</a>。由于个人比较懒，信奉拿来主义，所以就选择了<code>tuxlite_tbs</code>这个主题，自己只做了一些细节的修改。</p>
 <p>废话不多说，让我们开始安装主题吧。</p>
-<div class="highlight"><pre><span class="nv">$ </span>git clone git://github.com/getpelican/pelican-themes.git ~/pelican-themes <span class="c"># 下载主题到`~/pelican-themes/`目录下</span>
-<span class="nv">$ </span><span class="nb">cd</span> ~/pelican-themes/
-<span class="nv">$ </span>git submodule init  <span class="c"># 由于这个git库里面的一些主题是单独的一个子模块，所以将它们一起下载下来</span>
-<span class="nv">$ </span>git submodule update
+<div class="highlight"><pre>$ git clone git://github.com/getpelican/pelican-themes.git ~/pelican-themes <span class="c1"># 下载主题到`~/pelican-themes/`目录下</span>
+$ <span class="nb">cd</span> ~/pelican-themes/
+$ git submodule init  <span class="c1"># 由于这个git库里面的一些主题是单独的一个子模块，所以将它们一起下载下来</span>
+$ git submodule update
 </pre></div>
 
 
@@ -282,8 +282,8 @@ Summary: hello
 
 
 <p>然后重新执行</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
+<div class="highlight"><pre>$ make html
+$ make devserver
 </pre></div>
 
 
@@ -332,16 +332,16 @@ Summary: hello
 
 
 <p>修改<code>pelicanconf.py</code>,&nbsp;添加如下字段：</p>
-<div class="highlight"><pre><span class="c"># 新浪微博新关注按钮</span>
+<div class="highlight"><pre><span class="c1"># 新浪微博新关注按钮</span>
 <span class="n">WEIBO</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">WEIBO_UID</span> <span class="o">=</span> <span class="mi">1768615155</span>        <span class="c"># 填入uid</span>
-<span class="n">WEIBO_TYPE</span> <span class="o">=</span> <span class="s">&quot;red_3&quot;</span>
+<span class="n">WEIBO_UID</span> <span class="o">=</span> <span class="mi">1768615155</span>        <span class="c1"># 填入uid</span>
+<span class="n">WEIBO_TYPE</span> <span class="o">=</span> <span class="s2">&quot;red_3&quot;</span>
 </pre></div>
 
 
 <p>编译发布并预览。在本地预览的时候可能不会看到效果。需要发布到github&nbsp;pages上面才能看到.下面马上会讲如何部署到github上面.</p>
-<div class="highlight"><pre><span class="nv">$ </span>make html
-<span class="nv">$ </span>make devserver
+<div class="highlight"><pre>$ make html
+$ make devserver
 </pre></div>
 
 
@@ -358,32 +358,32 @@ Summary: hello
 <p>但是需要根据实际修改Makefile文件中的</p>
 <div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
     ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span>
-    git push origin gh-pages   <span class="c"># 根据实际使用的pages情况修改这里</span>
+    git push origin gh-pages   <span class="c1"># 根据实际使用的pages情况修改这里</span>
 </pre></div>
 
 
 <p>修改好了之后，可以直接使用<code>make github</code> 发布博客了.</p>
 <p>我使用的用户级别的pages时，具体修改如下：</p>
-<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>myblog <span class="c"># 进入博客代码目录</span>
-<span class="nv">$ </span>git init
-<span class="nv">$ </span>git remote add origin git@github.com:username/username.github.io.git <span class="c"># 需要替换username</span>
-<span class="nv">$ </span>git add .
-<span class="nv">$ </span>git commit -m <span class="s1">&#39;init pelican source code&#39;</span>
-<span class="nv">$ </span>penv  <span class="c">#打开虚拟环境</span>
-<span class="nv">$ </span>make html 编译代码
+<div class="highlight"><pre>$ <span class="nb">cd</span> myblog <span class="c1"># 进入博客代码目录</span>
+$ git init
+$ git remote add origin git@github.com:username/username.github.io.git <span class="c1"># 需要替换username</span>
+$ git add .
+$ git commit -m <span class="s1">&#39;init pelican source code&#39;</span>
+$ penv  <span class="c1">#打开虚拟环境</span>
+$ make html 编译代码
 </pre></div>
 
 
 <p>修改Makefile文件如下内容：</p>
 <div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
-    ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span> <span class="c"># 这一步会在本地创建一个gh-pages分支。并将OUTPUTDIR里面的内容拷贝到这个分支</span>
+    ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span> <span class="c1"># 这一步会在本地创建一个gh-pages分支。并将OUTPUTDIR里面的内容拷贝到这个分支</span>
     git push -f origin gh-pages:master
 <span class="c"># 注意我这里添加了参数f，在后面每次往master 分支提交代码的时候，如果有冲突，会强制覆盖master的代码</span>
 </pre></div>
 
 
 <p>最后一步，提交代码</p>
-<div class="highlight"><pre><span class="nv">$ </span>make github
+<div class="highlight"><pre>$ make github
 </pre></div>
 
 

@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/linux-commands.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-23T14:21:00+08:00</updated><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><updated>2015-11-23T14:21:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;top命令的具体就不解释了，记录一些实用的命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# redis用户此时所使用的内存总数&lt;/span&gt;
-&lt;span class="c"&gt;# 这里的内存使用&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# redis用户此时所使用的内存总数&lt;/span&gt;
+&lt;span class="c1"&gt;# 这里的内存使用&lt;/span&gt;
 top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
 
-&lt;span class="c"&gt;# 查看服务器所有进程的内容使用总数&lt;/span&gt;
-&lt;span class="c"&gt;# 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考&lt;/span&gt;
-&lt;span class="c"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;# 查看服务器所有进程的内容使用总数&lt;/span&gt;
+&lt;span class="c1"&gt;# 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考&lt;/span&gt;
+&lt;span class="c1"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
+$ top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
 135.6
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
 &lt;h2&gt;ssh&lt;/h2&gt;
 &lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
 &lt;p&gt;避免输入用户密码，可以先运行:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh-copy-id &amp;lt;user@remote-host&amp;gt;  &lt;span class="c"&gt;# 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ssh-copy-id &amp;lt;user@remote-host&amp;gt;  &lt;span class="c1"&gt;# 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过scp做文件拷贝:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;scp &lt;span class="o"&gt;[&lt;/span&gt;-r&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;-P port&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;your-local-file&amp;gt; &lt;span class="o"&gt;[]&lt;/span&gt;&amp;lt;user&amp;gt;@&lt;span class="o"&gt;]&lt;/span&gt;&amp;lt;remote-host&amp;gt;:&amp;lt;remote-file-path&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ scp &lt;span class="o"&gt;[&lt;/span&gt;-r&lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;-P port&lt;span class="o"&gt;]&lt;/span&gt; &amp;lt;your-local-file&amp;gt; &lt;span class="o"&gt;[]&lt;/span&gt;&amp;lt;user&amp;gt;@&lt;span class="o"&gt;]&lt;/span&gt;&amp;lt;remote-host&amp;gt;:&amp;lt;remote-file-path&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果网络比较慢可以先压缩再拷贝:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zcf - /file/path/to/copy&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tar zxf - -C /file/path/to/receive  &lt;span class="c"&gt;# 从remote-host拷贝文件回来&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;tar zcf - /file/path/to/copy &lt;span class="p"&gt;|&lt;/span&gt; ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zxf - -C /file/path/to/receive&amp;quot;&lt;/span&gt;  &lt;span class="c"&gt;# 将本地文件拷贝到remote-host&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zcf - /file/path/to/copy&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; tar zxf - -C /file/path/to/receive  &lt;span class="c1"&gt;# 从remote-host拷贝文件回来&lt;/span&gt;
+$ tar zcf - /file/path/to/copy &lt;span class="p"&gt;|&lt;/span&gt; ssh user@remote-host &lt;span class="s2"&gt;&amp;quot;tar zxf - -C /file/path/to/receive&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;# 将本地文件拷贝到remote-host&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;&lt;span class="caps"&gt;HTTP&lt;/span&gt;&lt;/h2&gt;
 &lt;p&gt;也可以通过&lt;span class="caps"&gt;HTTP&lt;/span&gt;协议拷贝，如果本地正好有nginx/apache，ln -s 创建个软链接到外部可以访问的路径，从其它机器可以通过wget下载。
 但，不是所有机器都装了nginx/apache，可以通过Python自带模块快速启动一个&lt;span class="caps"&gt;HTTP&lt;/span&gt; Simple&amp;nbsp;Server。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python -mSimpleHTTPServer  &lt;span class="c"&gt;# 默认监听8000端口，你当然可以自己指定端口&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;python -mSimpleHTTPServer &lt;span class="m"&gt;8888&lt;/span&gt;  &lt;span class="c"&gt;# 指定监听端口为8888&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;wget listen-ip:port/&amp;lt;file/path&amp;gt; &lt;span class="c"&gt;# 从其它主机拷贝文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ python -mSimpleHTTPServer  &lt;span class="c1"&gt;# 默认监听8000端口，你当然可以自己指定端口&lt;/span&gt;
+$ python -mSimpleHTTPServer &lt;span class="m"&gt;8888&lt;/span&gt;  &lt;span class="c1"&gt;# 指定监听端口为8888&lt;/span&gt;
+$ wget listen-ip:port/&amp;lt;file/path&amp;gt; &lt;span class="c1"&gt;# 从其它主机拷贝文件&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -42,9 +42,9 @@ top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&
 &lt;p&gt;&lt;span class="caps"&gt;HTTP&lt;/span&gt;完全可以支持断点续传，wget -c&amp;nbsp;就可以。&lt;/p&gt;
 &lt;h2&gt;rsync&lt;/h2&gt;
 &lt;p&gt;大家可能都体会过scp传输过程中，网络、主机异常导致必须重新传，小文件、网络快还好，不然真的想打人。&amp;nbsp;你一定想如果可以断点续传就好了，rsync可以完成你的心愿。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P --rsh&lt;span class="o"&gt;=&lt;/span&gt;ssh --progress &amp;lt;your-local-file&amp;gt; user@remote-host:&amp;lt;receive-file-path&amp;gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P -v -e ssh &amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt;-file&amp;gt; user@remote-host:receive-file-path  &lt;span class="c"&gt;# 本地同步文件到remote-host&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;&lt;span class="nb"&gt;local&lt;/span&gt;-file-path&amp;gt;  &lt;span class="c"&gt;# remote-host文件同步到本地&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ rsync -P --rsh&lt;span class="o"&gt;=&lt;/span&gt;ssh --progress &amp;lt;your-local-file&amp;gt; user@remote-host:&amp;lt;receive-file-path&amp;gt;
+$ rsync -P -v -e ssh &amp;lt;local-file&amp;gt; user@remote-host:receive-file-path  &lt;span class="c1"&gt;# 本地同步文件到remote-host&lt;/span&gt;
+$ rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;local-file-path&amp;gt;  &lt;span class="c1"&gt;# remote-host文件同步到本地&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -95,36 +95,36 @@ unix 1 [ ] STREAM CONNECTED 16182 @000000df
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;提示&lt;/strong&gt;：&lt;span class="caps"&gt;LISTEN&lt;/span&gt;和&lt;span class="caps"&gt;LISTENING&lt;/span&gt;的状态只有用-a或者-l才能看到&lt;/p&gt;
 &lt;h2&gt;实用命令实例&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 列出所有连接（包括监听和未监听的)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -a
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 列出所有连接（包括监听和未监听的)&lt;/span&gt;
+$ netstat -a
 
-&lt;span class="c"&gt;# 列出所有tcp连接&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -at
+&lt;span class="c1"&gt;# 列出所有tcp连接&lt;/span&gt;
+$ netstat -at
 
-&lt;span class="c"&gt;# 列出所有udp连接&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -au
+&lt;span class="c1"&gt;# 列出所有udp连接&lt;/span&gt;
+$ netstat -au
 
-&lt;span class="c"&gt;# 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip&lt;/span&gt;
-&lt;span class="c"&gt;# 对应的主机名，这会降低输出速度，如果不需要，可以使用-n&lt;/span&gt;
-&lt;span class="c"&gt;# 在netstat输出中不显示主机，端口和用户名(host, port or user)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -an
+&lt;span class="c1"&gt;# 默认情况下，netstat命令会做一个reverse dns lookup去查找连接的ip&lt;/span&gt;
+&lt;span class="c1"&gt;# 对应的主机名，这会降低输出速度，如果不需要，可以使用-n&lt;/span&gt;
+&lt;span class="c1"&gt;# 在netstat输出中不显示主机，端口和用户名(host, port or user)&lt;/span&gt;
+$ netstat -an
 
-&lt;span class="c"&gt;# 列出所有处于监听状态的&lt;/span&gt;
-&lt;span class="c"&gt;# -l选项不要与-a同时使用，不然也会列出未监听状态的连接&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -l
+&lt;span class="c1"&gt;# 列出所有处于监听状态的&lt;/span&gt;
+&lt;span class="c1"&gt;# -l选项不要与-a同时使用，不然也会列出未监听状态的连接&lt;/span&gt;
+$ netstat -l
 
-&lt;span class="c"&gt;# 列出所有监听状态的tcp连击&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lt
+&lt;span class="c1"&gt;# 列出所有监听状态的tcp连击&lt;/span&gt;
+$ netstat -lt
 
-&lt;span class="c"&gt;# 列出所有监听状态的udp连击&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lu
+&lt;span class="c1"&gt;# 列出所有监听状态的udp连击&lt;/span&gt;
+$ netstat -lu
 
-&lt;span class="c"&gt;# 列出所有的unix连接&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -lx
+&lt;span class="c1"&gt;# 列出所有的unix连接&lt;/span&gt;
+$ netstat -lx
 
-&lt;span class="c"&gt;# 在netstat输出中显示PID和进程名称(-p),用户名(-e)&lt;/span&gt;
-&lt;span class="c"&gt;# -p使用需要root权限,不然无法获取PID&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo netstat -ltpe
+&lt;span class="c1"&gt;# 在netstat输出中显示PID和进程名称(-p),用户名(-e)&lt;/span&gt;
+&lt;span class="c1"&gt;# -p使用需要root权限,不然无法获取PID&lt;/span&gt;
+$ sudo netstat -ltpe
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
 tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:5037          *:*                     LISTEN      linliang   &lt;span class="m"&gt;4530492&lt;/span&gt;     11684/adb
 tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:63342         *:*                     LISTEN      linliang   &lt;span class="m"&gt;10952269&lt;/span&gt;    6663/java
@@ -132,10 +132,10 @@ tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;
 tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; *:http                  *:*                     LISTEN      root       &lt;span class="m"&gt;12810&lt;/span&gt;       1344/nginx
 tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:domain        *:*                     LISTEN      root       &lt;span class="m"&gt;683&lt;/span&gt;         1481/dnsmasq
 
-&lt;span class="c"&gt;# 上面的命令总如果使用-n,将会显示用户UID，而不是用户名&lt;/span&gt;
+&lt;span class="c1"&gt;# 上面的命令总如果使用-n,将会显示用户UID，而不是用户名&lt;/span&gt;
 
-&lt;span class="c"&gt;# 列出所有的网络统计信息&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -s
+&lt;span class="c1"&gt;# 列出所有的网络统计信息&lt;/span&gt;
+$ netstat -s
 Ip:
 &lt;span class="m"&gt;14989101&lt;/span&gt; total packets received
 &lt;span class="m"&gt;0&lt;/span&gt; forwarded
@@ -148,18 +148,18 @@ Icmp:
     ICMP input histogram:
         destination unreachable: 5774
         timeout in transit: 106
-        &lt;span class="nb"&gt;echo &lt;/span&gt;replies: 154
+        &lt;span class="nb"&gt;echo&lt;/span&gt; replies: 154
     &lt;span class="m"&gt;6882&lt;/span&gt; ICMP messages sent
     &lt;span class="m"&gt;0&lt;/span&gt; ICMP messages failed
     ICMP output histogram:
 ....
 
-&lt;span class="c"&gt;# 显示TCP或UDP连接的统计信息&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -st
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -su
+&lt;span class="c1"&gt;# 显示TCP或UDP连接的统计信息&lt;/span&gt;
+$ netstat -st
+$ netstat -su
 
-&lt;span class="c"&gt;# 显示kernel的路由信息(-r)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -rn
+&lt;span class="c1"&gt;# 显示kernel的路由信息(-r)&lt;/span&gt;
+$ netstat -rn
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 0.0.0.0         172.26.50.1     0.0.0.0         UG        &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
@@ -167,17 +167,17 @@ Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 172.26.50.0     0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
 192.168.56.0    0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; vboxnet0
 
-&lt;span class="c"&gt;# 打印网络接口(-i)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -i
+&lt;span class="c1"&gt;# 打印网络接口(-i)&lt;/span&gt;
+$ netstat -i
 Kernel Interface table
 Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
 eth1       &lt;span class="m"&gt;1500&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;10650979&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;10656895&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; BMRU
 lo        &lt;span class="m"&gt;65536&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;   &lt;span class="m"&gt;5095802&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;       &lt;span class="m"&gt;5095802&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; LRU
 vboxnet0   &lt;span class="m"&gt;1500&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;         &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;1505&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; BMRU
 
-&lt;span class="c"&gt;# 上面的输出比较原始，为了获取友好输出，可以加上(-e)&lt;/span&gt;
-&lt;span class="c"&gt;# 达到与ifconfig命令类似的效果&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;netstat -ie
+&lt;span class="c1"&gt;# 上面的输出比较原始，为了获取友好输出，可以加上(-e)&lt;/span&gt;
+&lt;span class="c1"&gt;# 达到与ifconfig命令类似的效果&lt;/span&gt;
+$ netstat -ie
 Kernel Interface table
 eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
         inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
@@ -226,37 +226,37 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;显示所有进程&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps aux
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps aux
+$ ps -ef
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;显示指定用户的进程&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -f -u www-data
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -f -u www-data
 
-&lt;span class="c"&gt;# 多个用户用&amp;#39;,&amp;#39;隔开&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps -f -u www-data,root
+&lt;span class="c1"&gt;# 多个用户用&amp;#39;,&amp;#39;隔开&lt;/span&gt;
+$ ps -f -u www-data,root
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;按照进程名来指定&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -C nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -C nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;-C&amp;nbsp;选项必须提供精确的进程名，不提供模糊匹配，一般使用grep来搜索&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt;grep nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -ef &lt;span class="p"&gt;|&lt;/span&gt;grep nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;按照进程id来查找&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -f -p 3150,7298,6455
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -f -p 3150,7298,6455
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -264,14 +264,14 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
 &lt;li&gt;
 &lt;p&gt;按照&lt;span class="caps"&gt;CPU&lt;/span&gt;或内存使用情况排序&lt;/p&gt;
 &lt;p&gt;使用&amp;#8212;sort选项可以按照一定的顺序排序，并且可以在指定的排序列前添加&amp;#8217;-&amp;#8216;或&amp;#8217;+&amp;#8217;&amp;nbsp;来指定降序或升序排列&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# cpu 使用前５&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pcpu &lt;span class="p"&gt;|&lt;/span&gt; head -5
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# cpu 使用前５&lt;/span&gt;
+$ ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pcpu &lt;span class="p"&gt;|&lt;/span&gt; head -5
 
-&lt;span class="c"&gt;# 内存 使用前５&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pmem &lt;span class="p"&gt;|&lt;/span&gt; head -5
+&lt;span class="c1"&gt;# 内存 使用前５&lt;/span&gt;
+$ ps aux --sort&lt;span class="o"&gt;=&lt;/span&gt;-pmem &lt;span class="p"&gt;|&lt;/span&gt; head -5
 
-&lt;span class="c"&gt;# 指定多个排序&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps jax --sort&lt;span class="o"&gt;=&lt;/span&gt;uid,-ppid,+pid
+&lt;span class="c1"&gt;# 指定多个排序&lt;/span&gt;
+$ ps jax --sort&lt;span class="o"&gt;=&lt;/span&gt;uid,-ppid,+pid
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -314,7 +314,7 @@ priority     kernel scheduling priority
 &lt;li&gt;
 &lt;p&gt;按照树状结构显示&lt;/p&gt;
 &lt;p&gt;使用&lt;code&gt;--forest&lt;/code&gt;选项&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -f --forest -C nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -f --forest -C nginx
 UID        PID  PPID  C STIME TTY          TIME CMD
 root      &lt;span class="m"&gt;1344&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:00:00 nginx: master process /usr/sbin/nginx
 www-data  &lt;span class="m"&gt;1345&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:01:52  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
@@ -329,7 +329,7 @@ www-data  &lt;span class="m"&gt;1349&lt;/span&gt;  &lt;span class="m"&gt;1344&lt
 &lt;li&gt;
 &lt;p&gt;列出子进程&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;＃先列出所有nginx进程
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps -o pid,uname,comm -C nginx
+$ ps -o pid,uname,comm -C nginx
 PID USER     COMMAND
 &lt;span class="m"&gt;1344&lt;/span&gt; root     nginx
 &lt;span class="m"&gt;1345&lt;/span&gt; www-data nginx
@@ -337,8 +337,8 @@ PID USER     COMMAND
 &lt;span class="m"&gt;1348&lt;/span&gt; www-data nginx
 &lt;span class="m"&gt;1349&lt;/span&gt; www-data nginx
 
-&lt;span class="c"&gt;# 使用--ppid选项列出子进程&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps --ppid 2359
+&lt;span class="c1"&gt;# 使用--ppid选项列出子进程&lt;/span&gt;
+$ ps --ppid 2359
 PID TTY          TIME CMD
 &lt;span class="m"&gt;4524&lt;/span&gt; ?        00:00:00 apache2
 &lt;span class="m"&gt;4525&lt;/span&gt; ?        00:00:00 apache2
@@ -352,7 +352,7 @@ PID TTY          TIME CMD
 &lt;li&gt;
 &lt;p&gt;列出进程的线程&lt;/p&gt;
 &lt;p&gt;使用&lt;code&gt;-L&lt;/code&gt;选项&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -p &lt;span class="m"&gt;3150&lt;/span&gt; -L
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -p &lt;span class="m"&gt;3150&lt;/span&gt; -L
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -360,35 +360,35 @@ PID TTY          TIME CMD
 &lt;li&gt;
 &lt;p&gt;指定输出结果的列&lt;/p&gt;
 &lt;p&gt;可以输出的列信息与&lt;code&gt;--sort&lt;/code&gt;选项一样，可以查看man page 的&lt;code&gt;STANDARD FORMAT SPECIFIERS&lt;/code&gt;部分&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -e -o pid,uname,pcpu,pmem,comm
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -e -o pid,uname,pcpu,pmem,comm
 
-&lt;span class="c"&gt;# 显示指定的列并给出别名&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps -e -o pid,uname&lt;span class="o"&gt;=&lt;/span&gt;USERNAME,pcpu&lt;span class="o"&gt;=&lt;/span&gt;CPU_USAGE,pmem,comm
+&lt;span class="c1"&gt;# 显示指定的列并给出别名&lt;/span&gt;
+$ ps -e -o pid,uname&lt;span class="o"&gt;=&lt;/span&gt;USERNAME,pcpu&lt;span class="o"&gt;=&lt;/span&gt;CPU_USAGE,pmem,comm
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;将ps转变为实时更新的效果&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt; watch -n &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ps -e -o pid,uname,cmd,pmem,pcpu --sort=-pmem,-pcpu | head -15&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$  watch -n &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ps -e -o pid,uname,cmd,pmem,pcpu --sort=-pmem,-pcpu | head -15&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;列出僵尸进程&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;ps -A -o stat,ppid,pid,cmd &lt;span class="p"&gt;|&lt;/span&gt;grep -e &lt;span class="s1"&gt;&amp;#39;^[Zz]&amp;#39;&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt; grep defunct &lt;span class="p"&gt;|&lt;/span&gt; grep -v grep
+&lt;div class="highlight"&gt;&lt;pre&gt;$ ps -A -o stat,ppid,pid,cmd &lt;span class="p"&gt;|&lt;/span&gt;grep -e &lt;span class="s1"&gt;&amp;#39;^[Zz]&amp;#39;&lt;/span&gt;
+$ ps -ef &lt;span class="p"&gt;|&lt;/span&gt; grep defunct &lt;span class="p"&gt;|&lt;/span&gt; grep -v grep
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;指定用户, 程序的&lt;span class="caps"&gt;CPU&lt;/span&gt;和内存使用情况统计&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# redis用户所使用的cpu和内存信息统计&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
-&lt;span class="c"&gt;# 查看只是监听在6000端口的redis使用cpu和内存信息&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="m"&gt;6000&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# redis用户所使用的cpu和内存信息统计&lt;/span&gt;
+$ ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
+&lt;span class="c1"&gt;# 查看只是监听在6000端口的redis使用cpu和内存信息&lt;/span&gt;
+$ ps --no-headers -u redis -o pcpu,pmem,command &lt;span class="p"&gt;|&lt;/span&gt; grep &lt;span class="m"&gt;6000&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{cpu += $1; pmem += $2} END {print cpu, pmem}&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -533,7 +533,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;htop安装&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install htop
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install htop
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -937,7 +937,7 @@ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loa
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;em&gt;Load averages are not normalized for the number of CPUs in a system, so a load  aver‐ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loaded all the time while on a 4 &lt;span class="caps"&gt;CPU&lt;/span&gt; system it means it was idle 75% of the&amp;nbsp;time.&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;语法&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;uptime
+&lt;div class="highlight"&gt;&lt;pre&gt;$ uptime
 10:14:31 up &lt;span class="m"&gt;10&lt;/span&gt; days, 20:55,  &lt;span class="m"&gt;6&lt;/span&gt; users,  load average: 0.28, 0.42, 0.54
 &lt;/pre&gt;&lt;/div&gt;
 

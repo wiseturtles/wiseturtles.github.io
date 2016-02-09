@@ -90,25 +90,25 @@ Ubuntu&nbsp;64位的tarball包，解压出来可以直接用了。</p>
 在Github上面由这些工具的镜像，因此我们可以曲线救国，从镜像下载。在下载之前，首先，还是要先设置<code>GOPATH</code>变
 量, 怎么设置可以参考本系列文章第二篇<a href="http://blog.wiseturtles.com/posts/go-introduce.html">http://blog.wiseturtles.com/posts/go-introduce.html</a></p>
 <p>安装必备的cmd&nbsp;tools</p>
-<div class="highlight"><pre><span class="c">#　创建目录</span>
-<span class="nv">$ </span><span class="nb">export </span><span class="nv">GOPATH</span><span class="o">=</span><span class="s1">&#39;your_go_path&#39;</span>
-<span class="nv">$ </span>mkdir -p <span class="nv">$GOPATH</span>/src/golang.org/x
+<div class="highlight"><pre><span class="c1">#　创建目录</span>
+$ <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s1">&#39;your_go_path&#39;</span>
+$ mkdir -p $GOPATH/src/golang.org/x
 
-<span class="c"># 根据实际需要下载对应分支的tools</span>
-<span class="nv">$ </span>git clone -b release-branch.go1.4 git@github.com:golang/tools.git <span class="nv">$GOPATH</span>/src/golang.org/x/tools
-<span class="nv">$ </span><span class="nb">cd</span> <span class="nv">$GOPATH</span>
-<span class="c"># 安装工具</span>
-<span class="nv">$ </span>go install golang.org/x/tools/cmd/goimports
-<span class="nv">$ </span>go install golang.org/x/tools/cmd/vet
-<span class="nv">$ </span>go install golang.org/x/tools/cmd/oracle
-<span class="nv">$ </span>go install golang.org/x/tools/cmd/godoc
+<span class="c1"># 根据实际需要下载对应分支的tools</span>
+$ git clone -b release-branch.go1.4 git@github.com:golang/tools.git $GOPATH/src/golang.org/x/tools
+$ <span class="nb">cd</span> $GOPATH
+<span class="c1"># 安装工具</span>
+$ go install golang.org/x/tools/cmd/goimports
+$ go install golang.org/x/tools/cmd/vet
+$ go install golang.org/x/tools/cmd/oracle
+$ go install golang.org/x/tools/cmd/godoc
 
-<span class="c"># 安装不需要翻墙的工具</span>
-<span class="nv">$ </span>go get github.com/rogpeppe/godef
+<span class="c1"># 安装不需要翻墙的工具</span>
+$ go get github.com/rogpeppe/godef
 
-<span class="c"># 最后两个是我做web开发需要安装的包，没有需要的话可以不下载</span>
-<span class="nv">$ </span>go get github.com/astaxie/beego
-<span class="nv">$ </span>go get github.com/beego/bee
+<span class="c1"># 最后两个是我做web开发需要安装的包，没有需要的话可以不下载</span>
+$ go get github.com/astaxie/beego
+$ go get github.com/beego/bee
 </pre></div>
 
 

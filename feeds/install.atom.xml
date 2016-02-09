@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo pip install supervisor
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo pip install supervisor
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;配置supervisor&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;添加配置文件&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo mkdir /etc/supervisor
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo mkdir /etc/supervisor/conf.d
-&lt;span class="c"&gt;# 添加如下配置文件&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/supervisor/supervisord.conf
+&lt;li&gt;添加配置文件&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo mkdir /etc/supervisor
+$ sudo mkdir /etc/supervisor/conf.d
+&lt;span class="c1"&gt;# 添加如下配置文件&lt;/span&gt;
+$ cat /etc/supervisor/supervisord.conf
 &lt;span class="o"&gt;[&lt;/span&gt;unix_http_server&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/tmp/supervisor.sock    &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;the path to the socket file&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;chmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;                       &lt;span class="p"&gt;;&lt;/span&gt; sockef file mode &lt;span class="o"&gt;(&lt;/span&gt;default 0700&lt;span class="o"&gt;)&lt;/span&gt;
@@ -26,16 +26,16 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;http_port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:9001  &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;alternately, ip_address:port specifies AF_INET&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;sockchmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; AF_UNIX socketmode &lt;span class="o"&gt;(&lt;/span&gt;AF_INET ignore, default 0700&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;sockchown&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nobody.nogroup     &lt;span class="p"&gt;;&lt;/span&gt; AF_UNIX socket uid.gid owner &lt;span class="o"&gt;(&lt;/span&gt;AF_INET ignores&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nb"&gt;umask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;022&lt;/span&gt;                   &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;process file creation &lt;span class="nb"&gt;umask&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;default 022&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/supervisord.log &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;main log file&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nv"&gt;$CWD&lt;/span&gt;/supervisord.log&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;umask&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;022&lt;/span&gt;                   &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;process file creation umask&lt;span class="p"&gt;;&lt;/span&gt;default 022&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/supervisord.log &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;main log file&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nv"&gt;$C&lt;/span&gt;WD/supervisord.log&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;50MB       &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;max main logfile bytes b4 rotation&lt;span class="p"&gt;;&lt;/span&gt;default 50MB&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;num of main logfile rotation backups&lt;span class="p"&gt;;&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;loglevel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;debug              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;logging level&lt;span class="p"&gt;;&lt;/span&gt;default info&lt;span class="p"&gt;;&lt;/span&gt; others: debug,warn&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;pidfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisord.pid &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;supervisord pidfile&lt;span class="p"&gt;;&lt;/span&gt;default supervisord.pid&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;nodaemon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;start in foreground &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;nodaemon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;start in foreground &lt;span class="k"&gt;if&lt;/span&gt; true&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;minfds&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1024&lt;/span&gt;                 &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail startup file descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 1024&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;minprocs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;                &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail process descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 200&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;childlogdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;AUTO&amp;#39;&lt;/span&gt; child log dir, default &lt;span class="nv"&gt;$TEMP&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;childlogdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;AUTO&amp;#39;&lt;/span&gt; child log dir, default $TEMP&lt;span class="o"&gt;)&lt;/span&gt;
 
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;nocleanup&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;don&lt;span class="s1"&gt;&amp;#39;t clean up tempfiles at start;default false)&lt;/span&gt;
 &lt;span class="s1"&gt;;http_username=user          ; (default is no username (open system))&lt;/span&gt;
@@ -62,15 +62,15 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 &lt;span class="s1"&gt;;autorestart=true            ; retstart at unexpected quit (default: true)&lt;/span&gt;
 &lt;span class="s1"&gt;;startsecs=10                ; number of secs prog must stay running (def. 10)&lt;/span&gt;
 &lt;span class="s1"&gt;;startretries=3              ; max # of serial start failures (default 3)&lt;/span&gt;
-&lt;span class="s1"&gt;;exitcodes=0,2               ; &amp;#39;&lt;/span&gt;expected&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;exit &lt;/span&gt;codes &lt;span class="k"&gt;for&lt;/span&gt; process &lt;span class="o"&gt;(&lt;/span&gt;default 0,2&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopsignal&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;QUIT             &lt;span class="p"&gt;;&lt;/span&gt; signal used to &lt;span class="nb"&gt;kill &lt;/span&gt;process &lt;span class="o"&gt;(&lt;/span&gt;default TERM&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopwaitsecs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; max num secs to &lt;span class="nb"&gt;wait &lt;/span&gt;before SIGKILL &lt;span class="o"&gt;(&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="s1"&gt;;exitcodes=0,2               ; &amp;#39;&lt;/span&gt;expected&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;exit&lt;/span&gt; codes &lt;span class="k"&gt;for&lt;/span&gt; process &lt;span class="o"&gt;(&lt;/span&gt;default 0,2&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopsignal&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;QUIT             &lt;span class="p"&gt;;&lt;/span&gt; signal used to &lt;span class="nb"&gt;kill&lt;/span&gt; process &lt;span class="o"&gt;(&lt;/span&gt;default TERM&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;stopwaitsecs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; max num secs to &lt;span class="nb"&gt;wait&lt;/span&gt; before SIGKILL &lt;span class="o"&gt;(&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;user&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;chrism                 &lt;span class="p"&gt;;&lt;/span&gt; setuid to this UNIX account to run the program
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;, log program stdout &lt;span class="o"&gt;(&lt;/span&gt;default &lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;, log program stderr &lt;span class="o"&gt;(&lt;/span&gt;def &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; true, log program stdout &lt;span class="o"&gt;(&lt;/span&gt;default &lt;span class="nb"&gt;true&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;log_stderr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;             &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;if&lt;/span&gt; true, log program stderr &lt;span class="o"&gt;(&lt;/span&gt;def &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/log/cat.log    &lt;span class="p"&gt;;&lt;/span&gt; child log path, use NONE &lt;span class="k"&gt;for&lt;/span&gt; none&lt;span class="p"&gt;;&lt;/span&gt; default AUTO
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1MB        &lt;span class="p"&gt;;&lt;/span&gt; max &lt;span class="c"&gt;# logfile bytes b4 rotation (default 50MB)&lt;/span&gt;
-&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c"&gt;# of logfile backups (default 10)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1MB        &lt;span class="p"&gt;;&lt;/span&gt; max &lt;span class="c1"&gt;# logfile bytes b4 rotation (default 50MB)&lt;/span&gt;
+&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="c1"&gt;# of logfile backups (default 10)&lt;/span&gt;
 
 &lt;span class="o"&gt;[&lt;/span&gt;include&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; /etc/supervisor/conf.d/*.conf
@@ -81,23 +81,23 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 &lt;/ol&gt;
 &lt;p&gt;项目的配置文件写入&amp;nbsp;/etc/supervisor/conf.d/目录即可&lt;/p&gt;
 &lt;h2&gt;添加开机启动&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 添加如下配置文件&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/init.d/supervisord
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 添加如下配置文件&lt;/span&gt;
+$ cat /etc/init.d/supervisord
 
-&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;# /etc/rc.d/init.d/supervisord&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;# Supervisor is a client/server system that&lt;/span&gt;
-&lt;span class="c"&gt;# allows its users to monitor and control a&lt;/span&gt;
-&lt;span class="c"&gt;# number of processes on UNIX-like operating&lt;/span&gt;
-&lt;span class="c"&gt;# systems.&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;# chkconfig: - 64 36&lt;/span&gt;
-&lt;span class="c"&gt;# description: Supervisor Server&lt;/span&gt;
-&lt;span class="c"&gt;# processname: supervisord&lt;/span&gt;
+&lt;span class="c1"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# /etc/rc.d/init.d/supervisord&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# Supervisor is a client/server system that&lt;/span&gt;
+&lt;span class="c1"&gt;# allows its users to monitor and control a&lt;/span&gt;
+&lt;span class="c1"&gt;# number of processes on UNIX-like operating&lt;/span&gt;
+&lt;span class="c1"&gt;# systems.&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# chkconfig: - 64 36&lt;/span&gt;
+&lt;span class="c1"&gt;# description: Supervisor Server&lt;/span&gt;
+&lt;span class="c1"&gt;# processname: supervisord&lt;/span&gt;
 
-&lt;span class="c"&gt;# Source init functions&lt;/span&gt;
+&lt;span class="c1"&gt;# Source init functions&lt;/span&gt;
 . /etc/rc.d/init.d/functions
 
 &lt;span class="nv"&gt;prog&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;supervisord&amp;quot;&lt;/span&gt;
@@ -105,56 +105,56 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 &lt;span class="nv"&gt;prefix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;exec_prefix&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;prefix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;prog_bin&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;exec_prefix&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/bin/supervisord&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;PIDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/run/&lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;.pid&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-c /etc/supervisor/supervisord.conf &lt;/span&gt;&lt;span class="nv"&gt;$DAEMON_OPTS&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;PIDFILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/run/&lt;/span&gt;$&lt;span class="s2"&gt;prog.pid&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-c /etc/supervisor/supervisord.conf &lt;/span&gt;&lt;span class="nv"&gt;$DAE&lt;/span&gt;&lt;span class="s2"&gt;MON_OPTS&amp;quot;&lt;/span&gt;
 
 start&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;Starting &lt;span class="nv"&gt;$prog&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;    daemon &lt;/span&gt;&lt;span class="nv"&gt;$prog_bin&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$DAEMON_OPTS&lt;/span&gt;&lt;span class="s2"&gt; --pidfile &lt;/span&gt;&lt;span class="nv"&gt;$PIDFILE&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;    [ -f &lt;/span&gt;&lt;span class="nv"&gt;$PIDFILE&lt;/span&gt;&lt;span class="s2"&gt; ] &amp;amp;&amp;amp; success &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt;&lt;span class="s2"&gt; startup&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; failure &lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt; startup&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;    echo&lt;/span&gt;
-&lt;span class="s2"&gt;}&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -n $&lt;span class="s2"&gt;&amp;quot;Starting &lt;/span&gt;$&lt;span class="s2"&gt;prog: &amp;quot;&lt;/span&gt;
+    daemon $prog_bin &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON_OPTS --pidfile $PIDFILE
+    &lt;span class="o"&gt;[&lt;/span&gt; -f $PIDFILE &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; success $&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;prog startup&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; failure $&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;prog startup&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="s2"&gt;stop()&lt;/span&gt;
-&lt;span class="s2"&gt;{&lt;/span&gt;
-&lt;span class="s2"&gt;    echo -n &lt;/span&gt;&lt;span class="nv"&gt;$&amp;quot;&lt;/span&gt;&lt;span class="s2"&gt;Shutting down &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;: &amp;quot;&lt;/span&gt;
-    &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="nv"&gt;$PIDFILE&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; killproc &lt;span class="nv"&gt;$prog&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; success &lt;span class="nv"&gt;$&amp;quot;$prog&lt;/span&gt; shutdown&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;    echo&lt;/span&gt;
-&lt;span class="s2"&gt;}&lt;/span&gt;
+stop&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -n $&lt;span class="s2"&gt;&amp;quot;Shutting down &lt;/span&gt;$&lt;span class="s2"&gt;prog: &amp;quot;&lt;/span&gt;
+    &lt;span class="o"&gt;[&lt;/span&gt; -f $PIDFILE &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; killproc $prog &lt;span class="o"&gt;||&lt;/span&gt; success $&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;prog shutdown&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
 
-&lt;span class="s2"&gt;case &amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; in&lt;/span&gt;
+&lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
 
-&lt;span class="s2"&gt;start)&lt;/span&gt;
-&lt;span class="s2"&gt;start&lt;/span&gt;
-&lt;span class="s2"&gt;;;&lt;/span&gt;
+start&lt;span class="o"&gt;)&lt;/span&gt;
+start
+&lt;span class="p"&gt;;;&lt;/span&gt;
 
-&lt;span class="s2"&gt;stop)&lt;/span&gt;
-&lt;span class="s2"&gt;stop&lt;/span&gt;
-&lt;span class="s2"&gt;;;&lt;/span&gt;
+stop&lt;span class="o"&gt;)&lt;/span&gt;
+stop
+&lt;span class="p"&gt;;;&lt;/span&gt;
 
-&lt;span class="s2"&gt;status)&lt;/span&gt;
-&lt;span class="s2"&gt;    status &lt;/span&gt;&lt;span class="nv"&gt;$prog&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
-&lt;span class="s2"&gt;;;&lt;/span&gt;
+status&lt;span class="o"&gt;)&lt;/span&gt;
+    status $prog
+&lt;span class="p"&gt;;;&lt;/span&gt;
 
-&lt;span class="s2"&gt;restart)&lt;/span&gt;
-&lt;span class="s2"&gt;stop&lt;/span&gt;
-&lt;span class="s2"&gt;start&lt;/span&gt;
-&lt;span class="s2"&gt;;;&lt;/span&gt;
+restart&lt;span class="o"&gt;)&lt;/span&gt;
+stop
+start
+&lt;span class="p"&gt;;;&lt;/span&gt;
 
-&lt;span class="s2"&gt;*)&lt;/span&gt;
-&lt;span class="s2"&gt;echo &amp;quot;&lt;/span&gt;Usage: &lt;span class="nv"&gt;$0&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;start&lt;span class="p"&gt;|&lt;/span&gt;stop&lt;span class="p"&gt;|&lt;/span&gt;restart&lt;span class="p"&gt;|&lt;/span&gt;status&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="s2"&gt;;;&lt;/span&gt;
+*&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: &lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;&lt;span class="s2"&gt; {start|stop|restart|status}&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;;;&lt;/span&gt;
 
-&lt;span class="s2"&gt;esac&lt;/span&gt;
+&lt;span class="k"&gt;esac&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;设置如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chmod +x /etc/init.d/supervisord
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chkconfig --add supervisord
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo chkconfig supervisord on
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo service supervisord start
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo chmod +x /etc/init.d/supervisord
+$ sudo chkconfig --add supervisord
+$ sudo chkconfig supervisord on
+$ sudo service supervisord start
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
@@ -164,106 +164,106 @@ start&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;创建如下文件:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/init.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/init.d/nginx
 
-&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;# chkconfig: 2345 55 25&lt;/span&gt;
-&lt;span class="c"&gt;# Description: Nginx init.d script, put in /etc/init.d, chmod +x /etc/init.d/nginx&lt;/span&gt;
-&lt;span class="c"&gt;#              For Debian, run: update-rc.d -f nginx defaults&lt;/span&gt;
-&lt;span class="c"&gt;#              For CentOS, run: chkconfig --add nginx&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
-&lt;span class="c"&gt;### BEGIN INIT INFO&lt;/span&gt;
-&lt;span class="c"&gt;# Provides:          nginx&lt;/span&gt;
-&lt;span class="c"&gt;# Required-Start:    $all&lt;/span&gt;
-&lt;span class="c"&gt;# Required-Stop:     $all&lt;/span&gt;
-&lt;span class="c"&gt;# Default-Start:     2 3 4 5&lt;/span&gt;
-&lt;span class="c"&gt;# Default-Stop:      0 1 6&lt;/span&gt;
-&lt;span class="c"&gt;# Short-Description: nginx init.d script&lt;/span&gt;
-&lt;span class="c"&gt;# Description:       OpenResty (aka. ngx_openresty) is a full-fledged web application server by bundling the standard Nginx core,&lt;/span&gt;
-&lt;span class="c"&gt;#                    lots of 3rd-party Nginx modules, as well as most of their external dependencies.&lt;/span&gt;
-&lt;span class="c"&gt;### END INIT INFO&lt;/span&gt;
-&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# chkconfig: 2345 55 25&lt;/span&gt;
+&lt;span class="c1"&gt;# Description: Nginx init.d script, put in /etc/init.d, chmod +x /etc/init.d/nginx&lt;/span&gt;
+&lt;span class="c1"&gt;#              For Debian, run: update-rc.d -f nginx defaults&lt;/span&gt;
+&lt;span class="c1"&gt;#              For CentOS, run: chkconfig --add nginx&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;### BEGIN INIT INFO&lt;/span&gt;
+&lt;span class="c1"&gt;# Provides:          nginx&lt;/span&gt;
+&lt;span class="c1"&gt;# Required-Start:    $all&lt;/span&gt;
+&lt;span class="c1"&gt;# Required-Stop:     $all&lt;/span&gt;
+&lt;span class="c1"&gt;# Default-Start:     2 3 4 5&lt;/span&gt;
+&lt;span class="c1"&gt;# Default-Stop:      0 1 6&lt;/span&gt;
+&lt;span class="c1"&gt;# Short-Description: nginx init.d script&lt;/span&gt;
+&lt;span class="c1"&gt;# Description:       OpenResty (aka. ngx_openresty) is a full-fledged web application server by bundling the standard Nginx core,&lt;/span&gt;
+&lt;span class="c1"&gt;#                    lots of 3rd-party Nginx modules, as well as most of their external dependencies.&lt;/span&gt;
+&lt;span class="c1"&gt;### END INIT INFO&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
 
 &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 &lt;span class="nv"&gt;DESC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Nginx Daemon&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nginx
 &lt;span class="nv"&gt;PREFIX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/etc/openresty/nginx
-&lt;span class="nv"&gt;DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PREFIX&lt;/span&gt;/sbin/&lt;span class="nv"&gt;$NAME&lt;/span&gt;
-&lt;span class="nv"&gt;CONF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PREFIX&lt;/span&gt;/conf/&lt;span class="nv"&gt;$NAME&lt;/span&gt;.conf
-&lt;span class="nv"&gt;PID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PREFIX&lt;/span&gt;/logs/&lt;span class="nv"&gt;$NAME&lt;/span&gt;.pid
-&lt;span class="nv"&gt;SCRIPT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/etc/init.d/&lt;span class="nv"&gt;$NAME&lt;/span&gt;
+&lt;span class="nv"&gt;DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$PREFIX/sbin/$NAME
+&lt;span class="nv"&gt;CONF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$PREFIX/conf/$NAME.conf
+&lt;span class="nv"&gt;PID&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$PREFIX/logs/$NAME.pid
+&lt;span class="nv"&gt;SCRIPT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/etc/init.d/$NAME
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -x &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$DAEMON&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DAEMON&lt;/span&gt;&lt;span class="s2"&gt; has no permission to run. \033[0m&amp;quot;&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m Or &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -x &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$DAE&lt;/span&gt;&lt;span class="s2"&gt;MON&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DAE&lt;/span&gt;&lt;span class="s2"&gt;MON has no permission to run. \033[0m&amp;quot;&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m Or &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
     sleep 1
-    &lt;span class="nb"&gt;exit &lt;/span&gt;1
+    &lt;span class="nb"&gt;exit&lt;/span&gt; 1
 &lt;span class="k"&gt;fi&lt;/span&gt;
 
 do_start&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="nv"&gt;$PID&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$PID&lt;/span&gt;&lt;span class="s2"&gt; already exists. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; is already running or crashed. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Reopening &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -s reopen -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f $PID &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;$&lt;span class="s2"&gt;PID already exists. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC is already running or crashed. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Reopening &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -s reopen -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; reopened. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC reopened. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Starting &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Starting &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; started. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC started. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 do_stop&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f &lt;span class="nv"&gt;$PID&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$PID&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f $PID &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;$&lt;span class="s2"&gt;PID doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Stopping &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -s stop -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Stopping &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -s stop -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; stopped. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC stopped. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 do_reload&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f &lt;span class="nv"&gt;$PID&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$PID&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Starting &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f $PID &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;$&lt;span class="s2"&gt;PID doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Starting &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; started. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC started. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Reloading &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -s reload -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Reloading &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -s reload -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; reloaded. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC reloaded. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 do_quit&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f &lt;span class="nv"&gt;$PID&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$PID&lt;/span&gt;&lt;span class="s2"&gt; doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f $PID &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;$&lt;span class="s2"&gt;PID doesn&amp;#39;t exist. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[33m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC isn&amp;#39;t running. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;else&lt;/span&gt;
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Quitting &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-        &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -s quit -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Quitting &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -s quit -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
         sleep 1
-        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; quitted. \033[0m&amp;quot;&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[36m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC quitted. \033[0m&amp;quot;&lt;/span&gt;
     &lt;span class="k"&gt;fi&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 do_test&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DESC&lt;/span&gt;&lt;span class="s2"&gt; Testing &lt;/span&gt;&lt;span class="nv"&gt;$CONF&lt;/span&gt;&lt;span class="s2"&gt; ... \033[0m&amp;quot;&lt;/span&gt;
-    &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -t -c &lt;span class="nv"&gt;$CONF&lt;/span&gt;
+    &lt;span class="nb"&gt;echo&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;\033[32m &lt;/span&gt;&lt;span class="nv"&gt;$DE&lt;/span&gt;&lt;span class="s2"&gt;SC Testing &lt;/span&gt;&lt;span class="nv"&gt;$C&lt;/span&gt;&lt;span class="s2"&gt;ONF ... \033[0m&amp;quot;&lt;/span&gt;
+    &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -t -c &lt;span class="nv"&gt;$C&lt;/span&gt;ONF
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 do_info&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    &lt;span class="nv"&gt;$DAEMON&lt;/span&gt; -V
+    &lt;span class="nv"&gt;$DAE&lt;/span&gt;MON -V
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="k"&gt;case&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; in
@@ -290,12 +290,12 @@ info&lt;span class="o"&gt;)&lt;/span&gt;
 do_info
 &lt;span class="p"&gt;;;&lt;/span&gt;
 *&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: &lt;/span&gt;&lt;span class="nv"&gt;$SCRIPT&lt;/span&gt;&lt;span class="s2"&gt; {start|stop|reload|restart|quit|test|info}&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;exit &lt;/span&gt;2
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Usage: &lt;/span&gt;$&lt;span class="s2"&gt;SCRIPT {start|stop|reload|restart|quit|test|info}&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;exit&lt;/span&gt; 2
 &lt;span class="p"&gt;;;&lt;/span&gt;
 &lt;span class="k"&gt;esac&lt;/span&gt;
 
-&lt;span class="nb"&gt;exit &lt;/span&gt;0
+&lt;span class="nb"&gt;exit&lt;/span&gt; 0
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -308,17 +308,17 @@ do_info
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;CentOS系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;chkconfig --list nginx   &lt;span class="c"&gt;# 列出系统nginx服务启动情况&lt;/span&gt;
-chkconfig --add nginx    &lt;span class="c"&gt;# 添加nginx服务&lt;/span&gt;
-chkconfig --level &lt;span class="m"&gt;35&lt;/span&gt; nginx on &lt;span class="c"&gt;# 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;chkconfig --list nginx   &lt;span class="c1"&gt;# 列出系统nginx服务启动情况&lt;/span&gt;
+chkconfig --add nginx    &lt;span class="c1"&gt;# 添加nginx服务&lt;/span&gt;
+chkconfig --level &lt;span class="m"&gt;35&lt;/span&gt; nginx on &lt;span class="c1"&gt;# 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Debian系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo update-rc.d -f nginx remove  &lt;span class="c"&gt;# 删除nginx服务&lt;/span&gt;
-sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo update-rc.d -f nginx remove  &lt;span class="c1"&gt;# 删除nginx服务&lt;/span&gt;
+sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -328,7 +328,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/
 &lt;/ol&gt;
 &lt;h2&gt;使用logrotate切割日志&lt;/h2&gt;
 &lt;p&gt;创建如下文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;cat /etc/logrotate.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/logrotate.d/nginx
 /etc/openresty/nginx/logs/*.log &lt;span class="o"&gt;{&lt;/span&gt;
     daily
     missingok
@@ -361,7 +361,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/
 &lt;li&gt;/etc/openresty/nginx/logs/nginx.pid：nginx主进程pid&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;测试:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;logroate -f /etc/logrotate.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ logroate -f /etc/logrotate.d/nginx
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="openresty"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
 &lt;p&gt;Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。&lt;/p&gt;
 &lt;p&gt;本文以Ubuntu&amp;nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程&lt;/p&gt;
@@ -377,23 +377,23 @@ sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;安装&lt;span class="caps"&gt;JDK1&lt;/span&gt;.7&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo add-apt-repository ppa:webupd8team/java
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get update
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install oracle-java7-installer
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo add-apt-repository ppa:webupd8team/java
+$ sudo apt-get update
+$ sudo apt-get install oracle-java7-installer
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;安装Git&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install git
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;安装Nginx服务器, 用于作为Gerrit网站的反向代理以及&lt;span class="caps"&gt;HTTP&lt;/span&gt;认证&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -402,11 +402,11 @@ sudo update-rc.d apache2 defaults &lt;span class="c"&gt;# 添加nginx服务&lt;/
 &lt;h2&gt;数据库设置&lt;/h2&gt;
 &lt;p&gt;Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&amp;nbsp;Oracle.&lt;/p&gt;
 &lt;p&gt;本文以MySQL为例，介绍数据库的设置。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 安装数据库&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install mysql-server
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 安装数据库&lt;/span&gt;
+$ sudo apt-get install mysql-server
 
-&lt;span class="c"&gt;# 创建数据库reviewdb和用户gerrit2为后面做准备&lt;/span&gt;
-&lt;span class="c"&gt;# 数据库名和用户名可以根据实际的使用情况自己选择&lt;/span&gt;
+&lt;span class="c1"&gt;# 创建数据库reviewdb和用户gerrit2为后面做准备&lt;/span&gt;
+&lt;span class="c1"&gt;# 数据库名和用户名可以根据实际的使用情况自己选择&lt;/span&gt;
 mysql&amp;gt; CREATE USER &lt;span class="s1"&gt;&amp;#39;gerrit2&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt; IDENTIFIED BY &lt;span class="s1"&gt;&amp;#39;secret&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 mysql&amp;gt; CREATE DATABASE reviewdb&lt;span class="p"&gt;;&lt;/span&gt;
 mysql&amp;gt; GRANT ALL ON reviewdb.* TO &lt;span class="s1"&gt;&amp;#39;gerrit2&amp;#39;&lt;/span&gt;@&lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -416,14 +416,14 @@ mysql&amp;gt; FLUSH PRIVILEGES&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;h2&gt;初始化Gerrit站点&lt;/h2&gt;
 &lt;p&gt;由于Gerrit创建中需要保存自己的&lt;span class="caps"&gt;SSH&lt;/span&gt; Keys,&amp;nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 在系统上添加用户gerrit2&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo adduser gerrit2
-&lt;span class="c"&gt;# 切换到当前用户&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;sudo su gerrit2
-&lt;span class="c"&gt;# 下载gerrit安装包&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
-&lt;span class="c"&gt;# -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;java -jar gerrit-2.9.4.war init -d gerrit
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 在系统上添加用户gerrit2&lt;/span&gt;
+$ sudo adduser gerrit2
+&lt;span class="c1"&gt;# 切换到当前用户&lt;/span&gt;
+$ sudo su gerrit2
+&lt;span class="c1"&gt;# 下载gerrit安装包&lt;/span&gt;
+$ wget http://gerrit-releases.storage.googleapis.com/gerrit-2.9.4.war
+&lt;span class="c1"&gt;# -d 指定站点的根目录, 本例以gerrit2 HOME目录下的gerrit为例&lt;/span&gt;
+$ java -jar gerrit-2.9.4.war init -d gerrit
 
 *** Gerrit Code Review 2.9.4
 ***
@@ -432,7 +432,7 @@ Create &lt;span class="s1"&gt;&amp;#39;/home/gerrit2/gerrit&amp;#39;&lt;/span&gt
 
 *** Git Repositories
 ***
-&lt;span class="c"&gt;# 项目代码目录设置&lt;/span&gt;
+&lt;span class="c1"&gt;# 项目代码目录设置&lt;/span&gt;
 Location of Git repositories   &lt;span class="o"&gt;[&lt;/span&gt;git&lt;span class="o"&gt;]&lt;/span&gt;:
 
 *** SQL Database
@@ -445,7 +445,7 @@ Gerrit Code Review is not shipped with MySQL Connector/J 5.1.21
 Download and install it now &lt;span class="o"&gt;[&lt;/span&gt;Y/n&lt;span class="o"&gt;]&lt;/span&gt;?
 Downloading http://repo2.maven.org/maven2/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar ... OK
 Checksum mysql-connector-java-5.1.21.jar OK
-Server hostname                &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt;:           &lt;span class="c"&gt;# 此处填写刚刚创建数据库时设置的信息&lt;/span&gt;
+Server hostname                &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt;:           &lt;span class="c1"&gt;# 此处填写刚刚创建数据库时设置的信息&lt;/span&gt;
 Server port                    &lt;span class="o"&gt;[(&lt;/span&gt;mysql default&lt;span class="o"&gt;)]&lt;/span&gt;:
 Database name                  &lt;span class="o"&gt;[&lt;/span&gt;reviewdb&lt;span class="o"&gt;]&lt;/span&gt;:
 Database username              &lt;span class="o"&gt;[&lt;/span&gt;gerrit2&lt;span class="o"&gt;]&lt;/span&gt;:
@@ -460,10 +460,10 @@ Type                           &lt;span class="o"&gt;[&lt;/span&gt;LUCENE/?&lt;s
 *** User Authentication
 ***
 
-&lt;span class="c"&gt;# 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&amp;quot;?&amp;quot;查看&lt;/span&gt;
+&lt;span class="c1"&gt;# 认证方式设置, 根据实际情况自行选择，不清楚有哪些方式可以输入&amp;quot;?&amp;quot;查看&lt;/span&gt;
 Authentication method          &lt;span class="o"&gt;[&lt;/span&gt;OPENID/?&lt;span class="o"&gt;]&lt;/span&gt;: http
 Get username from custom HTTP header &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
-SSO &lt;span class="nb"&gt;logout &lt;/span&gt;URL                 :
+SSO &lt;span class="nb"&gt;logout&lt;/span&gt; URL                 :
 
 *** Review Labels
 ***
@@ -473,7 +473,7 @@ Install Verified label         &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span c
 *** Email Delivery
 ***
 
-&lt;span class="c"&gt;# 邮件服务器设置, 根据实际情况自行选择&lt;/span&gt;
+&lt;span class="c1"&gt;# 邮件服务器设置, 根据实际情况自行选择&lt;/span&gt;
 SMTP server hostname           &lt;span class="o"&gt;[&lt;/span&gt;localhost&lt;span class="o"&gt;]&lt;/span&gt;:
 SMTP server port               &lt;span class="o"&gt;[(&lt;/span&gt;default&lt;span class="o"&gt;)]&lt;/span&gt;:
 SMTP encryption                &lt;span class="o"&gt;[&lt;/span&gt;NONE/?&lt;span class="o"&gt;]&lt;/span&gt;:
@@ -510,12 +510,12 @@ Generating SSH host key ... rsa... dsa... &lt;span class="k"&gt;done&lt;/span&gt
 *** HTTP Daemon
 ***
 
-&lt;span class="c"&gt;# 启用反向代理&lt;/span&gt;
+&lt;span class="c1"&gt;# 启用反向代理&lt;/span&gt;
 Behind reverse proxy           &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;? y
 Proxy uses SSL &lt;span class="o"&gt;(&lt;/span&gt;https://&lt;span class="o"&gt;)&lt;/span&gt;      &lt;span class="o"&gt;[&lt;/span&gt;y/N&lt;span class="o"&gt;]&lt;/span&gt;?
 Subdirectory on proxy server   &lt;span class="o"&gt;[&lt;/span&gt;/&lt;span class="o"&gt;]&lt;/span&gt;:
 Listen on address              &lt;span class="o"&gt;[&lt;/span&gt;*&lt;span class="o"&gt;]&lt;/span&gt;:
-Listen on port                 &lt;span class="o"&gt;[&lt;/span&gt;8081&lt;span class="o"&gt;]&lt;/span&gt;:     &lt;span class="c"&gt;# 设置gerrit网站监听端口&lt;/span&gt;
+Listen on port                 &lt;span class="o"&gt;[&lt;/span&gt;8081&lt;span class="o"&gt;]&lt;/span&gt;:     &lt;span class="c1"&gt;# 设置gerrit网站监听端口&lt;/span&gt;
 Canonical URL                  &lt;span class="o"&gt;[&lt;/span&gt;http://localhost/&lt;span class="o"&gt;]&lt;/span&gt;:
 
 *** Plugins
@@ -551,20 +551,20 @@ OK
 &lt;/pre&gt;
 
 &lt;p&gt;创建用户密码文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# 创建用户名和密码都是admin的文件&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 创建用户名和密码都是admin的文件&lt;/span&gt;
+$ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;访问&lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt;输入用户名和密码即可登陆到Gerrit&lt;/p&gt;
 &lt;h2&gt;Gerrit目录结构&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;tree -L &lt;span class="m"&gt;1&lt;/span&gt; gerrit
+&lt;div class="highlight"&gt;&lt;pre&gt;$ tree -L &lt;span class="m"&gt;1&lt;/span&gt; gerrit
 gerrit
 ├── bin
 ├── cache
 ├── data
-├── etc  &lt;span class="c"&gt;# 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改&lt;/span&gt;
+├── etc  &lt;span class="c1"&gt;# 配置信息, 创建站点时的配置信息都保存在这里，可以按照需要修改&lt;/span&gt;
 ├── git
 ├── index
 ├── lib
@@ -576,9 +576,9 @@ gerrit
 
 
 &lt;h2&gt;常用命令&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh start  &lt;span class="c"&gt;# 启动gerrit服务&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh stop   &lt;span class="c"&gt;# 关闭gerrit服务&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;gerrit/bin/gerrit.sh restart &lt;span class="c"&gt;# 重启gerrit服务&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ gerrit/bin/gerrit.sh start  &lt;span class="c1"&gt;# 启动gerrit服务&lt;/span&gt;
+$ gerrit/bin/gerrit.sh stop   &lt;span class="c1"&gt;# 关闭gerrit服务&lt;/span&gt;
+$ gerrit/bin/gerrit.sh restart &lt;span class="c1"&gt;# 重启gerrit服务&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -634,17 +634,17 @@ access_log   logs/site.log;
 &lt;/div&gt;
 </summary><category term="windows"></category><category term="nginx"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><updated>2013-11-03T19:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:posts/install-jdk.html</id><summary type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
 首先下载jdk-7u45-linux-i586.tar.gz压缩包，并解压到 &lt;code&gt;/usr/local/lib/jdk1.7.0_45&lt;/code&gt; ,&amp;nbsp;再执行下面的脚本&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nv"&gt;JDK_BIN_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/jdk1.7.0_45/bin
-&lt;span class="k"&gt;for&lt;/span&gt; x in &lt;span class="k"&gt;$(&lt;/span&gt;find &lt;span class="nv"&gt;$JDK_BIN_PATH&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; x in &lt;span class="k"&gt;$(&lt;/span&gt;find $JDK_BIN_PATH&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
-    &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;basename &lt;span class="nv"&gt;$x&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
-    sudo update-alternatives --install /usr/bin/&lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$x&lt;/span&gt; 300
+    &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;basename $x&lt;span class="k"&gt;)&lt;/span&gt;
+    sudo update-alternatives --install /usr/bin/$name $name $x 300
 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 </summary><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><updated>2013-09-30T13:44:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:posts/setup-wamp.html</id><summary type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
 &lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;开发基本也就是在不同平台下，要么是&lt;span class="caps"&gt;LAMP&lt;/span&gt;(Linux + Apache + Mysql + &lt;span class="caps"&gt;PHP&lt;/span&gt;)，要么就是&lt;span class="caps"&gt;WAMP&lt;/span&gt;(Windows + Apache + Mysql +&lt;span class="caps"&gt;PHP&lt;/span&gt;),&amp;nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -824,24 +824,24 @@ DirectoryIndex index.html index.php
 &lt;p&gt;注意：最好是单独建立一个用户，并保证该用户对代码和后面创建索引的目录读写权限&lt;/p&gt;
 &lt;h2&gt;准备工作&lt;/h2&gt;
 &lt;p&gt;以opengrok用户身份登录安装jdk和Exuberant&amp;nbsp;Ctags.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install sun-java6-jdk ctags
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install sun-java6-jdk ctags
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;获取opengrok安装包（opengrok-0.11.1.tar.gz）和tomcat安装包(apachetomcat-7.0.6.tar.gz)解压安装包到任意目录下面&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; /var/local/
-&lt;span class="nv"&gt;$ &lt;/span&gt;tar -zxvf /path/to/opengrok-0.11.1.tar.gz
-&lt;span class="nv"&gt;$ &lt;/span&gt;tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /var/local/
+$ tar -zxvf /path/to/opengrok-0.11.1.tar.gz
+$ tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下载需要使用的代码到一个目录下面&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir -p ~/opengrok/projects/project1
-&lt;span class="nv"&gt;$ &lt;/span&gt;mkdir -p ~/opnegrok/projects/project2
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/opengrok/projects/project1
-&lt;span class="nv"&gt;$ &lt;/span&gt;download code of project1 &lt;span class="o"&gt;(&lt;/span&gt;such as: git clone ... or repo init ... &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; repo sync&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/opengrok/projects/project2
-&lt;span class="nv"&gt;$ &lt;/span&gt;download code of project2 &lt;span class="o"&gt;(&lt;/span&gt;such as: git clone ... or repo init ... &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; repo sync&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir -p ~/opengrok/projects/project1
+$ mkdir -p ~/opnegrok/projects/project2
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/opengrok/projects/project1
+$ download code of project1 &lt;span class="o"&gt;(&lt;/span&gt;such as: git clone ... or repo init ... &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; repo sync&lt;span class="o"&gt;)&lt;/span&gt;
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/opengrok/projects/project2
+$ download code of project2 &lt;span class="o"&gt;(&lt;/span&gt;such as: git clone ... or repo init ... &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; repo sync&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -854,14 +854,14 @@ opengrok/projects----project1
 &lt;/pre&gt;
 
 &lt;p&gt;启动tomcat，确认tomcat没有问题&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;/var/local/apache-tomcat-7.0.6/bin/startup.sh
+&lt;div class="highlight"&gt;&lt;pre&gt;$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查tomcat&amp;nbsp;是否正常工作&lt;/p&gt;
 &lt;h2&gt;部署OpenGrok&lt;/h2&gt;
 &lt;p&gt;执行命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo &lt;span class="nv"&gt;OPENGROK_TOMCAT_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
+&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo &lt;span class="nv"&gt;OPENGROK_TOMCAT_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -873,7 +873,7 @@ opengrok/projects----project1
 &lt;h3&gt;创建索引&lt;/h3&gt;
 &lt;p&gt;创建索引时，会创建三个目录，一个data目录来存放索引信息，一个etc目录创建配置信息和一个log目录。
  如想让~/opengrok/来存放索引,则指定&lt;code&gt;OPENGROK_INSTANCE_BASE=~/opengrok&lt;/code&gt;, 则指定&lt;code&gt;OPENGROK_INSTANCE_BASE=~/opengrok&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true &lt;/span&gt;&lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -881,7 +881,7 @@ opengrok/projects----project1
 &lt;p&gt;访问&lt;a href="http://127.0.0.1:8080/source"&gt;http://127.0.0.1:8080/source&lt;/a&gt;,enjoy&amp;nbsp;it!&lt;/p&gt;
 &lt;h3&gt;项目代码更新或者添加新的项目&lt;/h3&gt;
 &lt;p&gt;首先更新项目代码或者下载新的项目到~/opengrok/projects目录下面。&amp;nbsp;然后重新执行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true &lt;/span&gt;&lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -891,7 +891,7 @@ opengrok/projects----project1
 如添加公司&lt;span class="caps"&gt;LOGO&lt;/span&gt;或一些有用的帮助信息。&lt;/p&gt;
 &lt;h3&gt;直接调用命令行接口&lt;/h3&gt;
 &lt;p&gt;上面创建索引的命令其实&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true &lt;/span&gt;&lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -908,7 +908,7 @@ opengrok/projects----project1
 
 
 &lt;p&gt;上面各个参数的意思如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;java -jar opengrok.jar
+&lt;div class="highlight"&gt;&lt;pre&gt;$ java -jar opengrok.jar
 
 Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt;
 -?
@@ -924,13 +924,13 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Base URL of the user Information provider. Default: &lt;span class="s2"&gt;&amp;quot;http://www.opensolaris.org/viewProfile.jspa?username=&amp;quot;&lt;/span&gt;
 
 -C
-    Print per project percentage progress information&lt;span class="o"&gt;(&lt;/span&gt;I/O extensive, since one &lt;span class="nb"&gt;read &lt;/span&gt;through dir structure is made before indexing, needs -v, otherwise it just goes to the log&lt;span class="o"&gt;)&lt;/span&gt;
+    Print per project percentage progress information&lt;span class="o"&gt;(&lt;/span&gt;I/O extensive, since one &lt;span class="nb"&gt;read&lt;/span&gt; through dir structure is made before indexing, needs -v, otherwise it just goes to the log&lt;span class="o"&gt;)&lt;/span&gt;
 
 -c /path/to/ctags
     Path to Exuberant Ctags from http://ctags.sf.net by default takes the Exuberant Ctags in PATH.
 
 -D
-    Store &lt;span class="nb"&gt;history &lt;/span&gt;cache in a database &lt;span class="o"&gt;(&lt;/span&gt;needs the JDBC driver in the classpath, typically derbyclient.jar or derby.jar&lt;span class="o"&gt;)&lt;/span&gt;
+    Store &lt;span class="nb"&gt;history&lt;/span&gt; cache in a database &lt;span class="o"&gt;(&lt;/span&gt;needs the JDBC driver in the classpath, typically derbyclient.jar or derby.jar&lt;span class="o"&gt;)&lt;/span&gt;
 
 -d /path/to/data/root
     The directory where OpenGrok stores the generated data
@@ -939,10 +939,10 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Economical - consumes less disk space. It does not generate hyper text cross reference files offline, but will &lt;span class="k"&gt;do&lt;/span&gt; so on demand - which could be sightly slow.
 
 -H
-    Generate &lt;span class="nb"&gt;history &lt;/span&gt;cache &lt;span class="k"&gt;for&lt;/span&gt; all repositories
+    Generate &lt;span class="nb"&gt;history&lt;/span&gt; cache &lt;span class="k"&gt;for&lt;/span&gt; all repositories
 
 -h /path/to/repository
-    just generate &lt;span class="nb"&gt;history &lt;/span&gt;cache &lt;span class="k"&gt;for&lt;/span&gt; the specified repos &lt;span class="o"&gt;(&lt;/span&gt;absolute path from &lt;span class="nb"&gt;source &lt;/span&gt;root&lt;span class="o"&gt;)&lt;/span&gt;
+    just generate &lt;span class="nb"&gt;history&lt;/span&gt; cache &lt;span class="k"&gt;for&lt;/span&gt; the specified repos &lt;span class="o"&gt;(&lt;/span&gt;absolute path from &lt;span class="nb"&gt;source&lt;/span&gt; root&lt;span class="o"&gt;)&lt;/span&gt;
 
 -I pattern
     Only files matching this pattern will be examined &lt;span class="o"&gt;(&lt;/span&gt;supports wildcards, example: -I *.java -I *.c&lt;span class="o"&gt;)&lt;/span&gt;
@@ -951,10 +951,10 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Ignore the named files or directories &lt;span class="o"&gt;(&lt;/span&gt;supports wildcards, example: -i *.so -i *.dll&lt;span class="o"&gt;)&lt;/span&gt;
 
 -j class
-    Name of the JDBC driver class used by the &lt;span class="nb"&gt;history &lt;/span&gt;cache. Can use one of the shorthands &lt;span class="s2"&gt;&amp;quot;client&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;org.apache.derby.jdbc.ClientDriver&lt;span class="o"&gt;)&lt;/span&gt; or &lt;span class="s2"&gt;&amp;quot;embedded&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;org.apache.derby.jdbc.EmbeddedDriver&lt;span class="o"&gt;)&lt;/span&gt;. Default: &lt;span class="s2"&gt;&amp;quot;client&amp;quot;&lt;/span&gt;
+    Name of the JDBC driver class used by the &lt;span class="nb"&gt;history&lt;/span&gt; cache. Can use one of the shorthands &lt;span class="s2"&gt;&amp;quot;client&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;org.apache.derby.jdbc.ClientDriver&lt;span class="o"&gt;)&lt;/span&gt; or &lt;span class="s2"&gt;&amp;quot;embedded&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;org.apache.derby.jdbc.EmbeddedDriver&lt;span class="o"&gt;)&lt;/span&gt;. Default: &lt;span class="s2"&gt;&amp;quot;client&amp;quot;&lt;/span&gt;
 
 -k /path/to/repository
-    Kill the &lt;span class="nb"&gt;history &lt;/span&gt;cache &lt;span class="k"&gt;for&lt;/span&gt; the given repository and exit. Use &lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt; to delete the cache &lt;span class="k"&gt;for&lt;/span&gt; all repositories.
+    Kill the &lt;span class="nb"&gt;history&lt;/span&gt; cache &lt;span class="k"&gt;for&lt;/span&gt; the given repository and exit. Use &lt;span class="s1"&gt;&amp;#39;*&amp;#39;&lt;/span&gt; to delete the cache &lt;span class="k"&gt;for&lt;/span&gt; all repositories.
 
 -K
     List all repository pathes and exit.
@@ -972,16 +972,16 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Allow this symlink to be followed. Option may be repeated.
 
 -n
-    Do not generate indexes, but process all other &lt;span class="nb"&gt;command &lt;/span&gt;line options
+    Do not generate indexes, but process all other &lt;span class="nb"&gt;command&lt;/span&gt; line options
 
 -O on/off
     Turn on/off the optimization of the index database as part of the indexing step
 
 -P
-    Generate a project &lt;span class="k"&gt;for&lt;/span&gt; each of the top-level directories in &lt;span class="nb"&gt;source &lt;/span&gt;root
+    Generate a project &lt;span class="k"&gt;for&lt;/span&gt; each of the top-level directories in &lt;span class="nb"&gt;source&lt;/span&gt; root
 
 -p /path/to/default/project
-    This is the path to the project that should be selected by default in the web application&lt;span class="o"&gt;(&lt;/span&gt;when no other project &lt;span class="nb"&gt;set &lt;/span&gt;either in cookie or in parameter&lt;span class="o"&gt;)&lt;/span&gt;. You should strip off the &lt;span class="nb"&gt;source &lt;/span&gt;root.
+    This is the path to the project that should be selected by default in the web application&lt;span class="o"&gt;(&lt;/span&gt;when no other project &lt;span class="nb"&gt;set&lt;/span&gt; either in cookie or in parameter&lt;span class="o"&gt;)&lt;/span&gt;. You should strip off the &lt;span class="nb"&gt;source&lt;/span&gt; root.
 
 -Q on/off
     Turn on/off quick context scan. By default only the first 32k of a file is scanned, and a &lt;span class="s1"&gt;&amp;#39;[..all..]&amp;#39;&lt;/span&gt; link is inserted &lt;span class="k"&gt;if&lt;/span&gt; the file is bigger. Activating this may slow the server down &lt;span class="o"&gt;(&lt;/span&gt;Note: this is setting only affects the web application&lt;span class="o"&gt;)&lt;/span&gt;
@@ -996,13 +996,13 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Turn on/off support &lt;span class="k"&gt;for&lt;/span&gt; remote SCM systems
 
 -S
-    Search &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;external&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;source &lt;/span&gt;repositories and add them
+    Search &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;external&amp;quot;&lt;/span&gt; &lt;span class="nb"&gt;source&lt;/span&gt; repositories and add them
 
 -s /path/to/source/root
-    The root directory of the &lt;span class="nb"&gt;source &lt;/span&gt;tree
+    The root directory of the &lt;span class="nb"&gt;source&lt;/span&gt; tree
 
 -T number
-    The number of threads to use &lt;span class="k"&gt;for&lt;/span&gt; index generation. By default the number of threads will be &lt;span class="nb"&gt;set &lt;/span&gt;to the number of available CPUs
+    The number of threads to use &lt;span class="k"&gt;for&lt;/span&gt; index generation. By default the number of threads will be &lt;span class="nb"&gt;set&lt;/span&gt; to the number of available CPUs
 
 -t number
     Default tabsize to use &lt;span class="o"&gt;(&lt;/span&gt;number of spaces per tab character&lt;span class="o"&gt;)&lt;/span&gt;
@@ -1011,7 +1011,7 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     Send the current configuration to the specified address &lt;span class="o"&gt;(&lt;/span&gt;This is most likely the web-app configured with ConfigAddress&lt;span class="o"&gt;)&lt;/span&gt;
 
 -u url
-    URL to the database that contains the &lt;span class="nb"&gt;history &lt;/span&gt;cache. Default: If -j specifies &lt;span class="s2"&gt;&amp;quot;embedded&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;jdbc:derby:&lt;/span&gt;&lt;span class="nv"&gt;$DATA_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/cachedb;create=true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; otherwise, &lt;span class="s2"&gt;&amp;quot;jdbc:derby://localhost/cachedb;create=true&amp;quot;&lt;/span&gt;
+    URL to the database that contains the &lt;span class="nb"&gt;history&lt;/span&gt; cache. Default: If -j specifies &lt;span class="s2"&gt;&amp;quot;embedded&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;jdbc:derby:&lt;/span&gt;&lt;span class="nv"&gt;$DA&lt;/span&gt;&lt;span class="s2"&gt;TA_ROOT/cachedb;create=true&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; otherwise, &lt;span class="s2"&gt;&amp;quot;jdbc:derby://localhost/cachedb;create=true&amp;quot;&lt;/span&gt;
 
 -V
     Print version and quit
@@ -1029,7 +1029,7 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
     URL Suffix &lt;span class="k"&gt;for&lt;/span&gt; the user Information provider. Default: &lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;
 
 -z number
-    depth of scanning &lt;span class="k"&gt;for&lt;/span&gt; repositories in directory structure relative to &lt;span class="nb"&gt;source &lt;/span&gt;root
+    depth of scanning &lt;span class="k"&gt;for&lt;/span&gt; repositories in directory structure relative to &lt;span class="nb"&gt;source&lt;/span&gt; root
 &lt;/pre&gt;&lt;/div&gt;
 
 

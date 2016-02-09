@@ -2,8 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - export Android cantacts with vCard format via&nbsp;adb
-</title>
+    <title>Wise Turtles - Maven</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -26,12 +25,6 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
-    <meta name="author" contents="Zhang Wanming" />
-    <meta name="description" contents="" />
-
-      <meta name="tags" contents="Android" />
-      <meta name="tags" contents="vCard" />
-      <meta name="tags" contents="adb" />
 
 </head>
 
@@ -59,87 +52,17 @@
     <div class="row">
 
         <div class="span9">
-    <div class='article'>
-        <div class="content-title">
-            <h1>export Android cantacts with vCard format via&nbsp;adb</h1>
-            <br />
-    Tags <a href="http://blog.wiseturtles.com/tag/android.html">Android</a> <a href="http://blog.wiseturtles.com/tag/vcard.html">vCard</a> <a href="http://blog.wiseturtles.com/tag/adb.html">adb</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2015-01-11
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/maven-plugin-tomcat-jetty-run.html"><h2>Maven通过plugin在Tomcat、Jetty中运行项目</h2></a>
+          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/java.html">Java</a> <a href="http://blog.wiseturtles.com/tag/maven.html">Maven</a> <a href="http://blog.wiseturtles.com/tag/tomcat.html">Tomcat</a> <a href="http://blog.wiseturtles.com/tag/jetty.html">Jetty</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-02-09
 
-        </div>
+</div>
+          <div class="summary"><b>内容摘要:</b><p>Maven通过plugin在Tomcat、Jetty中运行项目</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/maven-plugin-tomcat-jetty-run.html">阅读</a></div>
+      </div>
 
-        <div><p>参考:
-<a href="http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms">http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms</a></p>
-<p>昨天手机(<span class="caps">TCL</span>&nbsp;S960)掉地下把屏幕摔坏了，Google被xx后，就没在用过其它通讯录同步，只好想办法从坏手机里导出，屏幕完全坏了，只能通过adb完成。</p>
-<h1>获取通讯录</h1>
-<p>通过adb从手机中导出通讯录，可以用如下方法：</p>
-<ol>
-<li>
-<p>am</p>
-<div class="highlight"><pre>$ adb shell am start -t <span class="s2">&quot;text/x-vcard&quot;</span> -d <span class="s2">&quot;file:///sdcard/contacts.vcf&quot;</span> -a android.intent.action.VIEW com.android.contacts
-</pre></div>
-
-
-</li>
-<li>
-<p>get&nbsp;contacts.db</p>
-<div class="highlight"><pre>$ adb pull /data/data/com.android.providers.contacts/databases/contacts2.db .
-sqlite3 -batch <span class="s">&lt;&lt;EOF contacts2.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from data; &lt;CR&gt; EOF</span>
-</pre></div>
-
-
-</li>
-</ol>
-<p>方法一无法运行报错，方法二需要root权限。</p>
-<p>Android拿root权限貌似就两种方法: xx root工具(通过系统漏洞获取root权限); 刷recory分区。&nbsp;我没找到该机型的recory，而是用360一键root，拿到root权限。</p>
-<p>有了root权限，通过方法二就可以拿到通讯录数据了，剩下的就是生成vCard格式。&nbsp;github上已经有人写了通过contacts2.db生成vCard文件的小工具。</p>
-<div class="highlight"><pre>$ git clone git@github.com:stachre/dump-contacts2db.git
-$ <span class="nb">cd</span> dump-contacts2db
-$ bash dump-contacts2db.sh path/to/contacts2.db &gt; path/to/contacts.vcf
-</pre></div>
-
-
-<p>如果还希望获取手机里的短信，可以用下面的命令:</p>
-<div class="highlight"><pre>$ adb pull /data/data/com.android.providers.telephony/databases/mmssms.db
-$ sqlite3 -batch <span class="s">&lt;&lt;EOF mmssms.db &lt;CR&gt; .header on &lt;CR&gt; .mode tabs &lt;CR&gt; select * from sms; &lt;CR&gt; EOF</span>
-</pre></div>
-
-
-<h1>Android解锁</h1>
-<p>Android解锁我没试过，命令如下：</p>
-<div class="highlight"><pre>adb shell
-<span class="nb">cd</span> /data/data/com.android.providers.settings/databases
-sqlite3 settings.db
-update system <span class="nb">set</span> <span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lock_pattern_autolock<span class="s1">&#39;;</span>
-<span class="s1">update secure set value=0 where name=’lock_pattern_autolock&#39;</span><span class="p">;</span>
-update system <span class="nb">set</span> <span class="nv">value</span><span class="o">=</span><span class="m">0</span> where <span class="nv">name</span><span class="o">=</span>’lockscreen.lockedoutpermanently<span class="s1">&#39;;</span>
-<span class="s1">update secure set value=0 where name=’lockscreen.lockedoutpermanently&#39;</span><span class="p">;</span>
-.quit
-</pre></div>
-
-
-<p>如果是忘了Android锁屏图案，想找回，可以试试:</p>
-<p><a href="https://github.com/sch3m4/androidpatternlock">https://github.com/sch3m4/androidpatternlock</a></p></div>
-
-        <hr>
-
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="android-vcard-from-command-line" data-title="export Android cantacts with vCard format via&nbsp;adb" data-url="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html"></div>
-<!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"wiseturtles"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
-<!-- 多说公共JS代码 end -->    </div>
+  
         </div>
 
         <div class="span3">

@@ -77,7 +77,7 @@ On 2015-06-26
 <p>网上搜索之后，找到</p>
 <p><a href="http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html">http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html</a></p>
 <p>根据描述,&nbsp;怀疑可能是redis连接数太多导致,于是查看</p>
-<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password info <span class="p">|</span> grep connected_clients
+<div class="highlight"><pre>$ redis-cli -a password info <span class="p">|</span> grep connected_clients
 connected_clients:6997
 </pre></div>
 
@@ -91,7 +91,7 @@ connected_clients:6997
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="kn">from</span> <span class="nn">flask_redis</span> <span class="kn">import</span> <span class="n">FlaskRedis</span>
 
-<span class="n">REDIS_URL</span> <span class="o">=</span> <span class="s">&quot;redis://:password@localhost:6379/0&quot;</span>
+<span class="n">REDIS_URL</span> <span class="o">=</span> <span class="s2">&quot;redis://:password@localhost:6379/0&quot;</span>
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
 <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">from_object</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -99,35 +99,35 @@ connected_clients:6997
 <span class="n">redis</span> <span class="o">=</span> <span class="n">FlaskRedis</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 
 
-<span class="nd">@app.route</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-    <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;hit&quot;</span><span class="p">)</span>
+    <span class="n">redis</span><span class="o">.</span><span class="n">incr</span><span class="p">(</span><span class="s2">&quot;hit&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">redis</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hit&quot;</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
 
 <p>采用gevent方式,&nbsp;单worker启动</p>
-<div class="highlight"><pre><span class="nv">$ </span>gunicorn -w <span class="m">1</span> app:app --worker-class gevent --error-logfile -
+<div class="highlight"><pre>$ gunicorn -w <span class="m">1</span> app:app --worker-class gevent --error-logfile -
 </pre></div>
 
 
 <p>使用ab模拟500个用户发送50000次请求的高并发</p>
-<div class="highlight"><pre><span class="nv">$ </span>ab  -c <span class="m">500</span>  -t <span class="m">30</span> -r  <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
+<div class="highlight"><pre>$ ab  -c <span class="m">500</span>  -t <span class="m">30</span> -r  <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
 </pre></div>
 
 
 <p>查看连接数</p>
-<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password info <span class="p">|</span>grep connected_clients
+<div class="highlight"><pre>$ redis-cli -a password info <span class="p">|</span>grep connected_clients
 connected_clients:232
 </pre></div>
 
 
 <p>可以看到, 在高并发, 单worker的条件下，&nbsp;一个连接池的连接数会就有两百多。然后测试开启４个worker的话，能达到一千二百多。</p>
 <p>这些连接在连接池里使用之后，基本上都长期处于idle状态，白白浪费资源.</p>
-<div class="highlight"><pre><span class="nv">$ </span>redis-cli -a password client list
+<div class="highlight"><pre>$ redis-cli -a password client list
 <span class="nv">addr</span><span class="o">=</span>127.0.0.1:45327 <span class="nv">fd</span><span class="o">=</span><span class="m">170</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">35</span> <span class="nv">idle</span><span class="o">=</span><span class="m">34</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
 <span class="nv">multi</span><span class="o">=</span>-1 <span class="nv">qbuf</span><span class="o">=</span><span class="m">0</span> qbuf-free<span class="o">=</span><span class="m">0</span> <span class="nv">obl</span><span class="o">=</span><span class="m">0</span> <span class="nv">oll</span><span class="o">=</span><span class="m">0</span> <span class="nv">omem</span><span class="o">=</span><span class="m">0</span> <span class="nv">events</span><span class="o">=</span>r <span class="nv">cmd</span><span class="o">=</span>get
 <span class="nv">addr</span><span class="o">=</span>127.0.0.1:43684 <span class="nv">fd</span><span class="o">=</span><span class="m">44</span> <span class="nv">name</span><span class="o">=</span> <span class="nv">age</span><span class="o">=</span><span class="m">36</span> <span class="nv">idle</span><span class="o">=</span><span class="m">10</span> <span class="nv">flags</span><span class="o">=</span>N <span class="nv">db</span><span class="o">=</span><span class="m">0</span> <span class="nv">sub</span><span class="o">=</span><span class="m">0</span> <span class="nv">psub</span><span class="o">=</span>0
@@ -151,7 +151,7 @@ connected_clients:232
 <ol>
 <li>
 <p>从目前的情况来看，是由于连接池维持了太多的连接导致.　因此不用的连接池应该及&nbsp;时被释放掉。通过设置</p>
-<div class="highlight"><pre><span class="nv">$ </span>reidis-cli -a password CONFIG SET timeout 30
+<div class="highlight"><pre>$ reidis-cli -a password CONFIG SET timeout 30
 </pre></div>
 
 
