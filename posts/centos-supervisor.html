@@ -70,13 +70,13 @@ On 2015-02-09
 
         <div><h2>安装</h2>
 <p>部署项目从Ubuntu转战到CentOS,&nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.</p>
-<div class="highlight"><pre>$ sudo pip install supervisor
+<div class="highlight"><pre><span></span>$ sudo pip install supervisor
 </pre></div>
 
 
 <h2>配置supervisor</h2>
 <ol>
-<li>添加配置文件<div class="highlight"><pre>$ sudo mkdir /etc/supervisor
+<li>添加配置文件<div class="highlight"><pre><span></span>$ sudo mkdir /etc/supervisor
 $ sudo mkdir /etc/supervisor/conf.d
 <span class="c1"># 添加如下配置文件</span>
 $ cat /etc/supervisor/supervisord.conf
@@ -150,7 +150,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 </ol>
 <p>项目的配置文件写入&nbsp;/etc/supervisor/conf.d/目录即可</p>
 <h2>添加开机启动</h2>
-<div class="highlight"><pre><span class="c1"># 添加如下配置文件</span>
+<div class="highlight"><pre><span></span><span class="c1"># 添加如下配置文件</span>
 $ cat /etc/init.d/supervisord
 
 <span class="c1">#!/bin/bash</span>
@@ -220,7 +220,7 @@ start
 
 
 <p>设置如下:</p>
-<div class="highlight"><pre>$ sudo chmod +x /etc/init.d/supervisord
+<div class="highlight"><pre><span></span>$ sudo chmod +x /etc/init.d/supervisord
 $ sudo chkconfig --add supervisord
 $ sudo chkconfig supervisord on
 $ sudo service supervisord start

@@ -74,19 +74,19 @@ On 2015-05-23
 <p>我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&nbsp;4。</p>
 <h1>监控主机安装Nagios</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre>$ sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
+<div class="highlight"><pre><span></span>$ sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
 </pre></div>
 
 
 <h2>创建用户、组</h2>
-<div class="highlight"><pre>$ sudo useradd nagios
+<div class="highlight"><pre><span></span>$ sudo useradd nagios
 $ sudo groupadd nagcmd
 $ sudo usermod -a -G nagcmd nagios
 </pre></div>
 
 
 <h2>安装nagios&nbsp;4</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software
 $ wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
 $ tar zxf nagios-4.0.8.tar.gz
 $ <span class="nb">cd</span> nagios-4.0.8
@@ -99,7 +99,7 @@ $ sudo service nagios restart
 
 
 <p>配置apache2</p>
-<div class="highlight"><pre>$ sudo /usr/bin/install -c -m <span class="m">644</span> sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
+<div class="highlight"><pre><span></span>$ sudo /usr/bin/install -c -m <span class="m">644</span> sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
 $ sudo ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/
 $ sudo a2enmod rewrite
 $ sudo a2enmod cgi
@@ -111,7 +111,7 @@ $ sudo service apache2 restart
 <p>浏览器访问 http://监控主机<span class="caps">IP</span>/nagios 查看监控情况, 登录用户名、密码就是 htpasswd 设置的。
 nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&nbsp;是配置文件夹。</p>
 <h2>安装nagios-plugins-2.0.3</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software
 $ wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
 $ tar zxf nagios-plugins-2.0.3.tar.gz
 $ <span class="nb">cd</span> nagios-plugins-2.0.3
@@ -122,7 +122,7 @@ $ make all <span class="o">&amp;&amp;</span> make install
 
 <p>nagios-plugins 命令安装在 /usr/local/nagios/libexec&nbsp;目录。</p>
 <h2>安装nagios-nrpe-2.15</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software
 $ wget -O nrpe-2.15.tar.gz <span class="s2">&quot;http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fnagios%2Ffiles%2Fnrpe-2.x%2Fnrpe-2.15%2F&amp;ts=1432369927&amp;use_mirror=liquidtelecom&quot;</span>
 $ tar zxf nrpe-2.15.tar.gz
 $ <span class="nb">cd</span> nrpe-2.15
@@ -134,19 +134,19 @@ $ sudo /usr/bin/install -c -m <span class="m">755</span> ./src/check_nrpe /usr/l
 
 
 <p>测试是否可以工作:</p>
-<div class="highlight"><pre>$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 <span class="c1"># 该IP是被监控主机的IP</span>
+<div class="highlight"><pre><span></span>$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 <span class="c1"># 该IP是被监控主机的IP</span>
 NRPE v2.13
 </pre></div>
 
 
 <h1>被监控主机安装Nagios <span class="caps">NRPE</span></h1>
 <p>安装nagios-plugins,&nbsp;nagios-nrpe-server</p>
-<div class="highlight"><pre>$ sudo apt-get install nagios-plugins nagios-nrpe-server
+<div class="highlight"><pre><span></span>$ sudo apt-get install nagios-plugins nagios-nrpe-server
 </pre></div>
 
 
 <p>配置nagios-nrpe-server，允许监控主机连接该被监控主机。</p>
-<div class="highlight"><pre>$ sudo vim /etc/nagios/nrpe.cfg
+<div class="highlight"><pre><span></span>$ sudo vim /etc/nagios/nrpe.cfg
 $ 将 监控主机IP 填入 allowed_hosts 字段，如: <span class="nv">allowed_hosts</span><span class="o">=</span>127.0.0.1,10.4.22.22
 $ sudo service nagios-nrpe-server restart
 </pre></div>
@@ -155,7 +155,7 @@ $ sudo service nagios-nrpe-server restart
 <h1>配置</h1>
 <h2>配置监控主机</h2>
 <p>/usr/local/nagios/etc/nagios.cfg</p>
-<div class="highlight"><pre>$ diff -u nagios.cfg.back nagios.cfg
+<div class="highlight"><pre><span></span>$ diff -u nagios.cfg.back nagios.cfg
 --- nagios.cfg.back2015-05-23 11:07:51.436491931 +0800
 +++ nagios.cfg2015-05-23 22:08:09.872618927 +0800
 @@ -30,6 +30,9 @@
@@ -179,7 +179,7 @@ $ sudo service nagios-nrpe-server restart
 
 
 <p>/usr/local/nagios/etc/objects/hosts.cfg</p>
-<div class="highlight"><pre>$ <span class="c1"># Define a host for the local machine</span>
+<div class="highlight"><pre><span></span>$ <span class="c1"># Define a host for the local machine</span>
 <span class="c1">##############</span>
 <span class="c1"># appstore01 #</span>
 <span class="c1">##############</span>
@@ -207,7 +207,7 @@ define host<span class="o">{</span>
 
 
 <p>/usr/local/nagios/etc/objects/groups.cfg</p>
-<div class="highlight"><pre><span class="c1"># Define an optional hostgroup for Linux machines</span>
+<div class="highlight"><pre><span></span><span class="c1"># Define an optional hostgroup for Linux machines</span>
 define hostgroup<span class="o">{</span>
     hostgroup_name  appstore-group <span class="p">;</span> The name of the hostgroup
     <span class="nb">alias</span>           appstore server group <span class="p">;</span> Long name of the group
@@ -217,7 +217,7 @@ define hostgroup<span class="o">{</span>
 
 
 <p>/etc/local/nagios/etc/objects/commands.cfg</p>
-<div class="highlight"><pre>$ diff -u objects/commands.cfg.back objects/commands.cfg
+<div class="highlight"><pre><span></span>$ diff -u objects/commands.cfg.back objects/commands.cfg
 +########################
 +# add by zhang wanming <span class="c1">#</span>
 +########################
@@ -248,7 +248,7 @@ define hostgroup<span class="o">{</span>
 
 
 <p>/etc/local/nagios/etc/objects/services.cfg</p>
-<div class="highlight"><pre>$ cat objects/services.cfg 
+<div class="highlight"><pre><span></span>$ cat objects/services.cfg 
 define service <span class="o">{</span>
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -344,7 +344,7 @@ define service <span class="o">{</span>
 
 
 <h2>配置被监控主机</h2>
-<div class="highlight"><pre>$ cat /etc/nagios/nrpe_local.cfg 
+<div class="highlight"><pre><span></span>$ cat /etc/nagios/nrpe_local.cfg 
 <span class="c1">######################################</span>
 <span class="c1"># Do any local nrpe configuration here</span>
 <span class="c1">######################################</span>
@@ -366,7 +366,7 @@ command<span class="o">[</span>check_http_launcher<span class="o">]=</span>/usr/
 <p>编辑/etc/nagios/nrpe.cfg, 确定 allowed_hosts 中加入监控主机<span class="caps">IP</span>，多个<span class="caps">IP</span>以 &#8220;,&#8221; 分隔。
 如:&nbsp;allowed_hosts=127.0.0.1,10.4.13.14</p>
 <p>然后，重新加载 nagios-nrpe-server&nbsp;配置文件，如下：</p>
-<div class="highlight"><pre>$ service nagios-nrpe-server reload
+<div class="highlight"><pre><span></span>$ service nagios-nrpe-server reload
 </pre></div>
 
 

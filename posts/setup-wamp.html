@@ -70,7 +70,7 @@ On 2013-09-30
 
         <div><p>最近开始学习<span class="caps">PHP</span>，工欲善其事，必先利其器。第一步当然是环境搭建啦！</p>
 <p><span class="caps">PHP</span>开发基本也就是在不同平台下，要么是<span class="caps">LAMP</span>(Linux + Apache + Mysql + <span class="caps">PHP</span>)，要么就是<span class="caps">WAMP</span>(Windows + Apache + Mysql +<span class="caps">PHP</span>),&nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令</p>
-<div class="highlight"><pre>$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
+<div class="highlight"><pre><span></span>$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
 </pre></div>
 
 
@@ -125,7 +125,7 @@ Popular options for deploying Apache httpd, and, optionally, <span class="caps">
 
 <h3>3.&nbsp;安装和启动Apache服务</h3>
 <p>先将<code>D:\wamp\Apache24\bin\</code>添加到系统环境变量中。方便后面安装和启动服务。&nbsp;运行cmd窗口，执行如下命令</p>
-<div class="highlight"><pre>httpd -k install -n service_name            # 安装apache服务 -n 是可选的，表示指定服务名字，不加-n使用默认的服务名字
+<div class="highlight"><pre><span></span>httpd -k install -n service_name            # 安装apache服务 -n 是可选的，表示指定服务名字，不加-n使用默认的服务名字
 httpd -k start/stop/restart -n service_name # 运行/停止/重启 apache服务, 同样，如果上面没有使用-n参数，这里也可以省去
 httpd -k uninstall -n service_name          # 卸载apache服务
 net start/stop service_name                 # 也可以运行/停止 apache服务
@@ -134,7 +134,7 @@ httpd -help                                 # 查看更多帮助信息
 
 
 <p>安装并运行Apache服务</p>
-<div class="highlight"><pre>httpd -k install
+<div class="highlight"><pre><span></span>httpd -k install
 httpd -k start
 </pre></div>
 
@@ -152,7 +152,7 @@ httpd -k start
 <h3>2.&nbsp;安装Mysql服务和使用</h3>
 <p>假设我使用的是zip包类型的Mysql，解压在<code>D:\wamp\mysql-5.6.13-win32\</code>目录下, 先把<code>D:\wamp\mysql-5.6.13-win32\bin</code>添加到环境变量，方便使用命令行。</p>
 <p>运行<span class="caps">CMD</span>窗口，跟安装Apache服务类似，直接运行</p>
-<div class="highlight"><pre>mysqld --install MySQL5.5(service_name)  # Mysql5.5 是service_name，是可选的，不指定的话它会默认使用一个服务名
+<div class="highlight"><pre><span></span>mysqld --install MySQL5.5(service_name)  # Mysql5.5 是service_name，是可选的，不指定的话它会默认使用一个服务名
 net start/stop MySQL5.5                  # 启动/停止Mysql服务
 mysqld --remove MySQL5.5                 # 移除Mysql服务
 
@@ -201,7 +201,7 @@ FLUSH PRIVILEGES;
 
 <p>最后再创建相对应的目录<code>D:\wamp\php-5.5.3-Win32-VC11-x86\logs</code>,<code>D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\upload</code>,<code>D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\session</code></p>
 <p>最后，让apache认识php，修改apache的配置文件<code>D:\wamp\Apache24\conf\httpd.conf</code>添加下面的内容</p>
-<div class="highlight"><pre># php配置 
+<div class="highlight"><pre><span></span># php配置 
 LoadModule php5_module &quot;E:/wamp_x64/php-5.5.3-Win32-VC11-x64/php5apache2_4.dll&quot;
 AddHandler application/x-httpd-php .php
 
@@ -222,7 +222,7 @@ DirectoryIndex index.html index.php
 <p>Xdebug 是一个<span class="caps">PHP</span>开发的调试工具，跟它齐名的另一个叫<code>Zend Debugger</code>, 也是一个很不错的东西。
 安装xdebug，首先需要下载适合版本的xdebug，如果不知道自己应该下载哪个版本的话，可以将你phpinfo();方法得到的页面内容粘贴到<a href="http://xdebug.org/wizard.php">这里</a>，它会自动分析出哪个版本的xdebug插件适合你。
 将下载下来的dll文件保存到php的安装路径<code>D:\wamp\php-5.5.3-Win32-VC11-x86\ext</code>目录下，然后修改<code>D:\wamp\php-5.5.3-Win32-VC11-x86\php.ini</code>文件，添加如下内容：</p>
-<div class="highlight"><pre><span class="k">[XDebug]</span>
+<div class="highlight"><pre><span></span><span class="k">[XDebug]</span>
 <span class="na">zend_extension</span> <span class="o">=</span> <span class="s">&quot;D:\wamp\php-5.5.3-Win32-VC11-x86\extphp_xdebug.dll&quot;</span>
 <span class="na">xdebug.auto_trace</span> <span class="o">=</span> <span class="s">1</span>
 <span class="na">xdebug.collect_params</span> <span class="o">=</span> <span class="s">1</span>

@@ -72,19 +72,19 @@ On 2015-01-20
 <p>由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？</p>
 <p>以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。</p>
 <p>前提:&nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)</p>
-<div class="highlight"><pre>$ ssh -fNL 9200:localhost:9200 192.167.0.1
+<div class="highlight"><pre><span></span>$ ssh -fNL 9200:localhost:9200 192.167.0.1
 </pre></div>
 
 
 <p>通过上面命令可以在本地机器和服务器A的9200端口之间做一个隧道，访问本地的9200端&nbsp;口就跟直接访问服务器A上的9200端口一样。</p>
 <p>为了使用方便，可以为上面的命令设置一个别名,添加到<code>~/.bashrc</code>中，&nbsp;如</p>
-<div class="highlight"><pre>$ <span class="nb">alias</span> <span class="nv">sshes</span><span class="o">=</span><span class="s2">&quot;ssh -fNL 9200:localhost:9200 192.167.0.1&quot;</span>
+<div class="highlight"><pre><span></span>$ <span class="nb">alias</span> <span class="nv">sshes</span><span class="o">=</span><span class="s2">&quot;ssh -fNL 9200:localhost:9200 192.167.0.1&quot;</span>
 </pre></div>
 
 
 <p>那么以后使用<code>sshes</code>就可以方便的建立一个ssh隧道连接,　同理，此法可用于连接服务器上的mysql及其它服务.</p>
 <p>另外一个常用的是通过ssh翻墙的命令</p>
-<div class="highlight"><pre>$ ssh -qTfnN -D <span class="m">7070</span> 192.167.0.2
+<div class="highlight"><pre><span></span>$ ssh -qTfnN -D <span class="m">7070</span> 192.167.0.2
 </pre></div>
 
 
@@ -97,7 +97,7 @@ On 2015-01-20
 <p>登陆到远程服务器时,当服务器上的用户名和本地的用户名不一致且端口也不是默认端口时.
 以服务器A(192.168.0.1), 用户名为root, 端口为4455。我们每次登陆到远程主机或拷贝
 文件时,&nbsp;都需要带上用户名和端口信息。如:</p>
-<div class="highlight"><pre><span class="c1"># ssh登陆</span>
+<div class="highlight"><pre><span></span><span class="c1"># ssh登陆</span>
 $ ssh -p <span class="m">4455</span> root@192.168.0.1
 <span class="c1"># scp拷贝</span>
 $ scp -P <span class="m">4455</span> root@192.168.0.1:/tmp/a a
@@ -105,7 +105,7 @@ $ scp -P <span class="m">4455</span> root@192.168.0.1:/tmp/a a
 
 
 <p>这样比较繁琐。稍微配置一下便可以化繁为简</p>
-<div class="highlight"><pre>$ cat ~/.ssh/config
+<div class="highlight"><pre><span></span>$ cat ~/.ssh/config
 Host 192.168.0.1
     User root
     Port 4455
@@ -113,7 +113,7 @@ Host 192.168.0.1
 
 
 <p>这样以后每次访问该服务器都不需要带上用户及端口信息</p>
-<div class="highlight"><pre><span class="c1"># ssh登陆</span>
+<div class="highlight"><pre><span></span><span class="c1"># ssh登陆</span>
 $ ssh 192.168.0.1
 <span class="c1"># scp拷贝</span>
 $ scp -P 192.168.0.1:/tmp/a a
@@ -121,7 +121,7 @@ $ scp -P 192.168.0.1:/tmp/a a
 
 
 <p>当本机需要通过不同的key登陆到不同的服务器时，我们都是通过<code>-i</code>来临时指定key.</p>
-<div class="highlight"><pre><span class="c1"># 使用a.key登陆192.168.0.1</span>
+<div class="highlight"><pre><span></span><span class="c1"># 使用a.key登陆192.168.0.1</span>
 $ ssh -i ~/.ssh/a.key 192.168.0.1
 <span class="c1"># 使用b.key登陆192.168.0.2</span>
 $ ssh -i ~/.ssh/b.key 192.168.0.2
@@ -129,7 +129,7 @@ $ ssh -i ~/.ssh/b.key 192.168.0.2
 
 
 <p>稍微配置一下</p>
-<div class="highlight"><pre>$ cat ~/.ssh/config
+<div class="highlight"><pre><span></span>$ cat ~/.ssh/config
 Host 192.168.0.1
     User root
     Port 4455
@@ -148,7 +148,7 @@ Host 192.168.0.2
 <h3>让man&nbsp;page不再单调</h3>
 <p>平时使用man page的时候，都是黑白的文字。看起来很是不方便，稍微配置一下，可以让
 你的man&nbsp;page充满颜色。</p>
-<div class="highlight"><pre><span class="c1"># color man pages</span>
+<div class="highlight"><pre><span></span><span class="c1"># color man pages</span>
 <span class="nb">export</span> <span class="nv">LESS_TERMCAP_mb</span><span class="o">=</span><span class="s1">$&#39;\E[01;31m&#39;</span>
 <span class="nb">export</span> <span class="nv">LESS_TERMCAP_md</span><span class="o">=</span><span class="s1">$&#39;\E[01;31m&#39;</span>
 <span class="nb">export</span> <span class="nv">LESS_TERMCAP_me</span><span class="o">=</span><span class="s1">$&#39;\E[0m&#39;</span>
@@ -162,14 +162,14 @@ Host 192.168.0.2
 <p><code>source ~/.bashrc</code>后，man一个命令可以看到效果</p>
 <h3>终端操作使用vim模式</h3>
 <p>从<code>@WanMing</code>处习得的技能，vim控必备</p>
-<div class="highlight"><pre><span class="nb">set</span> -o vi
+<div class="highlight"><pre><span></span><span class="nb">set</span> -o vi
 </pre></div>
 
 
 <p>效果如何，谁用谁知道</p>
 <h3>python自动激活项目的虚拟环境</h3>
 <p>重写<code>cd</code>命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境</p>
-<div class="highlight"><pre><span class="k">function</span> workon_cwd <span class="o">{</span>
+<div class="highlight"><pre><span></span><span class="k">function</span> workon_cwd <span class="o">{</span>
     <span class="c1"># Check that this is a Git repo</span>
     <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir 2&gt; /dev/null<span class="sb">`</span>
     <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
@@ -208,7 +208,7 @@ workon_cwd
 <p>通过设置<span class="caps">PS1</span>变量, 可以个性化终端提示符,&nbsp;展示更多有用信息.</p>
 <p>如我的终端设置, 里面包含了项目的分支，当前<span class="caps">HEAD</span>值，及git库的状态信息</p>
 <p><img alt="PS1 screenshot" src="http://pic.yupoo.com/crazygit_v/En4dALxz/medium.jpg" /></p>
-<div class="highlight"><pre><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TITLEBAR</span><span class="si">}</span><span class="s2"></span>
+<div class="highlight"><pre><span></span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TITLEBAR</span><span class="si">}</span><span class="s2"></span>
 <span class="si">${</span><span class="nv">SAVE_CURSOR</span><span class="si">}${</span><span class="nv">MOVE_CURSOR_RIGHTMOST</span><span class="si">}${</span><span class="nv">MOVE_CURSOR_5_LEFT</span><span class="si">}</span><span class="s2">\</span>
 <span class="si">${</span><span class="nv">RESTORE_CURSOR</span><span class="si">}</span><span class="s2">\</span>
 <span class="si">${</span><span class="nv">VIRTUALENV</span><span class="p">:+(</span>$<span class="nv">VIRTUALENV</span><span class="p">)</span><span class="si">}${</span><span class="nv">D_USER_COLOR</span><span class="si">}</span><span class="s2">\u </span><span class="si">${</span><span class="nv">D_INTERMEDIATE_COLOR</span><span class="si">}</span><span class="s2">\</span>

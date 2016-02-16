@@ -88,7 +88,7 @@ On 2014-11-30
 <p>官方入门指南：<a href="http://docs.getpelican.com/en/latest/getting_started.html">http://docs.getpelican.com/en/latest/getting_started.html</a>.</p>
 </blockquote>
 <p>本文以Pelican3.5为例，使用Pelican需要python环境，官方推荐的python版本是2.7.X，因此开始之前，最好是检查一下当前系统的python版本是否满足情况。</p>
-<div class="highlight"><pre>$ python --version
+<div class="highlight"><pre><span></span>$ python --version
 Python 2.7.6
 </pre></div>
 
@@ -97,7 +97,7 @@ Python 2.7.6
 <p>如果当前系统默认是2.7.X, 我们则可以直接创建一个虚拟环境来为安装pelican做准备。
 关于python虚拟环境的创建，详细可以参考: <a href="http://liuzhijun.iteye.com/blog/1872241">http://liuzhijun.iteye.com/blog/1872241</a>。</p>
 <p>下面说说主要步骤</p>
-<div class="highlight"><pre>$ sudo pip install virtualenv virtualenvwrapper
+<div class="highlight"><pre><span></span>$ sudo pip install virtualenv virtualenvwrapper
 $ <span class="nb">echo</span> <span class="s1">&#39;[[ -s /usr/local/bin/virtualenvwrapper.sh ]] &amp;&amp; source /usr/local/bin/virtualenvwrapper.sh&#39;</span> &gt;&gt; ~/.bashrc
 $ <span class="nb">source</span> ~/.bashrc
 $ mkvirtualenv pelican <span class="c1"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
@@ -108,7 +108,7 @@ $ workon pelican <span class="c1"># 激活虚拟环境</span>
 <p>另一种情况是当前系统默认python版本不是2.7.X的，
 为了方便及不影响当前系统的python版本，可以使用<a href="https://github.com/utahta/pythonbrew">pythonbrew</a>来搭建Python2.7.x环境。
 安装步骤: <a href="https://github.com/utahta/pythonbrew/blob/master/README.rst">https://github.com/utahta/pythonbrew/blob/master/<span class="caps">README</span>.rst</a></p>
-<div class="highlight"><pre><span class="c1"># 安装pythonbrew</span>
+<div class="highlight"><pre><span></span><span class="c1"># 安装pythonbrew</span>
 $ curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <span class="c1"># 这步执行成功后会生成目录: ~/.pythonbrew</span>
 $ <span class="nb">echo</span> <span class="s2">&quot;[[ -s </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
 $ <span class="nb">source</span> ~/.bashrc
@@ -127,7 +127,7 @@ $ pythonbrew switch 2.7.5   <span class="c1"># 永久切换到python 2.7.5,与us
 
 
 <p>使用pythonbrew自带的virtualenv</p>
-<div class="highlight"><pre>$ pythonbrew use 2.7.5
+<div class="highlight"><pre><span></span>$ pythonbrew use 2.7.5
 $ pythonbrew venv init       <span class="c1"># 初始化虚拟环境</span>
 $ pythonbrew venv create pelican  <span class="c1"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
 $ pythonbrew venv use pelican     <span class="c1"># 开启虚拟环境</span>
@@ -147,7 +147,7 @@ $ pythonbrew venv clone proj proj2
 
 <h3>安装pelican</h3>
 <p>在配置好了虚拟环境之后，就让我们进入虚拟环境安装pelican吧</p>
-<div class="highlight"><pre><span class="c1"># 需要先激活虚拟环境</span>
+<div class="highlight"><pre><span></span><span class="c1"># 需要先激活虚拟环境</span>
 $ workon pelican  <span class="c1"># 如果是使用的pythonbrew ,则是“penv”</span>
 $ pip install pelican markdown typogrif  <span class="c1"># 安装必须的python包</span>
 </pre></div>
@@ -155,7 +155,7 @@ $ pip install pelican markdown typogrif  <span class="c1"># 安装必须的pytho
 
 <h2>博客配置</h2>
 <p>现在一切环境都好了，就让我们开始动手写博客吧</p>
-<div class="highlight"><pre>$ mkdir myblog           <span class="c1"># 创建一个目录，用于存放博客</span>
+<div class="highlight"><pre><span></span>$ mkdir myblog           <span class="c1"># 创建一个目录，用于存放博客</span>
 $ <span class="nb">cd</span> myblog
 $ pelican-quickstart     <span class="c1"># 开始创建博客的向导</span>
 </pre></div>
@@ -186,7 +186,7 @@ $ pelican-quickstart     <span class="c1"># 开始创建博客的向导</span>
 pelican 支持三种格式的文件： reStructuredText， markdown和html。
 个人偏好于markdwon。下面就主要介绍markdown的吧，其他的可以到<a href="http://docs.getpelican.com/en/3.2/getting_started.html#kickstart-your-site">官网查看</a>.&nbsp;上面写得很清楚。</p>
 <p>创建第一篇文章，直接使用官网的例子。文章看起来应该大致像如下模板：</p>
-<div class="highlight"><pre>Title: 文章标题
+<div class="highlight"><pre><span></span>Title: 文章标题
 Date: 2014-11-30 23:15(日期)
 Category: Python
 Tags: pelican, publishing
@@ -201,7 +201,7 @@ Summary: hello
 
 <p>将上面的内容保存到<code>content</code>目录下，取名为<code>test.md</code>
 。现在就要用到前面的命令了。</p>
-<div class="highlight"><pre>$ make html
+<div class="highlight"><pre><span></span>$ make html
 $ make devserver
 </pre></div>
 
@@ -212,7 +212,7 @@ $ make devserver
 文件来实现，由于可以pelican比较灵活，可以配置的地方比较的多，就不介绍了，可以
 查看<a href="http://docs.getpelican.com/en/3.2/settings.html">官方文档</a>查找自己需要的
 。其实，默认的配置基本上已经很好了，我自己除了在配置文件里面加上了时区之外，其他的基本上没有修改什么了。&nbsp;给一个官方的配置文件示例:</p>
-<div class="highlight"><pre><span class="c1"># -*- coding: utf-8 -*-</span>
+<div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
 
 <span class="n">AUTHOR</span> <span class="o">=</span> <span class="s1">&#39;Alexis Métaireau&#39;</span>
@@ -268,7 +268,7 @@ $ make devserver
 <p><a href="https://github.com/getpelican/pelican-themes">https://github.com/getpelican/pelican-themes</a></p>
 <p>已经有很多现成的主题了，打开每个主题的文件夹都有一张主题效果的截图，可以方便选择自己喜欢的主题。什么？这些主题都不满意。好吧，你还可以选择<a href="http://docs.getpelican.com/en/3.2/themes.html#theming-pelican">创建属于自己独有的主题</a>。由于个人比较懒，信奉拿来主义，所以就选择了<code>tuxlite_tbs</code>这个主题，自己只做了一些细节的修改。</p>
 <p>废话不多说，让我们开始安装主题吧。</p>
-<div class="highlight"><pre>$ git clone git://github.com/getpelican/pelican-themes.git ~/pelican-themes <span class="c1"># 下载主题到`~/pelican-themes/`目录下</span>
+<div class="highlight"><pre><span></span>$ git clone git://github.com/getpelican/pelican-themes.git ~/pelican-themes <span class="c1"># 下载主题到`~/pelican-themes/`目录下</span>
 $ <span class="nb">cd</span> ~/pelican-themes/
 $ git submodule init  <span class="c1"># 由于这个git库里面的一些主题是单独的一个子模块，所以将它们一起下载下来</span>
 $ git submodule update
@@ -277,12 +277,12 @@ $ git submodule update
 
 <p>好了，现在已经有了所有的主题了，打开每个主题的文件夹都有一张主题效果的截图，选择自己喜欢的主题。</p>
 <p>修改<code>publishconf.py</code> 文件，添加<code>THEME</code>关键字，如果已经有了，则直接修改值即可，我选择的是<code>tuxlite-tbs</code></p>
-<div class="highlight"><pre>THEME = &quot;~/pelican-themes/tuxlite-tbs&quot;
+<div class="highlight"><pre><span></span>THEME = &quot;~/pelican-themes/tuxlite-tbs&quot;
 </pre></div>
 
 
 <p>然后重新执行</p>
-<div class="highlight"><pre>$ make html
+<div class="highlight"><pre><span></span>$ make html
 $ make devserver
 </pre></div>
 
@@ -294,29 +294,29 @@ $ make devserver
 <p>首先到<a href="http://open.weibo.com/widget/followbutton.php">新浪开放平台</a>获取关注按钮的代码吧。在我使用的时候，它主要提供了两中样式，一种是<span class="caps">WBML</span>标准版，一种是JavaScript简化版本。在实际使用的时候发现JavaScript版本时候会有一些问题。
 <a href="http://open.weibo.com/qa/index.php?qa=11802&amp;qa_1=%E4%BD%BF%E7%94%A8%E5%85%B3%E6%B3%A8%E6%8C%89%E9%92%AEjavascript%E7%AE%80%E5%8C%96%E7%89%88%EF%BC%8C%E6%8F%90%E7%A4%BAclient-js%E6%B2%A1%E6%9C%89sendmessage%E6%96%B9%E6%B3%95&amp;code=4b3704c5bce7d8cc46de2fe229687bdb">提示client.js没有sendMessage方法</a>.</p>
 <p>因此下面主要介绍如何添加<span class="caps">WBML</span>标准版本的。取得类似下面的代码</p>
-<div class="highlight"><pre><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;2991975565&quot;</span> <span class="na">type=</span><span class="s">&quot;red_1&quot;</span> <span class="na">width=</span><span class="s">&quot;67&quot;</span> <span class="na">height=</span><span class="s">&quot;24&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;2991975565&quot;</span> <span class="na">type=</span><span class="s">&quot;red_1&quot;</span> <span class="na">width=</span><span class="s">&quot;67&quot;</span> <span class="na">height=</span><span class="s">&quot;24&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
 </pre></div>
 
 
 <p>注意上面的uid就是自己微博帐号的id，type就是选择的样式。&nbsp;为了让这个代码有通用性。我将它修改为如下：</p>
-<div class="highlight"><pre><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_UID</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_TYPE</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;64&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;wb:follow-button</span> <span class="na">uid=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_UID</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;</span><span class="cp">{{</span><span class="nv">WEIBO_TYPE</span><span class="cp">}}</span><span class="s">&quot;</span> <span class="na">width=</span><span class="s">&quot;100%&quot;</span> <span class="na">height=</span><span class="s">&quot;64&quot;</span> <span class="nt">&gt;&lt;/wb:follow-button&gt;</span>
 </pre></div>
 
 
 <p>这样我们就可以通过在<code>pelicanconf.py</code>通过配置<code>WEIBO_UID</code>和<code>WEIBO_TYPE</code>灵活地设置帐号和样式。
 将上面的代码保存在weibo.html文件中，并将文件保存到主题代码库的<code>~/pelican-themes/tuxlite-tbs/templates</code>目录下。&nbsp;再修改这个目录下的base.html文件，引用我们的weibo.html。具体改动如下:</p>
 <p>在<span class="caps">HTML</span>标签中增加<span class="caps">XML</span>命名空间</p>
-<div class="highlight"><pre>&lt;html xmlns:wb=“http://open.weibo.com/wb”&gt;
+<div class="highlight"><pre><span></span>&lt;html xmlns:wb=“http://open.weibo.com/wb”&gt;
 </pre></div>
 
 
 <p>在<span class="caps">HEAD</span>头中引入<span class="caps">WB</span>.<span class="caps">JS</span></p>
-<div class="highlight"><pre><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;http://tjs.sjs.sinajs.cn/open/api/js/wb.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;script</span> <span class="na">src=</span><span class="s">&quot;http://tjs.sjs.sinajs.cn/open/api/js/wb.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
 
 
 <p>在需要显示微博关注按钮的地方includ刚刚的weibo.html，我把它添加在了社交下面.同时设置了<span class="caps">WEIBO</span>变量来设置是否显示微博关注按钮</p>
-<div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">WEIBO</span> <span class="cp">%}</span>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">if</span> <span class="nv">WEIBO</span> <span class="cp">%}</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;social&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;well&quot;</span> <span class="na">style=</span><span class="s">&quot;padding: 8px 0; background-color: #FBFBFB;&quot;</span><span class="nt">&gt;</span>
 <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;nav nav-list&quot;</span><span class="nt">&gt;</span>
@@ -332,7 +332,7 @@ $ make devserver
 
 
 <p>修改<code>pelicanconf.py</code>,&nbsp;添加如下字段：</p>
-<div class="highlight"><pre><span class="c1"># 新浪微博新关注按钮</span>
+<div class="highlight"><pre><span></span><span class="c1"># 新浪微博新关注按钮</span>
 <span class="n">WEIBO</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">WEIBO_UID</span> <span class="o">=</span> <span class="mi">1768615155</span>        <span class="c1"># 填入uid</span>
 <span class="n">WEIBO_TYPE</span> <span class="o">=</span> <span class="s2">&quot;red_3&quot;</span>
@@ -340,7 +340,7 @@ $ make devserver
 
 
 <p>编译发布并预览。在本地预览的时候可能不会看到效果。需要发布到github&nbsp;pages上面才能看到.下面马上会讲如何部署到github上面.</p>
-<div class="highlight"><pre>$ make html
+<div class="highlight"><pre><span></span>$ make html
 $ make devserver
 </pre></div>
 
@@ -356,7 +356,7 @@ $ make devserver
 为了做这件事情，我们可以使用前面介绍的ghp-import工具. 同时在我们的Makefile文件中也有封装这个命令
 具体使用<a href="http://docs.getpelican.com/en/3.2/tips.html#publishing-to-github">参考这里</a>.</p>
 <p>但是需要根据实际修改Makefile文件中的</p>
-<div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
+<div class="highlight"><pre><span></span><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
     ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span>
     git push origin gh-pages   <span class="c1"># 根据实际使用的pages情况修改这里</span>
 </pre></div>
@@ -364,7 +364,7 @@ $ make devserver
 
 <p>修改好了之后，可以直接使用<code>make github</code> 发布博客了.</p>
 <p>我使用的用户级别的pages时，具体修改如下：</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> myblog <span class="c1"># 进入博客代码目录</span>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> myblog <span class="c1"># 进入博客代码目录</span>
 $ git init
 $ git remote add origin git@github.com:username/username.github.io.git <span class="c1"># 需要替换username</span>
 $ git add .
@@ -375,7 +375,7 @@ $ make html 编译代码
 
 
 <p>修改Makefile文件如下内容：</p>
-<div class="highlight"><pre><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
+<div class="highlight"><pre><span></span><span class="nf">github</span><span class="o">:</span> <span class="n">publish</span>
     ghp-import <span class="k">$(</span>OUTPUTDIR<span class="k">)</span> <span class="c1"># 这一步会在本地创建一个gh-pages分支。并将OUTPUTDIR里面的内容拷贝到这个分支</span>
     git push -f origin gh-pages:master
 <span class="c"># 注意我这里添加了参数f，在后面每次往master 分支提交代码的时候，如果有冲突，会强制覆盖master的代码</span>
@@ -383,7 +383,7 @@ $ make html 编译代码
 
 
 <p>最后一步，提交代码</p>
-<div class="highlight"><pre>$ make github
+<div class="highlight"><pre><span></span>$ make github
 </pre></div>
 
 
@@ -399,7 +399,7 @@ $ make html 编译代码
 <p>有时候，再多的语言，也比不上一张图片来得直白，虽然我们可以将图片直接放在写博客的代码库里面再直接引用。但是个人感觉这样做并不好。图片一多，代码库就明显变大。一点也不方便。最好的方法是选用一个第三方的图片托管，支持外链的。这样我们只需要在图片托管处上传图片，然后在博客里面引用即可。在网上搜寻一番之后，在<a href="http://c7sky.com/image-storage-server.html">这里</a>找到了一些关于各种图片托管的介绍。在这里我选择了yupoo。大家也可以根据自己的需求任意选择一款。不说了，直接上图吧.</p>
 <p><img alt="第一张图片" src="http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg" /></p>
 <p>由于markdown语法本身没有代办设置图片布局，所以可以用html标签来设置</p>
-<div class="highlight"><pre><span class="nt">&lt;p</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg&quot;</span> <span class="na">title=</span><span class="s">&quot;Test Image&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
+<div class="highlight"><pre><span></span><span class="nt">&lt;p</span> <span class="na">align=</span><span class="s">&quot;center&quot;</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">&quot;http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg&quot;</span> <span class="na">title=</span><span class="s">&quot;Test Image&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
 </pre></div>
 
 

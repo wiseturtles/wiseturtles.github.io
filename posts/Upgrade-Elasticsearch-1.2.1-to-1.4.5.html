@@ -78,14 +78,14 @@ On 2015-06-19
 <p>注: Elasticsearch和Logstash都需要安装<span class="caps">JDK</span>, 我们用的<span class="caps">JDK</span>&nbsp;1.7</p>
 <h1>安装Logstash&nbsp;1.4.3</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software
 $ wget https://download.elastic.co/logstash/logstash/logstash-1.4.3.tar.gz
 $ tar zxf logstash-1.4.3.tar.gz
 </pre></div>
 
 
 <h2>修改配置文件</h2>
-<div class="highlight"><pre>$ cat /data/softwares/logstash-1.4.3/logstash.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+<div class="highlight"><pre><span></span>$ cat /data/softwares/logstash-1.4.3/logstash.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
 input <span class="o">{</span>
   redis <span class="o">{</span>
     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
@@ -199,21 +199,21 @@ output <span class="o">{</span>
 
 
 <h2>启动测试</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/softwares/logstash-1.4.3
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/softwares/logstash-1.4.3
 $ bin/logstash -f logstash.conf
 </pre></div>
 
 
 <h1>安装Elasticsearch&nbsp;1.4.5</h1>
 <h2>安装需要的软件包</h2>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software
 $ wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz
 $ tar zxf elasticsearch-1.4.5.tar.gz
 </pre></div>
 
 
 <p>安装插件：</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software <span class="c1"># 安装分词插件</span>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software <span class="c1"># 安装分词插件</span>
 $ git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
 $ <span class="nb">cd</span> elasticsearch-rtf
 $ cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
@@ -230,7 +230,7 @@ $ bin/plugin -install lukas-vlcek/bigdesk     <span class="c1"># bigdesk插件</
 
 
 <h2>修改配置文件</h2>
-<div class="highlight"><pre>$ cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
+<div class="highlight"><pre><span></span>$ cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml <span class="p">|</span> grep -Ev <span class="s1">&#39;^#|^$&#39;</span>
 cluster.name: elasticsearch_dashboard
 node.name: <span class="s2">&quot;es1&quot;</span>
 node.master: <span class="nb">true</span>
@@ -292,7 +292,7 @@ index:
 2. 其它机器配置文件类似，只需要修改和<span class="caps">IP</span>相关的字段值</p>
 <h2>启动Elasticsearch</h2>
 <p>测试能否正常启动：</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /data/software/elasticsearch-1.4.5
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software/elasticsearch-1.4.5
 $ bin/elasticsearch  <span class="c1"># 启动ES，测试是否可以正常启动</span>
 $ tail -f /data/log/elasticsearch/elasticsearch_dashboard.log <span class="c1"># 查看日志</span>
 </pre></div>
@@ -305,7 +305,7 @@ $ tail -f /data/log/elasticsearch/elasticsearch_dashboard.log <span class="c1">#
 </ul>
 <h1>配置supervisor</h1>
 <p>如果可以正常启动，我们通过supervisor管理Elasticsearch和Logstash。</p>
-<div class="highlight"><pre>$ sudo pip install supervisor <span class="c1"># 后来拿到root权限，否则还要先弄Python virtual env</span>
+<div class="highlight"><pre><span></span>$ sudo pip install supervisor <span class="c1"># 后来拿到root权限，否则还要先弄Python virtual env</span>
 $ 修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
 
 
@@ -362,7 +362,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 <h1>常用的<span class="caps">ES</span>命令别名</h1>
-<div class="highlight"><pre>$ tail -n3 ~/.bashrc 
+<div class="highlight"><pre><span></span>$ tail -n3 ~/.bashrc 
 <span class="nb">alias</span> <span class="nv">esh</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cluster/health?pretty&quot;</span>
 <span class="nb">alias</span> <span class="nv">esi</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/indices?pretty&quot;</span>
 <span class="nb">alias</span> <span class="nv">ess</span><span class="o">=</span><span class="s2">&quot;curl </span><span class="k">$(</span>ip -4 -o addr show dev eth0 <span class="p">|</span> awk <span class="s1">&#39;{split($4,a,&quot;/&quot;);print a[1]}&#39;</span><span class="k">)</span><span class="s2">:9200/_cat/shards&quot;</span>
@@ -377,7 +377,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 <h1>碰到的问题</h1>
 <h2>没有将shard同步到新加入的<span class="caps">ES</span>&nbsp;1.4.5机器上</h2>
 <p>修改number_of_replicas，根据机器个数修改。</p>
-<div class="highlight"><pre>$ curl -XPUT <span class="s1">&#39;&lt;your-ip&gt;:9200/&lt;your-index&gt;/_settings&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre><span></span>$ curl -XPUT <span class="s1">&#39;&lt;your-ip&gt;:9200/&lt;your-index&gt;/_settings&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">     &quot;index&quot; : {</span>
 <span class="s1">         &quot;number_of_replicas&quot; : 2</span>
 <span class="s1">      }</span>
@@ -386,7 +386,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 <p>明确让某个index的某个shard分配到指定机器上。</p>
-<div class="highlight"><pre>$ curl -XPOST <span class="s1">&#39;&lt;your-es-ip&gt;:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre><span></span>$ curl -XPOST <span class="s1">&#39;&lt;your-es-ip&gt;:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">    &quot;commands&quot; : [ {</span>
 <span class="s1">        &quot;move&quot; :</span>
 <span class="s1">            {</span>
@@ -405,7 +405,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 <p>比如：</p>
-<div class="highlight"><pre>$ curl -XPOST <span class="s1">&#39;localhost:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
+<div class="highlight"><pre><span></span>$ curl -XPOST <span class="s1">&#39;localhost:9200/_cluster/reroute&#39;</span> -d <span class="s1">&#39;{</span>
 <span class="s1">    &quot;commands&quot; : [ {</span>
 <span class="s1">        &quot;move&quot; :</span>
 <span class="s1">            {</span>

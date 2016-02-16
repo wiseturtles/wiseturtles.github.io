@@ -71,7 +71,7 @@ On 2015-11-23
 
         <div><h2>简介</h2>
 <p>top命令的具体就不解释了，记录一些实用的命令</p>
-<div class="highlight"><pre><span class="c1"># redis用户此时所使用的内存总数</span>
+<div class="highlight"><pre><span></span><span class="c1"># redis用户此时所使用的内存总数</span>
 <span class="c1"># 这里的内存使用</span>
 top -bn1 -u redis <span class="p">|</span>  awk <span class="s1">&#39;{mem += $10} END {print mem}&#39;</span>
 

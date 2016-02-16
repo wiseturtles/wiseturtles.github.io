@@ -95,14 +95,14 @@ On 2015-02-28
             proxy_pass   http://xx.xx.xx.xx;
 </pre></p>
 <p>注意当中的这两行</p>
-<div class="highlight"><pre><span class="x">proxy_set_header   X-Real-IP        </span><span class="p">$</span><span class="nv">remote_addr</span><span class="x">;</span>
+<div class="highlight"><pre><span></span><span class="x">proxy_set_header   X-Real-IP        </span><span class="p">$</span><span class="nv">remote_addr</span><span class="x">;</span>
 <span class="x">proxy_set_header   X-Forwarded-For  </span><span class="p">$</span><span class="nv">proxy_add_x_forwarded_for</span><span class="x">;</span>
 </pre></div>
 
 
 <p>根据维基百科描述,</p>
 <p>X-Forwarded-for的格式应该如下:</p>
-<div class="highlight"><pre>X-Forwarded-For: client1, proxy1, proxy2, ...
+<div class="highlight"><pre><span></span>X-Forwarded-For: client1, proxy1, proxy2, ...
 </pre></div>
 
 

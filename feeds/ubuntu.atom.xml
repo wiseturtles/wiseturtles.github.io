@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/ubuntu.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-07-06T15:00:00+08:00</updated><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install ssmtp
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install ssmtp
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;配置&lt;/h2&gt;
 &lt;p&gt;/etc/ssmtp/revaliases&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/ssmtp/revaliases
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/ssmtp/revaliases
 &lt;span class="c1"&gt;# sSMTP aliases&lt;/span&gt;
 &lt;span class="c1"&gt;#&lt;/span&gt;
 &lt;span class="c1"&gt;# Format:   local_account:outgoing_address:mailhub&lt;/span&gt;
@@ -20,7 +20,7 @@ root:no-reply@example.com:mail.example.com:587
 
 
 &lt;p&gt;/etc/ssmtp/ssmtp.conf&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="c1"&gt;#&lt;/span&gt;
 &lt;span class="c1"&gt;# Config file for sSMTP sendmail&lt;/span&gt;
 &lt;span class="c1"&gt;#&lt;/span&gt;
 &lt;span class="c1"&gt;# The person who gets all mail for userids &amp;lt; 1000&lt;/span&gt;
@@ -45,7 +45,7 @@ root:no-reply@example.com:mail.example.com:587
 
 
 &lt;h2&gt;测试&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ /usr/sbin/sendmail -t -F your-domain-name &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/sbin/sendmail -t -F your-domain-name &lt;span class="s"&gt;&amp;lt;&amp;lt;EOF&lt;/span&gt;
 &lt;span class="s"&gt;SUBJECT: $YOUR-SUBJECT&lt;/span&gt;
 &lt;span class="s"&gt;TO: A@example.com,B@example.com&lt;/span&gt;
 &lt;span class="s"&gt;MIME-VERSION: 1.0&lt;/span&gt;
@@ -57,19 +57,19 @@ root:no-reply@example.com:mail.example.com:587
 &lt;p&gt;我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&amp;nbsp;4。&lt;/p&gt;
 &lt;h1&gt;监控主机安装Nagios&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install build-essential libgd2-xpm-dev openssl libssl-dev apache2 php5 libapache2-mod-php5 apache2-utils postfix
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;创建用户、组&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo useradd nagios
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo useradd nagios
 $ sudo groupadd nagcmd
 $ sudo usermod -a -G nagcmd nagios
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;安装nagios&amp;nbsp;4&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 $ wget http://prdownloads.sourceforge.net/sourceforge/nagios/nagios-4.0.8.tar.gz
 $ tar zxf nagios-4.0.8.tar.gz
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; nagios-4.0.8
@@ -82,7 +82,7 @@ $ sudo service nagios restart
 
 
 &lt;p&gt;配置apache2&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo /usr/bin/install -c -m &lt;span class="m"&gt;644&lt;/span&gt; sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo /usr/bin/install -c -m &lt;span class="m"&gt;644&lt;/span&gt; sample-config/httpd.conf /etc/apache2/sites-available/nagios.conf
 $ sudo ln -s /etc/apache2/sites-available/nagios.conf /etc/apache2/sites-enabled/
 $ sudo a2enmod rewrite
 $ sudo a2enmod cgi
@@ -94,7 +94,7 @@ $ sudo service apache2 restart
 &lt;p&gt;浏览器访问 http://监控主机&lt;span class="caps"&gt;IP&lt;/span&gt;/nagios 查看监控情况, 登录用户名、密码就是 htpasswd 设置的。
 nagios 4将被安装到 /usr/local/nagios 目录，该目录下的 etc&amp;nbsp;是配置文件夹。&lt;/p&gt;
 &lt;h2&gt;安装nagios-plugins-2.0.3&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 $ wget https://nagios-plugins.org/download/nagios-plugins-2.0.3.tar.gz
 $ tar zxf nagios-plugins-2.0.3.tar.gz
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; nagios-plugins-2.0.3
@@ -105,7 +105,7 @@ $ make all &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
 
 &lt;p&gt;nagios-plugins 命令安装在 /usr/local/nagios/libexec&amp;nbsp;目录。&lt;/p&gt;
 &lt;h2&gt;安装nagios-nrpe-2.15&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 $ wget -O nrpe-2.15.tar.gz &lt;span class="s2"&gt;&amp;quot;http://downloads.sourceforge.net/project/nagios/nrpe-2.x/nrpe-2.15/nrpe-2.15.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fnagios%2Ffiles%2Fnrpe-2.x%2Fnrpe-2.15%2F&amp;amp;ts=1432369927&amp;amp;use_mirror=liquidtelecom&amp;quot;&lt;/span&gt;
 $ tar zxf nrpe-2.15.tar.gz
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; nrpe-2.15
@@ -117,19 +117,19 @@ $ sudo /usr/bin/install -c -m &lt;span class="m"&gt;755&lt;/span&gt; ./src/check
 
 
 &lt;p&gt;测试是否可以工作:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 &lt;span class="c1"&gt;# 该IP是被监控主机的IP&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 &lt;span class="c1"&gt;# 该IP是被监控主机的IP&lt;/span&gt;
 NRPE v2.13
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;被监控主机安装Nagios &lt;span class="caps"&gt;NRPE&lt;/span&gt;&lt;/h1&gt;
 &lt;p&gt;安装nagios-plugins,&amp;nbsp;nagios-nrpe-server&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install nagios-plugins nagios-nrpe-server
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install nagios-plugins nagios-nrpe-server
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;配置nagios-nrpe-server，允许监控主机连接该被监控主机。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo vim /etc/nagios/nrpe.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo vim /etc/nagios/nrpe.cfg
 $ 将 监控主机IP 填入 allowed_hosts 字段，如: &lt;span class="nv"&gt;allowed_hosts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1,10.4.22.22
 $ sudo service nagios-nrpe-server restart
 &lt;/pre&gt;&lt;/div&gt;
@@ -138,7 +138,7 @@ $ sudo service nagios-nrpe-server restart
 &lt;h1&gt;配置&lt;/h1&gt;
 &lt;h2&gt;配置监控主机&lt;/h2&gt;
 &lt;p&gt;/usr/local/nagios/etc/nagios.cfg&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ diff -u nagios.cfg.back nagios.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ diff -u nagios.cfg.back nagios.cfg
 --- nagios.cfg.back2015-05-23 11:07:51.436491931 +0800
 +++ nagios.cfg2015-05-23 22:08:09.872618927 +0800
 @@ -30,6 +30,9 @@
@@ -162,7 +162,7 @@ $ sudo service nagios-nrpe-server restart
 
 
 &lt;p&gt;/usr/local/nagios/etc/objects/hosts.cfg&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="c1"&gt;# Define a host for the local machine&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="c1"&gt;# Define a host for the local machine&lt;/span&gt;
 &lt;span class="c1"&gt;##############&lt;/span&gt;
 &lt;span class="c1"&gt;# appstore01 #&lt;/span&gt;
 &lt;span class="c1"&gt;##############&lt;/span&gt;
@@ -190,7 +190,7 @@ define host&lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;/usr/local/nagios/etc/objects/groups.cfg&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# Define an optional hostgroup for Linux machines&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# Define an optional hostgroup for Linux machines&lt;/span&gt;
 define hostgroup&lt;span class="o"&gt;{&lt;/span&gt;
     hostgroup_name  appstore-group &lt;span class="p"&gt;;&lt;/span&gt; The name of the hostgroup
     &lt;span class="nb"&gt;alias&lt;/span&gt;           appstore server group &lt;span class="p"&gt;;&lt;/span&gt; Long name of the group
@@ -200,7 +200,7 @@ define hostgroup&lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;/etc/local/nagios/etc/objects/commands.cfg&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ diff -u objects/commands.cfg.back objects/commands.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ diff -u objects/commands.cfg.back objects/commands.cfg
 +########################
 +# add by zhang wanming &lt;span class="c1"&gt;#&lt;/span&gt;
 +########################
@@ -231,7 +231,7 @@ define hostgroup&lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;p&gt;/etc/local/nagios/etc/objects/services.cfg&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat objects/services.cfg 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat objects/services.cfg 
 define service &lt;span class="o"&gt;{&lt;/span&gt;
         use                             generic-service
         hostgroup_name                  appstore-group
@@ -327,7 +327,7 @@ define service &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;h2&gt;配置被监控主机&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/nagios/nrpe_local.cfg 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/nagios/nrpe_local.cfg 
 &lt;span class="c1"&gt;######################################&lt;/span&gt;
 &lt;span class="c1"&gt;# Do any local nrpe configuration here&lt;/span&gt;
 &lt;span class="c1"&gt;######################################&lt;/span&gt;
@@ -349,7 +349,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;p&gt;编辑/etc/nagios/nrpe.cfg, 确定 allowed_hosts 中加入监控主机&lt;span class="caps"&gt;IP&lt;/span&gt;，多个&lt;span class="caps"&gt;IP&lt;/span&gt;以 &amp;#8220;,&amp;#8221; 分隔。
 如:&amp;nbsp;allowed_hosts=127.0.0.1,10.4.13.14&lt;/p&gt;
 &lt;p&gt;然后，重新加载 nagios-nrpe-server&amp;nbsp;配置文件，如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ service nagios-nrpe-server reload
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ service nagios-nrpe-server reload
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -362,19 +362,19 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;p&gt;由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？&lt;/p&gt;
 &lt;p&gt;以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&amp;nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。&lt;/p&gt;
 &lt;p&gt;前提:&amp;nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ ssh -fNL 9200:localhost:9200 192.167.0.1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -fNL 9200:localhost:9200 192.167.0.1
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;通过上面命令可以在本地机器和服务器A的9200端口之间做一个隧道，访问本地的9200端&amp;nbsp;口就跟直接访问服务器A上的9200端口一样。&lt;/p&gt;
 &lt;p&gt;为了使用方便，可以为上面的命令设置一个别名,添加到&lt;code&gt;~/.bashrc&lt;/code&gt;中，&amp;nbsp;如&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;sshes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -fNL 9200:localhost:9200 192.167.0.1&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;sshes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;ssh -fNL 9200:localhost:9200 192.167.0.1&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;那么以后使用&lt;code&gt;sshes&lt;/code&gt;就可以方便的建立一个ssh隧道连接,　同理，此法可用于连接服务器上的mysql及其它服务.&lt;/p&gt;
 &lt;p&gt;另外一个常用的是通过ssh翻墙的命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ ssh -qTfnN -D &lt;span class="m"&gt;7070&lt;/span&gt; 192.167.0.2
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -qTfnN -D &lt;span class="m"&gt;7070&lt;/span&gt; 192.167.0.2
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -387,7 +387,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;p&gt;登陆到远程服务器时,当服务器上的用户名和本地的用户名不一致且端口也不是默认端口时.
 以服务器A(192.168.0.1), 用户名为root, 端口为4455。我们每次登陆到远程主机或拷贝
 文件时,&amp;nbsp;都需要带上用户名和端口信息。如:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# ssh登陆&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# ssh登陆&lt;/span&gt;
 $ ssh -p &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1
 &lt;span class="c1"&gt;# scp拷贝&lt;/span&gt;
 $ scp -P &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1:/tmp/a a
@@ -395,7 +395,7 @@ $ scp -P &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1:/tmp/a a
 
 
 &lt;p&gt;这样比较繁琐。稍微配置一下便可以化繁为简&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat ~/.ssh/config
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.ssh/config
 Host 192.168.0.1
     User root
     Port 4455
@@ -403,7 +403,7 @@ Host 192.168.0.1
 
 
 &lt;p&gt;这样以后每次访问该服务器都不需要带上用户及端口信息&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# ssh登陆&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# ssh登陆&lt;/span&gt;
 $ ssh 192.168.0.1
 &lt;span class="c1"&gt;# scp拷贝&lt;/span&gt;
 $ scp -P 192.168.0.1:/tmp/a a
@@ -411,7 +411,7 @@ $ scp -P 192.168.0.1:/tmp/a a
 
 
 &lt;p&gt;当本机需要通过不同的key登陆到不同的服务器时，我们都是通过&lt;code&gt;-i&lt;/code&gt;来临时指定key.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 使用a.key登陆192.168.0.1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 使用a.key登陆192.168.0.1&lt;/span&gt;
 $ ssh -i ~/.ssh/a.key 192.168.0.1
 &lt;span class="c1"&gt;# 使用b.key登陆192.168.0.2&lt;/span&gt;
 $ ssh -i ~/.ssh/b.key 192.168.0.2
@@ -419,7 +419,7 @@ $ ssh -i ~/.ssh/b.key 192.168.0.2
 
 
 &lt;p&gt;稍微配置一下&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat ~/.ssh/config
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.ssh/config
 Host 192.168.0.1
     User root
     Port 4455
@@ -438,7 +438,7 @@ Host 192.168.0.2
 &lt;h3&gt;让man&amp;nbsp;page不再单调&lt;/h3&gt;
 &lt;p&gt;平时使用man page的时候，都是黑白的文字。看起来很是不方便，稍微配置一下，可以让
 你的man&amp;nbsp;page充满颜色。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# color man pages&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# color man pages&lt;/span&gt;
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LESS_TERMCAP_mb&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;31m&amp;#39;&lt;/span&gt;
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LESS_TERMCAP_md&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[01;31m&amp;#39;&lt;/span&gt;
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;LESS_TERMCAP_me&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;$&amp;#39;\E[0m&amp;#39;&lt;/span&gt;
@@ -452,14 +452,14 @@ Host 192.168.0.2
 &lt;p&gt;&lt;code&gt;source ~/.bashrc&lt;/code&gt;后，man一个命令可以看到效果&lt;/p&gt;
 &lt;h3&gt;终端操作使用vim模式&lt;/h3&gt;
 &lt;p&gt;从&lt;code&gt;@WanMing&lt;/code&gt;处习得的技能，vim控必备&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -o vi
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -o vi
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;效果如何，谁用谁知道&lt;/p&gt;
 &lt;h3&gt;python自动激活项目的虚拟环境&lt;/h3&gt;
 &lt;p&gt;重写&lt;code&gt;cd&lt;/code&gt;命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;function&lt;/span&gt; workon_cwd &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt; workon_cwd &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;# Check that this is a Git repo&lt;/span&gt;
     &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir 2&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
@@ -498,7 +498,7 @@ workon_cwd
 &lt;p&gt;通过设置&lt;span class="caps"&gt;PS1&lt;/span&gt;变量, 可以个性化终端提示符,&amp;nbsp;展示更多有用信息.&lt;/p&gt;
 &lt;p&gt;如我的终端设置, 里面包含了项目的分支，当前&lt;span class="caps"&gt;HEAD&lt;/span&gt;值，及git库的状态信息&lt;/p&gt;
 &lt;p&gt;&lt;img alt="PS1 screenshot" src="http://pic.yupoo.com/crazygit_v/En4dALxz/medium.jpg" /&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;PS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;TITLEBAR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;PS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;TITLEBAR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
 &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SAVE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_RIGHTMOST&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_5_LEFT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;RESTORE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;:+(&lt;/span&gt;$&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;D_USER_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\u &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
@@ -516,24 +516,24 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
 如果想直接通过无线网卡上外网，需要先停掉hostapd 或&amp;nbsp;ap-hotspot，并重启网络。&lt;/p&gt;
 &lt;p&gt;重启网络:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo service network-manager restart
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo service network-manager restart
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;方法一&lt;/h1&gt;
 &lt;h2&gt;查看无线网卡硬件信息&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo lspci &lt;span class="p"&gt;|&lt;/span&gt; grep -i network
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo lspci &lt;span class="p"&gt;|&lt;/span&gt; grep -i network
 03:00.0 Network controller: Intel Corporation Wireless &lt;span class="m"&gt;7260&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;rev 6b&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;查看无线网卡驱动信息&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ lsmod
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsmod
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;查看无线网卡设备名称&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ iwconfig
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ iwconfig
 wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt; dBm   
           Retry  long limit:7   RTS thr:off   Fragment thr:off
           Power Management:on
@@ -541,12 +541,12 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&
 
 
 &lt;h2&gt;安装需要的软件&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install dhcp3-server hostapd
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install dhcp3-server hostapd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改/etc/hostapd/hostapd.conf&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/hostapd/hostapd.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/hostapd/hostapd.conf
 &lt;span class="nv"&gt;interface&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;wlan0
 &lt;span class="nv"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nl80211
 &lt;span class="nv"&gt;ssid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_hotspot_name
@@ -562,13 +562,13 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&
 
 
 &lt;h2&gt;修改/etc/default/isc-dhcp-server&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ grep INTERFACES /etc/default/isc-dhcp-server
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep INTERFACES /etc/default/isc-dhcp-server
 &lt;span class="nv"&gt;INTERFACES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;wlan0&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改/etc/dhcp/dhcpd.conf&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;配置文件: /etc/dhcp/dhcpd.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;配置文件: /etc/dhcp/dhcpd.conf
 Make sure the follow lines are Commented out &lt;span class="o"&gt;(&lt;/span&gt; put a &lt;span class="nb"&gt;hash&lt;/span&gt; “#”  sign at the beginning of the line &lt;span class="o"&gt;)&lt;/span&gt; the following lines:
 &lt;span class="c1"&gt;# option definitions common to all supported networks…&lt;/span&gt;
 &lt;span class="c1"&gt;#option domain-name “example.org”;&lt;/span&gt;
@@ -590,7 +590,7 @@ ddns-update-style none&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="o"&gt;
 
 
 &lt;h2&gt;修改/etc/default/hostapd&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ grep -E &lt;span class="s1"&gt;&amp;#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&amp;#39;&lt;/span&gt; /etc/default/hostapd &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep -E &lt;span class="s1"&gt;&amp;#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&amp;#39;&lt;/span&gt; /etc/default/hostapd &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#&amp;#39;&lt;/span&gt;
 &lt;span class="nv"&gt;RUN_DAEMON&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;yes&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;DAEMON_CONF&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/hostapd/hostapd.conf&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;DAEMON_OPTS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-dd&amp;quot;&lt;/span&gt;
@@ -598,7 +598,7 @@ ddns-update-style none&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="o"&gt;
 
 
 &lt;h2&gt;修改/etc/network/interfaces&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/network/interfaces
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/network/interfaces
 auto lo
 iface lo inet loopback
 auto wlan0
@@ -609,13 +609,13 @@ iface wlan0 inet static
 
 
 &lt;h2&gt;修改/etc/sysctl.conf&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ grep net.ipv4.ip_forward /etc/sysctl.conf 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep net.ipv4.ip_forward /etc/sysctl.conf 
 net.ipv4.ip_forward&lt;span class="o"&gt;=&lt;/span&gt;1
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改/etc/rc.local&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;编辑 /etc/rc.local, 在 &lt;span class="s2"&gt;&amp;quot;exit 0&amp;quot;&lt;/span&gt; 前添加下一行
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;编辑 /etc/rc.local, 在 &lt;span class="s2"&gt;&amp;quot;exit 0&amp;quot;&lt;/span&gt; 前添加下一行
 iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -625,7 +625,7 @@ iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
 &lt;h1&gt;方法二&lt;/h1&gt;
 &lt;p&gt;用ap-hotspot更容易搭建。&lt;/p&gt;
 &lt;h2&gt;ap-hotspot安装、配置&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo add-apt-repository ppa:nilarimogard/webupd8
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo add-apt-repository ppa:nilarimogard/webupd8
 $ sudo apt-get install ap-hotspot
 $ sudo ap-hotspot configure &lt;span class="c1"&gt;# configure&lt;/span&gt;
 $ sudo ap-hotspot start &lt;span class="c1"&gt;# start&lt;/span&gt;
@@ -634,7 +634,7 @@ $ sudo ap-hotspot restart &lt;span class="c1"&gt;# restart&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category></entry><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
 &lt;h1&gt;升级&lt;/h1&gt;
 &lt;h2&gt;修改源&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/apt/sources.list
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/apt/sources.list
 deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
 deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
 deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
@@ -651,12 +651,12 @@ deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe m
 
 
 &lt;h2&gt;开始升级&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo &lt;span class="k"&gt;do&lt;/span&gt;-release-upgrade
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo &lt;span class="k"&gt;do&lt;/span&gt;-release-upgrade
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;nis无法启动，导致升级过程中配置nis包失败&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ grep redhat /etc/hosts
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep redhat /etc/hosts
 172.26.32.12    cd-redhat-001.TCTCD
 
 $ tail -1 /etc/yp.conf 
@@ -684,7 +684,7 @@ $ sudo service nis restart
 
 
 &lt;h1&gt;启动后登录时发现只能用administrator和guest登录&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/lightdm/lightdm.conf 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/lightdm/lightdm.conf 
 &lt;span class="o"&gt;[&lt;/span&gt;SeatDefaults&lt;span class="o"&gt;]&lt;/span&gt;
 user-session&lt;span class="o"&gt;=&lt;/span&gt;ubuntu
 greeter-session&lt;span class="o"&gt;=&lt;/span&gt;unity-greeter
@@ -694,5 +694,5 @@ greeter-show-manual-login&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"
 
 
 &lt;h2&gt;重启电脑，就可以用其它用户登录了&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo reboot
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo reboot
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category><category term="Nis"></category></entry></feed>

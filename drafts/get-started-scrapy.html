@@ -69,7 +69,7 @@ On 2015-08-27
         </div>
 
         <div><h2>常用命令</h2>
-<div class="highlight"><pre><span class="c1"># 运行一个爬虫</span>
+<div class="highlight"><pre><span></span><span class="c1"># 运行一个爬虫</span>
 $ scrapy runspider stackoverflow_spider.py -o top-stackoverflow-questions.json
 
 <span class="c1"># 创建项目</span>
@@ -92,7 +92,7 @@ $ scrapy crawl dmoz
 <li>项目级别:&nbsp;scrapy.cfg</li>
 </ul>
 <p>常用命令</p>
-<div class="highlight"><pre># 创建项目
+<div class="highlight"><pre><span></span># 创建项目
 $ scrapy startproject &lt;project_name&gt;
 
 # 创建爬虫
@@ -166,7 +166,7 @@ $ scrapy bench
 ItemLoader field属性 &gt; Item input_processor 或output_processor &gt; ItemLoader的default_input_processor&nbsp;和defualt_output_processor</p>
 <h2>Scrapy&nbsp;Shell</h2>
 <p>可以在Spider代码中使用shell</p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">scrapy.shell</span> <span class="kn">import</span> <span class="n">inspect_response</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.shell</span> <span class="kn">import</span> <span class="n">inspect_response</span>
 <span class="n">inspect_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 </pre></div>
 
@@ -175,7 +175,7 @@ ItemLoader field属性 &gt; Item input_processor 或output_processor &gt; ItemLo
 <ul>
 <li>使用</li>
 </ul>
-<div class="highlight"><pre># 调试CrawlSpider的Rules
+<div class="highlight"><pre><span></span># 调试CrawlSpider的Rules
 scrapy parse --spider=douban --noitems http://movie.douban.com/top250
 </pre></div>
 

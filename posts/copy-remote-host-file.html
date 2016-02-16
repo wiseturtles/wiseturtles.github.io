@@ -75,17 +75,17 @@ On 2015-11-11
 <h2>ssh</h2>
 <p>提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&nbsp;搭建个ftp好麻烦&#8230;)</p>
 <p>避免输入用户密码，可以先运行:</p>
-<div class="highlight"><pre>$ ssh-copy-id &lt;user@remote-host&gt;  <span class="c1"># 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys</span>
+<div class="highlight"><pre><span></span>$ ssh-copy-id &lt;user@remote-host&gt;  <span class="c1"># 输入密码，它会将你的key(~/.ssh/id_rsa.pub)添加到remote-host:~user/.ssh/authorized_keys</span>
 </pre></div>
 
 
 <p>通过scp做文件拷贝:</p>
-<div class="highlight"><pre>$ scp <span class="o">[</span>-r<span class="o">]</span> <span class="o">[</span>-P port<span class="o">]</span> &lt;your-local-file&gt; <span class="o">[]</span>&lt;user&gt;@<span class="o">]</span>&lt;remote-host&gt;:&lt;remote-file-path&gt;
+<div class="highlight"><pre><span></span>$ scp <span class="o">[</span>-r<span class="o">]</span> <span class="o">[</span>-P port<span class="o">]</span> &lt;your-local-file&gt; <span class="o">[]</span>&lt;user&gt;@<span class="o">]</span>&lt;remote-host&gt;:&lt;remote-file-path&gt;
 </pre></div>
 
 
 <p>如果网络比较慢可以先压缩再拷贝:</p>
-<div class="highlight"><pre>$ ssh user@remote-host <span class="s2">&quot;tar zcf - /file/path/to/copy&quot;</span> <span class="p">|</span> tar zxf - -C /file/path/to/receive  <span class="c1"># 从remote-host拷贝文件回来</span>
+<div class="highlight"><pre><span></span>$ ssh user@remote-host <span class="s2">&quot;tar zcf - /file/path/to/copy&quot;</span> <span class="p">|</span> tar zxf - -C /file/path/to/receive  <span class="c1"># 从remote-host拷贝文件回来</span>
 $ tar zcf - /file/path/to/copy <span class="p">|</span> ssh user@remote-host <span class="s2">&quot;tar zxf - -C /file/path/to/receive&quot;</span>  <span class="c1"># 将本地文件拷贝到remote-host</span>
 </pre></div>
 
@@ -93,7 +93,7 @@ $ tar zcf - /file/path/to/copy <span class="p">|</span> ssh user@remote-host <sp
 <h2><span class="caps">HTTP</span></h2>
 <p>也可以通过<span class="caps">HTTP</span>协议拷贝，如果本地正好有nginx/apache，ln -s 创建个软链接到外部可以访问的路径，从其它机器可以通过wget下载。
 但，不是所有机器都装了nginx/apache，可以通过Python自带模块快速启动一个<span class="caps">HTTP</span> Simple&nbsp;Server。</p>
-<div class="highlight"><pre>$ python -mSimpleHTTPServer  <span class="c1"># 默认监听8000端口，你当然可以自己指定端口</span>
+<div class="highlight"><pre><span></span>$ python -mSimpleHTTPServer  <span class="c1"># 默认监听8000端口，你当然可以自己指定端口</span>
 $ python -mSimpleHTTPServer <span class="m">8888</span>  <span class="c1"># 指定监听端口为8888</span>
 $ wget listen-ip:port/&lt;file/path&gt; <span class="c1"># 从其它主机拷贝文件</span>
 </pre></div>
@@ -103,7 +103,7 @@ $ wget listen-ip:port/&lt;file/path&gt; <span class="c1"># 从其它主机拷贝
 <p><span class="caps">HTTP</span>完全可以支持断点续传，wget -c&nbsp;就可以。</p>
 <h2>rsync</h2>
 <p>大家可能都体会过scp传输过程中，网络、主机异常导致必须重新传，小文件、网络快还好，不然真的想打人。&nbsp;你一定想如果可以断点续传就好了，rsync可以完成你的心愿。</p>
-<div class="highlight"><pre>$ rsync -P --rsh<span class="o">=</span>ssh --progress &lt;your-local-file&gt; user@remote-host:&lt;receive-file-path&gt;
+<div class="highlight"><pre><span></span>$ rsync -P --rsh<span class="o">=</span>ssh --progress &lt;your-local-file&gt; user@remote-host:&lt;receive-file-path&gt;
 $ rsync -P -v -e ssh &lt;local-file&gt; user@remote-host:receive-file-path  <span class="c1"># 本地同步文件到remote-host</span>
 $ rsync -P -v -e ssh user@remote-host:receive-file-path &lt;local-file-path&gt;  <span class="c1"># remote-host文件同步到本地</span>
 </pre></div>

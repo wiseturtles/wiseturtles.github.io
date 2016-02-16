@@ -9,12 +9,12 @@
 &lt;/ul&gt;
 &lt;h2&gt;nvm&lt;/h2&gt;
 &lt;p&gt;nvm (Node Version Manager)类似Python中的&lt;code&gt;virtualenv&lt;/code&gt;，是管理Node.js版本的工具，&amp;nbsp;方便在主机上安装多个Node.js版本，安装方法如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl https://raw.githubusercontent.com/creationix/nvm/v0.23.2/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl https://raw.githubusercontent.com/creationix/nvm/v0.23.2/install.sh &lt;span class="p"&gt;|&lt;/span&gt; bash
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;常用命令:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ nvm --version  &lt;span class="c1"&gt;# 查看nvm版本&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ nvm --version  &lt;span class="c1"&gt;# 查看nvm版本&lt;/span&gt;
 $ nvm -h  &lt;span class="c1"&gt;# 查看nvm帮助文档&lt;/span&gt;
 $ nvm current  &lt;span class="c1"&gt;# 查看当前使用的node.js版本&lt;/span&gt;
 $ nvm install stable
@@ -27,7 +27,7 @@ $ nvm use &amp;lt;version&amp;gt;  &lt;span class="c1"&gt;# 将默认node.js版�
 &lt;h2&gt;npm&lt;/h2&gt;
 &lt;p&gt;npm (Node Package Manager)是Node.js默认的模块管理器，用来安装管理Node.js模块。&amp;nbsp;npm已经集成到Node.js中了，所以装完Node.js就不再需要单独安装npm。&lt;/p&gt;
 &lt;p&gt;常用命令如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ npm &lt;span class="nb"&gt;help&lt;/span&gt;  &lt;span class="c1"&gt;# 查看帮助&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ npm &lt;span class="nb"&gt;help&lt;/span&gt;  &lt;span class="c1"&gt;# 查看帮助&lt;/span&gt;
 $ npm -l  &lt;span class="c1"&gt;# npm命令列表&lt;/span&gt;
 $ npm install npm@latest -g  &lt;span class="c1"&gt;# 将npm更新到最新版本&lt;/span&gt;
 $ npm -v  &lt;span class="c1"&gt;# 查看npm版本&lt;/span&gt;

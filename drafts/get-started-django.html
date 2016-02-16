@@ -69,7 +69,7 @@ On 2015-08-18
         </div>
 
         <div><h2>常用命令</h2>
-<div class="highlight"><pre><span class="c1"># 安装</span>
+<div class="highlight"><pre><span></span><span class="c1"># 安装</span>
 $ pip install Django
 
 <span class="c1"># 创建项目</span>
@@ -91,7 +91,7 @@ $ python manage.py sqlmigrate polls 0001
 <li>创建Model时，默认会创建主键<code>id</code>列,&nbsp;除非代码显示定义了主键</li>
 <li>主键是只读的，不能修改主键列，如果修改的话，会新增一条记录，而不是修改原有的</li>
 </ol>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 
 <span class="k">class</span> <span class="nc">Fruit</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>

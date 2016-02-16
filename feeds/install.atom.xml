@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo pip install supervisor
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install supervisor
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;配置supervisor&lt;/h2&gt;
 &lt;ol&gt;
-&lt;li&gt;添加配置文件&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo mkdir /etc/supervisor
+&lt;li&gt;添加配置文件&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo mkdir /etc/supervisor
 $ sudo mkdir /etc/supervisor/conf.d
 &lt;span class="c1"&gt;# 添加如下配置文件&lt;/span&gt;
 $ cat /etc/supervisor/supervisord.conf
@@ -81,7 +81,7 @@ supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.
 &lt;/ol&gt;
 &lt;p&gt;项目的配置文件写入&amp;nbsp;/etc/supervisor/conf.d/目录即可&lt;/p&gt;
 &lt;h2&gt;添加开机启动&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 添加如下配置文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 添加如下配置文件&lt;/span&gt;
 $ cat /etc/init.d/supervisord
 
 &lt;span class="c1"&gt;#!/bin/bash&lt;/span&gt;
@@ -151,7 +151,7 @@ start
 
 
 &lt;p&gt;设置如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo chmod +x /etc/init.d/supervisord
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo chmod +x /etc/init.d/supervisord
 $ sudo chkconfig --add supervisord
 $ sudo chkconfig supervisord on
 $ sudo service supervisord start
@@ -164,7 +164,7 @@ $ sudo service supervisord start
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;创建如下文件:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/init.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/init.d/nginx
 
 &lt;span class="c1"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="c1"&gt;#&lt;/span&gt;
@@ -308,7 +308,7 @@ do_info
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;CentOS系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;chkconfig --list nginx   &lt;span class="c1"&gt;# 列出系统nginx服务启动情况&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;chkconfig --list nginx   &lt;span class="c1"&gt;# 列出系统nginx服务启动情况&lt;/span&gt;
 chkconfig --add nginx    &lt;span class="c1"&gt;# 添加nginx服务&lt;/span&gt;
 chkconfig --level &lt;span class="m"&gt;35&lt;/span&gt; nginx on &lt;span class="c1"&gt;# 设定nginx在等级3和5为开机运行服务，--level 35表示操作只在等级3和5执行，on表示启动，off表示关闭&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -317,7 +317,7 @@ chkconfig --level &lt;span class="m"&gt;35&lt;/span&gt; nginx on &lt;span class=
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;Debian系统&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;sudo update-rc.d -f nginx remove  &lt;span class="c1"&gt;# 删除nginx服务&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo update-rc.d -f nginx remove  &lt;span class="c1"&gt;# 删除nginx服务&lt;/span&gt;
 sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -328,7 +328,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;
 &lt;/ol&gt;
 &lt;h2&gt;使用logrotate切割日志&lt;/h2&gt;
 &lt;p&gt;创建如下文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/logrotate.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/logrotate.d/nginx
 /etc/openresty/nginx/logs/*.log &lt;span class="o"&gt;{&lt;/span&gt;
     daily
     missingok
@@ -361,7 +361,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;
 &lt;li&gt;/etc/openresty/nginx/logs/nginx.pid：nginx主进程pid&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;测试:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ logroate -f /etc/logrotate.d/nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ logroate -f /etc/logrotate.d/nginx
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="openresty"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
 &lt;p&gt;Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。&lt;/p&gt;
 &lt;p&gt;本文以Ubuntu&amp;nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程&lt;/p&gt;
@@ -377,7 +377,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;安装&lt;span class="caps"&gt;JDK1&lt;/span&gt;.7&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo add-apt-repository ppa:webupd8team/java
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo add-apt-repository ppa:webupd8team/java
 $ sudo apt-get update
 $ sudo apt-get install oracle-java7-installer
 &lt;/pre&gt;&lt;/div&gt;
@@ -386,14 +386,14 @@ $ sudo apt-get install oracle-java7-installer
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;安装Git&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install git
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install git
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;安装Nginx服务器, 用于作为Gerrit网站的反向代理以及&lt;span class="caps"&gt;HTTP&lt;/span&gt;认证&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install nginx
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install nginx
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -402,7 +402,7 @@ $ sudo apt-get install oracle-java7-installer
 &lt;h2&gt;数据库设置&lt;/h2&gt;
 &lt;p&gt;Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&amp;nbsp;Oracle.&lt;/p&gt;
 &lt;p&gt;本文以MySQL为例，介绍数据库的设置。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 安装数据库&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 安装数据库&lt;/span&gt;
 $ sudo apt-get install mysql-server
 
 &lt;span class="c1"&gt;# 创建数据库reviewdb和用户gerrit2为后面做准备&lt;/span&gt;
@@ -416,7 +416,7 @@ mysql&amp;gt; FLUSH PRIVILEGES&lt;span class="p"&gt;;&lt;/span&gt;
 
 &lt;h2&gt;初始化Gerrit站点&lt;/h2&gt;
 &lt;p&gt;由于Gerrit创建中需要保存自己的&lt;span class="caps"&gt;SSH&lt;/span&gt; Keys,&amp;nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 在系统上添加用户gerrit2&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 在系统上添加用户gerrit2&lt;/span&gt;
 $ sudo adduser gerrit2
 &lt;span class="c1"&gt;# 切换到当前用户&lt;/span&gt;
 $ sudo su gerrit2
@@ -551,7 +551,7 @@ OK
 &lt;/pre&gt;
 
 &lt;p&gt;创建用户密码文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 创建用户名和密码都是admin的文件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 创建用户名和密码都是admin的文件&lt;/span&gt;
 $ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -559,7 +559,7 @@ $ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;访问&lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt;输入用户名和密码即可登陆到Gerrit&lt;/p&gt;
 &lt;h2&gt;Gerrit目录结构&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ tree -L &lt;span class="m"&gt;1&lt;/span&gt; gerrit
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tree -L &lt;span class="m"&gt;1&lt;/span&gt; gerrit
 gerrit
 ├── bin
 ├── cache
@@ -576,7 +576,7 @@ gerrit
 
 
 &lt;h2&gt;常用命令&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ gerrit/bin/gerrit.sh start  &lt;span class="c1"&gt;# 启动gerrit服务&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gerrit/bin/gerrit.sh start  &lt;span class="c1"&gt;# 启动gerrit服务&lt;/span&gt;
 $ gerrit/bin/gerrit.sh stop   &lt;span class="c1"&gt;# 关闭gerrit服务&lt;/span&gt;
 $ gerrit/bin/gerrit.sh restart &lt;span class="c1"&gt;# 重启gerrit服务&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -634,7 +634,7 @@ access_log   logs/site.log;
 &lt;/div&gt;
 </summary><category term="windows"></category><category term="nginx"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><updated>2013-11-03T19:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:posts/install-jdk.html</id><summary type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
 首先下载jdk-7u45-linux-i586.tar.gz压缩包，并解压到 &lt;code&gt;/usr/local/lib/jdk1.7.0_45&lt;/code&gt; ,&amp;nbsp;再执行下面的脚本&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nv"&gt;JDK_BIN_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/jdk1.7.0_45/bin
 &lt;span class="k"&gt;for&lt;/span&gt; x in &lt;span class="k"&gt;$(&lt;/span&gt;find $JDK_BIN_PATH&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;do&lt;/span&gt;
@@ -644,7 +644,7 @@ access_log   logs/site.log;
 &lt;/pre&gt;&lt;/div&gt;
 </summary><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><updated>2013-09-30T13:44:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:posts/setup-wamp.html</id><summary type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
 &lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;开发基本也就是在不同平台下，要么是&lt;span class="caps"&gt;LAMP&lt;/span&gt;(Linux + Apache + Mysql + &lt;span class="caps"&gt;PHP&lt;/span&gt;)，要么就是&lt;span class="caps"&gt;WAMP&lt;/span&gt;(Windows + Apache + Mysql +&lt;span class="caps"&gt;PHP&lt;/span&gt;),&amp;nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -699,7 +699,7 @@ Popular options for deploying Apache httpd, and, optionally, &lt;span class="cap
 
 &lt;h3&gt;3.&amp;nbsp;安装和启动Apache服务&lt;/h3&gt;
 &lt;p&gt;先将&lt;code&gt;D:\wamp\Apache24\bin\&lt;/code&gt;添加到系统环境变量中。方便后面安装和启动服务。&amp;nbsp;运行cmd窗口，执行如下命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;httpd -k install -n service_name            # 安装apache服务 -n 是可选的，表示指定服务名字，不加-n使用默认的服务名字
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;httpd -k install -n service_name            # 安装apache服务 -n 是可选的，表示指定服务名字，不加-n使用默认的服务名字
 httpd -k start/stop/restart -n service_name # 运行/停止/重启 apache服务, 同样，如果上面没有使用-n参数，这里也可以省去
 httpd -k uninstall -n service_name          # 卸载apache服务
 net start/stop service_name                 # 也可以运行/停止 apache服务
@@ -708,7 +708,7 @@ httpd -help                                 # 查看更多帮助信息
 
 
 &lt;p&gt;安装并运行Apache服务&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;httpd -k install
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;httpd -k install
 httpd -k start
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -726,7 +726,7 @@ httpd -k start
 &lt;h3&gt;2.&amp;nbsp;安装Mysql服务和使用&lt;/h3&gt;
 &lt;p&gt;假设我使用的是zip包类型的Mysql，解压在&lt;code&gt;D:\wamp\mysql-5.6.13-win32\&lt;/code&gt;目录下, 先把&lt;code&gt;D:\wamp\mysql-5.6.13-win32\bin&lt;/code&gt;添加到环境变量，方便使用命令行。&lt;/p&gt;
 &lt;p&gt;运行&lt;span class="caps"&gt;CMD&lt;/span&gt;窗口，跟安装Apache服务类似，直接运行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;mysqld --install MySQL5.5(service_name)  # Mysql5.5 是service_name，是可选的，不指定的话它会默认使用一个服务名
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;mysqld --install MySQL5.5(service_name)  # Mysql5.5 是service_name，是可选的，不指定的话它会默认使用一个服务名
 net start/stop MySQL5.5                  # 启动/停止Mysql服务
 mysqld --remove MySQL5.5                 # 移除Mysql服务
 
@@ -775,7 +775,7 @@ FLUSH PRIVILEGES;
 
 &lt;p&gt;最后再创建相对应的目录&lt;code&gt;D:\wamp\php-5.5.3-Win32-VC11-x86\logs&lt;/code&gt;,&lt;code&gt;D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\upload&lt;/code&gt;,&lt;code&gt;D:\wamp\php-5.5.3-Win32-VC11-x86\tmp\session&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;最后，让apache认识php，修改apache的配置文件&lt;code&gt;D:\wamp\Apache24\conf\httpd.conf&lt;/code&gt;添加下面的内容&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# php配置 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# php配置 
 LoadModule php5_module &amp;quot;E:/wamp_x64/php-5.5.3-Win32-VC11-x64/php5apache2_4.dll&amp;quot;
 AddHandler application/x-httpd-php .php
 
@@ -796,7 +796,7 @@ DirectoryIndex index.html index.php
 &lt;p&gt;Xdebug 是一个&lt;span class="caps"&gt;PHP&lt;/span&gt;开发的调试工具，跟它齐名的另一个叫&lt;code&gt;Zend Debugger&lt;/code&gt;, 也是一个很不错的东西。
 安装xdebug，首先需要下载适合版本的xdebug，如果不知道自己应该下载哪个版本的话，可以将你phpinfo();方法得到的页面内容粘贴到&lt;a href="http://xdebug.org/wizard.php"&gt;这里&lt;/a&gt;，它会自动分析出哪个版本的xdebug插件适合你。
 将下载下来的dll文件保存到php的安装路径&lt;code&gt;D:\wamp\php-5.5.3-Win32-VC11-x86\ext&lt;/code&gt;目录下，然后修改&lt;code&gt;D:\wamp\php-5.5.3-Win32-VC11-x86\php.ini&lt;/code&gt;文件，添加如下内容：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[XDebug]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[XDebug]&lt;/span&gt;
 &lt;span class="na"&gt;zend_extension&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;D:\wamp\php-5.5.3-Win32-VC11-x86\extphp_xdebug.dll&amp;quot;&lt;/span&gt;
 &lt;span class="na"&gt;xdebug.auto_trace&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
 &lt;span class="na"&gt;xdebug.collect_params&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;1&lt;/span&gt;
@@ -824,19 +824,19 @@ DirectoryIndex index.html index.php
 &lt;p&gt;注意：最好是单独建立一个用户，并保证该用户对代码和后面创建索引的目录读写权限&lt;/p&gt;
 &lt;h2&gt;准备工作&lt;/h2&gt;
 &lt;p&gt;以opengrok用户身份登录安装jdk和Exuberant&amp;nbsp;Ctags.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install sun-java6-jdk ctags
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install sun-java6-jdk ctags
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;获取opengrok安装包（opengrok-0.11.1.tar.gz）和tomcat安装包(apachetomcat-7.0.6.tar.gz)解压安装包到任意目录下面&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /var/local/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /var/local/
 $ tar -zxvf /path/to/opengrok-0.11.1.tar.gz
 $ tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下载需要使用的代码到一个目录下面&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir -p ~/opengrok/projects/project1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p ~/opengrok/projects/project1
 $ mkdir -p ~/opnegrok/projects/project2
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/opengrok/projects/project1
 $ download code of project1 &lt;span class="o"&gt;(&lt;/span&gt;such as: git clone ... or repo init ... &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; repo sync&lt;span class="o"&gt;)&lt;/span&gt;
@@ -854,14 +854,14 @@ opengrok/projects----project1
 &lt;/pre&gt;
 
 &lt;p&gt;启动tomcat，确认tomcat没有问题&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查tomcat&amp;nbsp;是否正常工作&lt;/p&gt;
 &lt;h2&gt;部署OpenGrok&lt;/h2&gt;
 &lt;p&gt;执行命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo &lt;span class="nv"&gt;OPENGROK_TOMCAT_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo &lt;span class="nv"&gt;OPENGROK_TOMCAT_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -873,7 +873,7 @@ opengrok/projects----project1
 &lt;h3&gt;创建索引&lt;/h3&gt;
 &lt;p&gt;创建索引时，会创建三个目录，一个data目录来存放索引信息，一个etc目录创建配置信息和一个log目录。
  如想让~/opengrok/来存放索引,则指定&lt;code&gt;OPENGROK_INSTANCE_BASE=~/opengrok&lt;/code&gt;, 则指定&lt;code&gt;OPENGROK_INSTANCE_BASE=~/opengrok&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -881,7 +881,7 @@ opengrok/projects----project1
 &lt;p&gt;访问&lt;a href="http://127.0.0.1:8080/source"&gt;http://127.0.0.1:8080/source&lt;/a&gt;,enjoy&amp;nbsp;it!&lt;/p&gt;
 &lt;h3&gt;项目代码更新或者添加新的项目&lt;/h3&gt;
 &lt;p&gt;首先更新项目代码或者下载新的项目到~/opengrok/projects目录下面。&amp;nbsp;然后重新执行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -891,12 +891,12 @@ opengrok/projects----project1
 如添加公司&lt;span class="caps"&gt;LOGO&lt;/span&gt;或一些有用的帮助信息。&lt;/p&gt;
 &lt;h3&gt;直接调用命令行接口&lt;/h3&gt;
 &lt;p&gt;上面创建索引的命令其实&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;OPENGROK_VERBOSE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt; &lt;span class="nv"&gt;OPENGROK_INSTANCE_BASE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;其实调用的是opengrok&amp;nbsp;lib目录下的jar包：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;java -Xmx2048m -Dorg.opensolaris.opengrok.history.cvs=/usr/bin/cvs
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;java -Xmx2048m -Dorg.opensolaris.opengrok.history.cvs=/usr/bin/cvs
 -Dorg.opensolaris.opengrok.history.git=/usr/bin/git
 -Djava.util.logging.config.file=/data/opengrok/opengrok_data/logging.properties
 -jar /data/opengrok/opengrok-0.11.1/bin/../lib/opengrok.jar
@@ -908,7 +908,7 @@ opengrok/projects----project1
 
 
 &lt;p&gt;上面各个参数的意思如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ java -jar opengrok.jar
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ java -jar opengrok.jar
 
 Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o"&gt;]&lt;/span&gt;
 -?

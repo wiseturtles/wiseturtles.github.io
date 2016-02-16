@@ -69,7 +69,7 @@ On 2015-05-22
         </div>
 
         <div><h2>requests</h2>
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
 <span class="n">local_filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="c1"># NOTE the stream=True parameter</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -83,7 +83,7 @@ On 2015-05-22
 
 
 <h2>urllib2</h2>
-<div class="highlight"><pre><span class="nb">file</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="nb">file</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="n">tmp</span> <span class="o">=</span> <span class="nb">file</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>

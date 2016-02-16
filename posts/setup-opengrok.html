@@ -75,19 +75,19 @@ On 2012-12-14
 <p>注意：最好是单独建立一个用户，并保证该用户对代码和后面创建索引的目录读写权限</p>
 <h2>准备工作</h2>
 <p>以opengrok用户身份登录安装jdk和Exuberant&nbsp;Ctags.</p>
-<div class="highlight"><pre>$ sudo apt-get install sun-java6-jdk ctags
+<div class="highlight"><pre><span></span>$ sudo apt-get install sun-java6-jdk ctags
 </pre></div>
 
 
 <p>获取opengrok安装包（opengrok-0.11.1.tar.gz）和tomcat安装包(apachetomcat-7.0.6.tar.gz)解压安装包到任意目录下面</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> /var/local/
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /var/local/
 $ tar -zxvf /path/to/opengrok-0.11.1.tar.gz
 $ tar -zxvf /path/to/apachetomcat-7.0.6.tar.gz
 </pre></div>
 
 
 <p>下载需要使用的代码到一个目录下面</p>
-<div class="highlight"><pre>$ mkdir -p ~/opengrok/projects/project1
+<div class="highlight"><pre><span></span>$ mkdir -p ~/opengrok/projects/project1
 $ mkdir -p ~/opnegrok/projects/project2
 $ <span class="nb">cd</span> ~/opengrok/projects/project1
 $ download code of project1 <span class="o">(</span>such as: git clone ... or repo init ... <span class="o">&amp;&amp;</span> repo sync<span class="o">)</span>
@@ -105,14 +105,14 @@ opengrok/projects----project1
 </pre>
 
 <p>启动tomcat，确认tomcat没有问题</p>
-<div class="highlight"><pre>$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
+<div class="highlight"><pre><span></span>$ /var/local/apache-tomcat-7.0.6/bin/startup.sh
 </pre></div>
 
 
 <p>访问<a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>检查tomcat&nbsp;是否正常工作</p>
 <h2>部署OpenGrok</h2>
 <p>执行命令</p>
-<div class="highlight"><pre>$ sudo <span class="nv">OPENGROK_TOMCAT_BASE</span><span class="o">=</span>/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
+<div class="highlight"><pre><span></span>$ sudo <span class="nv">OPENGROK_TOMCAT_BASE</span><span class="o">=</span>/var/local/apache-tomcat-7.0.6 /var/local/opengrok-0.11.1/bin/OpenGrok deploy
 </pre></div>
 
 
@@ -124,7 +124,7 @@ opengrok/projects----project1
 <h3>创建索引</h3>
 <p>创建索引时，会创建三个目录，一个data目录来存放索引信息，一个etc目录创建配置信息和一个log目录。
  如想让~/opengrok/来存放索引,则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code>, 则指定<code>OPENGROK_INSTANCE_BASE=~/opengrok</code></p>
-<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre><span></span>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
@@ -132,7 +132,7 @@ opengrok/projects----project1
 <p>访问<a href="http://127.0.0.1:8080/source">http://127.0.0.1:8080/source</a>,enjoy&nbsp;it!</p>
 <h3>项目代码更新或者添加新的项目</h3>
 <p>首先更新项目代码或者下载新的项目到~/opengrok/projects目录下面。&nbsp;然后重新执行</p>
-<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre><span></span>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
@@ -142,12 +142,12 @@ opengrok/projects----project1
 如添加公司<span class="caps">LOGO</span>或一些有用的帮助信息。</p>
 <h3>直接调用命令行接口</h3>
 <p>上面创建索引的命令其实</p>
-<div class="highlight"><pre>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
+<div class="highlight"><pre><span></span>$ <span class="nv">OPENGROK_VERBOSE</span><span class="o">=</span><span class="nb">true</span> <span class="nv">OPENGROK_INSTANCE_BASE</span><span class="o">=</span>~/opengrok/ ./OpenGrok index ~/opengrok/projects/
 </pre></div>
 
 
 <p>其实调用的是opengrok&nbsp;lib目录下的jar包：</p>
-<div class="highlight"><pre>java -Xmx2048m -Dorg.opensolaris.opengrok.history.cvs=/usr/bin/cvs
+<div class="highlight"><pre><span></span>java -Xmx2048m -Dorg.opensolaris.opengrok.history.cvs=/usr/bin/cvs
 -Dorg.opensolaris.opengrok.history.git=/usr/bin/git
 -Djava.util.logging.config.file=/data/opengrok/opengrok_data/logging.properties
 -jar /data/opengrok/opengrok-0.11.1/bin/../lib/opengrok.jar
@@ -159,7 +159,7 @@ opengrok/projects----project1
 
 
 <p>上面各个参数的意思如下:</p>
-<div class="highlight"><pre>$ java -jar opengrok.jar
+<div class="highlight"><pre><span></span>$ java -jar opengrok.jar
 
 Usage: opengrok.jar <span class="o">[</span>options<span class="o">]</span>
 -?

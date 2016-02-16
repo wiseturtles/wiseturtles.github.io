@@ -70,13 +70,13 @@ On 2015-07-06
 
         <div><p>工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。</p>
 <h2>安装</h2>
-<div class="highlight"><pre>$ sudo apt-get install ssmtp
+<div class="highlight"><pre><span></span>$ sudo apt-get install ssmtp
 </pre></div>
 
 
 <h2>配置</h2>
 <p>/etc/ssmtp/revaliases</p>
-<div class="highlight"><pre>$ cat /etc/ssmtp/revaliases
+<div class="highlight"><pre><span></span>$ cat /etc/ssmtp/revaliases
 <span class="c1"># sSMTP aliases</span>
 <span class="c1">#</span>
 <span class="c1"># Format:   local_account:outgoing_address:mailhub</span>
@@ -89,7 +89,7 @@ root:no-reply@example.com:mail.example.com:587
 
 
 <p>/etc/ssmtp/ssmtp.conf</p>
-<div class="highlight"><pre>$ <span class="c1">#</span>
+<div class="highlight"><pre><span></span>$ <span class="c1">#</span>
 <span class="c1"># Config file for sSMTP sendmail</span>
 <span class="c1">#</span>
 <span class="c1"># The person who gets all mail for userids &lt; 1000</span>
@@ -114,7 +114,7 @@ root:no-reply@example.com:mail.example.com:587
 
 
 <h2>测试</h2>
-<div class="highlight"><pre>$ /usr/sbin/sendmail -t -F your-domain-name <span class="s">&lt;&lt;EOF</span>
+<div class="highlight"><pre><span></span>$ /usr/sbin/sendmail -t -F your-domain-name <span class="s">&lt;&lt;EOF</span>
 <span class="s">SUBJECT: $YOUR-SUBJECT</span>
 <span class="s">TO: A@example.com,B@example.com</span>
 <span class="s">MIME-VERSION: 1.0</span>

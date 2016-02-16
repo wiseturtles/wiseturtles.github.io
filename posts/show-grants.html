@@ -73,19 +73,19 @@ On 2014-12-17
 <p><span class="caps">SHOW</span> <span class="caps">GRANTS</span></p>
 <p>官方文档: <a href="http://dev.mysql.com/doc/refman/5.6/en/show-grants.html">http://dev.mysql.com/doc/refman/5.6/en/show-grants.html</a></p>
 <h2>常看帮助</h2>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">HELP</span> <span class="k">SHOW</span> <span class="n">GRANTS</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">HELP</span> <span class="k">SHOW</span> <span class="n">GRANTS</span><span class="p">;</span>
 </pre></div>
 
 
 <h2>查看当前登陆用户在当前机器上的权限</h2>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span><span class="p">;</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="k">CURRENT_USER</span><span class="p">;</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="k">CURRENT_USER</span><span class="p">();</span>
 </pre></div>
 
 
 <h2>查看特定用户在特定主机上的权限</h2>
-<div class="highlight"><pre><span class="c1"># 查看test用户在主机&#39;%&#39;上的权限(没有指定主机时，默认是&#39;%&#39;)</span>
+<div class="highlight"><pre><span></span><span class="c1"># 查看test用户在主机&#39;%&#39;上的权限(没有指定主机时，默认是&#39;%&#39;)</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="s1">&#39;test&#39;</span><span class="p">;</span>
 <span class="c1"># 查看test用户在主机&#39;localhost&#39;上的权限(没有指定主机时，默认是&#39;%&#39;)</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">GRANTS</span> <span class="k">FOR</span> <span class="s1">&#39;test&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span><span class="p">;</span>
@@ -93,7 +93,7 @@ On 2014-12-17
 
 
 <h2>查看用户在哪些主机上分配了权限</h2>
-<div class="highlight"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span> <span class="k">from</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span> <span class="k">from</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
 </pre></div>
 
 

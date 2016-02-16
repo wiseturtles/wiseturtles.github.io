@@ -71,12 +71,12 @@ On 2015-06-26
         <div><h2>ab</h2>
 <p>ab是apache自带的压力测试工具。使用简单，便于一些简单的压力测试.</p>
 <h3>安装</h3>
-<div class="highlight"><pre>$ sudo apt-get install apache2-utils
+<div class="highlight"><pre><span></span>$ sudo apt-get install apache2-utils
 </pre></div>
 
 
 <h3>使用帮助</h3>
-<div class="highlight"><pre>$ ab -h
+<div class="highlight"><pre><span></span>$ ab -h
 Usage: ab <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>http<span class="o">[</span>s<span class="o">]</span>://<span class="o">]</span>hostname<span class="o">[</span>:port<span class="o">]</span>/path
 Options are:
     -n requests     Number of requests to perform <span class="c1"># 请求次数</span>
@@ -123,7 +123,7 @@ Options are:
 
 
 <h3>使用示例</h3>
-<div class="highlight"><pre><span class="c1"># GET</span>
+<div class="highlight"><pre><span></span><span class="c1"># GET</span>
 
 <span class="c1"># 30秒内并行1000个客户端，请求默认的50000次请求</span>
 $ ab -c <span class="m">1000</span> -t  <span class="m">30</span> http://www.baidu.com/
@@ -147,18 +147,18 @@ $ ab -c <span class="m">1000</span> -t <span class="m">30</span> -p data.json -T
 <p>另一个轻量级的压力测试工具，据说比ab好用，但是好像不支持模拟<span class="caps">POST</span>请求</p>
 <h3>安装</h3>
 <p>可以到<a href="http://home.tiscali.cz/~cz210552/webbench.html">http://home.tiscali.cz/~cz210552/webbench.html</a>获取最新版本的下载地址</p>
-<div class="highlight"><pre>$ wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
+<div class="highlight"><pre><span></span>$ wget http://home.tiscali.cz/~cz210552/distfiles/webbench-1.5.tar.gz
 </pre></div>
 
 
 <p>解压之后</p>
-<div class="highlight"><pre>$ make <span class="o">&amp;&amp;</span> sudo make install
+<div class="highlight"><pre><span></span>$ make <span class="o">&amp;&amp;</span> sudo make install
 </pre></div>
 
 
 <h3>使用帮助</h3>
 <p>使用上和ab差不多，具体参数可以参考下面</p>
-<div class="highlight"><pre>$ webbench
+<div class="highlight"><pre><span></span>$ webbench
 webbench <span class="o">[</span>option<span class="o">]</span>... URL
 -f<span class="p">|</span>--force               Don<span class="err">&#39;</span>t <span class="nb">wait</span> <span class="k">for</span> reply from server.
 -r<span class="p">|</span>--reload              Send reload request - Pragma: no-cache.

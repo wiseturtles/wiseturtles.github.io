@@ -70,7 +70,7 @@ On 2015-09-18
         <div><p>公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&nbsp;下面介绍下gitlab安装、配置。</p>
 <h2>系统环境</h2>
 <p>查看系统版本。</p>
-<div class="highlight"><pre>$ cat /etc/issue
+<div class="highlight"><pre><span></span>$ cat /etc/issue
 CentOS release 6.6 <span class="o">(</span>Final<span class="o">)</span>
 Kernel <span class="se">\r</span> on an <span class="se">\m</span>
 </pre></div>
@@ -78,7 +78,7 @@ Kernel <span class="se">\r</span> on an <span class="se">\m</span>
 
 <h2>安装gitlab</h2>
 <p><a href="https://about.gitlab.com/downloads/#centos6">官方安装文档</a>介绍的比较详细，&nbsp;我用公司邮箱发送邮件，所以，没有安装postfix。</p>
-<div class="highlight"><pre>$ sudo yum install curl openssh-server cronie
+<div class="highlight"><pre><span></span>$ sudo yum install curl openssh-server cronie
 $ sudo lokkit -s http -s ssh
 $ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh <span class="p">|</span> sudo bash
 $ sudo yum install gitlab-ce
@@ -87,7 +87,7 @@ $ sudo yum install gitlab-ce
 
 <h2>配置gitlab</h2>
 <p>数据库使用的是PostgreSQL，使用公司邮件服务器。</p>
-<div class="highlight"><pre>--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
+<div class="highlight"><pre><span></span>--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
 +++ /etc/gitlab/gitlab.rb   2015-09-09 14:47:33.710061343 +0800
 @@ -3,7 +3,7 @@
 <span class="c1">## Url on which GitLab will be reachable.</span>
@@ -317,13 +317,13 @@ gitlab_rails<span class="o">[</span><span class="s1">&#39;time_zone&#39;</span><
 
 
 <p>根据/etc/gitlab/gitlab.rb重新配置gitlab。</p>
-<div class="highlight"><pre>$ sudo gitlab-ctl reconfigure
+<div class="highlight"><pre><span></span>$ sudo gitlab-ctl reconfigure
 </pre></div>
 
 
 <p>使用默认用户名:<code>root</code> 密码:<code>5iveL!fe</code>登陆，登陆后修改默认密码。</p>
 <h2>备份</h2>
-<div class="highlight"><pre>$ sudo crontab -l
+<div class="highlight"><pre><span></span>$ sudo crontab -l
 <span class="m">0</span> <span class="m">2</span> * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create
 </pre></div></div>
 

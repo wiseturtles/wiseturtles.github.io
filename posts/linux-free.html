@@ -90,7 +90,7 @@ On 2015-01-09
 4 Swap:     25151484     224188   24927296
 </pre></p>
 <p>这样可以把free的输出看成一个二维数组<span class="caps">FO</span>(Free&nbsp;Output)。例如：</p>
-<div class="highlight"><pre>FO[2][1] = 24677460
+<div class="highlight"><pre><span></span>FO[2][1] = 24677460
 FO[3][2] = 10321516
 </pre></div>
 
@@ -99,7 +99,7 @@ FO[3][2] = 10321516
 free输出的第二行和第三行是比较让人迷惑的。这两行都是说明内存使用情况的。第一列是总量（total），第二列是使用量（used），第三列是可用量（free）。
 第一行的输出时从操作系统（<span class="caps">OS</span>）来看的。也就是说，从<span class="caps">OS</span>的角度来看，计算机上一共有:
 <span class="caps">24677460KB</span>（缺省时free的单位为<span class="caps">KB</span>）物理内存，即<span class="caps">FO</span>[2][1]；在这些物理内存中有<span class="caps">23276064KB</span>（即<span class="caps">FO</span>[2][2]）被使用了；还用<span class="caps">1401396KB</span>（即<span class="caps">FO</span>[2][3]）是可用的；&nbsp;这里得到第一个等式：</p>
-<div class="highlight"><pre>FO[2][1] = FO[2][2] + FO[2][3]
+<div class="highlight"><pre><span></span>FO[2][1] = FO[2][2] + FO[2][3]
 </pre></div>
 
 
@@ -114,7 +114,7 @@ free输出的第二行和第三行是比较让人迷惑的。这两行都是说�
 <p>也就是说buffer是用于存放要输出到disk（块设备）的数据的，而cache是存放从disk上读出的数据。这二者是为了提高<span class="caps">IO</span>性能的，并由<span class="caps">OS</span>管理。</p>
 <p>Linux和其他成熟的操作系统（例如windows），为了提高<span class="caps">IO</span> read的性能，总是要多cache一些数据，这也就是为什么<span class="caps">FO</span>[2][6]（cached memory）比较大，而<span class="caps">FO</span>[2][3]比较小的原因。我们可以做一个简单的测试:</p>
 <p>释放掉被系统cache占用的数据；</p>
-<div class="highlight"><pre>echo 3&gt;/proc/sys/vm/drop_caches
+<div class="highlight"><pre><span></span>echo 3&gt;/proc/sys/vm/drop_caches
 </pre></div>
 
 
@@ -128,7 +128,7 @@ free输出的第二行和第三行是比较让人迷惑的。这两行都是说�
 </ul>
 <p>因为被系统cache和buffer占用的内存可以被快速回收，所以通常<span class="caps">FO</span>[3][3]比<span class="caps">FO</span>[2][3]会大很多。</p>
 <p>这里还用两个等式：</p>
-<div class="highlight"><pre>FO[3][2] = FO[2][2] - FO[2][5] - FO[2][6]
+<div class="highlight"><pre><span></span>FO[3][2] = FO[2][2] - FO[2][5] - FO[2][6]
 FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 </pre></div>
 

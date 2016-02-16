@@ -77,7 +77,7 @@ On 2015-07-22
 <li>
 <p><span class="caps">GOPATH</span>允许多个目录, 当<span class="caps">GOPATH</span>有多个目录时，为了让每个目录下的bin目录都加入环境变量
 可以设置<code>${GOPATH//://bin:}/bin</code></p>
-<div class="highlight"><pre><span class="nb">export</span> <span class="nv">GOROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/go&quot;</span>
+<div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">GOROOT</span><span class="o">=</span><span class="s2">&quot;/usr/local/go&quot;</span>
 <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s2">&quot;</span>$<span class="s2">HOME/golang:</span>$<span class="s2">HOME/github/golang&quot;</span>
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span>$PATH:$GOROOT/bin:<span class="si">${</span><span class="nv">GOPATH</span><span class="p">//://bin:</span><span class="si">}</span>/bin
 </pre></div>
@@ -105,14 +105,14 @@ On 2015-07-22
 </ul>
 <h3>Go字符串</h3>
 <p>字符串是用一对双引号（&#8221;&#8220;）或反引号（&#8220;）括起来定义，它的类型是string&nbsp;如果要声明一个多行的字符串怎么办？可以通过`来声明</p>
-<div class="highlight"><pre> <span class="nx">m</span> <span class="o">:=</span> <span class="s">`hello</span>
+<div class="highlight"><pre><span></span> <span class="nx">m</span> <span class="o">:=</span> <span class="s">`hello</span>
 <span class="s">        world`</span>
 </pre></div>
 
 
 <h3>iota枚举</h3>
 <p>Go里面有一个关键字iota，这个关键字用来声明enum的时候采用，它默认开始值是0，每调用一次加1：</p>
-<div class="highlight"><pre><span class="kd">const</span><span class="p">(</span>
+<div class="highlight"><pre><span></span><span class="kd">const</span><span class="p">(</span>
     <span class="nx">x</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// x == 0</span>
     <span class="nx">y</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// y == 1</span>
     <span class="nx">z</span> <span class="p">=</span> <span class="kc">iota</span>  <span class="c1">// z == 2</span>
@@ -137,14 +137,14 @@ On 2015-07-22
 </ul>
 <h3>数组</h3>
 <p>声明</p>
-<div class="highlight"><pre><span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="c1">// 声明了一个长度为3的int数组</span>
+<div class="highlight"><pre><span></span><span class="nx">a</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="c1">// 声明了一个长度为3的int数组</span>
 <span class="nx">b</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span> <span class="c1">// 声明了一个长度为10的int数组，其中前三个元素初始化为1、2、3，其它默认为0</span>
 <span class="nx">c</span> <span class="o">:=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">}</span> <span class="c1">// 可以省略长度而采用`...`的方式，Go会自动根据元素个数来计算长度</span>
 </pre></div>
 
 
 <p>二维数组</p>
-<div class="highlight"><pre><span class="c1">// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素</span>
+<div class="highlight"><pre><span></span><span class="c1">// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素</span>
 <span class="nx">doubleArray</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{[</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">}}</span>
 
 <span class="c1">// 上面的声明可以简化，直接忽略内部的类型</span>

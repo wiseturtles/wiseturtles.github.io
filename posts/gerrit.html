@@ -83,7 +83,7 @@ On 2015-01-15
 <ol>
 <li>
 <p>安装<span class="caps">JDK1</span>.7</p>
-<div class="highlight"><pre>$ sudo add-apt-repository ppa:webupd8team/java
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:webupd8team/java
 $ sudo apt-get update
 $ sudo apt-get install oracle-java7-installer
 </pre></div>
@@ -92,14 +92,14 @@ $ sudo apt-get install oracle-java7-installer
 </li>
 <li>
 <p>安装Git</p>
-<div class="highlight"><pre>$ sudo apt-get install git
+<div class="highlight"><pre><span></span>$ sudo apt-get install git
 </pre></div>
 
 
 </li>
 <li>
 <p>安装Nginx服务器, 用于作为Gerrit网站的反向代理以及<span class="caps">HTTP</span>认证</p>
-<div class="highlight"><pre>$ sudo apt-get install nginx
+<div class="highlight"><pre><span></span>$ sudo apt-get install nginx
 </pre></div>
 
 
@@ -108,7 +108,7 @@ $ sudo apt-get install oracle-java7-installer
 <h2>数据库设置</h2>
 <p>Gerrit的使用必须依赖于数据库，目前支持的数据库有H2(Gerrit内置的), PostgreSQL, MySQL,&nbsp;Oracle.</p>
 <p>本文以MySQL为例，介绍数据库的设置。</p>
-<div class="highlight"><pre><span class="c1"># 安装数据库</span>
+<div class="highlight"><pre><span></span><span class="c1"># 安装数据库</span>
 $ sudo apt-get install mysql-server
 
 <span class="c1"># 创建数据库reviewdb和用户gerrit2为后面做准备</span>
@@ -122,7 +122,7 @@ mysql&gt; FLUSH PRIVILEGES<span class="p">;</span>
 
 <h2>初始化Gerrit站点</h2>
 <p>由于Gerrit创建中需要保存自己的<span class="caps">SSH</span> Keys,&nbsp;配置文件，代码库等信息，因此强烈建议单独创建一个用户来创建Gerrit站点。</p>
-<div class="highlight"><pre><span class="c1"># 在系统上添加用户gerrit2</span>
+<div class="highlight"><pre><span></span><span class="c1"># 在系统上添加用户gerrit2</span>
 $ sudo adduser gerrit2
 <span class="c1"># 切换到当前用户</span>
 $ sudo su gerrit2
@@ -257,7 +257,7 @@ OK
 </pre>
 
 <p>创建用户密码文件</p>
-<div class="highlight"><pre><span class="c1"># 创建用户名和密码都是admin的文件</span>
+<div class="highlight"><pre><span></span><span class="c1"># 创建用户名和密码都是admin的文件</span>
 $ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 </pre></div>
 
@@ -265,7 +265,7 @@ $ htpasswd -b -c /home/gerrit2/gerrit/etc/auth_passwd admin admin
 <h2>测试</h2>
 <p>访问<a href="http://localhost/">http://localhost/</a>输入用户名和密码即可登陆到Gerrit</p>
 <h2>Gerrit目录结构</h2>
-<div class="highlight"><pre>$ tree -L <span class="m">1</span> gerrit
+<div class="highlight"><pre><span></span>$ tree -L <span class="m">1</span> gerrit
 gerrit
 ├── bin
 ├── cache
@@ -282,7 +282,7 @@ gerrit
 
 
 <h2>常用命令</h2>
-<div class="highlight"><pre>$ gerrit/bin/gerrit.sh start  <span class="c1"># 启动gerrit服务</span>
+<div class="highlight"><pre><span></span>$ gerrit/bin/gerrit.sh start  <span class="c1"># 启动gerrit服务</span>
 $ gerrit/bin/gerrit.sh stop   <span class="c1"># 关闭gerrit服务</span>
 $ gerrit/bin/gerrit.sh restart <span class="c1"># 重启gerrit服务</span>
 </pre></div>

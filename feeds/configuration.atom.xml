@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-31T20:46:00+08:00</updated><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;解决：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-std=c99&amp;#39;&lt;/span&gt; pip install gevent
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;-std=c99&amp;#39;&lt;/span&gt; pip install gevent
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -14,21 +14,21 @@
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;获取所有可用的包:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ android list sdk -a -u
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ android list sdk -a -u
 $ android list sdk -a -u --proxy-host proxy-host --proxy-port proxy-port  &lt;span class="c1"&gt;# 设置代理&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装指定的包：(num1,&amp;nbsp;num2是上面命令返回的序号)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ wget https://bootstrap.pypa.io/get-pip.py
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python get-pip.py
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;或者，直接使用发行版的包管理安装:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install python-pip  &lt;span class="c1"&gt;# Debian/Ubuntu&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install python-pip  &lt;span class="c1"&gt;# Debian/Ubuntu&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -42,7 +42,7 @@ $ sudo python get-pip.py
 &lt;li&gt;http://pypi.douban.com/&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;修改pip默认源&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat .pip/pip.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat .pip/pip.conf
 &lt;span class="o"&gt;[&lt;/span&gt;global&lt;span class="o"&gt;]&lt;/span&gt;
 trusted-host &lt;span class="o"&gt;=&lt;/span&gt; mirrors.aliyun.com
 index-url &lt;span class="o"&gt;=&lt;/span&gt; http://mirrors.aliyun.com/pypi/simple/
@@ -78,14 +78,14 @@ index-url =&amp;nbsp;http://mirrors.aliyuncs.com/pypi/simple/&lt;/p&gt;
 &lt;p&gt;证书申请到会提示下载一个zip文件，解压缩后有 &lt;code&gt;for Nginx.zip&lt;/code&gt;，解压缩&lt;code&gt;for Nginx.zip&lt;/code&gt;得到 &lt;code&gt;*.crt&lt;/code&gt; 和 &lt;code&gt;*.key&lt;/code&gt;。
 将&lt;code&gt;.crt&lt;/code&gt; 和 &lt;code&gt;.key&lt;/code&gt; 文件放入Nginx主机的 /etc/ssl&amp;nbsp;目录。&lt;/p&gt;
 &lt;p&gt;生成dhparam.pem:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /etc/ssl/certs
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /etc/ssl/certs
 $ openssl dhparam -out dhparam.pem 4096
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;同时，启用了spdy，参考: &lt;a href="https://www.vobe.io/114"&gt;https://www.vobe.io/114&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Nginx配置文件(&lt;code&gt;/etc/nginx/sites-avaiable/default&lt;/code&gt;)如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nn"&gt;#server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nn"&gt;#server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
 &lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;your&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="err"&gt;#&lt;/span&gt;   &lt;span class="n"&gt;add_header&lt;/span&gt; &lt;span class="n"&gt;Strict&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Transport&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Security&lt;/span&gt; &lt;span class="n"&gt;max&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;15768000&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -140,7 +140,7 @@ $ openssl dhparam -out dhparam.pem 4096
 
 &lt;h2&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;&lt;/h2&gt;
 &lt;p&gt;curl测试服务器上的https接口:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl https://your-domain/your-services
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl https://your-domain/your-services
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -152,19 +152,19 @@ $ openssl dhparam -out dhparam.pem 4096
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
 &lt;p&gt;安装:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install iptables
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install iptables
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Debian系统中不需要启动iptables。&lt;/p&gt;
 &lt;h3&gt;CentOS&lt;/h3&gt;
 &lt;p&gt;安装:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo yum install iptables -y
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo yum install iptables -y
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo service iptables start
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo service iptables start
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -172,7 +172,7 @@ $ openssl dhparam -out dhparam.pem 4096
 &lt;p&gt;配置指令Debian、CentOS都一样。&lt;/p&gt;
 &lt;p&gt;这两段抄的&lt;a href="http://blog.kkyun.com/?p=50"&gt;kkyun&amp;nbsp;blog&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;清除防火墙规则:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;```
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;```
 #首先在清除前要将policy INPUT改成ACCEPT,表示接受一切请求。
 #这个一定要先做，不然清空后可能会悲剧
 $ sudo iptables -P INPUT ACCEPT
@@ -190,7 +190,7 @@ $ sudo iptables -Z
 
 
 &lt;p&gt;常用配置:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;```
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;```
 # 允许来自于lo接口的数据包
 # 如果没有此规则，你将不能通过127.0.0.1访问本地服务，例如ping 127.0.0.1
 $ sudo iptables -A INPUT -i lo -j ACCEPT
@@ -236,24 +236,24 @@ $ sudo iptables -D INPUT -s ***.***.***.*** -j DROP
 &lt;p&gt;iptables配置好在当前环境生效，但，重启系统就不再可用。&amp;nbsp;所以，我们需要将iptables配置信息保存下来，并在下次系统开机时自动加载。&lt;/p&gt;
 &lt;h4&gt;Debian&lt;/h4&gt;
 &lt;p&gt;重启时自动加载iptables配置信息:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install iptables-persistent
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install iptables-persistent
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h4&gt;CentOS&lt;/h4&gt;
 &lt;p&gt;保存iptables配置信息:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo service iptables save
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo service iptables save
 iptables: Saving firewall rules to /etc/sysconfig/iptables:&lt;span class="o"&gt;[&lt;/span&gt;  OK  &lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;重启自动运行iptables:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo chkconfig iptables on
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo chkconfig iptables on
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ lsb_release -a
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ lsb_release -a
 No LSB modules are available.
 Distributor ID: Debian
 Description:    Debian GNU/Linux 8.2 &lt;span class="o"&gt;(&lt;/span&gt;jessie&lt;span class="o"&gt;)&lt;/span&gt;
@@ -264,14 +264,14 @@ Codename:   jessie
 
 &lt;h2&gt;准备数据库环境&lt;/h2&gt;
 &lt;p&gt;virtualenv的安装、配置就不再介绍了。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install postgresql libpq-dev
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install postgresql libpq-dev
 $ mkvirtualenv sentry
 &lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ pip install psycopg2
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在PostgreSQL中为sentry创建数据库。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo -u postgre createuser --superuser sentry
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo -u postgre createuser --superuser sentry
 $ sudo -u sentry psql
 &lt;span class="nv"&gt;postgres&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="c1"&gt;# \password sentry&lt;/span&gt;
 Enter new password:
@@ -283,7 +283,7 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 &lt;h2&gt;安装sentry&lt;/h2&gt;
 &lt;p&gt;数据库使用的是PostgreSQL，使用公司邮件服务器发送邮件。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ workon sentry
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ workon sentry
 &lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ pip install sentry
 &lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry init /tmp/settings.py
 &lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sudo mv /tmp/settings.py /etc/sentry/sentry.conf.py
@@ -291,7 +291,7 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 
 &lt;p&gt;/etc/sentry/sentry.conf.py中的数据库配置如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;DATABASES&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="s1"&gt;&amp;#39;default&amp;#39;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
         &lt;span class="c1"&gt;# You can swap out the engine for MySQL easily by changing this value&lt;/span&gt;
         &lt;span class="c1"&gt;# to ``django.db.backends.mysql`` or to PostgreSQL with&lt;/span&gt;
@@ -312,7 +312,7 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 
 &lt;p&gt;/etc/sentry/sentry.conf.py中的Web服务配置如下：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# You MUST configure the absolute URI root for Sentry:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# You MUST configure the absolute URI root for Sentry:&lt;/span&gt;
 &lt;span class="nv"&gt;SENTRY_URL_PREFIX&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://your-ip&amp;#39;&lt;/span&gt;  &lt;span class="c1"&gt;# No trailing slash!&lt;/span&gt;
 
 &lt;span class="nv"&gt;SENTRY_WEB_HOST&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;localhost&amp;#39;&lt;/span&gt;
@@ -326,24 +326,24 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 &lt;p&gt;/etc/sentry/sentry.conf.py中的邮件配置根据个人情况修改。&lt;/p&gt;
 &lt;p&gt;修改完配置运行如下命令:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py upgrade
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py upgrade
 &lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py repair
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建sentry超级用户:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py createsuperuser
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py createsuperuser
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动Web服务命令如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py start
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py start
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;启动后就可以访问 http://your-ip:9000&amp;nbsp;了，用刚才创建的超级用户登录。&lt;/p&gt;
 &lt;p&gt;启动sentry&amp;nbsp;worker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py celery worker -B -l WARNING
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;sentry&lt;span class="o"&gt;)&lt;/span&gt;$ sentry --config&lt;span class="o"&gt;=&lt;/span&gt;/etc/sentry/sentry.conf.py celery worker -B -l WARNING
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -352,7 +352,7 @@ $ sudo -u sentry createdb -E utf8 sentry
 &lt;p&gt;通过supervisor管理sentry,&amp;nbsp;sentry_worker；并用nginx做反向代理。&lt;/p&gt;
 &lt;p&gt;supervisor的安装也不再介绍。&lt;/p&gt;
 &lt;p&gt;supervisor管理sentry:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/supervisor/conf.d/sentry.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/supervisor/conf.d/sentry.conf
 &lt;span class="o"&gt;[&lt;/span&gt;program:sentry&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="c1"&gt;#directory=/var/www/.virtualenvs/sentry/bin/&lt;/span&gt;
 &lt;span class="nv"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;VIRTUAL_ENV_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/www/.virtualenvs/sentry/bin/&amp;quot;&lt;/span&gt;
@@ -367,7 +367,7 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 
 &lt;p&gt;supervisor管理sentry_worker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/supervisor/conf.d/sentry_worker.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/supervisor/conf.d/sentry_worker.conf
 &lt;span class="o"&gt;[&lt;/span&gt;program:sentry_worker&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="c1"&gt;#directory=/var/www/.virtualenvs/sentry/bin/&lt;/span&gt;
 &lt;span class="nv"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;VIRTUAL_ENV_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/var/www/.virtualenvs/sentry/bin/&amp;quot;&lt;/span&gt;
@@ -382,14 +382,14 @@ $ sudo -u sentry createdb -E utf8 sentry
 
 
 &lt;p&gt;启动sentry,&amp;nbsp;sentry_worker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo service supervisor restart
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo service supervisor restart
 $ sudo supervisorctl  &lt;span class="c1"&gt;# 查看sentry, sentry_worker运行情况&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;配置Nginx&lt;/h3&gt;
 &lt;p&gt;/etc/nginx/sites-available/default的server配置中增加如下内容:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;```&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;```&lt;/span&gt;
 &lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;Host&lt;/span&gt;                 &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;http_host&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;X-Real-IP&lt;/span&gt;            &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;remote_addr&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
 &lt;span class="nt"&gt;proxy_set_header&lt;/span&gt;   &lt;span class="nt"&gt;X-Forwarded-For&lt;/span&gt;      &lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;proxy_add_x_forwarded_for&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
@@ -413,7 +413,7 @@ $ sudo supervisorctl  &lt;span class="c1"&gt;# 查看sentry, sentry_worker运行
 参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /etc/issue
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/issue
 CentOS release 6.6 &lt;span class="o"&gt;(&lt;/span&gt;Final&lt;span class="o"&gt;)&lt;/span&gt;
 Kernel &lt;span class="se"&gt;\r&lt;/span&gt; on an &lt;span class="se"&gt;\m&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -421,7 +421,7 @@ Kernel &lt;span class="se"&gt;\r&lt;/span&gt; on an &lt;span class="se"&gt;\m&lt
 
 &lt;h2&gt;安装gitlab&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://about.gitlab.com/downloads/#centos6"&gt;官方安装文档&lt;/a&gt;介绍的比较详细，&amp;nbsp;我用公司邮箱发送邮件，所以，没有安装postfix。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo yum install curl openssh-server cronie
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo yum install curl openssh-server cronie
 $ sudo lokkit -s http -s ssh
 $ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh &lt;span class="p"&gt;|&lt;/span&gt; sudo bash
 $ sudo yum install gitlab-ce
@@ -430,7 +430,7 @@ $ sudo yum install gitlab-ce
 
 &lt;h2&gt;配置gitlab&lt;/h2&gt;
 &lt;p&gt;数据库使用的是PostgreSQL，使用公司邮件服务器。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;--- /etc/gitlab/gitlab.rb.back  2015-09-07 16:31:05.247042700 +0800
 +++ /etc/gitlab/gitlab.rb   2015-09-09 14:47:33.710061343 +0800
 @@ -3,7 +3,7 @@
 &lt;span class="c1"&gt;## Url on which GitLab will be reachable.&lt;/span&gt;
@@ -660,12 +660,12 @@ gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;
 
 
 &lt;p&gt;根据/etc/gitlab/gitlab.rb重新配置gitlab。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo gitlab-ctl reconfigure
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo gitlab-ctl reconfigure
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用默认用户名:&lt;code&gt;root&lt;/code&gt; 密码:&lt;code&gt;5iveL!fe&lt;/code&gt;登陆，登陆后修改默认密码。&lt;/p&gt;
 &lt;h2&gt;备份&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo crontab -l
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo crontab -l
 &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt; * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="gitlab"></category></entry></feed>

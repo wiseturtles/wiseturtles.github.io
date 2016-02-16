@@ -90,7 +90,7 @@ On 2015-06-26
 <li>压力测试工具ab</li>
 <li>
 <p>代码及相关python包准备&nbsp;创建虚一个新的虚拟环境并安装需要的包</p>
-<div class="highlight"><pre>$ mkvirtualenv <span class="nb">test</span>
+<div class="highlight"><pre><span></span>$ mkvirtualenv <span class="nb">test</span>
 $ workon <span class="nb">test</span>
 
 $ cat requirements.txt
@@ -106,7 +106,7 @@ $ pip install -r requirements.txt
 
 
 <p>测试程序<code>app.py</code></p>
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 <span class="kn">from</span> <span class="nn">flask_redis</span> <span class="kn">import</span> <span class="n">FlaskRedis</span>
 
 <span class="n">REDIS_URL</span> <span class="o">=</span> <span class="s2">&quot;redis://:password-string@localhost:6379/0&quot;</span>
@@ -131,14 +131,14 @@ $ pip install -r requirements.txt
 <ol>
 <li>
 <p>使用ab工具,并行500个客户端,&nbsp;发送50000次请求</p>
-<div class="highlight"><pre>$ ab -c <span class="m">500</span> -t <span class="m">30</span> -r <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
+<div class="highlight"><pre><span></span>$ ab -c <span class="m">500</span> -t <span class="m">30</span> -r <span class="s2">&quot;http://127.0.0.1:8000/&quot;</span>
 </pre></div>
 
 
 </li>
 <li>
 <p>分别使用四种方式启动使用服务，&nbsp;并开启４个worker</p>
-<div class="highlight"><pre>$ gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class sync
+<div class="highlight"><pre><span></span>$ gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class sync
 $ gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class gevent
 $ gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class tornado
 $ gunicorn -w <span class="m">4</span> app:app --error-logfile - --worker-class eventlet

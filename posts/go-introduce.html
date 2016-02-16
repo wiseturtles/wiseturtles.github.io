@@ -116,7 +116,7 @@ src/
 下面，我自己一般设置两个路径作为<span class="caps">GOPATH</span>的值，一个用于专门下载第三方包，一个作为
 自己的工作环境,　这有的好处是可以在代码版本控制时,&nbsp;不受第三方库的影响</p>
 <p>如:</p>
-<div class="highlight"><pre># <span class="nv">$HOME</span>/golang作为第三方包的下载目录
+<div class="highlight"><pre><span></span># <span class="nv">$HOME</span>/golang作为第三方包的下载目录
 # <span class="nv">$HOME</span>/github/golang作为自己的开发目录
 $ export GOPATH=&quot;<span class="nv">$HOME</span>/golang:<span class="nv">$HOME</span>/github/golang&quot;
 
@@ -127,26 +127,26 @@ $ export PATH=<span class="nv">$PATH</span>:<span class="nv">$GOROOT</span>/bin:
 
 <h3>包路径</h3>
 <p>无论你是否要发布你的程序, 你都应该以要发布的方式来构建你的程序,最好的包名是&nbsp;github.com/user</p>
-<div class="highlight"><pre>$ mkdir -p $GOPATH/src/github.com/user
+<div class="highlight"><pre><span></span>$ mkdir -p $GOPATH/src/github.com/user
 </pre></div>
 
 
 <h3>第一个Go程序</h3>
 <p>下面，我将介绍如何将从头构建一个简单的go程序.
 首先, 我们以<code>/data/github/golang</code>为工作空间</p>
-<div class="highlight"><pre>$ mkdir -p /data/github/golang
+<div class="highlight"><pre><span></span>$ mkdir -p /data/github/golang
 $ <span class="nb">cd</span> /data/github/golang
 $ <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
 </pre></div>
 
 
 <p>为了创建一个简单的程序. 首先要选择包路径, 如<code>github.com/crazygit/hello</code>,&nbsp;并创建对于的目录结构</p>
-<div class="highlight"><pre>$ mkdir -p $GOPATH/src/github.com/crazygit/hello
+<div class="highlight"><pre><span></span>$ mkdir -p $GOPATH/src/github.com/crazygit/hello
 </pre></div>
 
 
 <p>在目录<code>$GOPATH/src/github.com/crazygit/hello</code>里创建<code>hello.go</code></p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 
@@ -157,31 +157,31 @@ $ <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=
 
 
 <p>使用go工具编译并安装程序</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> $GOPATH
 $ go install github.com/crazygit/hello
 </pre></div>
 
 
 <p>或者</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH/github.com/crazygit/hello
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> $GOPATH/github.com/crazygit/hello
 $ go install
 </pre></div>
 
 
 <p>执行了之后，可以看到<code>$GOPATH</code>中多了一个<code>bin</code>目录，里面有一个名为<code>hello</code>的可执行文件</p>
-<div class="highlight"><pre>$ $GOPATH/bin/hello
+<div class="highlight"><pre><span></span>$ $GOPATH/bin/hello
 Hello, world.
 </pre></div>
 
 
 <h3>第一个Go库</h3>
 <p>让我们再创建一个库，同样，先创建包路径<code>github.com/crazygit/stringutil</code></p>
-<div class="highlight"><pre>$ mkdir $GOPATH/src/github.com/crazygit/stringutil
+<div class="highlight"><pre><span></span>$ mkdir $GOPATH/src/github.com/crazygit/stringutil
 </pre></div>
 
 
 <p>在里面再创建一个名为<code>reverse.go</code></p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nx">stringutil</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">stringutil</span>
 
 <span class="kd">func</span> <span class="nx">Reverse</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
     <span class="nx">r</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
@@ -194,7 +194,7 @@ Hello, world.
 
 
 <p>编译</p>
-<div class="highlight"><pre>$ <span class="nb">cd</span> $GOPATH
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> $GOPATH
 $ go build github.com/crazygit/stringutil
 </pre></div>
 
@@ -202,7 +202,7 @@ $ go build github.com/crazygit/stringutil
 <p>编译过程不会有什么文件产生, 可以使用<code>go install</code>, 它会创建pkg目录
 并生成<code>pkg/linux_amd64/github.com/crazygit/stringutil.a</code>文件.</p>
 <p>修改<code>hello.go</code>,让它使用我们刚刚创建的库</p>
-<div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
     <span class="s">&quot;github.com/crazygit/stringutil&quot;</span>
 <span class="p">)</span>
@@ -215,19 +215,19 @@ $ go build github.com/crazygit/stringutil
 
 
 <p>安装，当安装的的时候，它会自动根据安装依赖,所以安装<code>hello</code>时, 它会自动安装<code>stringutil</code></p>
-<div class="highlight"><pre>$ go install github.com/crazygit/hello
+<div class="highlight"><pre><span></span>$ go install github.com/crazygit/hello
 </pre></div>
 
 
 <p>运行</p>
-<div class="highlight"><pre>$ $GOPATH/bin/hello
+<div class="highlight"><pre><span></span>$ $GOPATH/bin/hello
 Hello, Go!
 </pre></div>
 
 
 <h3>包名</h3>
 <p>Go代码文件的第一句话必须是</p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nx">name</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">name</span>
 </pre></div>
 
 
@@ -238,7 +238,7 @@ Hello, Go!
 <p>Go自带了一个使用<code>go test</code>的测试框架，为了写一个测试文件。</p>
 <p>应该创建一个文件名<code>_test.go</code>结尾的文件，函数名为如<code>TestXXX</code>的, 并且有参数<code>t *testing.T</code></p>
 <p>让我们为stringutil包创建测试<code>$GOPATH/src/github.com/crazygit/stringutil/reverse_test.go</code></p>
-<div class="highlight"><pre><span class="kn">package</span> <span class="nx">stringutil</span>
+<div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nx">stringutil</span>
 
 <span class="kn">import</span> <span class="s">&quot;testing&quot;</span>
 
@@ -262,13 +262,13 @@ Hello, Go!
 
 
 <p>执行测试</p>
-<div class="highlight"><pre>$ go <span class="nb">test</span> github.com/crazygit/stringutil
+<div class="highlight"><pre><span></span>$ go <span class="nb">test</span> github.com/crazygit/stringutil
 ok      github.com/crazygit/stringutil  0.002s
 </pre></div>
 
 
 <h2>第三方包</h2>
-<div class="highlight"><pre>$ go get github.com/golang/example/hello
+<div class="highlight"><pre><span></span>$ go get github.com/golang/example/hello
 $ $GOPATH/bin/hello
 Hello, Go examples!
 </pre></div>

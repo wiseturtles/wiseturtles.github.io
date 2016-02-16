@@ -7,13 +7,13 @@
 &lt;h3&gt;工作原理&lt;/h3&gt;
 &lt;p&gt;scrapyd是一个守护进程，监听爬虫的运行和请求，然后启动进程来执行它们&lt;/p&gt;
 &lt;h3&gt;启动服务&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 注意，启动scrapyd的目录会保存整个scrapyd运行期间生成的log, item文件，所以请选择合适的位置运行该命令&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 注意，启动scrapyd的目录会保存整个scrapyd运行期间生成的log, item文件，所以请选择合适的位置运行该命令&lt;/span&gt;
 $ scrapyd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;调度爬虫运行&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;spider2
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;spider2
 &lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;status&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;ok&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;jobid&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;26d1b1a6d6f111e0be5c001e648c57f8&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -28,19 +28,19 @@ $ scrapyd
 &lt;li&gt;Scrapy&amp;nbsp;0.17+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ pip install scrapyd
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install scrapyd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;或&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo apt-get install scrapyd
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install scrapyd
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;项目部署&lt;/h2&gt;
 &lt;p&gt;直接使用&lt;a href="https://github.com/scrapy/scrapyd-client"&gt;scrapyd-client&lt;/a&gt;提供的&lt;code&gt;scrapyd-deploy&lt;/code&gt;工具.&lt;/p&gt;
 &lt;h3&gt;安装scrapyd-client&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ pip install scrapyd-client
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pip install scrapyd-client
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -49,20 +49,20 @@ $ scrapyd
 &lt;h3&gt;配置服务器信息&lt;/h3&gt;
 &lt;p&gt;为了方便叙述，整个部署流程以部署&lt;a href="https://github.com/crazygit/scrapy_demo/tree/master/douban_movie"&gt;豆瓣电影&lt;/a&gt;爬虫为例。
 配置服务器和项目信息, 需要编辑&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，添加如下内容&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
 &lt;span class="na"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://localhost:6800/&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;其中&lt;code&gt;server-douban&lt;/code&gt;为服务器名称, &lt;code&gt;url&lt;/code&gt;为服务器地址，即运行了&lt;code&gt;scrapyd&lt;/code&gt;命令的服务器。&lt;/p&gt;
 &lt;p&gt;检查配置,&amp;nbsp;列出当前可用的服务器&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy -l
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy -l
 server-douban        http://localhost:6800/
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;列出服务器上所有的项目, 需要确保服务器上的&lt;code&gt;scrapyd&lt;/code&gt;命令正在执行，否则会报连接失败.首次运行的话，可以看到只有一个&lt;code&gt;default&lt;/code&gt;项目&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy -L server-douban
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy -L server-douban
 default
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -70,11 +70,11 @@ default
 &lt;p&gt;打开&lt;a href="http://localhost:6800/"&gt;http://localhost:6800/&lt;/a&gt;, 可以看到&lt;code&gt;Available projects: default&lt;/code&gt;&lt;/p&gt;
 &lt;h3&gt;部署项目&lt;/h3&gt;
 &lt;p&gt;在爬虫项目根目录下执行下面的命令, 其中&lt;code&gt;target&lt;/code&gt;为上一步配置的服务器名称，&lt;code&gt;project&lt;/code&gt;为项目名称，可以根据实际情况自己指定。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy server-douban -p douban-movies
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy server-douban -p douban-movies
 Packing version 1446102534
 Deploying to project &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt; in http://localhost:6800/addversion.json
 Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&lt;/span&gt;:
@@ -84,7 +84,7 @@ Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&l
 
 &lt;p&gt;部署操作会打包你的当前项目，如果当前项目下有&lt;code&gt;setup.py&lt;/code&gt;文件，就会使用它，没有的会就会自动创建一个。(如果后期项目需要打包的话，可以根据自己的需要修改里面的信息，也可以暂时不管它).&amp;nbsp;从返回的结果里面，我们可以看到部署的状态，项目名称，版本号和爬虫个数，以及当前的主机名称.&lt;/p&gt;
 &lt;p&gt;检查部署结果&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy -L server-douban
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy -L server-douban
 default
 douban-movies
 &lt;/pre&gt;&lt;/div&gt;
@@ -92,31 +92,31 @@ douban-movies
 
 &lt;p&gt;或再次打开&lt;a href="http://localhost:6800/"&gt;http://localhost:6800/&lt;/a&gt;, 也可以看到&lt;code&gt;Available projects: default, douban-movies&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;我们也可以把项目信息写入到配置文件中，部署时就不用指定项目信息，编辑&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，添加项目信息&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[deploy:server-douban]&lt;/span&gt;
 &lt;span class="na"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;http://localhost:6800/&lt;/span&gt;
 &lt;span class="na"&gt;project&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;douban-movies&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;下次部署可以直接执行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;如果配置了多个服务器的话，可以将项目直接部署到多台服务器&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ scrapyd-deploy -a -p &amp;lt;project&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ scrapyd-deploy -a -p &amp;lt;project&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;指定版本号&lt;/h3&gt;
 &lt;p&gt;默认情况下, &lt;code&gt;scrapyd-deploy&lt;/code&gt;使用当前的时间戳作为版本号，我们可以使用&lt;code&gt;--version&lt;/code&gt;来指定版本号&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt; --version &amp;lt;version&amp;gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;scrapyd-deploy &amp;lt;target&amp;gt; -p &amp;lt;project&amp;gt; --version &amp;lt;version&amp;gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;版本号的格式必须满足&lt;a href="http://epydoc.sourceforge.net/stdlib/distutils.version.LooseVersion-class.html"&gt;LooseVersion&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 设置版本号为0.1&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 设置版本号为0.1&lt;/span&gt;
 $ scrapyd-deploy server-douban -p douban-movies --version 0.1
 Packing version 0.1
 Deploying to project &lt;span class="s2"&gt;&amp;quot;douban-movies&amp;quot;&lt;/span&gt; in http://localhost:6800/addversion.json
@@ -126,13 +126,13 @@ Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&l
 
 
 &lt;p&gt;如果使用了&lt;code&gt;Mercurial&lt;/code&gt;或&lt;code&gt;Git&lt;/code&gt;管理代码，　可以使用&lt;code&gt;HG&lt;/code&gt;和&lt;code&gt;GIT&lt;/code&gt;作为version的参数，也可以将它写入&lt;code&gt;scrapy.cfg&lt;/code&gt;文件，那么就会使用当前的reversion作为版本号。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[deploy:target]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[deploy:target]&lt;/span&gt;
 &lt;span class="err"&gt;...&lt;/span&gt;
 &lt;span class="na"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;GIT&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat scrapy.cfg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat scrapy.cfg
 ...
 &lt;span class="o"&gt;[&lt;/span&gt;deploy:server-douban&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; http://localhost:6800/
@@ -150,7 +150,7 @@ Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&l
 
 
 &lt;p&gt;关于从&lt;span class="caps"&gt;GIT&lt;/span&gt;获取版本号的方式，可以参看&lt;code&gt;scrapyd-client&lt;/code&gt;源码部分&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;GIT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;  &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="n"&gt;version&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;GIT&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Popen&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;git&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;describe&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;PIPE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;communicate&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
         &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wait&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -165,7 +165,7 @@ Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&l
 
 &lt;h3&gt;服务器添加认证信息&lt;/h3&gt;
 &lt;p&gt;我们也可以在scrapyd前面加一层反向代理来实现用户认证。以nginx为例,&amp;nbsp;配置nginx&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
        &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="m"&gt;6801&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
        &lt;span class="n"&gt;location&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;{&lt;/span&gt;
             &lt;span class="n"&gt;proxy_pass&lt;/span&gt;            &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;://&lt;/span&gt;&lt;span class="m"&gt;127&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="m"&gt;6800&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -178,7 +178,7 @@ Server response &lt;span class="o"&gt;(&lt;/span&gt;200&lt;span class="o"&gt;)&l
 
 &lt;p&gt;&lt;code&gt;/etc/nginx/htpasswd/user.htpasswd&lt;/code&gt;里设置的用户名和密码都是&lt;code&gt;test&lt;/code&gt;
 修改配置文件，添加用户信息信息&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;...
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;...
 [deploy:server-douban]
 url = http://localhost:6801/
 project = douban-movies
@@ -197,7 +197,7 @@ password = test
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;调度爬虫&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider
 &lt;span class="c1"&gt;# 带上参数&lt;/span&gt;
 $ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;spider&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;somespider -d &lt;span class="nv"&gt;setting&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;DOWNLOAD_DELAY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt; -d &lt;span class="nv"&gt;arg1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;val1
 &lt;/pre&gt;&lt;/div&gt;
@@ -206,49 +206,49 @@ $ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;取消&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/cancel.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;job&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;6487ec79947edab326d6db28a2d86511e8247444
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/cancel.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;job&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;6487ec79947edab326d6db28a2d86511e8247444
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;列出项目&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/listprojects.json
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/listprojects.json
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;列出版本&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/listversions.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/listversions.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;列出爬虫&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/listspiders.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/listspiders.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;列出job&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/listjobs.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/listjobs.json?project&lt;span class="o"&gt;=&lt;/span&gt;myproject
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;删除版本&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/delversion.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r99
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/delversion.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject -d &lt;span class="nv"&gt;version&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r99
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;删除项目&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl http://localhost:6800/delproject.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl http://localhost:6800/delproject.json -d &lt;span class="nv"&gt;project&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;myproject
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -264,7 +264,7 @@ $ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;
 &lt;/ul&gt;
 &lt;p&gt;最后加载的会覆盖前面的设置&lt;/p&gt;
 &lt;p&gt;默认配置文件如下,&amp;nbsp;可以根据需要修改&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;[scrapyd]&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[scrapyd]&lt;/span&gt;
 &lt;span class="na"&gt;eggs_dir&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;eggs&lt;/span&gt;
 &lt;span class="na"&gt;logs_dir&lt;/span&gt;    &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;logs&lt;/span&gt;
 &lt;span class="na"&gt;items_dir&lt;/span&gt;   &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;items&lt;/span&gt;
@@ -314,7 +314,7 @@ $ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;
 &lt;p&gt;网上搜索之后，找到&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html"&gt;http://blog.sina.com.cn/s/blog_6262a50e0101cjyf.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;根据描述,&amp;nbsp;怀疑可能是redis连接数太多导致,于是查看&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt; grep connected_clients
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt; grep connected_clients
 connected_clients:6997
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -325,7 +325,7 @@ connected_clients:6997
 &lt;p&gt;经过调试发现。虽然使用py-redis连接redis, 它使用到了连接池，但是，连接池默认是没有设置连接数的上限(可以通过相关参数设置)，当高并发时，它会不断的创建连接，并且这些连接用完之后也不会自动释放。
 由于我们的服务运行采用的gevent方式。 因此, 更容易引起这个问题。为了验证自己的
 猜测, 写了个简单的计数程序&lt;code&gt;app.py&lt;/code&gt;测试一下。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;
 
 &lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;redis://:password@localhost:6379/0&amp;quot;&lt;/span&gt;
@@ -347,24 +347,24 @@ connected_clients:6997
 
 
 &lt;p&gt;采用gevent方式,&amp;nbsp;单worker启动&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ gunicorn -w &lt;span class="m"&gt;1&lt;/span&gt; app:app --worker-class gevent --error-logfile -
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gunicorn -w &lt;span class="m"&gt;1&lt;/span&gt; app:app --worker-class gevent --error-logfile -
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用ab模拟500个用户发送50000次请求的高并发&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ ab  -c &lt;span class="m"&gt;500&lt;/span&gt;  -t &lt;span class="m"&gt;30&lt;/span&gt; -r  &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ab  -c &lt;span class="m"&gt;500&lt;/span&gt;  -t &lt;span class="m"&gt;30&lt;/span&gt; -r  &lt;span class="s2"&gt;&amp;quot;http://127.0.0.1:8000/&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;查看连接数&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt;grep connected_clients
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ redis-cli -a password info &lt;span class="p"&gt;|&lt;/span&gt;grep connected_clients
 connected_clients:232
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;可以看到, 在高并发, 单worker的条件下，&amp;nbsp;一个连接池的连接数会就有两百多。然后测试开启４个worker的话，能达到一千二百多。&lt;/p&gt;
 &lt;p&gt;这些连接在连接池里使用之后，基本上都长期处于idle状态，白白浪费资源.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ redis-cli -a password client list
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ redis-cli -a password client list
 &lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:45327 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;170&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;35&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;34&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
 &lt;span class="nv"&gt;multi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-1 &lt;span class="nv"&gt;qbuf&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; qbuf-free&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;obl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;oll&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;omem&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;events&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;r &lt;span class="nv"&gt;cmd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;get
 &lt;span class="nv"&gt;addr&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1:43684 &lt;span class="nv"&gt;fd&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;44&lt;/span&gt; &lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nv"&gt;age&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;36&lt;/span&gt; &lt;span class="nv"&gt;idle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="nv"&gt;flags&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;N &lt;span class="nv"&gt;db&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;sub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="nv"&gt;psub&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;0
@@ -388,7 +388,7 @@ connected_clients:232
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;从目前的情况来看，是由于连接池维持了太多的连接导致.　因此不用的连接池应该及&amp;nbsp;时被释放掉。通过设置&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ reidis-cli -a password CONFIG SET timeout 30
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ reidis-cli -a password CONFIG SET timeout 30
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -401,7 +401,7 @@ connected_clients:232
 &lt;p&gt;&lt;a href="https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/"&gt;https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;</summary><category term="flask"></category><category term="redis"></category><category term="gevent"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><updated>2015-05-22T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="n"&gt;local_filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="c1"&gt;# NOTE the stream=True parameter&lt;/span&gt;
 &lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;requests&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -415,7 +415,7 @@ connected_clients:232
 
 
 &lt;h2&gt;urllib2&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;file&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;urllib2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlopen&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;filename&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="n"&gt;tmp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;file&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -433,7 +433,7 @@ connected_clients:232
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;创建&lt;code&gt;app.py&lt;/code&gt;文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;logging.config&lt;/span&gt;
@@ -454,7 +454,7 @@ connected_clients:232
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;创建&lt;code&gt;run.py&lt;/code&gt;文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;app&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;app_factory&lt;/span&gt;
 
 &lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;app_factory&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
@@ -470,7 +470,7 @@ connected_clients:232
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;创建logger的配置文件&lt;code&gt;log.conf&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat log.conf
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat log.conf
 &lt;span class="c1"&gt;# https://docs.python.org/2/library/logging.config.html#logging-config-fileformat&lt;/span&gt;
 
 &lt;span class="c1"&gt;# configure loggers&lt;/span&gt;
@@ -511,7 +511,7 @@ connected_clients:232
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;运行&lt;code&gt;run.py&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ python run.py 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ python run.py 
 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;root.other_logger&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;, &lt;span class="s1"&gt;&amp;#39;root.other_logger&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -522,7 +522,7 @@ connected_clients:232
 &lt;li&gt;
 &lt;p&gt;Flask中的默认logger名&lt;/p&gt;
 &lt;p&gt;Flask默认以import_name作为logger的默认名&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;app = Flask(&amp;#39;root&amp;#39;)
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;app = Flask(&amp;#39;root&amp;#39;)
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -578,7 +578,7 @@ Google了一下，在 &lt;a class="reference external" href="http://stackoverflo
 因此需要修改一下pep381cient程序代码。
 修改文件: &lt;code&gt;(YOUR INSALLED DIRECTORY)/pep381client/__init__.py&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;如 &lt;code&gt;/usr/local/lib/python2.6/dist-packages/pep381client/__init__.py&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;9:  -BASE = &amp;#39;http://&amp;#39;+pypi
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;9:  -BASE = &amp;#39;http://&amp;#39;+pypi
     +BASE = &amp;#39;https://&amp;#39;+pypi
 
 28: -        _conn = httplib.HTTPConnection(pypi)

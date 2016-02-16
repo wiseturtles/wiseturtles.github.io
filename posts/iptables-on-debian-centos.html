@@ -72,19 +72,19 @@ On 2015-09-23
 <h2>安装iptables</h2>
 <h3>Debian</h3>
 <p>安装:</p>
-<div class="highlight"><pre>$ sudo apt-get install iptables
+<div class="highlight"><pre><span></span>$ sudo apt-get install iptables
 </pre></div>
 
 
 <p>Debian系统中不需要启动iptables。</p>
 <h3>CentOS</h3>
 <p>安装:</p>
-<div class="highlight"><pre>$ sudo yum install iptables -y
+<div class="highlight"><pre><span></span>$ sudo yum install iptables -y
 </pre></div>
 
 
 <p>启动:</p>
-<div class="highlight"><pre>$ sudo service iptables start
+<div class="highlight"><pre><span></span>$ sudo service iptables start
 </pre></div>
 
 
@@ -92,7 +92,7 @@ On 2015-09-23
 <p>配置指令Debian、CentOS都一样。</p>
 <p>这两段抄的<a href="http://blog.kkyun.com/?p=50">kkyun&nbsp;blog</a></p>
 <p>清除防火墙规则:</p>
-<div class="highlight"><pre>```
+<div class="highlight"><pre><span></span>```
 #首先在清除前要将policy INPUT改成ACCEPT,表示接受一切请求。
 #这个一定要先做，不然清空后可能会悲剧
 $ sudo iptables -P INPUT ACCEPT
@@ -110,7 +110,7 @@ $ sudo iptables -Z
 
 
 <p>常用配置:</p>
-<div class="highlight"><pre>```
+<div class="highlight"><pre><span></span>```
 # 允许来自于lo接口的数据包
 # 如果没有此规则，你将不能通过127.0.0.1访问本地服务，例如ping 127.0.0.1
 $ sudo iptables -A INPUT -i lo -j ACCEPT
@@ -156,19 +156,19 @@ $ sudo iptables -D INPUT -s ***.***.***.*** -j DROP
 <p>iptables配置好在当前环境生效，但，重启系统就不再可用。&nbsp;所以，我们需要将iptables配置信息保存下来，并在下次系统开机时自动加载。</p>
 <h4>Debian</h4>
 <p>重启时自动加载iptables配置信息:</p>
-<div class="highlight"><pre>$ sudo apt-get install iptables-persistent
+<div class="highlight"><pre><span></span>$ sudo apt-get install iptables-persistent
 </pre></div>
 
 
 <h4>CentOS</h4>
 <p>保存iptables配置信息:</p>
-<div class="highlight"><pre>$ sudo service iptables save
+<div class="highlight"><pre><span></span>$ sudo service iptables save
 iptables: Saving firewall rules to /etc/sysconfig/iptables:<span class="o">[</span>  OK  <span class="o">]</span>
 </pre></div>
 
 
 <p>重启自动运行iptables:</p>
-<div class="highlight"><pre>$ sudo chkconfig iptables on
+<div class="highlight"><pre><span></span>$ sudo chkconfig iptables on
 </pre></div></div>
 
         <hr>

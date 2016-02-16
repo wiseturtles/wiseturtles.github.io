@@ -51,7 +51,7 @@
 &lt;/ul&gt;
 &lt;p&gt;通常选择注册第一种形式。&lt;/p&gt;
 &lt;p&gt;任意选择一个节点，执行如下命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup -d &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
 &lt;span class="s1"&gt;{&lt;/span&gt;
 &lt;span class="s1"&gt;    &amp;quot;type&amp;quot;: &amp;quot;fs&amp;quot;,&lt;/span&gt;
 &lt;span class="s1"&gt;    &amp;quot;settings&amp;quot;: {&lt;/span&gt;
@@ -71,7 +71,7 @@
 &lt;li&gt;max_restore_bytes_per_sec&amp;nbsp;快照恢复的速度，默认20mb/s&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;更新仓库设置如下:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="s2"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;fs&amp;quot;&lt;/span&gt;,
     &lt;span class="s2"&gt;&amp;quot;settings&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;{&lt;/span&gt;
@@ -86,23 +86,23 @@
 
 &lt;p&gt;这里需要注意一点是，注册仓库用的是&lt;code&gt;PUT&lt;/code&gt;, 而更新仓库设置用的是&lt;code&gt;POST&lt;/code&gt;.&lt;/p&gt;
 &lt;h3&gt;检查注册的仓库信息&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XGET http://192.168.0.1:9200/_snapshot/my_backup
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;开始备份&lt;/h3&gt;
 &lt;p&gt;指定快照名称为&lt;code&gt;snapshot_20150812&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;执行上面的上面的命令会马上返回，并在后台执行备份操作, 如果想等到备份完成，可以加上参数&lt;code&gt;wait_for_completion=true&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPUT  http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;默认是备份所有的索引indices,&amp;nbsp;如果要指定index,可以&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPUT http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPUT http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="s2"&gt;&amp;quot;indices&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_1,index_2&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -112,7 +112,7 @@
 &lt;p&gt;这个备份过程需要的时间视数据量而定.&lt;/p&gt;
 &lt;h3&gt;查看备份状态&lt;/h3&gt;
 &lt;p&gt;整个备份过程中，可以通过如下命令查看备份进度&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XGET http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_status
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XGET http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_status
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -125,22 +125,22 @@
 &lt;li&gt;&lt;span class="caps"&gt;FAILED&lt;/span&gt;&amp;nbsp;备份失败&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;取消备份&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XDELETE http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XDELETE http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;恢复备份&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;同备份一样，也可以设置wait_for_completion=true等待恢复结果&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore?wait_for_completion&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;true&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;默认情况下，是恢复所有的索引，我们也可以设置一些参数来指定恢复的索引，以及重命令恢复的索引，这样可以避免覆盖原有的数据.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XPOST http://192.168.0.1:9200/_snapshot/my_backup/snapshot_20150812/_restore
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="s2"&gt;&amp;quot;indices&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_1&amp;quot;&lt;/span&gt;,
     &lt;span class="s2"&gt;&amp;quot;rename_pattern&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;index_(.+)&amp;quot;&lt;/span&gt;,
@@ -155,7 +155,7 @@
 &lt;li&gt;rename_replacement:&amp;nbsp;表示将所有的索引重命名为&amp;#8217;restored_index_xxx&amp;#8217;.如index_1会被重命名为restored_index_1.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3&gt;查看恢复进度&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;# 查看所有索引的恢复进度&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 查看所有索引的恢复进度&lt;/span&gt;
 curl -XGET http://192.168.0.1:9200/_recovery/
 
 &lt;span class="c1"&gt;# 查看索引restored_index_1的恢复进度&lt;/span&gt;
@@ -165,7 +165,7 @@ curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 
 &lt;h3&gt;取消恢复&lt;/h3&gt;
 &lt;p&gt;只需要删除索引，即可取消恢复&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;curl -XDELETE http://192.168.0.1:9200/restored_index_1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -XDELETE http://192.168.0.1:9200/restored_index_1
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -178,14 +178,14 @@ curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 &lt;p&gt;注: Elasticsearch和Logstash都需要安装&lt;span class="caps"&gt;JDK&lt;/span&gt;, 我们用的&lt;span class="caps"&gt;JDK&lt;/span&gt;&amp;nbsp;1.7&lt;/p&gt;
 &lt;h1&gt;安装Logstash&amp;nbsp;1.4.3&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 $ wget https://download.elastic.co/logstash/logstash/logstash-1.4.3.tar.gz
 $ tar zxf logstash-1.4.3.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改配置文件&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /data/softwares/logstash-1.4.3/logstash.conf &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#|^$&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /data/softwares/logstash-1.4.3/logstash.conf &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#|^$&amp;#39;&lt;/span&gt;
 input &lt;span class="o"&gt;{&lt;/span&gt;
   redis &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;codec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;json&amp;quot;&lt;/span&gt;
@@ -299,21 +299,21 @@ output &lt;span class="o"&gt;{&lt;/span&gt;
 
 
 &lt;h2&gt;启动测试&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/softwares/logstash-1.4.3
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/softwares/logstash-1.4.3
 $ bin/logstash -f logstash.conf
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h1&gt;安装Elasticsearch&amp;nbsp;1.4.5&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software
 $ wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.tar.gz
 $ tar zxf elasticsearch-1.4.5.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;安装插件：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software &lt;span class="c1"&gt;# 安装分词插件&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software &lt;span class="c1"&gt;# 安装分词插件&lt;/span&gt;
 $ git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; elasticsearch-rtf
 $ cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
@@ -330,7 +330,7 @@ $ bin/plugin -install lukas-vlcek/bigdesk     &lt;span class="c1"&gt;# bigdesk�
 
 
 &lt;h2&gt;修改配置文件&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#|^$&amp;#39;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /data/softwares/elasticsearch-1.4.5/config/elasticsearch.yml &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^#|^$&amp;#39;&lt;/span&gt;
 cluster.name: elasticsearch_dashboard
 node.name: &lt;span class="s2"&gt;&amp;quot;es1&amp;quot;&lt;/span&gt;
 node.master: &lt;span class="nb"&gt;true&lt;/span&gt;
@@ -392,7 +392,7 @@ index:
 2. 其它机器配置文件类似，只需要修改和&lt;span class="caps"&gt;IP&lt;/span&gt;相关的字段值&lt;/p&gt;
 &lt;h2&gt;启动Elasticsearch&lt;/h2&gt;
 &lt;p&gt;测试能否正常启动：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software/elasticsearch-1.4.5
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software/elasticsearch-1.4.5
 $ bin/elasticsearch  &lt;span class="c1"&gt;# 启动ES，测试是否可以正常启动&lt;/span&gt;
 $ tail -f /data/log/elasticsearch/elasticsearch_dashboard.log &lt;span class="c1"&gt;# 查看日志&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -405,7 +405,7 @@ $ tail -f /data/log/elasticsearch/elasticsearch_dashboard.log &lt;span class="c1
 &lt;/ul&gt;
 &lt;h1&gt;配置supervisor&lt;/h1&gt;
 &lt;p&gt;如果可以正常启动，我们通过supervisor管理Elasticsearch和Logstash。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ sudo pip install supervisor &lt;span class="c1"&gt;# 后来拿到root权限，否则还要先弄Python virtual env&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install supervisor &lt;span class="c1"&gt;# 后来拿到root权限，否则还要先弄Python virtual env&lt;/span&gt;
 $ 修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
 
 
@@ -462,7 +462,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 &lt;h1&gt;常用的&lt;span class="caps"&gt;ES&lt;/span&gt;命令别名&lt;/h1&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ tail -n3 ~/.bashrc 
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tail -n3 ~/.bashrc 
 &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;esh&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;curl &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ip -4 -o addr show dev eth0 &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{split($4,a,&amp;quot;/&amp;quot;);print a[1]}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;:9200/_cluster/health?pretty&amp;quot;&lt;/span&gt;
 &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;esi&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;curl &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ip -4 -o addr show dev eth0 &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{split($4,a,&amp;quot;/&amp;quot;);print a[1]}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;:9200/_cat/indices?pretty&amp;quot;&lt;/span&gt;
 &lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;ess&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;curl &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;ip -4 -o addr show dev eth0 &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{split($4,a,&amp;quot;/&amp;quot;);print a[1]}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;:9200/_cat/shards&amp;quot;&lt;/span&gt;
@@ -477,7 +477,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 &lt;h1&gt;碰到的问题&lt;/h1&gt;
 &lt;h2&gt;没有将shard同步到新加入的&lt;span class="caps"&gt;ES&lt;/span&gt;&amp;nbsp;1.4.5机器上&lt;/h2&gt;
 &lt;p&gt;修改number_of_replicas，根据机器个数修改。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPUT &lt;span class="s1"&gt;&amp;#39;&amp;lt;your-ip&amp;gt;:9200/&amp;lt;your-index&amp;gt;/_settings&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPUT &lt;span class="s1"&gt;&amp;#39;&amp;lt;your-ip&amp;gt;:9200/&amp;lt;your-index&amp;gt;/_settings&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
 &lt;span class="s1"&gt;     &amp;quot;index&amp;quot; : {&lt;/span&gt;
 &lt;span class="s1"&gt;         &amp;quot;number_of_replicas&amp;quot; : 2&lt;/span&gt;
 &lt;span class="s1"&gt;      }&lt;/span&gt;
@@ -486,7 +486,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 &lt;p&gt;明确让某个index的某个shard分配到指定机器上。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPOST &lt;span class="s1"&gt;&amp;#39;&amp;lt;your-es-ip&amp;gt;:9200/_cluster/reroute&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPOST &lt;span class="s1"&gt;&amp;#39;&amp;lt;your-es-ip&amp;gt;:9200/_cluster/reroute&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
 &lt;span class="s1"&gt;    &amp;quot;commands&amp;quot; : [ {&lt;/span&gt;
 &lt;span class="s1"&gt;        &amp;quot;move&amp;quot; :&lt;/span&gt;
 &lt;span class="s1"&gt;            {&lt;/span&gt;
@@ -505,7 +505,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 
 
 &lt;p&gt;比如：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ curl -XPOST &lt;span class="s1"&gt;&amp;#39;localhost:9200/_cluster/reroute&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ curl -XPOST &lt;span class="s1"&gt;&amp;#39;localhost:9200/_cluster/reroute&amp;#39;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&lt;/span&gt;
 &lt;span class="s1"&gt;    &amp;quot;commands&amp;quot; : [ {&lt;/span&gt;
 &lt;span class="s1"&gt;        &amp;quot;move&amp;quot; :&lt;/span&gt;
 &lt;span class="s1"&gt;            {&lt;/span&gt;

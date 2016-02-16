@@ -73,24 +73,24 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
 如果想直接通过无线网卡上外网，需要先停掉hostapd 或&nbsp;ap-hotspot，并重启网络。</p>
 <p>重启网络:</p>
-<div class="highlight"><pre>$ sudo service network-manager restart
+<div class="highlight"><pre><span></span>$ sudo service network-manager restart
 </pre></div>
 
 
 <h1>方法一</h1>
 <h2>查看无线网卡硬件信息</h2>
-<div class="highlight"><pre>$ sudo lspci <span class="p">|</span> grep -i network
+<div class="highlight"><pre><span></span>$ sudo lspci <span class="p">|</span> grep -i network
 03:00.0 Network controller: Intel Corporation Wireless <span class="m">7260</span> <span class="o">(</span>rev 6b<span class="o">)</span>
 </pre></div>
 
 
 <h2>查看无线网卡驱动信息</h2>
-<div class="highlight"><pre>$ lsmod
+<div class="highlight"><pre><span></span>$ lsmod
 </pre></div>
 
 
 <h2>查看无线网卡设备名称</h2>
-<div class="highlight"><pre>$ iwconfig
+<div class="highlight"><pre><span></span>$ iwconfig
 wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span class="m">16</span> dBm   
           Retry  long limit:7   RTS thr:off   Fragment thr:off
           Power Management:on
@@ -98,12 +98,12 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span cla
 
 
 <h2>安装需要的软件</h2>
-<div class="highlight"><pre>$ sudo apt-get install dhcp3-server hostapd
+<div class="highlight"><pre><span></span>$ sudo apt-get install dhcp3-server hostapd
 </pre></div>
 
 
 <h2>修改/etc/hostapd/hostapd.conf</h2>
-<div class="highlight"><pre>$ cat /etc/hostapd/hostapd.conf
+<div class="highlight"><pre><span></span>$ cat /etc/hostapd/hostapd.conf
 <span class="nv">interface</span><span class="o">=</span>wlan0
 <span class="nv">driver</span><span class="o">=</span>nl80211
 <span class="nv">ssid</span><span class="o">=</span>your_hotspot_name
@@ -119,13 +119,13 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span cla
 
 
 <h2>修改/etc/default/isc-dhcp-server</h2>
-<div class="highlight"><pre>$ grep INTERFACES /etc/default/isc-dhcp-server
+<div class="highlight"><pre><span></span>$ grep INTERFACES /etc/default/isc-dhcp-server
 <span class="nv">INTERFACES</span><span class="o">=</span><span class="s2">&quot;wlan0&quot;</span>
 </pre></div>
 
 
 <h2>修改/etc/dhcp/dhcpd.conf</h2>
-<div class="highlight"><pre>配置文件: /etc/dhcp/dhcpd.conf
+<div class="highlight"><pre><span></span>配置文件: /etc/dhcp/dhcpd.conf
 Make sure the follow lines are Commented out <span class="o">(</span> put a <span class="nb">hash</span> “#”  sign at the beginning of the line <span class="o">)</span> the following lines:
 <span class="c1"># option definitions common to all supported networks…</span>
 <span class="c1">#option domain-name “example.org”;</span>
@@ -147,7 +147,7 @@ ddns-update-style none<span class="p">;</span><span class="o">)</span>
 
 
 <h2>修改/etc/default/hostapd</h2>
-<div class="highlight"><pre>$ grep -E <span class="s1">&#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&#39;</span> /etc/default/hostapd <span class="p">|</span> grep -Ev <span class="s1">&#39;^#&#39;</span>
+<div class="highlight"><pre><span></span>$ grep -E <span class="s1">&#39;RUN_DAEMON|DAEMON_CONF|DAEMON_OPTS&#39;</span> /etc/default/hostapd <span class="p">|</span> grep -Ev <span class="s1">&#39;^#&#39;</span>
 <span class="nv">RUN_DAEMON</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span>
 <span class="nv">DAEMON_CONF</span><span class="o">=</span><span class="s2">&quot;/etc/hostapd/hostapd.conf&quot;</span>
 <span class="nv">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-dd&quot;</span>
@@ -155,7 +155,7 @@ ddns-update-style none<span class="p">;</span><span class="o">)</span>
 
 
 <h2>修改/etc/network/interfaces</h2>
-<div class="highlight"><pre>$ cat /etc/network/interfaces
+<div class="highlight"><pre><span></span>$ cat /etc/network/interfaces
 auto lo
 iface lo inet loopback
 auto wlan0
@@ -166,13 +166,13 @@ iface wlan0 inet static
 
 
 <h2>修改/etc/sysctl.conf</h2>
-<div class="highlight"><pre>$ grep net.ipv4.ip_forward /etc/sysctl.conf 
+<div class="highlight"><pre><span></span>$ grep net.ipv4.ip_forward /etc/sysctl.conf 
 net.ipv4.ip_forward<span class="o">=</span>1
 </pre></div>
 
 
 <h2>修改/etc/rc.local</h2>
-<div class="highlight"><pre>编辑 /etc/rc.local, 在 <span class="s2">&quot;exit 0&quot;</span> 前添加下一行
+<div class="highlight"><pre><span></span>编辑 /etc/rc.local, 在 <span class="s2">&quot;exit 0&quot;</span> 前添加下一行
 iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
 </pre></div>
 
@@ -182,7 +182,7 @@ iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
 <h1>方法二</h1>
 <p>用ap-hotspot更容易搭建。</p>
 <h2>ap-hotspot安装、配置</h2>
-<div class="highlight"><pre>$ sudo add-apt-repository ppa:nilarimogard/webupd8
+<div class="highlight"><pre><span></span>$ sudo add-apt-repository ppa:nilarimogard/webupd8
 $ sudo apt-get install ap-hotspot
 $ sudo ap-hotspot configure <span class="c1"># configure</span>
 $ sudo ap-hotspot start <span class="c1"># start</span>

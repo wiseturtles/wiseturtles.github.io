@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Upgrade Ubuntu from 10.04 to&nbsp;12.04
+    <title>Wise Turtles - Mac System Intregrity Protection - Operation not&nbsp;permitted
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -26,11 +26,11 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
-    <meta name="author" contents="Zhang Wanming" />
+    <meta name="author" contents="ox0spy" />
     <meta name="description" contents="" />
 
-      <meta name="tags" contents="Ubuntu" />
-      <meta name="tags" contents="Nis" />
+      <meta name="tags" contents="Mac" />
+      <meta name="tags" contents="SIP" />
 
 </head>
 
@@ -60,84 +60,56 @@
         <div class="span9">
     <div class='article'>
         <div class="content-title">
-            <h1>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h1>
+            <h1>Mac System Intregrity Protection - Operation not&nbsp;permitted</h1>
             <br />
-    Tags <a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a> <a href="http://blog.wiseturtles.com/tag/nis.html">Nis</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2014-12-04
+    Tags <a href="http://blog.wiseturtles.com/tag/mac.html">Mac</a> <a href="http://blog.wiseturtles.com/tag/sip.html">SIP</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-02-16
 
         </div>
 
-        <div><p>公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox <span class="caps">OS</span>都有问题，所以，我尝试升级并把碰到的问题记录下来。</p>
-<h1>升级</h1>
-<h2>修改源</h2>
-<div class="highlight"><pre><span></span>$ cat /etc/apt/sources.list
-deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-backports main restricted universe multiverse
-
-<span class="c1"># aliyun</span>
-deb http://mirrors.aliyun.com/ubuntu/ lucid main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe multiverse
+        <div><p>貌似刚拿到电脑是自己手动编译安装了vim 7.3，后来都是brew install&nbsp;vim最新版本。</p>
+<p>今天vim出了点问题，发现系统上还有个vim 7.3，准备删除时就报<code>Operation not permitted</code></p>
+<h2>问题描述</h2>
+<div class="highlight"><pre><span></span>$ sudo rm -rf /usr/share/vim/
+rm: /usr/share/vim: Operation not permitted
 </pre></div>
 
 
-<h2>开始升级</h2>
-<div class="highlight"><pre><span></span>$ sudo <span class="k">do</span>-release-upgrade
+<p>习惯Linux我就觉得有没有搞错，我是root呀，什么文件不能删除呢。。。</p>
+<p>Google下才知道Apple为了防止恶意软件破坏系统开启了<a href="https://support.apple.com/en-us/HT204899">System Intregrity Protection</a>。</p>
+<h2>解决</h2>
+<p>查看文件flag:</p>
+<div class="highlight"><pre><span></span>$ ls -lO /usr/share/vim
+-rwxr-xr-x  <span class="m">8</span> root  wheel  restricted - Aug  <span class="m">2</span> 22:36 /usr/share/vim
 </pre></div>
 
 
-<h2>nis无法启动，导致升级过程中配置nis包失败</h2>
-<div class="highlight"><pre><span></span>$ grep redhat /etc/hosts
-172.26.32.12    cd-redhat-001.TCTCD
-
-$ tail -1 /etc/yp.conf 
-ypserver cd-redhat-001.TCTCD
-
-$ cat /etc/defaultdomain 
-TCTCD
-
-$ grep NIS /etc/default/nis <span class="p">|</span> grep -Ev <span class="s1">&#39;#&#39;</span>
-<span class="nv">NISSERVER</span><span class="o">=</span><span class="nb">false</span>
-<span class="nv">NISCLIENT</span><span class="o">=</span><span class="nb">true</span>
-<span class="nv">NISMASTER</span><span class="o">=</span>
-
-$ cat /etc/auto.master
-/home /etc/auto.home
-
-$ cat /etc/auto.home 
-xcsu cd-redhat-001.TCTCD:/home/xcsu
-
-$ /usr/lib/yp/ypinit -s cd-redhat-001.TCTCD
-
-$ sudo service portmap restart
-$ sudo service nis restart
-</pre></div>
-
-
-<h1>启动后登录时发现只能用administrator和guest登录</h1>
-<div class="highlight"><pre><span></span>$ cat /etc/lightdm/lightdm.conf 
-<span class="o">[</span>SeatDefaults<span class="o">]</span>
-user-session<span class="o">=</span>ubuntu
-greeter-session<span class="o">=</span>unity-greeter
-allow-guest<span class="o">=</span><span class="nb">false</span>
-greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
-</pre></div>
-
-
-<h2>重启电脑，就可以用其它用户登录了</h2>
-<div class="highlight"><pre><span></span>$ sudo reboot
+<p>参考:&nbsp;http://stackoverflow.com/questions/30768087/restricted-folder-files-in-os-x-el-capitan</p>
+<ul>
+<li>reboot</li>
+<li>as soon as you hear the &#8220;Mac sound&#8221; on the grey screen, press Cmd+R to enter Recovery&nbsp;mode</li>
+<li>Open&nbsp;Utilities-&gt;Terminal</li>
+<li>Run the command csrutil&nbsp;disable</li>
+<li>Reboot, you&#8217;ll land in the normal <span class="caps">OS</span> with <span class="caps">SIP</span>&nbsp;disabled</li>
+<li>do all the changes you&#8217;d like to&nbsp;do</li>
+<li>Reboot&nbsp;again</li>
+<li>as soon as you hear the &#8220;Mac sound&#8221; on the grey screen, press Cmd+R to enter Recovery&nbsp;mode</li>
+<li>Enable <span class="caps">SIP</span> with csrutil&nbsp;enable</li>
+<li>Reboot&nbsp;again</li>
+<li>done</li>
+</ul>
+<p>流程如下:</p>
+<p>重启 -&gt; Command+R，进入恢复模式 -&gt; 在终端通过<code>csrutil disable</code>禁掉<span class="caps">SIP</span> -&gt; 重启 -&gt; 删除文件 -&gt; 再通过Command+R，进入恢复模式 -&gt; 通过 <code>csrutil enable</code> 启用<span class="caps">SIP</span> -&gt;&nbsp;再次重启</p>
+<p>查看<span class="caps">SIP</span>状态:</p>
+<div class="highlight"><pre><span></span>$ csrutil status
+System Integrity Protection status: enabled.
 </pre></div></div>
 
         <hr>
 
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="upgrade-ubuntu-from-10.04-to-12.04" data-title="Upgrade Ubuntu from 10.04 to&nbsp;12.04" data-url="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html"></div>
+  <div class="ds-thread" data-thread-key="Mac-System-Intregrity-Protection" data-title="Mac System Intregrity Protection - Operation not&nbsp;permitted" data-url="http://blog.wiseturtles.com/posts/Mac-System-Intregrity-Protection.html"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

@@ -22,13 +22,13 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.yinwang.org/blog-cn/2014/04/18/golang/"&gt;对 Go&amp;nbsp;语言的综合评价&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</summary><category term="go"></category></entry><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><updated>2015-07-22T16:33:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-hello-beego.html</id><summary type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ go get github.com/astaxie/beego
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go get github.com/astaxie/beego
 $ go get github.com/beego/bee
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;创建程序&lt;code&gt;hello-beego.go&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
         &lt;span class="s"&gt;&amp;quot;github.com/astaxie/beego&amp;quot;&lt;/span&gt;
@@ -57,7 +57,7 @@ $ go get github.com/beego/bee
 &lt;li&gt;
 &lt;p&gt;&lt;span class="caps"&gt;GOPATH&lt;/span&gt;允许多个目录, 当&lt;span class="caps"&gt;GOPATH&lt;/span&gt;有多个目录时，为了让每个目录下的bin目录都加入环境变量
 可以设置&lt;code&gt;${GOPATH//://bin:}/bin&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;HOME/golang:&lt;/span&gt;$&lt;span class="s2"&gt;HOME/github/golang&amp;quot;&lt;/span&gt;
 &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$PATH:$GOROOT/bin:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="p"&gt;//://bin:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin
 &lt;/pre&gt;&lt;/div&gt;
@@ -85,14 +85,14 @@ $ go get github.com/beego/bee
 &lt;/ul&gt;
 &lt;h3&gt;Go字符串&lt;/h3&gt;
 &lt;p&gt;字符串是用一对双引号（&amp;#8221;&amp;#8220;）或反引号（&amp;#8220;）括起来定义，它的类型是string&amp;nbsp;如果要声明一个多行的字符串怎么办？可以通过`来声明&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt; &lt;span class="nx"&gt;m&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;`hello&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; &lt;span class="nx"&gt;m&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="s"&gt;`hello&lt;/span&gt;
 &lt;span class="s"&gt;        world`&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;iota枚举&lt;/h3&gt;
 &lt;p&gt;Go里面有一个关键字iota，这个关键字用来声明enum的时候采用，它默认开始值是0，每调用一次加1：&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kd"&gt;const&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kd"&gt;const&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="nx"&gt;x&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// x == 0&lt;/span&gt;
     &lt;span class="nx"&gt;y&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// y == 1&lt;/span&gt;
     &lt;span class="nx"&gt;z&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="kc"&gt;iota&lt;/span&gt;  &lt;span class="c1"&gt;// z == 2&lt;/span&gt;
@@ -117,14 +117,14 @@ $ go get github.com/beego/bee
 &lt;/ul&gt;
 &lt;h3&gt;数组&lt;/h3&gt;
 &lt;p&gt;声明&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 声明了一个长度为3的int数组&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 声明了一个长度为3的int数组&lt;/span&gt;
 &lt;span class="nx"&gt;b&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 声明了一个长度为10的int数组，其中前三个元素初始化为1、2、3，其它默认为0&lt;/span&gt;
 &lt;span class="nx"&gt;c&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="c1"&gt;// 可以省略长度而采用`...`的方式，Go会自动根据元素个数来计算长度&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;二维数组&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;// 声明了一个二维数组，该数组以两个数组作为元素，其中每个数组中又有4个int类型的元素&lt;/span&gt;
 &lt;span class="nx"&gt;doubleArray&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;6&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
 
 &lt;span class="c1"&gt;// 上面的声明可以简化，直接忽略内部的类型&lt;/span&gt;
@@ -155,7 +155,7 @@ Ubuntu&amp;nbsp;64位的tarball包，解压出来可以直接用了。&lt;/p&gt;
 在Github上面由这些工具的镜像，因此我们可以曲线救国，从镜像下载。在下载之前，首先，还是要先设置&lt;code&gt;GOPATH&lt;/code&gt;变
 量, 怎么设置可以参考本系列文章第二篇&lt;a href="http://blog.wiseturtles.com/posts/go-introduce.html"&gt;http://blog.wiseturtles.com/posts/go-introduce.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;安装必备的cmd&amp;nbsp;tools&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c1"&gt;#　创建目录&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#　创建目录&lt;/span&gt;
 $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;your_go_path&amp;#39;&lt;/span&gt;
 $ mkdir -p $GOPATH/src/golang.org/x
 
@@ -181,7 +181,7 @@ $ go get github.com/beego/bee
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;GoSublime 配置, Preferences -&amp;gt; Package Settings -&amp;gt; GoSublime -&amp;gt;　Settings -&amp;nbsp;User&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;{
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
     // &lt;span class="n"&gt;you&lt;/span&gt; &lt;span class="n"&gt;may&lt;/span&gt; &lt;span class="n"&gt;set&lt;/span&gt; &lt;span class="n"&gt;specific&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt; &lt;span class="n"&gt;variables&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt;
     // &lt;span class="nb"&gt;e&lt;/span&gt;.&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;env&amp;quot;&lt;/span&gt;: { &lt;span class="s"&gt;&amp;quot;PATH&amp;quot;&lt;/span&gt;: &lt;span class="s"&gt;&amp;quot;$HOME/go/bin:$PATH&amp;quot;&lt;/span&gt; }
     // &lt;span class="n"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;values&lt;/span&gt;, &lt;span class="nv"&gt;$PATH&lt;/span&gt; &lt;span class="o"&gt;and&lt;/span&gt; ${&lt;span class="n"&gt;PATH&lt;/span&gt;} &lt;span class="n"&gt;are&lt;/span&gt; &lt;span class="n"&gt;replaced&lt;/span&gt; &lt;span class="n"&gt;with&lt;/span&gt;
@@ -222,7 +222,7 @@ $ go get github.com/beego/bee
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;GoDef 配置, Preferences -&amp;gt; Package Settings -&amp;gt; GoDef -&amp;gt;　Settings -&amp;nbsp;User&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;{
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;{
     //根据实际情况设置如下变量
     &amp;quot;gopath&amp;quot;: &amp;quot;/home/linliang/golang&amp;quot;
 }
@@ -285,7 +285,7 @@ src/
 下面，我自己一般设置两个路径作为&lt;span class="caps"&gt;GOPATH&lt;/span&gt;的值，一个用于专门下载第三方包，一个作为
 自己的工作环境,　这有的好处是可以在代码版本控制时,&amp;nbsp;不受第三方库的影响&lt;/p&gt;
 &lt;p&gt;如:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;# &lt;span class="nv"&gt;$HOME&lt;/span&gt;/golang作为第三方包的下载目录
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# &lt;span class="nv"&gt;$HOME&lt;/span&gt;/golang作为第三方包的下载目录
 # &lt;span class="nv"&gt;$HOME&lt;/span&gt;/github/golang作为自己的开发目录
 $ export GOPATH=&amp;quot;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/golang:&lt;span class="nv"&gt;$HOME&lt;/span&gt;/github/golang&amp;quot;
 
@@ -296,26 +296,26 @@ $ export PATH=&lt;span class="nv"&gt;$PATH&lt;/span&gt;:&lt;span class="nv"&gt;$
 
 &lt;h3&gt;包路径&lt;/h3&gt;
 &lt;p&gt;无论你是否要发布你的程序, 你都应该以要发布的方式来构建你的程序,最好的包名是&amp;nbsp;github.com/user&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir -p $GOPATH/src/github.com/user
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p $GOPATH/src/github.com/user
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;第一个Go程序&lt;/h3&gt;
 &lt;p&gt;下面，我将介绍如何将从头构建一个简单的go程序.
 首先, 我们以&lt;code&gt;/data/github/golang&lt;/code&gt;为工作空间&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir -p /data/github/golang
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p /data/github/golang
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/github/golang
 $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;为了创建一个简单的程序. 首先要选择包路径, 如&lt;code&gt;github.com/crazygit/hello&lt;/code&gt;,&amp;nbsp;并创建对于的目录结构&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir -p $GOPATH/src/github.com/crazygit/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p $GOPATH/src/github.com/crazygit/hello
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在目录&lt;code&gt;$GOPATH/src/github.com/crazygit/hello&lt;/code&gt;里创建&lt;code&gt;hello.go&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
 
@@ -326,31 +326,31 @@ $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/s
 
 
 &lt;p&gt;使用go工具编译并安装程序&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
 $ go install github.com/crazygit/hello
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;或者&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH/github.com/crazygit/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH/github.com/crazygit/hello
 $ go install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;执行了之后，可以看到&lt;code&gt;$GOPATH&lt;/code&gt;中多了一个&lt;code&gt;bin&lt;/code&gt;目录，里面有一个名为&lt;code&gt;hello&lt;/code&gt;的可执行文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ $GOPATH/bin/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ $GOPATH/bin/hello
 Hello, world.
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;第一个Go库&lt;/h3&gt;
 &lt;p&gt;让我们再创建一个库，同样，先创建包路径&lt;code&gt;github.com/crazygit/stringutil&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ mkdir $GOPATH/src/github.com/crazygit/stringutil
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir $GOPATH/src/github.com/crazygit/stringutil
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;在里面再创建一个名为&lt;code&gt;reverse.go&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;stringutil&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;stringutil&lt;/span&gt;
 
 &lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nx"&gt;Reverse&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="kt"&gt;string&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
     &lt;span class="nx"&gt;r&lt;/span&gt; &lt;span class="o"&gt;:=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;&lt;span class="nb"&gt;rune&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;s&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -363,7 +363,7 @@ Hello, world.
 
 
 &lt;p&gt;编译&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
 $ go build github.com/crazygit/stringutil
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -371,7 +371,7 @@ $ go build github.com/crazygit/stringutil
 &lt;p&gt;编译过程不会有什么文件产生, 可以使用&lt;code&gt;go install&lt;/code&gt;, 它会创建pkg目录
 并生成&lt;code&gt;pkg/linux_amd64/github.com/crazygit/stringutil.a&lt;/code&gt;文件.&lt;/p&gt;
 &lt;p&gt;修改&lt;code&gt;hello.go&lt;/code&gt;,让它使用我们刚刚创建的库&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
     &lt;span class="s"&gt;&amp;quot;github.com/crazygit/stringutil&amp;quot;&lt;/span&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
@@ -384,19 +384,19 @@ $ go build github.com/crazygit/stringutil
 
 
 &lt;p&gt;安装，当安装的的时候，它会自动根据安装依赖,所以安装&lt;code&gt;hello&lt;/code&gt;时, 它会自动安装&lt;code&gt;stringutil&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ go install github.com/crazygit/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go install github.com/crazygit/hello
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;运行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ $GOPATH/bin/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ $GOPATH/bin/hello
 Hello, Go!
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;包名&lt;/h3&gt;
 &lt;p&gt;Go代码文件的第一句话必须是&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;name&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;name&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -407,7 +407,7 @@ Hello, Go!
 &lt;p&gt;Go自带了一个使用&lt;code&gt;go test&lt;/code&gt;的测试框架，为了写一个测试文件。&lt;/p&gt;
 &lt;p&gt;应该创建一个文件名&lt;code&gt;_test.go&lt;/code&gt;结尾的文件，函数名为如&lt;code&gt;TestXXX&lt;/code&gt;的, 并且有参数&lt;code&gt;t *testing.T&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;让我们为stringutil包创建测试&lt;code&gt;$GOPATH/src/github.com/crazygit/stringutil/reverse_test.go&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;stringutil&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;stringutil&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;testing&amp;quot;&lt;/span&gt;
 
@@ -431,13 +431,13 @@ Hello, Go!
 
 
 &lt;p&gt;执行测试&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ go &lt;span class="nb"&gt;test&lt;/span&gt; github.com/crazygit/stringutil
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go &lt;span class="nb"&gt;test&lt;/span&gt; github.com/crazygit/stringutil
 ok      github.com/crazygit/stringutil  0.002s
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;第三方包&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ go get github.com/golang/example/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go get github.com/golang/example/hello
 $ $GOPATH/bin/hello
 Hello, Go examples!
 &lt;/pre&gt;&lt;/div&gt;
@@ -451,13 +451,13 @@ Hello, Go examples!
 &lt;h3&gt;开发环境搭建&lt;/h3&gt;
 &lt;p&gt;整个安装过程比较简单，下载安装包，配置环境变量即可。&lt;/p&gt;
 &lt;p&gt;以Linux为例.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget https://storage.googleapis.com/golang/go1.4.2.linux-amd64.tar.gz
 $ tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;添加环境变量:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="x"&gt;export GOROOT=/usr/local/go&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;export GOROOT=/usr/local/go&lt;/span&gt;
 &lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -465,7 +465,7 @@ $ tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
 &lt;p&gt;&lt;code&gt;GOROOT&lt;/code&gt;是告诉系统Go安装在哪里，
 &lt;code&gt;PATH&lt;/code&gt;是指定Go相关命令的调用路径.&lt;/p&gt;
 &lt;p&gt;环境检查，按照国际惯例，当然是先来&amp;#8221;Hello World&amp;#8221;. 创建&lt;code&gt;hello.go&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
 
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
 
@@ -476,7 +476,7 @@ $ tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
 
 
 &lt;p&gt;执行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;$ go run hello.go
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go run hello.go
 hello, world
 &lt;/pre&gt;&lt;/div&gt;
 
