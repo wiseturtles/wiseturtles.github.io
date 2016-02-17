@@ -16,7 +16,7 @@ rm: /usr/share/vim: Operation not permitted
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;参考:&amp;nbsp;http://stackoverflow.com/questions/30768087/restricted-folder-files-in-os-x-el-capitan&lt;/p&gt;
+&lt;p&gt;参考: &lt;a href="http://stackoverflow.com/questions/30768087/restricted-folder-files-in-os-x-el-capitan"&gt;http://stackoverflow.com/questions/30768087/restricted-folder-files-in-os-x-el-capitan&lt;/a&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;reboot&lt;/li&gt;
 &lt;li&gt;as soon as you hear the &amp;#8220;Mac sound&amp;#8221; on the grey screen, press Cmd+R to enter Recovery&amp;nbsp;mode&lt;/li&gt;
