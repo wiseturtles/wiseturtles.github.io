@@ -107,7 +107,7 @@ $ set-keychain-settings -t <span class="m">3600</span> -l ~/Library/Keychains/lo
 
 <p>开始在命令行运行完还是一直报这个错误，后来，将unlock-keychain命令放在编译命令前就好了。</p>
 <p>记得编译前先运行:</p>
-<div class="highlight"><pre><span></span>$ security unlock-keychain -p &lt;your-passwd&gt; <span class="s2">&quot;</span>$<span class="s2">HOME/Library/Keychains/login.keychain&quot;</span>
+<div class="highlight"><pre><span></span>$ security unlock-keychain -p &lt;your-passwd&gt; <span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Library/Keychains/login.keychain&quot;</span>
 </pre></div>
 
 

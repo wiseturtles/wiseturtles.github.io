@@ -174,19 +174,19 @@ Host 192.168.0.2
     <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir 2&gt; /dev/null<span class="sb">`</span>
     <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># Find the repo root and check for virtualenv name override</span>
-        <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span><span class="se">\c</span>d $GIT_DIR<span class="p">;</span> <span class="nb">pwd</span><span class="sb">`</span>
-        <span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="sb">`</span>dirname <span class="s2">&quot;</span>$<span class="s2">GIT_DIR&quot;</span><span class="sb">`</span>
-        <span class="nv">ENV_NAME</span><span class="o">=</span><span class="sb">`</span>basename <span class="s2">&quot;</span>$<span class="s2">PROJECT_ROOT&quot;</span><span class="sb">`</span>
-        <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;</span>$<span class="s2">PROJECT_ROOT/.venv&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-            <span class="nv">ENV_NAME</span><span class="o">=</span><span class="sb">`</span>cat <span class="s2">&quot;</span>$<span class="s2">PROJECT_ROOT/.venv&quot;</span><span class="sb">`</span>
+        <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span><span class="se">\c</span>d <span class="nv">$GIT_DIR</span><span class="p">;</span> <span class="nb">pwd</span><span class="sb">`</span>
+        <span class="nv">PROJECT_ROOT</span><span class="o">=</span><span class="sb">`</span>dirname <span class="s2">&quot;</span><span class="nv">$GIT_DIR</span><span class="s2">&quot;</span><span class="sb">`</span>
+        <span class="nv">ENV_NAME</span><span class="o">=</span><span class="sb">`</span>basename <span class="s2">&quot;</span><span class="nv">$PROJECT_ROOT</span><span class="s2">&quot;</span><span class="sb">`</span>
+        <span class="k">if</span> <span class="o">[</span> -f <span class="s2">&quot;</span><span class="nv">$PROJECT_ROOT</span><span class="s2">/.venv&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="nv">ENV_NAME</span><span class="o">=</span><span class="sb">`</span>cat <span class="s2">&quot;</span><span class="nv">$PROJECT_ROOT</span><span class="s2">/.venv&quot;</span><span class="sb">`</span>
         <span class="k">fi</span>
         <span class="c1"># Activate the environment only if it is not already active</span>
-        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span>$<span class="s2">VIRTUAL_ENV&quot;</span> !<span class="o">=</span> <span class="s2">&quot;</span>$<span class="s2">WORKON_HOME/</span><span class="nv">$E</span><span class="s2">NV_NAME&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-            <span class="k">if</span> <span class="o">[</span> -e <span class="s2">&quot;</span>$<span class="s2">WORKON_HOME/</span><span class="nv">$E</span><span class="s2">NV_NAME/bin/activate&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-                workon <span class="s2">&quot;</span><span class="nv">$E</span><span class="s2">NV_NAME&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CD_VIRTUAL_ENV</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$E</span><span class="s2">NV_NAME&quot;</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$VIRTUAL_ENV</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;</span><span class="nv">$WORKON_HOME</span><span class="s2">/</span><span class="nv">$ENV_NAME</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="k">if</span> <span class="o">[</span> -e <span class="s2">&quot;</span><span class="nv">$WORKON_HOME</span><span class="s2">/</span><span class="nv">$ENV_NAME</span><span class="s2">/bin/activate&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                workon <span class="s2">&quot;</span><span class="nv">$ENV_NAME</span><span class="s2">&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">export</span> <span class="nv">CD_VIRTUAL_ENV</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$ENV_NAME</span><span class="s2">&quot;</span>
             <span class="k">fi</span>
         <span class="k">fi</span>
-    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$CD_</span>VIRTUAL_ENV <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">elif</span> <span class="o">[</span> <span class="nv">$CD_VIRTUAL_ENV</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># We&#39;ve just left the repo, deactivate the environment</span>
         <span class="c1"># Note: this only happens if the virtualenv was activated automatically</span>
         deactivate <span class="o">&amp;&amp;</span> <span class="nb">unset</span> CD_VIRTUAL_ENV
@@ -211,7 +211,7 @@ workon_cwd
 <div class="highlight"><pre><span></span><span class="nv">PS1</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">TITLEBAR</span><span class="si">}</span><span class="s2"></span>
 <span class="si">${</span><span class="nv">SAVE_CURSOR</span><span class="si">}${</span><span class="nv">MOVE_CURSOR_RIGHTMOST</span><span class="si">}${</span><span class="nv">MOVE_CURSOR_5_LEFT</span><span class="si">}</span><span class="s2">\</span>
 <span class="si">${</span><span class="nv">RESTORE_CURSOR</span><span class="si">}</span><span class="s2">\</span>
-<span class="si">${</span><span class="nv">VIRTUALENV</span><span class="p">:+(</span>$<span class="nv">VIRTUALENV</span><span class="p">)</span><span class="si">}${</span><span class="nv">D_USER_COLOR</span><span class="si">}</span><span class="s2">\u </span><span class="si">${</span><span class="nv">D_INTERMEDIATE_COLOR</span><span class="si">}</span><span class="s2">\</span>
+<span class="si">${</span><span class="nv">VIRTUALENV</span><span class="p">:+(</span><span class="nv">$VIRTUALENV</span><span class="p">)</span><span class="si">}${</span><span class="nv">D_USER_COLOR</span><span class="si">}</span><span class="s2">\u </span><span class="si">${</span><span class="nv">D_INTERMEDIATE_COLOR</span><span class="si">}</span><span class="s2">\</span>
 <span class="s2">at </span><span class="si">${</span><span class="nv">D_MACHINE_COLOR</span><span class="si">}</span><span class="s2">\h </span><span class="si">${</span><span class="nv">D_INTERMEDIATE_COLOR</span><span class="si">}</span><span class="s2">\</span>
 <span class="s2">in </span><span class="si">${</span><span class="nv">D_DIR_COLOR</span><span class="si">}</span><span class="s2">\w </span><span class="si">${</span><span class="nv">D_INTERMEDIATE_COLOR</span><span class="si">}</span><span class="s2">\</span>
 <span class="k">$(</span>demula_vcprompt<span class="k">)</span><span class="s2">\</span>

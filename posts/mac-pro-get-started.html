@@ -198,15 +198,15 @@ $ <span class="nb">cd</span> ~/k-vim <span class="o">&amp;&amp;</span> bash -x i
 <p><span class="caps">IDEA</span>中打开该plugin代码，配置<span class="caps">IDEA</span> Platform <span class="caps">SDK</span>版本，Build出jar包。然后，选择jar包安装。</p>
 <p>配置<span class="caps">IDEA</span>的golang开发环境浪费了很多时间，尝试了不同版本的<a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin">go-lang-idea-plugin</a>，总是报错“The selected directory is not a valid home for Go <span class="caps">SDK</span>”。
 最后运行下面命令再选择<span class="caps">GO</span> <span class="caps">SDK</span>目录终于可以了。</p>
-<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> $GOROOT
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="nv">$GOROOT</span>
 /Users/&lt;my-home&gt;/Projects/golang/sdk
-$ <span class="nb">echo</span> $GOPATH
+$ <span class="nb">echo</span> <span class="nv">$GOPATH</span>
 /Users/&lt;my-home&gt;/Projects/golang/mygo
-$ <span class="nb">cd</span> $GOROOT
+$ <span class="nb">cd</span> <span class="nv">$GOROOT</span>
 $ git checkout -b go1.4.2 go1.4.2
 $ <span class="nb">cd</span> src <span class="o">&amp;&amp;</span> ./all.bash
-$ cp $GOPATH/bin/go $GOROOT/bin/
-$ cp $GOPATH/bin/gofmt $GOROOT/bin/
+$ cp <span class="nv">$GOPATH</span>/bin/go <span class="nv">$GOROOT</span>/bin/
+$ cp <span class="nv">$GOPATH</span>/bin/gofmt <span class="nv">$GOROOT</span>/bin/
 </pre></div>
 
 

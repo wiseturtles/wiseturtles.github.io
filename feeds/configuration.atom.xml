@@ -1,5 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-10-31T20:46:00+08:00</updated><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-03-11T18:52:00+08:00</updated><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
+&lt;h2&gt;通过Gerrit replication&amp;nbsp;plugin完成Gerrit同步&lt;/h2&gt;
+&lt;h3&gt;安装buck&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install ant
+ubuntu@gerrit$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/download
+ubuntu@gerrit$ git clone https://github.com/facebook/buck.git
+ubuntu@gerrit$ &lt;span class="nb"&gt;cd&lt;/span&gt; buck
+ubuntu@gerrit$ ant  &lt;span class="c1"&gt;# 编译完成后 buck 可执行文件就在当前的bin目录&lt;/span&gt;
+ubuntu@gerrit$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export PATH=$HOME/download/buck/bin:$PATH&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+ubuntu@gerrit$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;编译replication&amp;nbsp;plugin&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ git clone https://gerrit.googlesource.com/gerrit
+ubuntu@gerrit$ git checkout -b v2.11.4-tag v2.11.4  &lt;span class="c1"&gt;# 我gerrit版本是2.11.4&lt;/span&gt;
+ubuntu@gerrit$ git submodule update --init --recursive
+ubuntu@gerrit$ buck build plugins/replication:replication
+ubuntu@gerrit$ cp buck-out/gen/plugins/replication/replication.jar /tmp
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;安装replication&amp;nbsp;plugin&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ ssh -p &lt;span class="m"&gt;29418&lt;/span&gt; localhost gerrit plugin install -n replication.jar - &amp;lt;/tmp/replication.jar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;配置replication&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ cat etc/replication.config
+&lt;span class="o"&gt;[&lt;/span&gt;remote &lt;span class="s2"&gt;&amp;quot;gerrit-backup&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+    &lt;span class="nv"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; ubuntu@10.x.x.x:/data/gerrit-backup/git/&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;name&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;.git
+    &lt;span class="nv"&gt;push&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; +refs/heads/*:refs/heads/*
+    &lt;span class="nv"&gt;push&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; +refs/tags/*:refs/tags/*
+    &lt;span class="nv"&gt;timeout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 30
+    &lt;span class="nv"&gt;threads&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; 3
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;同步一份代码到backup&amp;nbsp;gerrit&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit-backup $ sudo mkdir -p /data/gerrit-backup
+ubuntu@gerrit-backup $ sudo chown -R ubuntu /data
+ubuntu@gerrit-backup $ &lt;span class="nb"&gt;exit&lt;/span&gt;  &lt;span class="c1"&gt;# 退出gerrit-backup&lt;/span&gt;
+
+ubuntu@gerrit$ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/apps/gerrit/review_site  &lt;span class="c1"&gt;# 登陆gerrit,并进入Gerrit目录&lt;/span&gt;
+ubuntu@gerrit$ tar cf - git &lt;span class="p"&gt;|&lt;/span&gt; ssh gerrit-backup &lt;span class="s2"&gt;&amp;quot;cd /data/gerrit-backup &amp;amp;&amp;amp; tar xf -&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;开始同步&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ ssh -p &lt;span class="m"&gt;29418&lt;/span&gt; localhost gerrit plugin reload replication  &lt;span class="c1"&gt;# reload&lt;/span&gt;
+ubuntu@gerrit$ ssh -p &lt;span class="m"&gt;29418&lt;/span&gt; localhost replication start --wait --all  &lt;span class="c1"&gt;# start replication&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Gerrit&amp;nbsp;MySQL备份&lt;/h2&gt;
+&lt;p&gt;通过automysqlbackup备份MySQL数据到本地文件系统.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install automysqlbackup
+ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbackup测试是否可以备份，可能需要修改 /etc/default/automysqlbackup 和 /etc/mysql* 配置文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果需要可以将MySQL数据定期同步到Amazon&amp;nbsp;S3等系统存储.&lt;/p&gt;
+&lt;h2&gt;参考文档:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://gerrit.googlesource.com/gerrit/+/v2.0.2/Documentation/config-replication.txt"&gt;config-replication.txt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
 &lt;/pre&gt;&lt;/div&gt;
 

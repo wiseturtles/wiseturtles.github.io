@@ -102,81 +102,81 @@ On 2015-02-06
 <span class="nv">DESC</span><span class="o">=</span><span class="s2">&quot;Nginx Daemon&quot;</span>
 <span class="nv">NAME</span><span class="o">=</span>nginx
 <span class="nv">PREFIX</span><span class="o">=</span>/etc/openresty/nginx
-<span class="nv">DAEMON</span><span class="o">=</span>$PREFIX/sbin/$NAME
-<span class="nv">CONF</span><span class="o">=</span>$PREFIX/conf/$NAME.conf
-<span class="nv">PID</span><span class="o">=</span>$PREFIX/logs/$NAME.pid
-<span class="nv">SCRIPT</span><span class="o">=</span>/etc/init.d/$NAME
+<span class="nv">DAEMON</span><span class="o">=</span><span class="nv">$PREFIX</span>/sbin/<span class="nv">$NAME</span>
+<span class="nv">CONF</span><span class="o">=</span><span class="nv">$PREFIX</span>/conf/<span class="nv">$NAME</span>.conf
+<span class="nv">PID</span><span class="o">=</span><span class="nv">$PREFIX</span>/logs/<span class="nv">$NAME</span>.pid
+<span class="nv">SCRIPT</span><span class="o">=</span>/etc/init.d/<span class="nv">$NAME</span>
 
-<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$DAE</span><span class="s2">MON&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$C</span><span class="s2">ONF&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DAE</span><span class="s2">MON has no permission to run. \033[0m&quot;</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m Or </span><span class="nv">$C</span><span class="s2">ONF doesn&#39;t exist. \033[0m&quot;</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$DAEMON</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$CONF</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DAEMON</span><span class="s2"> has no permission to run. \033[0m&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m Or </span><span class="nv">$CONF</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
     sleep 1
     <span class="nb">exit</span> 1
 <span class="k">fi</span>
 
 do_start<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID already exists. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC is already running or crashed. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Reopening </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -s reopen -c <span class="nv">$C</span>ONF
+    <span class="k">if</span> <span class="o">[</span> -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> already exists. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> is already running or crashed. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reopening </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -s reopen -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC reopened. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reopened. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Starting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -c <span class="nv">$C</span>ONF
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC started. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_stop<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
+    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Stopping </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -s stop -c <span class="nv">$C</span>ONF
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Stopping </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -s stop -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC stopped. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> stopped. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_reload<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Starting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -c <span class="nv">$C</span>ONF
+    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC started. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Reloading </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -s reload -c <span class="nv">$C</span>ONF
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reloading </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -s reload -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC reloaded. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reloaded. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_quit<span class="o">()</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span> ! -f $PID <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span>$<span class="s2">PID doesn&#39;t exist. \033[0m&quot;</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DE</span><span class="s2">SC isn&#39;t running. \033[0m&quot;</span>
+    <span class="k">if</span> <span class="o">[</span> ! -f <span class="nv">$PID</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$PID</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
     <span class="k">else</span>
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Quitting </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-        <span class="nv">$DAE</span>MON -s quit -c <span class="nv">$C</span>ONF
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Quitting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+        <span class="nv">$DAEMON</span> -s quit -c <span class="nv">$CONF</span>
         sleep 1
-        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DE</span><span class="s2">SC quitted. \033[0m&quot;</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> quitted. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
 
 do_test<span class="o">()</span> <span class="o">{</span>
-    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DE</span><span class="s2">SC Testing </span><span class="nv">$C</span><span class="s2">ONF ... \033[0m&quot;</span>
-    <span class="nv">$DAE</span>MON -t -c <span class="nv">$C</span>ONF
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Testing </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
+    <span class="nv">$DAEMON</span> -t -c <span class="nv">$CONF</span>
 <span class="o">}</span>
 
 do_info<span class="o">()</span> <span class="o">{</span>
-    <span class="nv">$DAE</span>MON -V
+    <span class="nv">$DAEMON</span> -V
 <span class="o">}</span>
 
 <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> in
@@ -203,7 +203,7 @@ info<span class="o">)</span>
 do_info
 <span class="p">;;</span>
 *<span class="o">)</span>
-<span class="nb">echo</span> <span class="s2">&quot;Usage: </span>$<span class="s2">SCRIPT {start|stop|reload|restart|quit|test|info}&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;Usage: </span><span class="nv">$SCRIPT</span><span class="s2"> {start|stop|reload|restart|quit|test|info}&quot;</span>
 <span class="nb">exit</span> 2
 <span class="p">;;</span>
 <span class="k">esac</span>

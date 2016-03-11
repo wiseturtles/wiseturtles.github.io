@@ -110,7 +110,7 @@ $ workon pelican <span class="c1"># 激活虚拟环境</span>
 安装步骤: <a href="https://github.com/utahta/pythonbrew/blob/master/README.rst">https://github.com/utahta/pythonbrew/blob/master/<span class="caps">README</span>.rst</a></p>
 <div class="highlight"><pre><span></span><span class="c1"># 安装pythonbrew</span>
 $ curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <span class="c1"># 这步执行成功后会生成目录: ~/.pythonbrew</span>
-$ <span class="nb">echo</span> <span class="s2">&quot;[[ -s </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span>$<span class="s2">HOME/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
+$ <span class="nb">echo</span> <span class="s2">&quot;[[ -s </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
 $ <span class="nb">source</span> ~/.bashrc
 $ pythonbrew --version      <span class="c1"># 检查是否安装成功</span>
 $ pythonbrew install --verbose 2.7.5       <span class="c1"># 安装python 2.7.5</span>

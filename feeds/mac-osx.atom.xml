@@ -112,7 +112,7 @@ $ set-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/
 
 &lt;p&gt;开始在命令行运行完还是一直报这个错误，后来，将unlock-keychain命令放在编译命令前就好了。&lt;/p&gt;
 &lt;p&gt;记得编译前先运行:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ security unlock-keychain -p &amp;lt;your-passwd&amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;HOME/Library/Keychains/login.keychain&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ security unlock-keychain -p &amp;lt;your-passwd&amp;gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/Library/Keychains/login.keychain&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -250,15 +250,15 @@ $ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;
 &lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;中打开该plugin代码，配置&lt;span class="caps"&gt;IDEA&lt;/span&gt; Platform &lt;span class="caps"&gt;SDK&lt;/span&gt;版本，Build出jar包。然后，选择jar包安装。&lt;/p&gt;
 &lt;p&gt;配置&lt;span class="caps"&gt;IDEA&lt;/span&gt;的golang开发环境浪费了很多时间，尝试了不同版本的&lt;a href="https://github.com/go-lang-plugin-org/go-lang-idea-plugin"&gt;go-lang-idea-plugin&lt;/a&gt;，总是报错“The selected directory is not a valid home for Go &lt;span class="caps"&gt;SDK&lt;/span&gt;”。
 最后运行下面命令再选择&lt;span class="caps"&gt;GO&lt;/span&gt; &lt;span class="caps"&gt;SDK&lt;/span&gt;目录终于可以了。&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; $GOROOT
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
 /Users/&amp;lt;my-home&amp;gt;/Projects/golang/sdk
-$ &lt;span class="nb"&gt;echo&lt;/span&gt; $GOPATH
+$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
 /Users/&amp;lt;my-home&amp;gt;/Projects/golang/mygo
-$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOROOT
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;
 $ git checkout -b go1.4.2 go1.4.2
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; src &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; ./all.bash
-$ cp $GOPATH/bin/go $GOROOT/bin/
-$ cp $GOPATH/bin/gofmt $GOROOT/bin/
+$ cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/go &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
+$ cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/gofmt &lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin/
 &lt;/pre&gt;&lt;/div&gt;
 
 

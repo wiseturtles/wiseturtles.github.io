@@ -92,11 +92,11 @@ Ubuntu&nbsp;64位的tarball包，解压出来可以直接用了。</p>
 <p>安装必备的cmd&nbsp;tools</p>
 <div class="highlight"><pre><span></span><span class="c1">#　创建目录</span>
 $ <span class="nb">export</span> <span class="nv">GOPATH</span><span class="o">=</span><span class="s1">&#39;your_go_path&#39;</span>
-$ mkdir -p $GOPATH/src/golang.org/x
+$ mkdir -p <span class="nv">$GOPATH</span>/src/golang.org/x
 
 <span class="c1"># 根据实际需要下载对应分支的tools</span>
-$ git clone -b release-branch.go1.4 git@github.com:golang/tools.git $GOPATH/src/golang.org/x/tools
-$ <span class="nb">cd</span> $GOPATH
+$ git clone -b release-branch.go1.4 git@github.com:golang/tools.git <span class="nv">$GOPATH</span>/src/golang.org/x/tools
+$ <span class="nb">cd</span> <span class="nv">$GOPATH</span>
 <span class="c1"># 安装工具</span>
 $ go install golang.org/x/tools/cmd/goimports
 $ go install golang.org/x/tools/cmd/vet

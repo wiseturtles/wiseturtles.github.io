@@ -207,25 +207,25 @@ define hostgroup&lt;span class="o"&gt;{&lt;/span&gt;
 +# &lt;span class="s1"&gt;&amp;#39;check_mysql&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
 +define command&lt;span class="o"&gt;{&lt;/span&gt;
 +   command_name    check_mysql
-+   command_line    $USER1$/check_mysql -H $HOSTADDRESS$ -u &lt;span class="nv"&gt;$A&lt;/span&gt;RG1$ -p &lt;span class="nv"&gt;$A&lt;/span&gt;RG2$ -d &lt;span class="nv"&gt;$A&lt;/span&gt;RG3$ -P 3306
++   command_line    &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_mysql -H &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -u &lt;span class="nv"&gt;$ARG1&lt;/span&gt;$ -p &lt;span class="nv"&gt;$ARG2&lt;/span&gt;$ -d &lt;span class="nv"&gt;$ARG3&lt;/span&gt;$ -P 3306
 +   &lt;span class="o"&gt;}&lt;/span&gt;
 
 +# &lt;span class="s1"&gt;&amp;#39;check_http_with_url_port&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
 +define command&lt;span class="o"&gt;{&lt;/span&gt;
 +        command_name    check_http_with_url_port
-+        command_line    $USER1$/check_http -I $HOSTADDRESS$ -u &lt;span class="nv"&gt;$A&lt;/span&gt;RG1$ -p &lt;span class="nv"&gt;$A&lt;/span&gt;RG2$
++        command_line    &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_http -I &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -u &lt;span class="nv"&gt;$ARG1&lt;/span&gt;$ -p &lt;span class="nv"&gt;$ARG2&lt;/span&gt;$
 +        &lt;span class="o"&gt;}&lt;/span&gt;
 +
 +# &lt;span class="s1"&gt;&amp;#39;check_nrpe&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
 +define command&lt;span class="o"&gt;{&lt;/span&gt;
 +        command_name check_nrpe
-+        command_line $USER1$/check_nrpe -H $HOSTADDRESS$ -c &lt;span class="nv"&gt;$A&lt;/span&gt;RG1$
++        command_line &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_nrpe -H &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -c &lt;span class="nv"&gt;$ARG1&lt;/span&gt;$
 +        &lt;span class="o"&gt;}&lt;/span&gt;
 +
 +# &lt;span class="s1"&gt;&amp;#39;check_memcached&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
 +define command&lt;span class="o"&gt;{&lt;/span&gt;
 +        command_name check_memcached
-+        command_line $USER1$/check_tcp -H $HOSTADDRESS$ -p &lt;span class="m"&gt;11211&lt;/span&gt; -t &lt;span class="m"&gt;5&lt;/span&gt; -E -s &lt;span class="s1"&gt;&amp;#39;stats\r\nquit\r\n&amp;#39;&lt;/span&gt; -e &lt;span class="s1"&gt;&amp;#39;uptime&amp;#39;&lt;/span&gt; -M crit
++        command_line &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_tcp -H &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -p &lt;span class="m"&gt;11211&lt;/span&gt; -t &lt;span class="m"&gt;5&lt;/span&gt; -E -s &lt;span class="s1"&gt;&amp;#39;stats\r\nquit\r\n&amp;#39;&lt;/span&gt; -e &lt;span class="s1"&gt;&amp;#39;uptime&amp;#39;&lt;/span&gt; -M crit
 +        &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -464,19 +464,19 @@ Host 192.168.0.2
     &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir 2&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
         &lt;span class="c1"&gt;# Find the repo root and check for virtualenv name override&lt;/span&gt;
-        &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;d $GIT_DIR&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
-        &lt;span class="nv"&gt;PROJECT_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;GIT_DIR&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
-        &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;basename &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;PROJECT_ROOT&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;PROJECT_ROOT/.venv&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-            &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;PROJECT_ROOT/.venv&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;d &lt;span class="nv"&gt;$GIT_DIR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="nv"&gt;PROJECT_ROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;dirname &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$GIT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;basename &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -f &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/.venv&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+            &lt;span class="nv"&gt;ENV_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;cat &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$PROJECT_ROOT&lt;/span&gt;&lt;span class="s2"&gt;/.venv&amp;quot;&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
         &lt;span class="k"&gt;fi&lt;/span&gt;
         &lt;span class="c1"&gt;# Activate the environment only if it is not already active&lt;/span&gt;
-        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;VIRTUAL_ENV&amp;quot;&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;WORKON_HOME/&lt;/span&gt;&lt;span class="nv"&gt;$E&lt;/span&gt;&lt;span class="s2"&gt;NV_NAME&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;WORKON_HOME/&lt;/span&gt;&lt;span class="nv"&gt;$E&lt;/span&gt;&lt;span class="s2"&gt;NV_NAME/bin/activate&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
-                workon &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$E&lt;/span&gt;&lt;span class="s2"&gt;NV_NAME&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;CD_VIRTUAL_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$E&lt;/span&gt;&lt;span class="s2"&gt;NV_NAME&amp;quot;&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$VIRTUAL_ENV&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$WORKON_HOME&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; -e &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$WORKON_HOME&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;/bin/activate&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+                workon &lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;CD_VIRTUAL_ENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$ENV_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
             &lt;span class="k"&gt;fi&lt;/span&gt;
         &lt;span class="k"&gt;fi&lt;/span&gt;
-    &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$CD_&lt;/span&gt;VIRTUAL_ENV &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+    &lt;span class="k"&gt;elif&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$CD_VIRTUAL_ENV&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
         &lt;span class="c1"&gt;# We&amp;#39;ve just left the repo, deactivate the environment&lt;/span&gt;
         &lt;span class="c1"&gt;# Note: this only happens if the virtualenv was activated automatically&lt;/span&gt;
         deactivate &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;unset&lt;/span&gt; CD_VIRTUAL_ENV
@@ -501,7 +501,7 @@ workon_cwd
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nv"&gt;PS1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;TITLEBAR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&lt;/span&gt;
 &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SAVE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_RIGHTMOST&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;MOVE_CURSOR_5_LEFT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;RESTORE_CURSOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
-&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;:+(&lt;/span&gt;$&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;D_USER_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\u &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
+&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;:+(&lt;/span&gt;&lt;span class="nv"&gt;$VIRTUALENV&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="si"&gt;}${&lt;/span&gt;&lt;span class="nv"&gt;D_USER_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\u &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="s2"&gt;at &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_MACHINE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\h &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="s2"&gt;in &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_DIR_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\w &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;D_INTERMEDIATE_COLOR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;
 &lt;span class="k"&gt;$(&lt;/span&gt;demula_vcprompt&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;\&lt;/span&gt;

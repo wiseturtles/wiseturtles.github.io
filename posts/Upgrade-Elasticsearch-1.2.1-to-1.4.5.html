@@ -319,7 +319,7 @@ $ cat /etc/supervisor/supervisord.conf <span class="p">|</span> grep -Ev <span c
 supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface:make_main_rpcinterface
 <span class="o">[</span>supervisord<span class="o">]</span>
 <span class="nv">http_port</span><span class="o">=</span>/var/run/supervisor.sock <span class="p">;</span> <span class="o">(</span>default is to run a UNIX domain socket server<span class="o">)</span>
-<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$C</span>WD/supervisord.log<span class="o">)</span>
+<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
 <span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
 <span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
 <span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
@@ -327,7 +327,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 <span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> true<span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
 <span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
 <span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
-<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default $TEMP<span class="o">)</span>
+<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
 <span class="o">[</span>supervisorctl<span class="o">]</span>
 <span class="nv">serverurl</span><span class="o">=</span>unix:////var/run/supervisor.sock <span class="p">;</span> use a unix:// URL  <span class="k">for</span> a unix socket
 <span class="o">[</span>include<span class="o">]</span>

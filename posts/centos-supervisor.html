@@ -96,7 +96,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 <span class="p">;</span><span class="nv">sockchmod</span><span class="o">=</span><span class="m">0700</span>              <span class="p">;</span> AF_UNIX socketmode <span class="o">(</span>AF_INET ignore, default 0700<span class="o">)</span>
 <span class="p">;</span><span class="nv">sockchown</span><span class="o">=</span>nobody.nogroup     <span class="p">;</span> AF_UNIX socket uid.gid owner <span class="o">(</span>AF_INET ignores<span class="o">)</span>
 <span class="p">;</span><span class="nv">umask</span><span class="o">=</span><span class="m">022</span>                   <span class="p">;</span> <span class="o">(</span>process file creation umask<span class="p">;</span>default 022<span class="o">)</span>
-<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$C</span>WD/supervisord.log<span class="o">)</span>
+<span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
 <span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
 <span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
 <span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
@@ -104,7 +104,7 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 <span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> true<span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
 <span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
 <span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
-<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default $TEMP<span class="o">)</span>
+<span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
 
 <span class="p">;</span><span class="nv">nocleanup</span><span class="o">=</span><span class="nb">true</span>              <span class="p">;</span> <span class="o">(</span>don<span class="s1">&#39;t clean up tempfiles at start;default false)</span>
 <span class="s1">;http_username=user          ; (default is no username (open system))</span>
@@ -174,21 +174,21 @@ $ cat /etc/init.d/supervisord
 <span class="nv">prefix</span><span class="o">=</span><span class="s2">&quot;/usr&quot;</span>
 <span class="nv">exec_prefix</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">prefix</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="nv">prog_bin</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">exec_prefix</span><span class="si">}</span><span class="s2">/bin/supervisord&quot;</span>
-<span class="nv">PIDFILE</span><span class="o">=</span><span class="s2">&quot;/var/run/</span>$<span class="s2">prog.pid&quot;</span>
-<span class="nv">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-c /etc/supervisor/supervisord.conf </span><span class="nv">$DAE</span><span class="s2">MON_OPTS&quot;</span>
+<span class="nv">PIDFILE</span><span class="o">=</span><span class="s2">&quot;/var/run/</span><span class="nv">$prog</span><span class="s2">.pid&quot;</span>
+<span class="nv">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-c /etc/supervisor/supervisord.conf </span><span class="nv">$DAEMON_OPTS</span><span class="s2">&quot;</span>
 
 start<span class="o">()</span>
 <span class="o">{</span>
-    <span class="nb">echo</span> -n $<span class="s2">&quot;Starting </span>$<span class="s2">prog: &quot;</span>
-    daemon $prog_bin <span class="nv">$DAE</span>MON_OPTS --pidfile $PIDFILE
-    <span class="o">[</span> -f $PIDFILE <span class="o">]</span> <span class="o">&amp;&amp;</span> success $<span class="s2">&quot;</span>$<span class="s2">prog startup&quot;</span> <span class="o">||</span> failure $<span class="s2">&quot;</span>$<span class="s2">prog startup&quot;</span>
+    <span class="nb">echo</span> -n $<span class="s2">&quot;Starting </span><span class="nv">$prog</span><span class="s2">: &quot;</span>
+    daemon <span class="nv">$prog_bin</span> <span class="nv">$DAEMON_OPTS</span> --pidfile <span class="nv">$PIDFILE</span>
+    <span class="o">[</span> -f <span class="nv">$PIDFILE</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> success $<span class="s2">&quot;</span><span class="nv">$prog</span><span class="s2"> startup&quot;</span> <span class="o">||</span> failure $<span class="s2">&quot;</span><span class="nv">$prog</span><span class="s2"> startup&quot;</span>
     <span class="nb">echo</span>
 <span class="o">}</span>
 
 stop<span class="o">()</span>
 <span class="o">{</span>
-    <span class="nb">echo</span> -n $<span class="s2">&quot;Shutting down </span>$<span class="s2">prog: &quot;</span>
-    <span class="o">[</span> -f $PIDFILE <span class="o">]</span> <span class="o">&amp;&amp;</span> killproc $prog <span class="o">||</span> success $<span class="s2">&quot;</span>$<span class="s2">prog shutdown&quot;</span>
+    <span class="nb">echo</span> -n $<span class="s2">&quot;Shutting down </span><span class="nv">$prog</span><span class="s2">: &quot;</span>
+    <span class="o">[</span> -f <span class="nv">$PIDFILE</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> killproc <span class="nv">$prog</span> <span class="o">||</span> success $<span class="s2">&quot;</span><span class="nv">$prog</span><span class="s2"> shutdown&quot;</span>
     <span class="nb">echo</span>
 <span class="o">}</span>
 
@@ -203,7 +203,7 @@ stop
 <span class="p">;;</span>
 
 status<span class="o">)</span>
-    status $prog
+    status <span class="nv">$prog</span>
 <span class="p">;;</span>
 
 restart<span class="o">)</span>

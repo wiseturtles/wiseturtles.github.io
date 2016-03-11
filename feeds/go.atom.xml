@@ -58,8 +58,8 @@ $ go get github.com/beego/bee
 &lt;p&gt;&lt;span class="caps"&gt;GOPATH&lt;/span&gt;允许多个目录, 当&lt;span class="caps"&gt;GOPATH&lt;/span&gt;有多个目录时，为了让每个目录下的bin目录都加入环境变量
 可以设置&lt;code&gt;${GOPATH//://bin:}/bin&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;$&lt;span class="s2"&gt;HOME/golang:&lt;/span&gt;$&lt;span class="s2"&gt;HOME/github/golang&amp;quot;&lt;/span&gt;
-&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;$PATH:$GOROOT/bin:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="p"&gt;//://bin:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/golang:&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/github/golang&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$PATH&lt;/span&gt;:&lt;span class="nv"&gt;$GOROOT&lt;/span&gt;/bin:&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="p"&gt;//://bin:&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;/bin
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -157,11 +157,11 @@ Ubuntu&amp;nbsp;64位的tarball包，解压出来可以直接用了。&lt;/p&gt;
 &lt;p&gt;安装必备的cmd&amp;nbsp;tools&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;#　创建目录&lt;/span&gt;
 $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;your_go_path&amp;#39;&lt;/span&gt;
-$ mkdir -p $GOPATH/src/golang.org/x
+$ mkdir -p &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/golang.org/x
 
 &lt;span class="c1"&gt;# 根据实际需要下载对应分支的tools&lt;/span&gt;
-$ git clone -b release-branch.go1.4 git@github.com:golang/tools.git $GOPATH/src/golang.org/x/tools
-$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
+$ git clone -b release-branch.go1.4 git@github.com:golang/tools.git &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/golang.org/x/tools
+$ &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
 &lt;span class="c1"&gt;# 安装工具&lt;/span&gt;
 $ go install golang.org/x/tools/cmd/goimports
 $ go install golang.org/x/tools/cmd/vet
@@ -296,7 +296,7 @@ $ export PATH=&lt;span class="nv"&gt;$PATH&lt;/span&gt;:&lt;span class="nv"&gt;$
 
 &lt;h3&gt;包路径&lt;/h3&gt;
 &lt;p&gt;无论你是否要发布你的程序, 你都应该以要发布的方式来构建你的程序,最好的包名是&amp;nbsp;github.com/user&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p $GOPATH/src/github.com/user
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/github.com/user
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -310,7 +310,7 @@ $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/s
 
 
 &lt;p&gt;为了创建一个简单的程序. 首先要选择包路径, 如&lt;code&gt;github.com/crazygit/hello&lt;/code&gt;,&amp;nbsp;并创建对于的目录结构&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p $GOPATH/src/github.com/crazygit/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir -p &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/github.com/crazygit/hello
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -326,26 +326,26 @@ $ &lt;span class="nb"&gt;export&lt;/span&gt; &lt;span class="nv"&gt;GOPATH&lt;/s
 
 
 &lt;p&gt;使用go工具编译并安装程序&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
 $ go install github.com/crazygit/hello
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;或者&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH/github.com/crazygit/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/github.com/crazygit/hello
 $ go install
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;执行了之后，可以看到&lt;code&gt;$GOPATH&lt;/code&gt;中多了一个&lt;code&gt;bin&lt;/code&gt;目录，里面有一个名为&lt;code&gt;hello&lt;/code&gt;的可执行文件&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ $GOPATH/bin/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/hello
 Hello, world.
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;第一个Go库&lt;/h3&gt;
 &lt;p&gt;让我们再创建一个库，同样，先创建包路径&lt;code&gt;github.com/crazygit/stringutil&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir $GOPATH/src/github.com/crazygit/stringutil
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mkdir &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/src/github.com/crazygit/stringutil
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -363,7 +363,7 @@ Hello, world.
 
 
 &lt;p&gt;编译&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; $GOPATH
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;
 $ go build github.com/crazygit/stringutil
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -389,7 +389,7 @@ $ go build github.com/crazygit/stringutil
 
 
 &lt;p&gt;运行&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ $GOPATH/bin/hello
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/hello
 Hello, Go!
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -438,7 +438,7 @@ ok      github.com/crazygit/stringutil  0.002s
 
 &lt;h2&gt;第三方包&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go get github.com/golang/example/hello
-$ $GOPATH/bin/hello
+$ &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/hello
 Hello, Go examples!
 &lt;/pre&gt;&lt;/div&gt;
 
