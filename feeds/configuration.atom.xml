@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-03-11T18:52:00+08:00</updated><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-04-05T11:39:00+08:00</updated><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><updated>2016-04-05T11:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
+&lt;p&gt;注: 系统为Ubuntu&amp;nbsp;14.04，Debian系统也类似。&lt;/p&gt;
+&lt;h2&gt;安装automysqlbackup&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install automysqlbackup
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置automysqlbackup&lt;/h2&gt;
+&lt;h3&gt;参数介绍&lt;/h3&gt;
+&lt;p&gt;配置文件路径: &lt;code&gt;/etc/default/automysqlbackup&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;主要参数:
+&lt;span class="caps"&gt;USERNAME&lt;/span&gt; - 数据库登陆用户名
+&lt;span class="caps"&gt;PASSWORD&lt;/span&gt; - 数据库登陆密码
+&lt;span class="caps"&gt;DBHOST&lt;/span&gt; - 数据库主机名或&lt;span class="caps"&gt;IP&lt;/span&gt;地址
+&lt;span class="caps"&gt;DBNAMES&lt;/span&gt; - 需要备份的MySQL数据库
+&lt;span class="caps"&gt;BACKUPDIR&lt;/span&gt; - 备份文件存放路径
+&lt;span class="caps"&gt;SOCKET&lt;/span&gt; - MySQL服务的本地unix socket路径
+&lt;span class="caps"&gt;MAILCONTENT&lt;/span&gt; - 发送邮件内容，可以为: log, files, stdout, quiet
+&lt;span class="caps"&gt;MAXATTSIZE&lt;/span&gt; - 最大允许的邮件内容大小
+&lt;span class="caps"&gt;MAILADDR&lt;/span&gt; - 接收通知的邮箱地址
+&lt;span class="caps"&gt;PREBACKUP&lt;/span&gt; - 备份前运行的脚本
+&lt;span class="caps"&gt;POSTBACKUP&lt;/span&gt; -&amp;nbsp;备份后运行的脚本&lt;/p&gt;
+&lt;p&gt;其它参数参考 &lt;code&gt;/etc/default/automysqlbackup&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;修改&lt;code&gt;DBNAMES&lt;/code&gt;, &lt;code&gt;BACKUPDIR&lt;/code&gt;，指定需要备份的数据库名称和备份文件存放路径。&lt;/p&gt;
+&lt;h3&gt;发送邮件通知&lt;/h3&gt;
+&lt;p&gt;修改&lt;code&gt;MAILCONTENT&lt;/code&gt;, &lt;code&gt;MAILADDR&lt;/code&gt;指定发送什么内容到指定邮箱。&lt;/p&gt;
+&lt;p&gt;注:&amp;nbsp;先确保通过postfix在命令行可以发送邮件到你的邮箱.&lt;/p&gt;
+&lt;h3&gt;备份到Amazon&amp;nbsp;S3&lt;/h3&gt;
+&lt;p&gt;安装s3cmd，使用s3cmd同步备份文件到Amazon&amp;nbsp;S3。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install s3cmd
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改&lt;code&gt;POSTBACKUP&lt;/code&gt;，备份完成后同步备份文件到Amazon&amp;nbsp;S3。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;POSTBACKUP=/etc/automysqlbackup/mysql-backup-post
+$ cat /etc/automysqlbackup/mysql-backup-post
+#!/bin/bash
+
+sudo /usr/local/bin/s3cmd -c /home/user/.s3cfg -r sync local-automysqlbackup-path s3://your-backup-bucket/
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
 &lt;h2&gt;通过Gerrit replication&amp;nbsp;plugin完成Gerrit同步&lt;/h2&gt;
 &lt;h3&gt;安装buck&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install ant
