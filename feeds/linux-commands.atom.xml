@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/linux-commands.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-23T14:21:00+08:00</updated><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><updated>2015-11-23T14:21:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/linux-commands.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-11-23T14:21:00+08:00</updated><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><published>2015-11-23T14:21:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;top命令的具体就不解释了，记录一些实用的命令&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# redis用户此时所使用的内存总数&lt;/span&gt;
 &lt;span class="c1"&gt;# 这里的内存使用&lt;/span&gt;
@@ -10,7 +10,7 @@ top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&
 &lt;span class="c1"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
 $ top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
 135.6
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><published>2015-11-11T10:12:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
 &lt;h2&gt;ssh&lt;/h2&gt;
 &lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
 &lt;p&gt;避免输入用户密码，可以先运行:&lt;/p&gt;
@@ -50,7 +50,7 @@ $ rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;local-file-path&
 
 &lt;p&gt;rsync功能强大，以后再补充。&lt;/p&gt;
 &lt;h2&gt;zsync&lt;/h2&gt;
-&lt;p&gt;先安装后看文档吧，基于&lt;span class="caps"&gt;HTTP&lt;/span&gt;的rsync，使用有一定限制，必须服务端有 .zsync&amp;nbsp;才行。优点是速度非常快。&lt;/p&gt;</summary><category term="Linux"></category><category term="ssh"></category><category term="sync"></category><category term="python"></category><category term="tar"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;p&gt;先安装后看文档吧，基于&lt;span class="caps"&gt;HTTP&lt;/span&gt;的rsync，使用有一定限制，必须服务端有 .zsync&amp;nbsp;才行。优点是速度非常快。&lt;/p&gt;</summary><category term="Linux"></category><category term="ssh"></category><category term="sync"></category><category term="python"></category><category term="tar"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><published>2015-01-14T10:35:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html"&gt;http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-netstat-command-examples/"&gt;http://www.binarytides.com/linux-netstat-command-examples/&lt;/a&gt;&lt;/li&gt;
@@ -206,7 +206,7 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
         RX bytes:0 &lt;span class="o"&gt;(&lt;/span&gt;0.0 B&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:130893 &lt;span class="o"&gt;(&lt;/span&gt;130.8 KB&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><updated>2015-01-13T09:51:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><published>2015-01-13T09:51:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-ps-command/"&gt;10 basic examples of Linux ps&amp;nbsp;command&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://man.linuxde.net/ps"&gt;http://man.linuxde.net/ps&lt;/a&gt;&lt;/li&gt;
@@ -459,7 +459,7 @@ X：  采用旧式的Linux i386登陆格式显示程序状况。
 --User&lt;用户识别码&gt;：  此选项的效果和指定"-U"选项相同。
 --version：  此选项的效果和指定"-V"选项相同。
 --widty&lt;每列字符数&gt;：  此选项的效果和指定"-cols"选项相同。
-&lt;/pre&gt;</summary><category term="linux"></category><category term="command"></category><category term="ps"></category></entry><entry><title>free</title><link href="http://blog.wiseturtles.com/posts/linux-free.html" rel="alternate"></link><updated>2015-01-09T15:27:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-free.html</id><summary type="html">&lt;p&gt;本来转载自:&lt;/p&gt;
+&lt;/pre&gt;</summary><category term="linux"></category><category term="command"></category><category term="ps"></category></entry><entry><title>free</title><link href="http://blog.wiseturtles.com/posts/linux-free.html" rel="alternate"></link><published>2015-01-09T15:27:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-free.html</id><summary type="html">&lt;p&gt;本来转载自:&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html"&gt;http://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;更多free命令可参看:&lt;/p&gt;
 &lt;ul&gt;
@@ -525,7 +525,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 
 &lt;p&gt;这二者都不难理解。&lt;/p&gt;
 &lt;p&gt;free命令由procps.*.rpm提供（在Redhat系列的&lt;span class="caps"&gt;OS&lt;/span&gt;上）。free命令的所有输出值都是从/proc/meminfo中读出的。&lt;/p&gt;
-&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>htop</title><link href="http://blog.wiseturtles.com/posts/linux-htop.html" rel="alternate"></link><updated>2015-01-09T14:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-htop.html</id><summary type="html">&lt;p&gt;本文转摘自 &lt;a href="https://blog.linuxeye.com/350.html"&gt;Linux运维笔记&lt;/a&gt;.&amp;nbsp;并做适当修改　&lt;/p&gt;
+&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>htop</title><link href="http://blog.wiseturtles.com/posts/linux-htop.html" rel="alternate"></link><published>2015-01-09T14:04:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-htop.html</id><summary type="html">&lt;p&gt;本文转摘自 &lt;a href="https://blog.linuxeye.com/350.html"&gt;Linux运维笔记&lt;/a&gt;.&amp;nbsp;并做适当修改　&lt;/p&gt;
 &lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;Htop是一款运行于Linux系统监控与进程管理软件，用于取代Unix下传统的top。与top只提供最消耗资源的进程列表不同，htop提供所有进程的列表，并且使用彩色标识出处理器、swap和内存状态。&lt;/p&gt;
 &lt;p&gt;用户一般可以在top无法提供详尽系统信息的情况下选择安装并使用htop。比如，在查找应用程序的内存泄漏问题时。与top相比，htop提供更方便、光标控制的界面来杀死进程。&lt;/p&gt;
@@ -919,7 +919,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 
 
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="linux"></category><category term="command"></category><category term="htop"></category></entry><entry><title>uptime</title><link href="http://blog.wiseturtles.com/posts/linux-uptime.html" rel="alternate"></link><updated>2014-12-15T10:08:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-15:posts/linux-uptime.html</id><summary type="html">&lt;h2&gt;用途&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="linux"></category><category term="command"></category><category term="htop"></category></entry><entry><title>uptime</title><link href="http://blog.wiseturtles.com/posts/linux-uptime.html" rel="alternate"></link><published>2014-12-15T10:08:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-15:posts/linux-uptime.html</id><summary type="html">&lt;h2&gt;用途&lt;/h2&gt;
 &lt;p&gt;man&amp;nbsp;page&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;uptime gives a one line display of the following information.  The cur‐

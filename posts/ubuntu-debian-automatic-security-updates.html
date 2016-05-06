@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Authors</title>
+    <title>Wise Turtles - Ubuntu/Debian自动安装安全更新
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,11 @@
     <!-- use useso fonts instead of google online fonts-->
     <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Ubunu" />
+      <meta name="tags" contents="Debian" />
 
 </head>
 
@@ -52,13 +58,61 @@
     <div class="row">
 
         <div class="span9">
-    <h1>Authors on Wise Turtles</h1>
+    <div class='article'>
+        <div class="content-title">
+            <h1>Ubuntu/Debian自动安装安全更新</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/ubunu.html">Ubunu</a> <a href="http://blog.wiseturtles.com/tag/debian.html">Debian</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-05-06
 
-    <ul>        <li><a href="http://blog.wiseturtles.com/author/craygit.html">craygit</a> (2)</li>
-        <li><a href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a> (31)</li>
-        <li><a href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a> (20)</li>
-        <li><a href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a> (7)</li>
-    </ul>
+        </div>
+
+        <div><p>有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。</p>
+<p>本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)</p>
+<h2>安装unattended-upgrades自动更新安全补丁</h2>
+<div class="highlight"><pre><span></span>$ sudo apt-get install unattended-upgrades
+$ sudo dpkg-configure unattended-upgrades  <span class="c1"># 选Yes，自动下载安装</span>
+</pre></div>
+
+
+<p>根据自己情况修改配置文件 - <code>/etc/apt/apt.conf.d/50unattended-upgrades</code></p>
+<p>可以设置邮件通知。</p>
+<h2>如果只想收到邮件通知，可以安装apticron</h2>
+<div class="highlight"><pre><span></span>$ apt-get install apticron
+</pre></div>
+
+
+<p>修改配置文件 - <code>/etc/apticron/apticron.conf</code></p>
+<h2>订阅相关邮件列表，了解最新安全信息</h2>
+<ul>
+<li>[Ubuntu Security Notices]<a href="http://www.ubuntu.com/usn/">http://www.ubuntu.com/usn/</a></li>
+<li>[Debian Security Information]<a href="https://www.debian.org/security/index.en.html">https://www.debian.org/security/index.en.html</a></li>
+</ul>
+<p>参考链接:</p>
+<ul>
+<li><a href="https://help.ubuntu.com/community/AutomaticSecurityUpdates">https://help.ubuntu.com/community/AutomaticSecurityUpdates</a></li>
+<li><a href="https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/">https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/</a></li>
+</ul></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="ubuntu-debian-automatic-security-updates" data-title="Ubuntu/Debian自动安装安全更新" data-url="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
         </div>
 
         <div class="span3">

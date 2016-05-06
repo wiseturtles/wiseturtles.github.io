@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-04-05T11:39:00+08:00</updated><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><updated>2016-04-05T11:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-05-06T12:38:00+08:00</updated><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
+&lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
+&lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install unattended-upgrades
+$ sudo dpkg-configure unattended-upgrades  &lt;span class="c1"&gt;# 选Yes，自动下载安装&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;根据自己情况修改配置文件 - &lt;code&gt;/etc/apt/apt.conf.d/50unattended-upgrades&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可以设置邮件通知。&lt;/p&gt;
+&lt;h2&gt;如果只想收到邮件通知，可以安装apticron&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ apt-get install apticron
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改配置文件 - &lt;code&gt;/etc/apticron/apticron.conf&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;订阅相关邮件列表，了解最新安全信息&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[Ubuntu Security Notices]&lt;a href="http://www.ubuntu.com/usn/"&gt;http://www.ubuntu.com/usn/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[Debian Security Information]&lt;a href="https://www.debian.org/security/index.en.html"&gt;https://www.debian.org/security/index.en.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考链接:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://help.ubuntu.com/community/AutomaticSecurityUpdates"&gt;https://help.ubuntu.com/community/AutomaticSecurityUpdates&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/"&gt;https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Ubunu"></category><category term="Debian"></category></entry><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><published>2016-04-05T11:39:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
 &lt;p&gt;注: 系统为Ubuntu&amp;nbsp;14.04，Debian系统也类似。&lt;/p&gt;
 &lt;h2&gt;安装automysqlbackup&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install automysqlbackup
@@ -41,7 +66,7 @@ sudo /usr/local/bin/s3cmd -c /home/user/.s3cfg -r sync local-automysqlbackup-pat
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
+&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><published>2016-03-11T18:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
 &lt;h2&gt;通过Gerrit replication&amp;nbsp;plugin完成Gerrit同步&lt;/h2&gt;
 &lt;h3&gt;安装buck&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install ant
@@ -106,7 +131,7 @@ ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbac
 &lt;h2&gt;参考文档:&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://gerrit.googlesource.com/gerrit/+/v2.0.2/Documentation/config-replication.txt"&gt;config-replication.txt&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Mac System Intregrity Protection - Operation not permitted</title><link href="http://blog.wiseturtles.com/posts/Mac-System-Intregrity-Protection.html" rel="alternate"></link><updated>2016-02-16T14:36:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-16:posts/Mac-System-Intregrity-Protection.html</id><summary type="html">&lt;p&gt;貌似刚拿到电脑是自己手动编译安装了vim 7.3，后来都是brew install&amp;nbsp;vim最新版本。&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Mac System Intregrity Protection - Operation not permitted</title><link href="http://blog.wiseturtles.com/posts/Mac-System-Intregrity-Protection.html" rel="alternate"></link><published>2016-02-16T14:36:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-16:posts/Mac-System-Intregrity-Protection.html</id><summary type="html">&lt;p&gt;貌似刚拿到电脑是自己手动编译安装了vim 7.3，后来都是brew install&amp;nbsp;vim最新版本。&lt;/p&gt;
 &lt;p&gt;今天vim出了点问题，发现系统上还有个vim 7.3，准备删除时就报&lt;code&gt;Operation not permitted&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo rm -rf /usr/share/vim/
@@ -142,7 +167,7 @@ rm: /usr/share/vim: Operation not permitted
 &lt;p&gt;查看&lt;span class="caps"&gt;SIP&lt;/span&gt;状态:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ csrutil status
 System Integrity Protection status: enabled.
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="SIP"></category></entry><entry><title>Maven通过plugin在Tomcat、Jetty中运行项目</title><link href="http://blog.wiseturtles.com/posts/maven-plugin-tomcat-jetty-run.html" rel="alternate"></link><updated>2016-02-09T16:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-09:posts/maven-plugin-tomcat-jetty-run.html</id><summary type="html">&lt;p&gt;记录下如何在pom.xml中配置插件，通过tomcat、Jetty运行项目.&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="SIP"></category></entry><entry><title>Maven通过plugin在Tomcat、Jetty中运行项目</title><link href="http://blog.wiseturtles.com/posts/maven-plugin-tomcat-jetty-run.html" rel="alternate"></link><published>2016-02-09T16:00:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-09:posts/maven-plugin-tomcat-jetty-run.html</id><summary type="html">&lt;p&gt;记录下如何在pom.xml中配置插件，通过tomcat、Jetty运行项目.&lt;/p&gt;
 &lt;h2&gt;配置pom.xml&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;build&amp;gt;&lt;/span&gt;
     &lt;span class="nt"&gt;&amp;lt;plugins&amp;gt;&lt;/span&gt;
@@ -176,7 +201,7 @@ $ mvn tomcat7:run
 
 &lt;h3&gt;Maven Jetty&amp;nbsp;plugin&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mvn jetty:run
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Java"></category><category term="Maven"></category><category term="Tomcat"></category><category term="Jetty"></category></entry><entry><title>Mac Python ValueError: unknown locale: UTF-8</title><link href="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html" rel="alternate"></link><updated>2015-12-13T08:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-12-13:posts/mac-python-ValueError-unknown-locale-utf-8.html</id><summary type="html">&lt;p&gt;Mac brew更新软件报locale utf-8&amp;nbsp;unknown。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Java"></category><category term="Maven"></category><category term="Tomcat"></category><category term="Jetty"></category></entry><entry><title>Mac Python ValueError: unknown locale: UTF-8</title><link href="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html" rel="alternate"></link><published>2015-12-13T08:39:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-12-13:posts/mac-python-ValueError-unknown-locale-utf-8.html</id><summary type="html">&lt;p&gt;Mac brew更新软件报locale utf-8&amp;nbsp;unknown。&lt;/p&gt;
 &lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt;，更新 mpv 时报错: &lt;code&gt;ValueError: unknown locale: UTF-8&lt;/code&gt;&lt;/p&gt;
 &lt;h4&gt;确定当前locale&lt;/h4&gt;
@@ -215,7 +240,7 @@ ValueError: unknown locale: UTF-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;brew upgrade&lt;/code&gt;也正常工作了。&lt;/p&gt;</summary><category term="Python"></category><category term="Shell"></category><category term="Mac"></category></entry><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><updated>2015-11-23T14:21:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;brew upgrade&lt;/code&gt;也正常工作了。&lt;/p&gt;</summary><category term="Python"></category><category term="Shell"></category><category term="Mac"></category></entry><entry><title>top</title><link href="http://blog.wiseturtles.com/posts/linux-top.html" rel="alternate"></link><published>2015-11-23T14:21:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-11-23:posts/linux-top.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;top命令的具体就不解释了，记录一些实用的命令&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# redis用户此时所使用的内存总数&lt;/span&gt;
 &lt;span class="c1"&gt;# 这里的内存使用&lt;/span&gt;
@@ -226,7 +251,7 @@ top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&
 &lt;span class="c1"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
 $ top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
 135.6
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><published>2015-11-11T15:42:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
 &lt;h2&gt;编译环境&lt;/h2&gt;
 &lt;p&gt;为了构建iOS应用，必须找台Mac电脑做slave。
 安装很简单，貌似brew install&amp;nbsp;jenkins就可以了，然后，Jenkins页面上将它加入作为slave。&lt;/p&gt;
@@ -271,7 +296,7 @@ $ set-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/
 &lt;h2&gt;参考文章&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/"&gt;http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><published>2015-11-11T10:12:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
 &lt;h2&gt;ssh&lt;/h2&gt;
 &lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
 &lt;p&gt;避免输入用户密码，可以先运行:&lt;/p&gt;
@@ -311,7 +336,7 @@ $ rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;local-file-path&
 
 &lt;p&gt;rsync功能强大，以后再补充。&lt;/p&gt;
 &lt;h2&gt;zsync&lt;/h2&gt;
-&lt;p&gt;先安装后看文档吧，基于&lt;span class="caps"&gt;HTTP&lt;/span&gt;的rsync，使用有一定限制，必须服务端有 .zsync&amp;nbsp;才行。优点是速度非常快。&lt;/p&gt;</summary><category term="Linux"></category><category term="ssh"></category><category term="sync"></category><category term="python"></category><category term="tar"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
+&lt;p&gt;先安装后看文档吧，基于&lt;span class="caps"&gt;HTTP&lt;/span&gt;的rsync，使用有一定限制，必须服务端有 .zsync&amp;nbsp;才行。优点是速度非常快。&lt;/p&gt;</summary><category term="Linux"></category><category term="ssh"></category><category term="sync"></category><category term="python"></category><category term="tar"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><published>2015-10-31T20:46:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -321,7 +346,7 @@ $ rsync -P -v -e ssh user@remote-host:receive-file-path &amp;lt;local-file-path&
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>scrapyd和scrapyd-client使用教程</title><link href="http://blog.wiseturtles.com/posts/scrapyd.html" rel="alternate"></link><updated>2015-10-29T17:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-10-29:posts/scrapyd.html</id><summary type="html">&lt;p&gt;scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过&lt;span class="caps"&gt;JSON&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt;来部署爬虫项目和控制爬虫运行&lt;/p&gt;
+&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>scrapyd和scrapyd-client使用教程</title><link href="http://blog.wiseturtles.com/posts/scrapyd.html" rel="alternate"></link><published>2015-10-29T17:42:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-10-29:posts/scrapyd.html</id><summary type="html">&lt;p&gt;scrapyd是一个用于部署和运行scrapy爬虫的程序，它允许你通过&lt;span class="caps"&gt;JSON&lt;/span&gt; &lt;span class="caps"&gt;API&lt;/span&gt;来部署爬虫项目和控制爬虫运行&lt;/p&gt;
 &lt;h2&gt;概览&lt;/h2&gt;
 &lt;h3&gt;项目和版本&lt;/h3&gt;
 &lt;p&gt;scrapyd可以管理多个项目，并且每个项目允许有多个版本，但是只有最新的版本会被用来运行爬虫.&lt;/p&gt;
@@ -628,7 +653,7 @@ $ curl http://localhost:6800/schedule.json -d &lt;span class="nv"&gt;project&lt;
 &lt;/ul&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;小结&lt;/h2&gt;
-&lt;p&gt;关于scrapyd，个人感觉比较适合单机部署爬虫和调度使用，分布式的爬虫调度可能不太合适，需要每台机器上都启动这样一个服务，日志也没有办法集中，用jenkins来做可能更合适.&lt;/p&gt;</summary><category term="scrapyd"></category><category term="scrapy"></category><category term="scrapyd-client"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+&lt;p&gt;关于scrapyd，个人感觉比较适合单机部署爬虫和调度使用，分布式的爬虫调度可能不太合适，需要每台机器上都启动这样一个服务，日志也没有办法集中，用jenkins来做可能更合适.&lt;/p&gt;</summary><category term="scrapyd"></category><category term="scrapy"></category><category term="scrapyd-client"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><published>2015-10-27T19:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
 &lt;h3&gt;android&lt;/h3&gt;
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
@@ -640,7 +665,7 @@ $ android list sdk -a -u --proxy-host proxy-host --proxy-port proxy-port  &lt;sp
 
 &lt;p&gt;安装指定的包：(num1,&amp;nbsp;num2是上面命令返回的序号)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><published>2015-10-15T21:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python get-pip.py
 &lt;/pre&gt;&lt;/div&gt;
@@ -673,7 +698,7 @@ index-url =&amp;nbsp;http://mirrors.aliyuncs.com/pypi/simple/&lt;/p&gt;
 &lt;p&gt;不加trusted-host会报下面的警告:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The repository located at mirrors.aliyun.com is not a trusted or secure host and is being ignored. If this repository is available via &lt;span class="caps"&gt;HTTPS&lt;/span&gt; it is recommended to use &lt;span class="caps"&gt;HTTPS&lt;/span&gt; instead, otherwise you may silence this warning and allow it anyways with &amp;#8216;&amp;#8212;trusted-host&amp;nbsp;mirrors.aliyun.com&amp;#8217;.&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><published>2015-10-10T13:27:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cocoachina.com/ios/20150703/12392.html"&gt;http://www.cocoachina.com/ios/20150703/12392.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/"&gt;https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/&lt;/a&gt;&lt;/li&gt;
@@ -766,7 +791,7 @@ $ openssl dhparam -out dhparam.pem 4096
 &lt;p&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;配置的是否安全：&lt;a href="https://www.ssllabs.com/ssltest/"&gt;https://www.ssllabs.com/ssltest/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;测试&lt;span class="caps"&gt;SPDY&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
+&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><published>2015-09-29T14:45:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
 &lt;h2&gt;Gradle代理设置&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.gradle/gradle.properties
 systemProp.http.proxyHost&lt;span class="o"&gt;=&lt;/span&gt;your-proxy
@@ -774,7 +799,7 @@ systemProp.http.proxyPort&lt;span class="o"&gt;=&lt;/span&gt;proxy-port
 &lt;span class="c1"&gt;#systemProp.http.proxyUser=userid&lt;/span&gt;
 &lt;span class="c1"&gt;#systemProp.http.proxyPassword=password&lt;/span&gt;
 &lt;span class="c1"&gt;#systemProp.http.nonProxyHosts=*.nonproxyrepos.com|localhost&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="gradle"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="gradle"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><published>2015-09-23T16:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
@@ -876,7 +901,7 @@ iptables: Saving firewall rules to /etc/sysconfig/iptables:&lt;span class="o"&gt
 
 &lt;p&gt;重启自动运行iptables:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo chkconfig iptables on
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><published>2015-09-22T15:55:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
@@ -1037,7 +1062,7 @@ $ sudo supervisorctl  &lt;span class="c1"&gt;# 查看sentry, sentry_worker运行
 &lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;开始我们就提到过sentry支持目前所有主流语言，
-参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
+参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><published>2015-09-18T23:48:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 下载&lt;/span&gt;
 $ wget http://download.redis.io/releases/redis-3.0.4.tar.gz
 $ tar -zxvf redis-3.0.4.tar.gz
@@ -1217,7 +1242,7 @@ OK
 
 &lt;span class="c1"&gt;# 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块&lt;/span&gt;
 &lt;span class="c1"&gt;# 完毕&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;p&gt;大家都知道Node.js是基于JavaScript的，使JavaScript可以用于后台开发。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><published>2015-09-18T13:49:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;p&gt;大家都知道Node.js是基于JavaScript的，使JavaScript可以用于后台开发。&lt;/p&gt;
 &lt;h2&gt;为啥学JavaScript&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;公司项目需要&lt;/li&gt;
@@ -1267,7 +1292,7 @@ $ npm uninstall
 &lt;li&gt;&lt;a href="https://github.com/alsotang/node-lessons"&gt;Node.js包教不包会&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://javascript.ruanyifeng.com/#nodejs"&gt;JavaScript标准参考教程&lt;/a&gt;有些章节专门介绍Node.js。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;还在看上面文章学习的阶段&amp;nbsp;:D&lt;/p&gt;</summary><category term="node.js"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
+&lt;p&gt;还在看上面文章学习的阶段&amp;nbsp;:D&lt;/p&gt;</summary><category term="node.js"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><published>2015-09-18T13:13:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/issue
@@ -1525,7 +1550,7 @@ gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;
 &lt;h2&gt;备份&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo crontab -l
 &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;2&lt;/span&gt; * * * /opt/gitlab/bin/gitlab-rake gitlab:backup:create
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="gitlab"></category></entry><entry><title>Golang评价</title><link href="http://blog.wiseturtles.com/posts/golang-chaos.html" rel="alternate"></link><updated>2015-09-15T13:47:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-15:posts/golang-chaos.html</id><summary type="html">&lt;h3&gt;djvu9&lt;/h3&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="gitlab"></category></entry><entry><title>Golang评价</title><link href="http://blog.wiseturtles.com/posts/golang-chaos.html" rel="alternate"></link><published>2015-09-15T13:47:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-15:posts/golang-chaos.html</id><summary type="html">&lt;h3&gt;djvu9&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -1547,7 +1572,7 @@ gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;
 &lt;h3&gt;yinwang&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.yinwang.org/blog-cn/2014/04/18/golang/"&gt;对 Go&amp;nbsp;语言的综合评价&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="go"></category></entry><entry><title>Elastichsearch反向代理设置</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-reverse-proxy.html" rel="alternate"></link><updated>2015-08-12T17:29:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-reverse-proxy.html</id><summary type="html">&lt;p&gt;内网的&lt;span class="caps"&gt;ES&lt;/span&gt;集群，平时操作都是通过命令行，有点不方便，而且安装的site插件也没法使用&amp;nbsp;，比较蛋疼，所以配置nginx作为elasticsearch的反向代理，并且添加认证信息.&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="go"></category></entry><entry><title>Elastichsearch反向代理设置</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-reverse-proxy.html" rel="alternate"></link><published>2015-08-12T17:29:00+08:00</published><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-reverse-proxy.html</id><summary type="html">&lt;p&gt;内网的&lt;span class="caps"&gt;ES&lt;/span&gt;集群，平时操作都是通过命令行，有点不方便，而且安装的site插件也没法使用&amp;nbsp;，比较蛋疼，所以配置nginx作为elasticsearch的反向代理，并且添加认证信息.&lt;/p&gt;
 &lt;p&gt;如果是直接用域名的根节点作为反向代理的话，比较简单，直接配置一下就可以，但是问
 题是根节点被暂用，需要设置一个前缀来来访问,&amp;nbsp;就稍微麻烦一点.&lt;/p&gt;
 &lt;p&gt;nginx配置如下:&lt;/p&gt;
@@ -1573,7 +1598,7 @@ gitlab_rails&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;
 &lt;li&gt;&lt;a href="http://www.example.com/es/"&gt;http://www.example.com/es/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.example.com/es/_plugin/head/"&gt;http://www.example.com/es/_plugin/head/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;配置好之后，用起来爽多了。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="reverse"></category><category term="proxy"></category></entry><entry><title>Elastichsearch数据备份，恢复，及迁移</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html" rel="alternate"></link><updated>2015-08-12T14:13:00+08:00</updated><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-snapshot-restore.html</id><summary type="html">&lt;h3&gt;参考资料:&lt;/h3&gt;
+&lt;p&gt;配置好之后，用起来爽多了。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="reverse"></category><category term="proxy"></category></entry><entry><title>Elastichsearch数据备份，恢复，及迁移</title><link href="http://blog.wiseturtles.com/posts/elasticsearch-snapshot-restore.html" rel="alternate"></link><published>2015-08-12T14:13:00+08:00</published><author><name>craygit</name></author><id>tag:blog.wiseturtles.com,2015-08-12:posts/elasticsearch-snapshot-restore.html</id><summary type="html">&lt;h3&gt;参考资料:&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/backing-up-your-cluster.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html"&gt;https://www.elastic.co/guide/en/elasticsearch/guide/current/_restoring_from_a_snapshot.html&lt;/a&gt;&lt;/li&gt;
@@ -1718,7 +1743,7 @@ curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 
 
 &lt;h3&gt;备份快照迁移&lt;/h3&gt;
-&lt;p&gt;如果需要将快照迁移到另一个集群.只需要将备份文件全部拷贝到要迁移的机器上, 然后再在新的集群上注册一个快照仓库,设置&lt;code&gt;location&lt;/code&gt;的位置为备份文件所在的地方，然后执行恢复备份的命令即可。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="snapshot"></category><category term="restore"></category><category term="transfer"></category></entry><entry><title>Java Spring 学习索引</title><link href="http://blog.wiseturtles.com/posts/get-started-with-java-spring.html" rel="alternate"></link><updated>2015-08-06T00:20:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-08-06:posts/get-started-with-java-spring.html</id><summary type="html">&lt;p&gt;近期由于工作需要，需要学习Java Web开发，虽然以前也接触过Java, 不过也就仅限于写个&amp;#8221;Hello World&amp;#8221;. 为了尽快掌握Java Web开发，面对网上琳琅满目的学习资料，&amp;nbsp;必须梳理一条清晰的学习路线，不然就会陷入无尽的文档流中了。结合本人的学习情况，整理出如下学习过程。&lt;/p&gt;
+&lt;p&gt;如果需要将快照迁移到另一个集群.只需要将备份文件全部拷贝到要迁移的机器上, 然后再在新的集群上注册一个快照仓库,设置&lt;code&gt;location&lt;/code&gt;的位置为备份文件所在的地方，然后执行恢复备份的命令即可。&lt;/p&gt;</summary><category term="elasticsearch"></category><category term="snapshot"></category><category term="restore"></category><category term="transfer"></category></entry><entry><title>Java Spring 学习索引</title><link href="http://blog.wiseturtles.com/posts/get-started-with-java-spring.html" rel="alternate"></link><published>2015-08-06T00:20:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-08-06:posts/get-started-with-java-spring.html</id><summary type="html">&lt;p&gt;近期由于工作需要，需要学习Java Web开发，虽然以前也接触过Java, 不过也就仅限于写个&amp;#8221;Hello World&amp;#8221;. 为了尽快掌握Java Web开发，面对网上琳琅满目的学习资料，&amp;nbsp;必须梳理一条清晰的学习路线，不然就会陷入无尽的文档流中了。结合本人的学习情况，整理出如下学习过程。&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;Java基础语法&lt;/p&gt;
@@ -1742,7 +1767,7 @@ curl -XGET http://192.168.0.1:9200/_recovery/restored_index_1
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;暂时就整理这么多吧，后面学习了之后再继续整理。&lt;/p&gt;
-&lt;p&gt;未完，待续&amp;#8230;&amp;#8230;&lt;/p&gt;</summary><category term="java"></category><category term="spring"></category></entry><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><updated>2015-07-22T16:33:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-hello-beego.html</id><summary type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
+&lt;p&gt;未完，待续&amp;#8230;&amp;#8230;&lt;/p&gt;</summary><category term="java"></category><category term="spring"></category></entry><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><published>2015-07-22T16:33:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-hello-beego.html</id><summary type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go get github.com/astaxie/beego
 $ go get github.com/beego/bee
 &lt;/pre&gt;&lt;/div&gt;
@@ -1770,7 +1795,7 @@ $ go get github.com/beego/bee
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;执行&lt;code&gt;go run hello-beego.go&lt;/code&gt;, 访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查，　如果输出&amp;#8221;hello world&amp;#8221;&amp;nbsp;表示本地beego环境已经搭建成功&lt;/p&gt;</summary><category term="go"></category><category term="beego"></category></entry><entry><title>Go学习笔记4之知识点记录</title><link href="http://blog.wiseturtles.com/posts/go-notes.html" rel="alternate"></link><updated>2015-07-22T14:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-notes.html</id><summary type="html">&lt;h3&gt;Go环境配置&lt;/h3&gt;
+&lt;p&gt;执行&lt;code&gt;go run hello-beego.go&lt;/code&gt;, 访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查，　如果输出&amp;#8221;hello world&amp;#8221;&amp;nbsp;表示本地beego环境已经搭建成功&lt;/p&gt;</summary><category term="go"></category><category term="beego"></category></entry><entry><title>Go学习笔记4之知识点记录</title><link href="http://blog.wiseturtles.com/posts/go-notes.html" rel="alternate"></link><published>2015-07-22T14:09:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-notes.html</id><summary type="html">&lt;h3&gt;Go环境配置&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;如果你想在同一个系统中安装多个版本的Go，你可以参考第三方工具&lt;a href="https://github.com/moovweb/gvm"&gt;&lt;span class="caps"&gt;GVM&lt;/span&gt;&lt;/a&gt;，这是目前在这&amp;nbsp;方面做得最好的工具。&lt;/p&gt;
@@ -1855,7 +1880,7 @@ $ go get github.com/beego/bee
 
 &lt;p&gt;&lt;em&gt;注意&lt;/em&gt;:&amp;nbsp;数组之间的赋值是值的赋值，即当把一个数组作为参数传入函数的时候，传入的其实是该数组的副本，而不是它的指针。如果要使用指针，那么就需要用到后面介绍的slice类型了。&lt;/p&gt;
 &lt;h3&gt;Slice&lt;/h3&gt;
-&lt;p&gt;注意slice和数组在声明时的区别：声明数组时，方括号内写明了数组的长度或使用&amp;#8230;自动计算长度，而声明slice时，方括号内没有任何字符。&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="note"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
+&lt;p&gt;注意slice和数组在声明时的区别：声明数组时，方括号内写明了数组的长度或使用&amp;#8230;自动计算长度，而声明slice时，方括号内没有任何字符。&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="note"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><published>2015-07-18T14:56:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
 &lt;h2&gt;Xcode&lt;/h2&gt;
 &lt;h3&gt;安装Xcode命令行工具:&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ xcode-select --install
@@ -2006,7 +2031,7 @@ $ cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/gofmt &lt;span class="nv"&g
 &lt;li&gt;mac的屏的确要比我之前用过的笔记本好很多&lt;/li&gt;
 &lt;li&gt;严重怀疑网上那些把mac捧得太高的人只用过Windows，根本没用过Ubuntu之类的桌面Linux&amp;nbsp;(至少目前自己还没体会到mac比Linux高效在哪里)&lt;/li&gt;
 &lt;li&gt;刚开始使用难免出错，也许上面的都是错的。。&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Mac"></category></entry><entry><title>Go学习笔记3之打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
+&lt;/ol&gt;</summary><category term="Mac"></category></entry><entry><title>Go学习笔记3之打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><published>2015-07-13T16:45:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
 &lt;p&gt;可以用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具和插件目前已经非常多了,如&lt;span class="caps"&gt;VIM&lt;/span&gt;, Emacs, atom等，这里&lt;a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins"&gt;IDEs and Plugins for
 Go&lt;/a&gt;罗列了许多可以作为&lt;span class="caps"&gt;GO&lt;/span&gt;开发
 的&lt;span class="caps"&gt;IDE&lt;/span&gt;和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
@@ -2109,7 +2134,7 @@ $ go get github.com/beego/bee
 &lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键&lt;/li&gt;
 &lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><updated>2015-07-06T15:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
+&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>sSMTP发送邮件</title><link href="http://blog.wiseturtles.com/posts/install-sSMTP.html" rel="alternate"></link><published>2015-07-06T15:00:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-06:posts/install-sSMTP.html</id><summary type="html">&lt;p&gt;工作中很多场景需要发送邮件，如：报警邮件、日报等。本文介绍如何安装、配置sSMTP做邮件发送。&lt;/p&gt;
 &lt;h2&gt;安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install ssmtp
 &lt;/pre&gt;&lt;/div&gt;
@@ -2163,7 +2188,7 @@ root:no-reply@example.com:mail.example.com:587
 &lt;span class="s"&gt;$YOUR-MAIL-BODY&lt;/span&gt;
 
 &lt;span class="s"&gt;EOF&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记2之初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Debian"></category><category term="sSMTP"></category></entry><entry><title>Go学习笔记2之初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><published>2015-06-30T23:37:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/code.html"&gt;How to Write Go&amp;nbsp;Code&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;代码组织&lt;/h2&gt;
 &lt;h3&gt;工作空间&lt;/h3&gt;
@@ -2370,7 +2395,7 @@ Hello, Go examples!
 
 
 &lt;p&gt;如果当前包已经存在，&lt;code&gt;go get&lt;/code&gt;会跳过下载&lt;/p&gt;
-&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记1之安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记1之安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><published>2015-06-30T23:11:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/install"&gt;Installing Go - Getting&amp;nbsp;Started&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;必备技能之翻墙&lt;/h3&gt;
 &lt;p&gt;这个是必须的技能，不然go的官网都没法访问,&amp;nbsp;后面也不用看了。&lt;/p&gt;
@@ -2407,7 +2432,7 @@ hello, world
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题.&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><updated>2015-06-26T12:59:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
+&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题.&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>高并发下连接redis导致redis连接失败</title><link href="http://blog.wiseturtles.com/posts/flask-redis-gevent.html" rel="alternate"></link><published>2015-06-26T12:59:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/flask-redis-gevent.html</id><summary type="html">&lt;h3&gt;现象&lt;/h3&gt;
 &lt;p&gt;最近线上的redis服务器会莫名出现无法突然之间无法连接的情况，需要重启一下redis服务器才能正常工作，感觉很诡异.&amp;nbsp;查看redis日志，发现报如下错误:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Error allocating resoures for the&amp;nbsp;client&lt;/p&gt;
@@ -2501,7 +2526,7 @@ connected_clients:232
 里没有做对,&amp;nbsp;有机会再研究。&lt;/p&gt;
 &lt;p&gt;&lt;a href="https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/"&gt;https://gehrcke.de/2013/01/highly-concurrent-connections-to-redis-with-gevent-and-redis-py/&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="flask"></category><category term="redis"></category><category term="gevent"></category></entry><entry><title>Gunicorn 几种 Worker class 性能测试比较</title><link href="http://blog.wiseturtles.com/posts/gunicorn-worker-class-compare.html" rel="alternate"></link><updated>2015-06-26T09:30:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/gunicorn-worker-class-compare.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="flask"></category><category term="redis"></category><category term="gevent"></category></entry><entry><title>Gunicorn 几种 Worker class 性能测试比较</title><link href="http://blog.wiseturtles.com/posts/gunicorn-worker-class-compare.html" rel="alternate"></link><published>2015-06-26T09:30:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/gunicorn-worker-class-compare.html</id><summary type="html">&lt;h2&gt;简介&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Gunicorn, 一个支持&lt;span class="caps"&gt;WSGI&lt;/span&gt;协议的web服务器&lt;/li&gt;
 &lt;li&gt;Flask, 一个轻量级的python&amp;nbsp;web框架&lt;/li&gt;
@@ -2777,7 +2802,7 @@ $ gunicorn -w &lt;span class="m"&gt;4&lt;/span&gt; app:app --error-logfile - --w
 [2015-06-25 11:31:06 +0000] [27280] [INFO] Booting worker with pid: 27280
 &lt;/pre&gt;
 
-&lt;p&gt;eventlet&amp;nbsp;和gevent两种方式效果最好，数据基本差不多.&lt;/p&gt;</summary><category term="gunicorn"></category><category term="flask"></category><category term="gevent"></category><category term="eventlet"></category><category term="tornado"></category></entry><entry><title>压力测试工具ab webbench</title><link href="http://blog.wiseturtles.com/posts/server-benchmarkingt-tool-ab-and-webbench.html" rel="alternate"></link><updated>2015-06-26T07:29:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/server-benchmarkingt-tool-ab-and-webbench.html</id><summary type="html">&lt;h2&gt;ab&lt;/h2&gt;
+&lt;p&gt;eventlet&amp;nbsp;和gevent两种方式效果最好，数据基本差不多.&lt;/p&gt;</summary><category term="gunicorn"></category><category term="flask"></category><category term="gevent"></category><category term="eventlet"></category><category term="tornado"></category></entry><entry><title>压力测试工具ab webbench</title><link href="http://blog.wiseturtles.com/posts/server-benchmarkingt-tool-ab-and-webbench.html" rel="alternate"></link><published>2015-06-26T07:29:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-26:posts/server-benchmarkingt-tool-ab-and-webbench.html</id><summary type="html">&lt;h2&gt;ab&lt;/h2&gt;
 &lt;p&gt;ab是apache自带的压力测试工具。使用简单，便于一些简单的压力测试.&lt;/p&gt;
 &lt;h3&gt;安装&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install apache2-utils
@@ -2883,7 +2908,7 @@ webbench &lt;span class="o"&gt;[&lt;/span&gt;option&lt;span class="o"&gt;]&lt;/s
 --trace                  Use TRACE request method.
 -?&lt;span class="p"&gt;|&lt;/span&gt;-h&lt;span class="p"&gt;|&lt;/span&gt;--help             This information.
 -V&lt;span class="p"&gt;|&lt;/span&gt;--version             Display program version.
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="ab"></category><category term="workbench"></category></entry><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><updated>2015-06-19T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="ab"></category><category term="workbench"></category></entry><entry><title>Upgrade Elasticsearch 1.2.1 to 1.4.5</title><link href="http://blog.wiseturtles.com/posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html" rel="alternate"></link><published>2015-06-19T00:00:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-06-19:posts/Upgrade-Elasticsearch-1.2.1-to-1.4.5.html</id><summary type="html">&lt;p&gt;一年前刚开始做应用市场数据统计，团队选用了&lt;span class="caps"&gt;ELK&lt;/span&gt;中的&lt;span class="caps"&gt;EL&lt;/span&gt; (Elasticsearch, Logstash)，没有用Kibana；而且根据产品、运营需求调用&lt;span class="caps"&gt;ES&lt;/span&gt; Restful &lt;span class="caps"&gt;API&lt;/span&gt;，自己做Web展示。
 用了以下插件:analysis-icu, analysis-ik, analysis-mmseg, analysis-pinyin
 当时&lt;span class="caps"&gt;ES&lt;/span&gt;版本为1.2.1，一直没有升级，最近升级到1.4.5。&lt;/p&gt;
 &lt;p&gt;我们之前服务器是Debian 7，现在服务器是CentOS 6.5；服务器版本和&lt;span class="caps"&gt;ES&lt;/span&gt;没有关系，至少我没碰到任何系统问题。&lt;/p&gt;
@@ -3242,7 +3267,7 @@ $ cat /etc/supervisor/conf.d/logstash.conf
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch"&gt;http://stackoverflow.com/questions/25135869/how-to-rebalance-shard-elasticsearch&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html"&gt;https://t37.net/how-to-fix-your-elasticsearch-cluster-stuck-in-initializing-shards-mode.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix"&gt;http://stackoverflow.com/questions/19967472/elasticsearch-unassigned-shards-how-to-fix&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Dashboard"></category><category term="Elasticsearch"></category><category term="Logstash"></category><category term="ELK"></category></entry><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu-or-debian.html" rel="alternate"></link><updated>2015-05-23T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu-or-debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
+&lt;/ol&gt;</summary><category term="Dashboard"></category><category term="Elasticsearch"></category><category term="Logstash"></category><category term="ELK"></category></entry><entry><title>Install Nagios 4 on Ubuntu/Debian</title><link href="http://blog.wiseturtles.com/posts/install-nagios4-on-ubuntu-or-debian.html" rel="alternate"></link><published>2015-05-23T00:00:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-23:posts/install-nagios4-on-ubuntu-or-debian.html</id><summary type="html">&lt;p&gt;Ucloud后台监控系统功能很简单，最近发现之前设置过的监控项也无法正常显示，更不能编辑了。&amp;nbsp;虽然，马上就要将系统迁移到公司自己大家的云平台，但，最近Ucloud服务器压力很大，周末抽空先将Nagios搭建起来，让自己能及时收到报警。&lt;/p&gt;
 &lt;p&gt;我们Ucloud服务器都用的Debian 7 (wheezy)，源里只有nagios3，所以，自己编译、安装Nagios&amp;nbsp;4。&lt;/p&gt;
 &lt;h1&gt;监控主机安装Nagios&lt;/h1&gt;
 &lt;h2&gt;安装需要的软件包&lt;/h2&gt;
@@ -3547,7 +3572,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;ol&gt;
 &lt;li&gt;&lt;a href="https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04"&gt;https://www.digitalocean.com/community/tutorials/how-to-install-nagios-4-and-monitor-your-servers-on-ubuntu-14-04&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://netkiller.github.io/monitoring/nagios/"&gt;http://netkiller.github.io/monitoring/nagios/&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Debian"></category><category term="Monitor"></category><category term="Management"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><updated>2015-05-22T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="Ubuntu"></category><category term="Debian"></category><category term="Monitor"></category><category term="Management"></category></entry><entry><title>Python下载大文件</title><link href="http://blog.wiseturtles.com/posts/python-download-large-file-without-out-of-memory.html" rel="alternate"></link><published>2015-05-22T00:00:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-05-22:posts/python-download-large-file-without-out-of-memory.html</id><summary type="html">&lt;h2&gt;requests&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;download_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;span class="n"&gt;local_filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;span class="c1"&gt;# NOTE the stream=True parameter&lt;/span&gt;
@@ -3576,7 +3601,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;ol&gt;
 &lt;li&gt;http://stackoverflow.com/questions/16694907/how-to-download-large-file-in-python-with-requests-py&lt;/li&gt;
 &lt;li&gt;http://stackoverflow.com/questions/27053028/how-to-download-large-file-without-memoryerror-in-python&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Python"></category><category term="OOM"></category></entry><entry><title>从源码编译安装vim 7.4</title><link href="http://blog.wiseturtles.com/posts/build-vim-7.4.html" rel="alternate"></link><updated>2015-03-07T00:15:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-03-07:posts/build-vim-7.4.html</id><summary type="html">&lt;h3&gt;准备编译环境&lt;/h3&gt;
+&lt;/ol&gt;</summary><category term="Python"></category><category term="OOM"></category></entry><entry><title>从源码编译安装vim 7.4</title><link href="http://blog.wiseturtles.com/posts/build-vim-7.4.html" rel="alternate"></link><published>2015-03-07T00:15:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-03-07:posts/build-vim-7.4.html</id><summary type="html">&lt;h3&gt;准备编译环境&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;    $ sudo apt-get build-dep vim
     $ sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
             libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
@@ -3626,7 +3651,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;h3&gt;收获&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;checkinstall&amp;nbsp;是个好东西&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="vim"></category><category term="ubuntu"></category></entry><entry><title>Flask中通过fileConfig配置多个logger</title><link href="http://blog.wiseturtles.com/posts/flask-logging.html" rel="alternate"></link><updated>2015-02-11T00:05:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-11:posts/flask-logging.html</id><summary type="html">&lt;h2&gt;Flask中如何通过配置文件配置logger&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="vim"></category><category term="ubuntu"></category></entry><entry><title>Flask中通过fileConfig配置多个logger</title><link href="http://blog.wiseturtles.com/posts/flask-logging.html" rel="alternate"></link><published>2015-02-11T00:05:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-11:posts/flask-logging.html</id><summary type="html">&lt;h2&gt;Flask中如何通过配置文件配置logger&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;创建&lt;code&gt;app.py&lt;/code&gt;文件&lt;/p&gt;
@@ -3732,7 +3757,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;li&gt;level设置时, logger的level等级应该小于handler的level等级，最终是以handler的设置为准，&amp;nbsp;反之，则起作用的是logger的level&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="flask"></category><category term="logging"></category></entry><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+&lt;/ol&gt;</summary><category term="flask"></category><category term="logging"></category></entry><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><published>2015-02-09T23:49:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install supervisor
 &lt;/pre&gt;&lt;/div&gt;
@@ -3888,7 +3913,7 @@ start
 $ sudo chkconfig --add supervisord
 $ sudo chkconfig supervisord on
 $ sudo service supervisord start
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><published>2015-02-06T15:45:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
 &lt;h2&gt;下载及安装&lt;/h2&gt;
@@ -4095,7 +4120,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;
 &lt;/ul&gt;
 &lt;p&gt;测试:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ logroate -f /etc/logrotate.d/nginx
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="openresty"></category></entry><entry><title>linux 小贴士</title><link href="http://blog.wiseturtles.com/posts/linux-tips.html" rel="alternate"></link><updated>2015-01-20T18:16:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-20:posts/linux-tips.html</id><summary type="html">&lt;h2&gt;ssh端口转发&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="openresty"></category></entry><entry><title>linux 小贴士</title><link href="http://blog.wiseturtles.com/posts/linux-tips.html" rel="alternate"></link><published>2015-01-20T18:16:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-20:posts/linux-tips.html</id><summary type="html">&lt;h2&gt;ssh端口转发&lt;/h2&gt;
 &lt;p&gt;由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？&lt;/p&gt;
 &lt;p&gt;以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&amp;nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。&lt;/p&gt;
 &lt;p&gt;前提:&amp;nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)&lt;/p&gt;
@@ -4247,7 +4272,7 @@ workon_cwd
 
 
 &lt;p&gt;如下是一个在线生成&lt;span class="caps"&gt;PS1&lt;/span&gt;变量的网站，可以根据自己的需求定制&lt;span class="caps"&gt;PS1&lt;/span&gt;变量:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://bashrcgenerator.com/"&gt;http://bashrcgenerator.com/&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="tips"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
+&lt;p&gt;&lt;a href="http://bashrcgenerator.com/"&gt;http://bashrcgenerator.com/&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="tips"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><published>2015-01-15T17:09:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
 &lt;p&gt;Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。&lt;/p&gt;
 &lt;p&gt;本文以Ubuntu&amp;nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程&lt;/p&gt;
 &lt;h2&gt;参考文献&lt;/h2&gt;
@@ -4476,7 +4501,7 @@ $ gerrit/bin/gerrit.sh restart &lt;span class="c1"&gt;# 重启gerrit服务&lt;/s
 &lt;li&gt;如果用MySQL作为数据库，Gerrit数据库的引擎应该是Innodb.&lt;/li&gt;
 &lt;li&gt;配置邮件时，一直认证失败，除了在&lt;code&gt;etc/gerrt.conf&lt;/code&gt;文件里指定&lt;code&gt;sendmail.smtpUser&lt;/code&gt;, 还需要指定&lt;code&gt;sendmail.from&lt;/code&gt;为发送邮件的用户信息, 格式为&lt;code&gt;username &amp;lt;youmail@mail.com&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;认证可以使用github oauth认证&lt;a href="https://github.com/davido/gerrit-oauth-provider"&gt;gerrit-oauth-provider&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="git"></category><category term="gerrit"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><updated>2015-01-14T10:35:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;/ol&gt;</summary><category term="git"></category><category term="gerrit"></category></entry><entry><title>netstat</title><link href="http://blog.wiseturtles.com/posts/linux-netstat.html" rel="alternate"></link><published>2015-01-14T10:35:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-14:posts/linux-netstat.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html"&gt;http://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-netstat-command-examples/"&gt;http://www.binarytides.com/linux-netstat-command-examples/&lt;/a&gt;&lt;/li&gt;
@@ -4632,7 +4657,7 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
         RX bytes:0 &lt;span class="o"&gt;(&lt;/span&gt;0.0 B&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:130893 &lt;span class="o"&gt;(&lt;/span&gt;130.8 KB&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><updated>2015-01-13T09:51:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><published>2015-01-13T09:51:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:posts/linux-ps.html</id><summary type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-ps-command/"&gt;10 basic examples of Linux ps&amp;nbsp;command&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://man.linuxde.net/ps"&gt;http://man.linuxde.net/ps&lt;/a&gt;&lt;/li&gt;
@@ -4885,7 +4910,7 @@ X：  采用旧式的Linux i386登陆格式显示程序状况。
 --User&lt;用户识别码&gt;：  此选项的效果和指定"-U"选项相同。
 --version：  此选项的效果和指定"-V"选项相同。
 --widty&lt;每列字符数&gt;：  此选项的效果和指定"-cols"选项相同。
-&lt;/pre&gt;</summary><category term="linux"></category><category term="command"></category><category term="ps"></category></entry><entry><title>export Android cantacts with vCard format via adb</title><link href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html" rel="alternate"></link><updated>2015-01-11T15:20:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-01-11:posts/android-vcard-from-command-line.html</id><summary type="html">&lt;p&gt;参考:
+&lt;/pre&gt;</summary><category term="linux"></category><category term="command"></category><category term="ps"></category></entry><entry><title>export Android cantacts with vCard format via adb</title><link href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html" rel="alternate"></link><published>2015-01-11T15:20:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-01-11:posts/android-vcard-from-command-line.html</id><summary type="html">&lt;p&gt;参考:
 &lt;a href="http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms"&gt;http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨天手机(&lt;span class="caps"&gt;TCL&lt;/span&gt;&amp;nbsp;S960)掉地下把屏幕摔坏了，Google被xx后，就没在用过其它通讯录同步，只好想办法从坏手机里导出，屏幕完全坏了，只能通过adb完成。&lt;/p&gt;
 &lt;h1&gt;获取通讯录&lt;/h1&gt;
@@ -4936,7 +4961,7 @@ update system &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;val
 
 
 &lt;p&gt;如果是忘了Android锁屏图案，想找回，可以试试:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/sch3m4/androidpatternlock"&gt;https://github.com/sch3m4/androidpatternlock&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category><category term="vCard"></category><category term="adb"></category></entry><entry><title>free</title><link href="http://blog.wiseturtles.com/posts/linux-free.html" rel="alternate"></link><updated>2015-01-09T15:27:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-free.html</id><summary type="html">&lt;p&gt;本来转载自:&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/sch3m4/androidpatternlock"&gt;https://github.com/sch3m4/androidpatternlock&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category><category term="vCard"></category><category term="adb"></category></entry><entry><title>free</title><link href="http://blog.wiseturtles.com/posts/linux-free.html" rel="alternate"></link><published>2015-01-09T15:27:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-free.html</id><summary type="html">&lt;p&gt;本来转载自:&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html"&gt;http://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;更多free命令可参看:&lt;/p&gt;
 &lt;ul&gt;
@@ -5002,7 +5027,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 
 &lt;p&gt;这二者都不难理解。&lt;/p&gt;
 &lt;p&gt;free命令由procps.*.rpm提供（在Redhat系列的&lt;span class="caps"&gt;OS&lt;/span&gt;上）。free命令的所有输出值都是从/proc/meminfo中读出的。&lt;/p&gt;
-&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>htop</title><link href="http://blog.wiseturtles.com/posts/linux-htop.html" rel="alternate"></link><updated>2015-01-09T14:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-htop.html</id><summary type="html">&lt;p&gt;本文转摘自 &lt;a href="https://blog.linuxeye.com/350.html"&gt;Linux运维笔记&lt;/a&gt;.&amp;nbsp;并做适当修改　&lt;/p&gt;
+&lt;p&gt;在系统上可能有meminfo(2)这个函数，它就是为了解析/proc/meminfo的。procps这个包自己实现了meminfo()这个函数。可以下载一个procps的tar包看看具体实现，现在最新版式3.2.8。&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="free"></category></entry><entry><title>htop</title><link href="http://blog.wiseturtles.com/posts/linux-htop.html" rel="alternate"></link><published>2015-01-09T14:04:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-09:posts/linux-htop.html</id><summary type="html">&lt;p&gt;本文转摘自 &lt;a href="https://blog.linuxeye.com/350.html"&gt;Linux运维笔记&lt;/a&gt;.&amp;nbsp;并做适当修改　&lt;/p&gt;
 &lt;h2&gt;简介&lt;/h2&gt;
 &lt;p&gt;Htop是一款运行于Linux系统监控与进程管理软件，用于取代Unix下传统的top。与top只提供最消耗资源的进程列表不同，htop提供所有进程的列表，并且使用彩色标识出处理器、swap和内存状态。&lt;/p&gt;
 &lt;p&gt;用户一般可以在top无法提供详尽系统信息的情况下选择安装并使用htop。比如，在查找应用程序的内存泄漏问题时。与top相比，htop提供更方便、光标控制的界面来杀死进程。&lt;/p&gt;
@@ -5396,7 +5421,7 @@ FO[3][3] = FO[2][3] + FO[2][5] + FO[2][6]
 
 
 &lt;/li&gt;
-&lt;/ol&gt;</summary><category term="linux"></category><category term="command"></category><category term="htop"></category></entry><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><updated>2014-12-30T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
+&lt;/ol&gt;</summary><category term="linux"></category><category term="command"></category><category term="htop"></category></entry><entry><title>WIFI Hotspot Setup On Ubuntu 12.04</title><link href="http://blog.wiseturtles.com/posts/wifi-hotspot-setup-on-ubuntu.html" rel="alternate"></link><published>2014-12-30T00:00:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-30:posts/wifi-hotspot-setup-on-ubuntu.html</id><summary type="html">&lt;p&gt;hotspot配置参考：http://thenewbieblog.wordpress.com/2012/05/01/wifi-hotspot-setup-on-ubuntu/
 Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffer/&amp;nbsp;Android利用tcpdump抓包：http://www.trinea.cn/android/tcpdump_wireshark/&lt;/p&gt;
 &lt;p&gt;为了Ubuntu笔记本方便对Android手机上的Apps做抓包, 本文介绍两种方法，方法二更容易配置。
 有线、无线同时可以工作时，用下面方法将无线网卡作为hotspot，通过有线连接外网。
@@ -5517,7 +5542,7 @@ $ sudo ap-hotspot configure &lt;span class="c1"&gt;# configure&lt;/span&gt;
 $ sudo ap-hotspot start &lt;span class="c1"&gt;# start&lt;/span&gt;
 $ sudo ap-hotspot stop &lt;span class="c1"&gt;# stop&lt;/span&gt;
 $ sudo ap-hotspot restart &lt;span class="c1"&gt;# restart&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category></entry><entry><title>MySQL查看用户权限</title><link href="http://blog.wiseturtles.com/posts/show-grants.html" rel="alternate"></link><updated>2014-12-17T11:25:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-17:posts/show-grants.html</id><summary type="html">&lt;h2&gt;命令&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category></entry><entry><title>MySQL查看用户权限</title><link href="http://blog.wiseturtles.com/posts/show-grants.html" rel="alternate"></link><published>2014-12-17T11:25:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-17:posts/show-grants.html</id><summary type="html">&lt;h2&gt;命令&lt;/h2&gt;
 &lt;p&gt;&lt;span class="caps"&gt;SHOW&lt;/span&gt; &lt;span class="caps"&gt;GRANTS&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;官方文档: &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/show-grants.html"&gt;http://dev.mysql.com/doc/refman/5.6/en/show-grants.html&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;常看帮助&lt;/h2&gt;
@@ -5585,7 +5610,7 @@ $ sudo ap-hotspot restart &lt;span class="c1"&gt;# restart&lt;/span&gt;
 database, table, column.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td scope="row"&gt;&lt;a class="link" href="privileges-provided.html#priv_usage"&gt;&lt;code class="literal"&gt;USAGE&lt;/code&gt;&lt;/a&gt;&lt;/td&gt;&lt;td&gt;Synonym for &lt;span class="quote"&gt;“&lt;span class="quote"&gt;no privileges&lt;/span&gt;”&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
 &lt;/div&gt;
 
-&lt;/div&gt;</summary><category term="mysql"></category><category term="user"></category><category term="grants"></category></entry><entry><title>uptime</title><link href="http://blog.wiseturtles.com/posts/linux-uptime.html" rel="alternate"></link><updated>2014-12-15T10:08:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-15:posts/linux-uptime.html</id><summary type="html">&lt;h2&gt;用途&lt;/h2&gt;
+&lt;/div&gt;</summary><category term="mysql"></category><category term="user"></category><category term="grants"></category></entry><entry><title>uptime</title><link href="http://blog.wiseturtles.com/posts/linux-uptime.html" rel="alternate"></link><published>2014-12-15T10:08:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-15:posts/linux-uptime.html</id><summary type="html">&lt;h2&gt;用途&lt;/h2&gt;
 &lt;p&gt;man&amp;nbsp;page&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;uptime gives a one line display of the following information.  The cur‐
@@ -5611,7 +5636,7 @@ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loa
 &lt;p&gt;上面的结果显示的分别是系统的当前时间，运行时间，当前用户数，过去1, 5, 15分钟的系统平均负载
 总体来说，值为1时，当只有单个&lt;span class="caps"&gt;CPU&lt;/span&gt;表示已经完全利用，当有４个&lt;span class="caps"&gt;CPU&lt;/span&gt;时，表示还有75%的空闲.&lt;/p&gt;
 &lt;p&gt;关于平均负载的值可以阅读&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages"&gt;http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="uptime"></category></entry><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><updated>2014-12-04T00:00:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages"&gt;http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages&lt;/a&gt;&lt;/p&gt;</summary><category term="linux"></category><category term="command"></category><category term="uptime"></category></entry><entry><title>Upgrade Ubuntu from 10.04 to 12.04</title><link href="http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html" rel="alternate"></link><published>2014-12-04T00:00:00+08:00</published><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2014-12-04:posts/upgrade-ubuntu-from-10.04-to-12.04.html</id><summary type="html">&lt;p&gt;公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox &lt;span class="caps"&gt;OS&lt;/span&gt;都有问题，所以，我尝试升级并把碰到的问题记录下来。&lt;/p&gt;
 &lt;h1&gt;升级&lt;/h1&gt;
 &lt;h2&gt;修改源&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/apt/sources.list
@@ -5675,7 +5700,7 @@ greeter-show-manual-login&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"
 
 &lt;h2&gt;重启电脑，就可以用其它用户登录了&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo reboot
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category><category term="Nis"></category></entry><entry><title>如何发表文章</title><link href="http://blog.wiseturtles.com/posts/about-wiseturtles.html" rel="alternate"></link><updated>2014-12-03T00:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-03:posts/about-wiseturtles.html</id><summary type="html">&lt;h2&gt;为什么要有这个博客&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Ubuntu"></category><category term="Nis"></category></entry><entry><title>如何发表文章</title><link href="http://blog.wiseturtles.com/posts/about-wiseturtles.html" rel="alternate"></link><published>2014-12-03T00:04:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-03:posts/about-wiseturtles.html</id><summary type="html">&lt;h2&gt;为什么要有这个博客&lt;/h2&gt;
 &lt;p&gt;方便知识的整理，分享和交流。更主要的是慢慢感觉年纪越来越大(黑线！！！)，记性越来越差，需要一个可以记录东西的地方.&lt;/p&gt;
 &lt;p&gt;古话说得好&lt;/p&gt;
 &lt;blockquote&gt;
@@ -5831,7 +5856,7 @@ A block of text.
 &lt;h2&gt;图片和附件管理&lt;/h2&gt;
 &lt;p&gt;一般不建议将文章中要使用到的图片或附件提交到blog库中，避免引起blog库迅速增大， blog库建议只保存纯文本的东西。可以将要使用的图片或附件上传到支持外链的第三方存储，然后在文正里直接引用图片或附件的&lt;span class="caps"&gt;URL&lt;/span&gt;。或者单独建立一个git库来保存图片和附件。&lt;/p&gt;
 &lt;h2&gt;最后&lt;/h2&gt;
-&lt;p&gt;这里只是介绍了大体上的一些用法，更多请参阅: &lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;http://docs.getpelican.com/en/3.5.0/content.html&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>pelican + github 搭建个人Blog</title><link href="http://blog.wiseturtles.com/posts/setup-pelican.html" rel="alternate"></link><updated>2014-11-30T22:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-11-30:posts/setup-pelican.html</id><summary type="html">&lt;h2&gt;为什么选择Pelican&lt;/h2&gt;
+&lt;p&gt;这里只是介绍了大体上的一些用法，更多请参阅: &lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;http://docs.getpelican.com/en/3.5.0/content.html&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>pelican + github 搭建个人Blog</title><link href="http://blog.wiseturtles.com/posts/setup-pelican.html" rel="alternate"></link><published>2014-11-30T22:42:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-11-30:posts/setup-pelican.html</id><summary type="html">&lt;h2&gt;为什么选择Pelican&lt;/h2&gt;
 &lt;p&gt;想搭建一个博客，不想受门户网站博客的限制，想用更纯净的方式写作，方便数据转移，
 专注内容而不是格式，在这个页面&lt;a href="https://www.staticgen.com"&gt;https://www.staticgen.com&lt;/a&gt;罗列了各种语言的静态博客引擎,&amp;nbsp;最终选择了Pelican.&lt;/p&gt;
 &lt;p&gt;为什么呢？&lt;/p&gt;
@@ -6183,7 +6208,7 @@ $ make html 编译代码
 &lt;/ul&gt;
 &lt;p&gt;这些功能&lt;a href="http://docs.getpelican.com"&gt;官方文档&lt;/a&gt;都有介绍，可以自己查找。&lt;/p&gt;
 &lt;h3&gt;结束语&lt;/h3&gt;
-&lt;p&gt;暂时使用到的功能就这么多了，以后有什么新的添加我会更新的，由于小弟也是刚刚接触这个，加上文笔不怎么好，如果有什么不明白的地方或错误的地方，欢迎留言，大家一起交流下。&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>Sublime Text 2使用入门</title><link href="http://blog.wiseturtles.com/posts/sublime-text-2.html" rel="alternate"></link><updated>2013-11-27T09:52:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-27:posts/sublime-text-2.html</id><summary type="html">&lt;div class="contents topic" id="contents"&gt;
+&lt;p&gt;暂时使用到的功能就这么多了，以后有什么新的添加我会更新的，由于小弟也是刚刚接触这个，加上文笔不怎么好，如果有什么不明白的地方或错误的地方，欢迎留言，大家一起交流下。&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>Sublime Text 2使用入门</title><link href="http://blog.wiseturtles.com/posts/sublime-text-2.html" rel="alternate"></link><published>2013-11-27T09:52:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-27:posts/sublime-text-2.html</id><summary type="html">&lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#id1" id="id4"&gt;安装&lt;/a&gt;&lt;/li&gt;
@@ -6251,7 +6276,7 @@ $ make html 编译代码
 &lt;li&gt;&lt;a class="reference external" href="https://sublime.wbond.net/"&gt;https://sublime.wbond.net/&lt;/a&gt; （sublime package control,&amp;nbsp;插件管理的文档，在这里可以查看所有插件，获取热门插件和插件更新信息)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-</summary><category term="sublime"></category></entry><entry><title>Windows下安装Nginx</title><link href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html" rel="alternate"></link><updated>2013-11-26T09:30:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-26:posts/install-nginx-on-windows.html</id><summary type="html">&lt;p&gt;本文参考自 &lt;a class="reference external" href="http://nginx.org/cn/docs/windows.html"&gt;windows下安装nginx&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
+</summary><category term="sublime"></category></entry><entry><title>Windows下安装Nginx</title><link href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html" rel="alternate"></link><published>2013-11-26T09:30:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-26:posts/install-nginx-on-windows.html</id><summary type="html">&lt;p&gt;本文参考自 &lt;a class="reference external" href="http://nginx.org/cn/docs/windows.html"&gt;windows下安装nginx&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
 &lt;p&gt;nginx的Windows版本使用原生Win32 &lt;span class="caps"&gt;API&lt;/span&gt;（非Cygwin模拟层）。当前nginx/Windows只使用select作为通知方法，所以不要期待它有很高的性能和扩展性。鉴于这点和一些已知问题，nginx/Windows目前还处于beta阶段。nginx/Windows和Unix版本相比，功能几乎已经齐全，除了&lt;span class="caps"&gt;XSLT&lt;/span&gt;过滤器、图像过滤器、GeoIP模块和嵌入Perl语言支持以外。&lt;/p&gt;
 &lt;p&gt;安装nginx/Windows，需要下载最新的1.5.7开发版本，因为开发分支上包含了所有已知的问题修复，尤其是针对Windows版本的问题修复。解压缩下载得到的zip文件，进入nginx-1.5.7目录，运行nginx。下面给出一个在C盘根目录下安装的例子：&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -6292,7 +6317,7 @@ access_log   logs/site.log;
 &lt;p&gt;作为系统服务运行。
 使用“I/O完成端口”作为事件模型。&amp;nbsp;使用单工作进程多线程的模型。&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="windows"></category><category term="nginx"></category></entry><entry><title>Windows环境下搭建python开发环境</title><link href="http://blog.wiseturtles.com/posts/install-python-on-windows.html" rel="alternate"></link><updated>2013-11-25T23:14:34+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-25:posts/install-python-on-windows.html</id><summary type="html">&lt;ol class="arabic"&gt;
+</summary><category term="windows"></category><category term="nginx"></category></entry><entry><title>Windows环境下搭建python开发环境</title><link href="http://blog.wiseturtles.com/posts/install-python-on-windows.html" rel="alternate"></link><published>2013-11-25T23:14:34+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-25:posts/install-python-on-windows.html</id><summary type="html">&lt;ol class="arabic"&gt;
 &lt;li&gt;&lt;p class="first"&gt;从 &lt;a class="reference external" href="http://www.python.org/download/"&gt;Python官网下载&lt;/a&gt;&amp;nbsp;下载自己所需版本的windows安装包并进行安装。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;将安装包的路径添加到系统环境变量,  &lt;code&gt;C:\Python27&lt;/code&gt; ， 同时为了后面使 &lt;code&gt;easy_install&lt;/code&gt; ，也 &lt;code&gt;C:\Python27\Scripts&lt;/code&gt; 添加到环境变量里（现在这个目录还不存在).&lt;/p&gt;
@@ -6354,7 +6379,7 @@ Google了一下，在 &lt;a class="reference external" href="http://stackoverflo
 &lt;li&gt;&lt;p class="first"&gt;好了，现在可以开始python之旅了。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-</summary><category term="windows"></category><category term="python"></category><category term="pypi mirrors"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><updated>2013-11-03T19:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:posts/install-jdk.html</id><summary type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
+</summary><category term="windows"></category><category term="python"></category><category term="pypi mirrors"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><published>2013-11-03T19:09:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:posts/install-jdk.html</id><summary type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
 首先下载jdk-7u45-linux-i586.tar.gz压缩包，并解压到 &lt;code&gt;/usr/local/lib/jdk1.7.0_45&lt;/code&gt; ,&amp;nbsp;再执行下面的脚本&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nv"&gt;JDK_BIN_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/jdk1.7.0_45/bin
@@ -6364,7 +6389,7 @@ Google了一下，在 &lt;a class="reference external" href="http://stackoverflo
     sudo update-alternatives --install /usr/bin/&lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$x&lt;/span&gt; 300
 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</summary><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><updated>2013-09-30T13:44:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:posts/setup-wamp.html</id><summary type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
+</summary><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><published>2013-09-30T13:44:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:posts/setup-wamp.html</id><summary type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
 &lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;开发基本也就是在不同平台下，要么是&lt;span class="caps"&gt;LAMP&lt;/span&gt;(Linux + Apache + Mysql + &lt;span class="caps"&gt;PHP&lt;/span&gt;)，要么就是&lt;span class="caps"&gt;WAMP&lt;/span&gt;(Windows + Apache + Mysql +&lt;span class="caps"&gt;PHP&lt;/span&gt;),&amp;nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
 &lt;/pre&gt;&lt;/div&gt;
@@ -6538,7 +6563,7 @@ DirectoryIndex index.html index.php
 
 &lt;p&gt;最后，重新启动apache即可。访问phpinfo();页面检查是否有xdebug，如果有，表示安装成功。&lt;/p&gt;
 &lt;h2&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;集成开发环境&lt;/h2&gt;
-&lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;的集成开发环境比较多: 如Zend Studio，Eclipse + &lt;span class="caps"&gt;PDT&lt;/span&gt;， Eclipse + PHPEclipse等。这些环境经过简单的配置之后都支持远程调试，还有一些浏览器的工具，如FireFox浏览器的&amp;#8221;FireBug +&amp;nbsp;FirePHP&amp;#8221;插件，这些资料比较多，就不在这里重复了。&lt;/p&gt;</summary><category term="php"></category><category term="wamp"></category></entry><entry><title>OpenGrok安装使用指南</title><link href="http://blog.wiseturtles.com/posts/setup-opengrok.html" rel="alternate"></link><updated>2012-12-14T18:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2012-12-14:posts/setup-opengrok.html</id><summary type="html">&lt;p&gt;本文主要参考了下面的文章:&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;的集成开发环境比较多: 如Zend Studio，Eclipse + &lt;span class="caps"&gt;PDT&lt;/span&gt;， Eclipse + PHPEclipse等。这些环境经过简单的配置之后都支持远程调试，还有一些浏览器的工具，如FireFox浏览器的&amp;#8221;FireBug +&amp;nbsp;FirePHP&amp;#8221;插件，这些资料比较多，就不在这里重复了。&lt;/p&gt;</summary><category term="php"></category><category term="wamp"></category></entry><entry><title>OpenGrok安装使用指南</title><link href="http://blog.wiseturtles.com/posts/setup-opengrok.html" rel="alternate"></link><published>2012-12-14T18:09:00+08:00</published><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2012-12-14:posts/setup-opengrok.html</id><summary type="html">&lt;p&gt;本文主要参考了下面的文章:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription"&gt;http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://src.opensolaris.org/source/xref/opengrok/trunk/README.txt"&gt;http://src.opensolaris.org/source/xref/opengrok/trunk/&lt;span class="caps"&gt;README&lt;/span&gt;.txt&lt;/a&gt;&lt;/li&gt;

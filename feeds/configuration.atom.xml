@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-04-05T11:39:00+08:00</updated><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><updated>2016-04-05T11:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-05-06T12:38:00+08:00</updated><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
+&lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
+&lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install unattended-upgrades
+$ sudo dpkg-configure unattended-upgrades  &lt;span class="c1"&gt;# 选Yes，自动下载安装&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;根据自己情况修改配置文件 - &lt;code&gt;/etc/apt/apt.conf.d/50unattended-upgrades&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可以设置邮件通知。&lt;/p&gt;
+&lt;h2&gt;如果只想收到邮件通知，可以安装apticron&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ apt-get install apticron
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改配置文件 - &lt;code&gt;/etc/apticron/apticron.conf&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;订阅相关邮件列表，了解最新安全信息&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[Ubuntu Security Notices]&lt;a href="http://www.ubuntu.com/usn/"&gt;http://www.ubuntu.com/usn/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;[Debian Security Information]&lt;a href="https://www.debian.org/security/index.en.html"&gt;https://www.debian.org/security/index.en.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考链接:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://help.ubuntu.com/community/AutomaticSecurityUpdates"&gt;https://help.ubuntu.com/community/AutomaticSecurityUpdates&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/"&gt;https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Ubunu"></category><category term="Debian"></category></entry><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><published>2016-04-05T11:39:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
 &lt;p&gt;注: 系统为Ubuntu&amp;nbsp;14.04，Debian系统也类似。&lt;/p&gt;
 &lt;h2&gt;安装automysqlbackup&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install automysqlbackup
@@ -41,7 +66,7 @@ sudo /usr/local/bin/s3cmd -c /home/user/.s3cfg -r sync local-automysqlbackup-pat
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
+&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><published>2016-03-11T18:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
 &lt;h2&gt;通过Gerrit replication&amp;nbsp;plugin完成Gerrit同步&lt;/h2&gt;
 &lt;h3&gt;安装buck&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install ant
@@ -106,7 +131,7 @@ ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbac
 &lt;h2&gt;参考文档:&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://gerrit.googlesource.com/gerrit/+/v2.0.2/Documentation/config-replication.txt"&gt;config-replication.txt&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><published>2015-10-31T20:46:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -116,7 +141,7 @@ ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbac
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><published>2015-10-27T19:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
 &lt;h3&gt;android&lt;/h3&gt;
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
@@ -128,7 +153,7 @@ $ android list sdk -a -u --proxy-host proxy-host --proxy-port proxy-port  &lt;sp
 
 &lt;p&gt;安装指定的包：(num1,&amp;nbsp;num2是上面命令返回的序号)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><published>2015-10-15T21:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python get-pip.py
 &lt;/pre&gt;&lt;/div&gt;
@@ -161,7 +186,7 @@ index-url =&amp;nbsp;http://mirrors.aliyuncs.com/pypi/simple/&lt;/p&gt;
 &lt;p&gt;不加trusted-host会报下面的警告:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The repository located at mirrors.aliyun.com is not a trusted or secure host and is being ignored. If this repository is available via &lt;span class="caps"&gt;HTTPS&lt;/span&gt; it is recommended to use &lt;span class="caps"&gt;HTTPS&lt;/span&gt; instead, otherwise you may silence this warning and allow it anyways with &amp;#8216;&amp;#8212;trusted-host&amp;nbsp;mirrors.aliyun.com&amp;#8217;.&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><published>2015-10-10T13:27:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cocoachina.com/ios/20150703/12392.html"&gt;http://www.cocoachina.com/ios/20150703/12392.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/"&gt;https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/&lt;/a&gt;&lt;/li&gt;
@@ -254,7 +279,7 @@ $ openssl dhparam -out dhparam.pem 4096
 &lt;p&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;配置的是否安全：&lt;a href="https://www.ssllabs.com/ssltest/"&gt;https://www.ssllabs.com/ssltest/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;测试&lt;span class="caps"&gt;SPDY&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><published>2015-09-23T16:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
@@ -356,7 +381,7 @@ iptables: Saving firewall rules to /etc/sysconfig/iptables:&lt;span class="o"&gt
 
 &lt;p&gt;重启自动运行iptables:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo chkconfig iptables on
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><published>2015-09-22T15:55:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
@@ -517,7 +542,7 @@ $ sudo supervisorctl  &lt;span class="c1"&gt;# 查看sentry, sentry_worker运行
 &lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;开始我们就提到过sentry支持目前所有主流语言，
-参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
+参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><published>2015-09-18T13:13:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/issue
