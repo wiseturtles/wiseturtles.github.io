@@ -3,7 +3,7 @@
 &lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
 &lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install unattended-upgrades
-$ sudo dpkg-configure unattended-upgrades  &lt;span class="c1"&gt;# 选Yes，自动下载安装&lt;/span&gt;
+$ sudo dpkg-reconfigure unattended-upgrades  &lt;span class="c1"&gt;# 选Yes，自动下载安装&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
