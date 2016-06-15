@@ -32,7 +32,7 @@ Hello World
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2&gt;下面看下如何一步一步编译、链接c程序&lt;/h2&gt;
+&lt;h2&gt;如何一步一步编译、链接c程序&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat helloc.c
 &lt;span class="c1"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
 &lt;span class="c1"&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
