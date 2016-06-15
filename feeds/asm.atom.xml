@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-15T22:09:00+08:00</updated><entry><title>Hello World with asm</title><link href="http://blog.wiseturtles.com/posts/hello-world-with-asm.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/hello-world-with-asm.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
+&lt;h2&gt;开发环境准备&lt;/h2&gt;
+&lt;p&gt;所有开发都在Ubuntu上完成，需要用的binutils, gcc,&amp;nbsp;gdb。&lt;/p&gt;
+&lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install binutils gcc gdb
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;asm Hello&amp;nbsp;World&lt;/h2&gt;
 &lt;p&gt;用asm写个Hello World，.data数据段中定义msg变量为 &amp;#8220;Hello World\n&amp;#8221;，.text指令段从_start开始，否则需要ld时指定-e label。&amp;nbsp;程序调用了printf输出msg，然后调用exit(0)退出。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat hello.s

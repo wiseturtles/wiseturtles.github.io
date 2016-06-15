@@ -69,6 +69,13 @@ On 2016-06-15
         </div>
 
         <div><p>用汇编写个Hello&nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。</p>
+<h2>开发环境准备</h2>
+<p>所有开发都在Ubuntu上完成，需要用的binutils, gcc,&nbsp;gdb。</p>
+<p>Ubuntu上安装软件很方便，指令如下：</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get install binutils gcc gdb
+</pre></div>
+
+
 <h2>asm Hello&nbsp;World</h2>
 <p>用asm写个Hello World，.data数据段中定义msg变量为 &#8220;Hello World\n&#8221;，.text指令段从_start开始，否则需要ld时指定-e label。&nbsp;程序调用了printf输出msg，然后调用exit(0)退出。</p>
 <div class="highlight"><pre><span></span>$ cat hello.s
