@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-15T22:09:00+08:00</updated><entry><title>Hello World with asm</title><link href="http://blog.wiseturtles.com/posts/hello-world-with-asm.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/hello-world-with-asm.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
+&lt;h2&gt;asm Hello&amp;nbsp;World&lt;/h2&gt;
+&lt;p&gt;用asm写个Hello World，.data数据段中定义msg变量为 &amp;#8220;Hello World\n&amp;#8221;，.text指令段从_start开始，否则需要ld时指定-e label。&amp;nbsp;程序调用了printf输出msg，然后调用exit(0)退出。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat hello.s
+&lt;span class="c1"&gt;#hello.s Just a Hello World in asm.&lt;/span&gt;
+.section .data
+msg:
+    .ascii &lt;span class="s2"&gt;&amp;quot;Hello World\n&amp;quot;&lt;/span&gt;
+.section .text
+.globl _start
+_start:
+    movl &lt;span class="nv"&gt;$4&lt;/span&gt;, %eax
+    movl &lt;span class="nv"&gt;$1&lt;/span&gt;, %ebx
+    movl &lt;span class="nv"&gt;$msg&lt;/span&gt;, %ecx
+    movl &lt;span class="nv"&gt;$12&lt;/span&gt;, %edx
+    int &lt;span class="nv"&gt;$0&lt;/span&gt;x80
+    movl &lt;span class="nv"&gt;$1&lt;/span&gt;, %eax
+    movl &lt;span class="nv"&gt;$0&lt;/span&gt;, %ebx
+    int &lt;span class="nv"&gt;$0&lt;/span&gt;x80
+$ as -o hello.o hello.s
+$ ld -o hello hello.o
+$ ./hello
+Hello World
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;下面看下如何一步一步编译、链接c程序&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat helloc.c
+&lt;span class="c1"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class="c1"&gt;#include &amp;lt;stdlib.h&amp;gt;&lt;/span&gt;
+
+int main&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;
+    printf&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hello World\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    exit&lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+$ gcc -S helloc.c
+$ as -o helloc.o helloc.s
+$ ld -e main -lc -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o helloc helloc.o
+$ ./helloc
+Hello World
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;说明：
+- gcc -S生成c代码对应的汇编代码，但是汇编代码中的.globl label为main
+- 因为汇编代码的&lt;code&gt;.globl label&lt;/code&gt;是&lt;code&gt;main&lt;/code&gt;，所以必须使用&lt;code&gt;-e&lt;/code&gt;参数指定label为&lt;code&gt;main&lt;/code&gt;；默认是&lt;code&gt;_start&lt;/code&gt;
+- 因为汇编代码直接使用了c的库函数printf、exit，所以必须指定-lc链接c标准库
+- -lc动态链接c标准库，所以，必须指定运行时加载动态库的程序，即：&lt;code&gt;-dynamic-linker /lib64/ld-linux-x86-64.so.2&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;asm Hello World&amp;nbsp;(改进版)&lt;/h2&gt;
+&lt;p&gt;既然汇编代码中可以直接调用c的标准库函数，那就看看怎么改进之前的hello.s。
+下面代码调用c库中的puts和exit函数。
+可以用gcc编译、链接汇编代码，而gcc默认只认&lt;code&gt;.globl main&lt;/code&gt;而不是&lt;code&gt;.globl _start&lt;/code&gt;，所以，我们下面用&lt;code&gt;.globl main&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat new_hello.s
+&lt;span class="c1"&gt;#new_hello.s Just a &amp;quot;Hello World&amp;quot;&lt;/span&gt;
+.section .data
+msg:
+    .string &lt;span class="s2"&gt;&amp;quot;Hello World&amp;quot;&lt;/span&gt;
+.section .text
+.global main
+main:
+    movl &lt;span class="nv"&gt;$msg&lt;/span&gt;, %edi
+    call puts
+    movl &lt;span class="nv"&gt;$0&lt;/span&gt;, %edi
+    call &lt;span class="nb"&gt;exit&lt;/span&gt;
+$ as -o new_hello.o new_hello.s
+$ ld -e main -lc -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o new_hello new_hello.o
+$ ./new_hello
+Hello World
+
+$ gcc -o new_hello new_hello.s  &lt;span class="c1"&gt;# 当然可以直接用这条指令编译、链接生成可执行文件&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="asm"></category><category term="Linux"></category></entry></feed>
