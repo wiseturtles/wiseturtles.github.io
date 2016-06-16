@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-15T22:09:00+08:00</updated><entry><title>Write Your First ASM Program</title><link href="http://blog.wiseturtles.com/posts/Write-Your-First-ASM-Program.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/Write-Your-First-ASM-Program.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
 &lt;h2&gt;开发环境准备&lt;/h2&gt;
-&lt;p&gt;所有开发都在Ubuntu上完成，需要用的binutils, gcc,&amp;nbsp;gdb。&lt;/p&gt;
+&lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb。&lt;/p&gt;
 &lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install binutils gcc gdb
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;asm Hello&amp;nbsp;World&lt;/h2&gt;
-&lt;p&gt;用asm写个Hello World，.data数据段中定义msg变量为 &amp;#8220;Hello World\n&amp;#8221;，.text指令段从_start开始，否则需要ld时指定-e label。&amp;nbsp;程序调用了printf输出msg，然后调用exit(0)退出。&lt;/p&gt;
+&lt;p&gt;用asm写个Hello World，&lt;code&gt;.data&lt;/code&gt;数据段中定义msg变量为 &lt;code&gt;"Hello World\n"&lt;/code&gt;，&lt;code&gt;.text&lt;/code&gt;指令段从&lt;code&gt;_start&lt;/code&gt;开始，否则需要ld时指定&lt;code&gt;-e label&lt;/code&gt;。&amp;nbsp;程序调用了printf输出msg，然后调用exit(0)退出。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat hello.s
 &lt;span class="c1"&gt;#hello.s Just a Hello World in asm.&lt;/span&gt;
 .section .data
@@ -53,7 +53,7 @@ Hello World
 
 &lt;p&gt;说明：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;gcc -S生成c代码对应的汇编代码，但是汇编代码中的.globl&amp;nbsp;label为main&lt;/li&gt;
+&lt;li&gt;gcc -S生成c代码对应的汇编代码，但是汇编代码中的&lt;code&gt;.globl label&lt;/code&gt;为main&lt;/li&gt;
 &lt;li&gt;因为汇编代码的&lt;code&gt;.globl label&lt;/code&gt;是&lt;code&gt;main&lt;/code&gt;，所以必须使用&lt;code&gt;-e&lt;/code&gt;参数指定label为&lt;code&gt;main&lt;/code&gt;；默认是&lt;code&gt;_start&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;因为汇编代码直接使用了c的库函数printf、exit，所以必须指定-lc链接c标准库&lt;/li&gt;
 &lt;li&gt;-lc动态链接c标准库，所以，必须指定运行时加载动态库的程序，即：&lt;code&gt;-dynamic-linker /lib64/ld-linux-x86-64.so.2&lt;/code&gt;&lt;/li&gt;

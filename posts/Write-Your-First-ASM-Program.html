@@ -70,14 +70,14 @@ On 2016-06-15
 
         <div><p>用汇编写个Hello&nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。</p>
 <h2>开发环境准备</h2>
-<p>所有开发都在Ubuntu上完成，需要用的binutils, gcc,&nbsp;gdb。</p>
+<p>所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&nbsp;gdb。</p>
 <p>Ubuntu上安装软件很方便，指令如下：</p>
 <div class="highlight"><pre><span></span>$ sudo apt-get install binutils gcc gdb
 </pre></div>
 
 
 <h2>asm Hello&nbsp;World</h2>
-<p>用asm写个Hello World，.data数据段中定义msg变量为 &#8220;Hello World\n&#8221;，.text指令段从_start开始，否则需要ld时指定-e label。&nbsp;程序调用了printf输出msg，然后调用exit(0)退出。</p>
+<p>用asm写个Hello World，<code>.data</code>数据段中定义msg变量为 <code>"Hello World\n"</code>，<code>.text</code>指令段从<code>_start</code>开始，否则需要ld时指定<code>-e label</code>。&nbsp;程序调用了printf输出msg，然后调用exit(0)退出。</p>
 <div class="highlight"><pre><span></span>$ cat hello.s
 <span class="c1">#hello.s Just a Hello World in asm.</span>
 .section .data
@@ -122,7 +122,7 @@ Hello World
 
 <p>说明：</p>
 <ul>
-<li>gcc -S生成c代码对应的汇编代码，但是汇编代码中的.globl&nbsp;label为main</li>
+<li>gcc -S生成c代码对应的汇编代码，但是汇编代码中的<code>.globl label</code>为main</li>
 <li>因为汇编代码的<code>.globl label</code>是<code>main</code>，所以必须使用<code>-e</code>参数指定label为<code>main</code>；默认是<code>_start</code></li>
 <li>因为汇编代码直接使用了c的库函数printf、exit，所以必须指定-lc链接c标准库</li>
 <li>-lc动态链接c标准库，所以，必须指定运行时加载动态库的程序，即：<code>-dynamic-linker /lib64/ld-linux-x86-64.so.2</code></li>
