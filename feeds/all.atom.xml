@@ -1,5 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-15T22:09:00+08:00</updated><entry><title>Write Your First ASM Program</title><link href="http://blog.wiseturtles.com/posts/Write-Your-First-ASM-Program.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/Write-Your-First-ASM-Program.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-16T12:37:00+08:00</updated><entry><title>在64位机器上编写、运行32位汇编代码</title><link href="http://blog.wiseturtles.com/posts/Write-32bit-asm-program-and-run-on-64bit-machine.html" rel="alternate"></link><published>2016-06-16T12:37:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-16:posts/Write-32bit-asm-program-and-run-on-64bit-machine.html</id><summary type="html">&lt;p&gt;我按照 &lt;code&gt;&amp;lt;&amp;lt;professional assembly language&amp;gt;&amp;gt;&lt;/code&gt;（中文名为：编译语言程序设计) 学习汇编，但使用pushl在我的Ubuntu 64bit上报错&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt;。
+Google一圈发现需要在代码头部加上&lt;code&gt;.code32&lt;/code&gt;，并且ld时需要额外指定些参数。&lt;/p&gt;
+&lt;h2&gt;安装libc6-i386&lt;/h2&gt;
+&lt;p&gt;ld链接时会用到libc-i386，所以，先安装并做个软链接。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install libc6-i386
+$ sudo ln -s /lib32/libc-2.19.so /lib32/libc.so
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：不做软链接可能会导致&lt;code&gt;ld -lc&lt;/code&gt;报错：&lt;code&gt;ld: cannot find -lc&lt;/code&gt;&lt;/p&gt;
+&lt;h2&gt;在64位机器上编译、链接、运行32位汇编代码&lt;/h2&gt;
+&lt;p&gt;源代码如下，代码中调用printf输出&lt;code&gt;Hello World\n&lt;/code&gt;，然后调用exit(0)退出。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat myhello.s
+&lt;span class="c1"&gt;#myhello.s Just output &amp;quot;Hello World\n&amp;quot;&lt;/span&gt;
+.code32
+.section .data
+msg:
+    .asciz &lt;span class="s2"&gt;&amp;quot;Hello World\n&amp;quot;&lt;/span&gt;
+.section .text
+.globl main
+main:
+    pushl &lt;span class="nv"&gt;$msg&lt;/span&gt;
+    call &lt;span class="nb"&gt;printf&lt;/span&gt;
+    addl &lt;span class="nv"&gt;$4&lt;/span&gt;, %esp
+    pushl &lt;span class="nv"&gt;$0&lt;/span&gt;
+    call &lt;span class="nb"&gt;exit&lt;/span&gt;
+
+$ as --32 -o myhello.o myhello.s
+$ ld -e main -m elf_i386 -L/lib32 -lc -dynamic-linker /lib32/ld-linux.so.2 -o myhello myhello.o
+$ ./myhello
+Hello World
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;as --32&lt;/code&gt; 指定生成32位object文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ld -e main&lt;/code&gt; 因为程序中用了&lt;code&gt;.globl main&lt;/code&gt; 而非 &lt;code&gt;.globl _start&lt;/code&gt;，所以，用它指定汇编入口&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ld -m elf_i386&lt;/code&gt; 指定生成elf&amp;nbsp;i386&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-L/lib32 -lc&lt;/code&gt;指定从&lt;code&gt;/lib32&lt;/code&gt;目录下找&lt;code&gt;libc.so&lt;/code&gt;；可以简写为&lt;code&gt;-lc&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-dynamic-linker /lib32/ld-linux.so.2&lt;/code&gt; 指定操作系统用来动态地查找和加载库文件的程序&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;设置bash&amp;nbsp;alias&lt;/h2&gt;
+&lt;p&gt;每次都需要输入&lt;code&gt;as --32&lt;/code&gt;和&lt;code&gt;ld -m elf_i386&lt;/code&gt;很麻烦，我们可以通过bash&amp;nbsp;alias简化输入。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ tail -2 ~/.bashrc
+&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;as&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;as --32&amp;#39;&lt;/span&gt;
+&lt;span class="nb"&gt;alias&lt;/span&gt; &lt;span class="nv"&gt;ld&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;ld -m elf_i386&amp;#39;&lt;/span&gt;
+$ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
+$ as -o myhello.o myhello.s
+$ ld -e main -lc -dynamic-linker /lib32/ld-linux.so.2 -o myhello myhello.o
+$ ./myhello
+Hello World
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就方便多了，当然也可以根据个人喜好把其它参数一起加入alias中。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>Write Your First ASM Program</title><link href="http://blog.wiseturtles.com/posts/Write-Your-First-ASM-Program.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/Write-Your-First-ASM-Program.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
 &lt;h2&gt;开发环境准备&lt;/h2&gt;
 &lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb。&lt;/p&gt;
 &lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;
