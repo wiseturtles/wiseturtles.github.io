@@ -70,6 +70,8 @@ On 2016-06-17
 
         <div><p>学习汇编过程中每次输入as,&nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。</p>
 <p>所以，写个小脚本完成汇编程序的编译、链接及运行。</p>
+<h2>脚本介绍</h2>
+<p>脚本内容如下：</p>
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -133,7 +135,7 @@ On 2016-06-17
 <span class="nv">basename</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span>basename -s <span class="s1">&#39;.s&#39;</span> <span class="nv">$src</span><span class="k">)</span><span class="s2">&quot;</span>
 <span class="nv">obj</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">/</span><span class="si">${</span><span class="nv">basename</span><span class="si">}</span><span class="s2">.o&quot;</span>
 <span class="nv">bin</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$dir</span><span class="s2">/</span><span class="nv">$basename</span><span class="s2">&quot;</span>
-<span class="nv">as_opts</span><span class="o">=</span><span class="s2">&quot;--32&quot;</span>
+<span class="nv">as_opts</span><span class="o">=</span><span class="s2">&quot;--32 -gstabs&quot;</span>  <span class="c1"># -gstabs: 使用该参数可以通过gdb调试代码</span>
 <span class="nv">ld_opts</span><span class="o">=</span><span class="s2">&quot;-m elf_i386&quot;</span>
 
 <span class="c1"># check if .global label is not the default &quot;_start&quot;; if not &quot;_start&quot;, then using &quot;-e label&quot;</span>
@@ -156,7 +158,24 @@ ld <span class="nv">$ld_opts</span> -o <span class="nv">$bin</span> <span class=
 </pre></div>
 </td></tr></table>
 
-<p>注：上篇文章已经讲过学习资料是<span class="caps">AT</span>&amp;T 32位汇编，而个人电脑是64位系统，所以，指定了 <code>as --32</code> 和 <code>ld -m elf_i386</code>。</p></div>
+<p>注：上篇文章已经讲过学习资料是<span class="caps">AT</span>&amp;T 32位汇编，而个人电脑是64位系统，所以，指定了 <code>as --32</code> 和 <code>ld -m elf_i386</code>。</p>
+<h2>如何使用呢?</h2>
+<p>将脚本放入 <code>~/bin/</code> 目录内，并设置可执行权限 <code>chmod +x ~/bin/asm-run.sh</code>，然后将 <code>$HOME/bin</code> 加入 <code>$PATH</code> 环境变量。</p>
+<div class="highlight"><pre><span></span>$ <span class="nb">echo</span> <span class="s1">&#39;export PATH=$HOME/bin:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</pre></div>
+
+
+<p>这样就可以在任意目录中直接通过 <code>asm-run.sh</code> 运行脚本了。</p>
+<p>假如下载有个<code>myhello.s</code>的汇编源码，通过该脚本编译运行的方法如下：</p>
+<div class="highlight"><pre><span></span>$ asm-run.sh myhello.s
+as --32 -o ./myhello.o myhello.s
+ld -m elf_i386 -e main -lc -dynamic-linker /lib32/ld-linux.so.2 -o ./myhello ./myhello.o
+run ./myhello ...
+Hello World
+</pre></div>
+
+
+<p>终于不用一遍一遍的输入指令，编译、链接、运行汇编程序了。</p></div>
 
         <hr>
 

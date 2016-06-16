@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-17T00:09:00+08:00</updated><entry><title>编译、链接、运行汇编程序</title><link href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html" rel="alternate"></link><published>2016-06-17T00:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/Compile-Link-and-Run-ASM-Program.html</id><summary type="html">&lt;p&gt;学习汇编过程中每次输入as,&amp;nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。&lt;/p&gt;
 &lt;p&gt;所以，写个小脚本完成汇编程序的编译、链接及运行。&lt;/p&gt;
+&lt;h2&gt;脚本介绍&lt;/h2&gt;
+&lt;p&gt;脚本内容如下：&lt;/p&gt;
 &lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
  2
  3
@@ -64,7 +66,7 @@
 &lt;span class="nv"&gt;basename&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;basename -s &lt;span class="s1"&gt;&amp;#39;.s&amp;#39;&lt;/span&gt; &lt;span class="nv"&gt;$src&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;obj&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$dir&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;basename&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.o&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$dir&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;$basename&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
-&lt;span class="nv"&gt;as_opts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--32&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;as_opts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;--32 -gstabs&amp;quot;&lt;/span&gt;  &lt;span class="c1"&gt;# -gstabs: 使用该参数可以通过gdb调试代码&lt;/span&gt;
 &lt;span class="nv"&gt;ld_opts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-m elf_i386&amp;quot;&lt;/span&gt;
 
 &lt;span class="c1"&gt;# check if .global label is not the default &amp;quot;_start&amp;quot;; if not &amp;quot;_start&amp;quot;, then using &amp;quot;-e label&amp;quot;&lt;/span&gt;
@@ -87,7 +89,24 @@ ld &lt;span class="nv"&gt;$ld_opts&lt;/span&gt; -o &lt;span class="nv"&gt;$bin&l
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 
-&lt;p&gt;注：上篇文章已经讲过学习资料是&lt;span class="caps"&gt;AT&lt;/span&gt;&amp;amp;T 32位汇编，而个人电脑是64位系统，所以，指定了 &lt;code&gt;as --32&lt;/code&gt; 和 &lt;code&gt;ld -m elf_i386&lt;/code&gt;。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>在64位机器上编写、运行32位汇编代码</title><link href="http://blog.wiseturtles.com/posts/Write-32bit-asm-program-and-run-on-64bit-machine.html" rel="alternate"></link><published>2016-06-16T12:37:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-16:posts/Write-32bit-asm-program-and-run-on-64bit-machine.html</id><summary type="html">&lt;p&gt;我按照 &lt;code&gt;&amp;lt;&amp;lt;professional assembly language&amp;gt;&amp;gt;&lt;/code&gt;（中文名为：编译语言程序设计) 学习汇编，但使用pushl在我的Ubuntu 64bit上报错&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt;。
+&lt;p&gt;注：上篇文章已经讲过学习资料是&lt;span class="caps"&gt;AT&lt;/span&gt;&amp;amp;T 32位汇编，而个人电脑是64位系统，所以，指定了 &lt;code&gt;as --32&lt;/code&gt; 和 &lt;code&gt;ld -m elf_i386&lt;/code&gt;。&lt;/p&gt;
+&lt;h2&gt;如何使用呢?&lt;/h2&gt;
+&lt;p&gt;将脚本放入 &lt;code&gt;~/bin/&lt;/code&gt; 目录内，并设置可执行权限 &lt;code&gt;chmod +x ~/bin/asm-run.sh&lt;/code&gt;，然后将 &lt;code&gt;$HOME/bin&lt;/code&gt; 加入 &lt;code&gt;$PATH&lt;/code&gt; 环境变量。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;export PATH=$HOME/bin:$PATH&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;这样就可以在任意目录中直接通过 &lt;code&gt;asm-run.sh&lt;/code&gt; 运行脚本了。&lt;/p&gt;
+&lt;p&gt;假如下载有个&lt;code&gt;myhello.s&lt;/code&gt;的汇编源码，通过该脚本编译运行的方法如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ asm-run.sh myhello.s
+as --32 -o ./myhello.o myhello.s
+ld -m elf_i386 -e main -lc -dynamic-linker /lib32/ld-linux.so.2 -o ./myhello ./myhello.o
+run ./myhello ...
+Hello World
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;终于不用一遍一遍的输入指令，编译、链接、运行汇编程序了。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>在64位机器上编写、运行32位汇编代码</title><link href="http://blog.wiseturtles.com/posts/Write-32bit-asm-program-and-run-on-64bit-machine.html" rel="alternate"></link><published>2016-06-16T12:37:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-16:posts/Write-32bit-asm-program-and-run-on-64bit-machine.html</id><summary type="html">&lt;p&gt;我按照 &lt;code&gt;&amp;lt;&amp;lt;professional assembly language&amp;gt;&amp;gt;&lt;/code&gt;（中文名为：编译语言程序设计) 学习汇编，但使用pushl在我的Ubuntu 64bit上报错&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt;。
 Google一圈发现需要在代码头部加上&lt;code&gt;.code32&lt;/code&gt;，并且ld时需要额外指定些参数。&lt;/p&gt;
 &lt;h2&gt;安装libc6-i386&lt;/h2&gt;
 &lt;p&gt;ld链接时会用到libc-i386，所以，先安装并做个软链接。&lt;/p&gt;
