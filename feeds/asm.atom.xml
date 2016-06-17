@@ -1,5 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-17T00:09:00+08:00</updated><entry><title>编译、链接、运行汇编程序</title><link href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html" rel="alternate"></link><published>2016-06-17T00:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/Compile-Link-and-Run-ASM-Program.html</id><summary type="html">&lt;p&gt;学习汇编过程中每次输入as,&amp;nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-17T20:00:00+08:00</updated><entry><title>Ubuntu+Vim配置汇编程序开发环境</title><link href="http://blog.wiseturtles.com/posts/setup-asm-development-environment.html" rel="alternate"></link><published>2016-06-17T20:00:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/setup-asm-development-environment.html</id><summary type="html">&lt;p&gt;本文专门介绍Ubuntu系统上基于Vim配置汇编程序开发环境。&lt;/p&gt;
+&lt;h2&gt;Ubuntu系统配置&lt;/h2&gt;
+&lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb等软件。&lt;/p&gt;
+&lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install binutils gcc gdb libc6-i386 libc6-dev-i386
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Vim配置&lt;/h2&gt;
+&lt;p&gt;个人比较喜欢&lt;a href="https://github.com/wklken/k-vim"&gt;k-vim&lt;/a&gt;，根据项目的安装文档安装即可。&lt;/p&gt;
+&lt;p&gt;汇编源代码的基本结构类似，每次都写一遍 &lt;code&gt;.section .data&lt;/code&gt; 之类的很麻烦，通过下面补丁，新建汇编源文件时，自动加载模板：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gh"&gt;diff --git a/vimrc b/vimrc&lt;/span&gt;
+&lt;span class="gh"&gt;index e073d53..596bcc1 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/vimrc&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/vimrc&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -580,7 +580,7 @@ autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,pe&lt;/span&gt;
+
+
+&amp;quot; 定义函数AutoSetFileHead，自动插入文件头
+&lt;span class="gd"&gt;-autocmd BufNewFile *.sh,*.py exec &amp;quot;:call AutoSetFileHead()&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+autocmd BufNewFile *.sh,*.py,*.s exec &amp;quot;:call AutoSetFileHead()&amp;quot;&lt;/span&gt;
+function! AutoSetFileHead()
+    &amp;quot;如果文件类型为.sh文件
+    if &amp;amp;filetype == &amp;#39;sh&amp;#39;
+&lt;span class="gu"&gt;@@ -593,9 +593,23 @@ function! AutoSetFileHead()&lt;/span&gt;
+        call append(1, &amp;quot;\# encoding: utf-8&amp;quot;)
+    endif
+
+&lt;span class="gd"&gt;-    normal G&lt;/span&gt;
+&lt;span class="gd"&gt;-    normal o&lt;/span&gt;
+&lt;span class="gd"&gt;-    normal o&lt;/span&gt;
+&lt;span class="gi"&gt;+    &amp;quot;如果文件类型为asm&lt;/span&gt;
+&lt;span class="gi"&gt;+    if &amp;amp;filetype == &amp;#39;asm&amp;#39;&lt;/span&gt;
+&lt;span class="gi"&gt;+        call setline(1, &amp;quot;.section .data&amp;quot;)&lt;/span&gt;
+&lt;span class="gi"&gt;+        call append(1, &amp;quot;.section .text&amp;quot;)&lt;/span&gt;
+&lt;span class="gi"&gt;+        call append(2, &amp;quot;.globl _start&amp;quot;)&lt;/span&gt;
+&lt;span class="gi"&gt;+        call append(3, &amp;quot;_start:&amp;quot;)&lt;/span&gt;
+&lt;span class="gi"&gt;+    endif&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+&lt;span class="gi"&gt;+    if &amp;amp;filetype == &amp;#39;asm&amp;#39;&lt;/span&gt;
+&lt;span class="gi"&gt;+        normal G&lt;/span&gt;
+&lt;span class="gi"&gt;+        normal o&lt;/span&gt;
+&lt;span class="gi"&gt;+    else&lt;/span&gt;
+&lt;span class="gi"&gt;+        normal G&lt;/span&gt;
+&lt;span class="gi"&gt;+        normal o&lt;/span&gt;
+&lt;span class="gi"&gt;+        normal o&lt;/span&gt;
+&lt;span class="gi"&gt;+    endif&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+endfunc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;在Ubuntu&amp;nbsp;64位系统上编译、运行32位汇编&lt;/h2&gt;
+&lt;p&gt;之前提到过我学习的参考书籍讲的是32位&lt;span class="caps"&gt;AT&lt;/span&gt;&amp;amp;T汇编，而我的系统是64位，所以，这里介绍在64位Ubuntu上编译、运行32位汇编程序需要做那些配置。&lt;/p&gt;
+&lt;h3&gt;64位Ubuntu编译、链接32位汇编程序&lt;/h3&gt;
+&lt;p&gt;在 &lt;code&gt;~/.bashrc&lt;/code&gt; 中添加下面的行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# asm i386
+alias as=&amp;#39;as --32 -gstabs&amp;#39;
+alias ld=&amp;#39;ld -m elf_i386&amp;#39;
+alias gcc=&amp;#39;gcc -m32&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;每次输入指令编译、运行、查看返回值也很麻烦，可以写个脚本自动完成这些工作，参考：&lt;a href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html"&gt;编译、链接、运行汇编程序&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;上面链接中提到的那坨脚本基本可以用 &lt;code&gt;gcc -m32 -o myhello myhello.s&lt;/code&gt; 代替😂&lt;/li&gt;
+&lt;li&gt;如果用上面的gcc指令编译汇编代码，只能在汇编代码中使用&lt;code&gt;.globl main&lt;/code&gt;；而不能使用as默认的&lt;code&gt;.globl _start&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Vim&lt;/h3&gt;
+&lt;h4&gt;asm在Vim中的语法检查&lt;/h4&gt;
+&lt;p&gt;&lt;a href="https://github.com/wklken/k-vim"&gt;k-vim&lt;/a&gt;使用&lt;code&gt;syntastic&lt;/code&gt;做语法检查，&lt;code&gt;syntastic&lt;/code&gt;对asm源码默认检查会使用&lt;code&gt;as&lt;/code&gt;编译源码，如果不指定&lt;code&gt;as --32&lt;/code&gt;有些32位处理器特有的指令会引起报错。&lt;/p&gt;
+&lt;p&gt;现象就是每次在Vim中&lt;code&gt;:w&lt;/code&gt;保存时，可能会报：&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt; 或 &lt;code&gt;Error: 'jcxz' is not supported in 64-bit mode&lt;/code&gt; 之类的错误。&lt;/p&gt;
+&lt;p&gt;可以在vim配置中指定&lt;code&gt;g:syntastic_asm_compiler_options&lt;/code&gt;参数，避免错误，补丁如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="gh"&gt;diff --git a/vimrc.bundles b/vimrc.bundles&lt;/span&gt;
+&lt;span class="gh"&gt;index c7428e8..7a4555d 100644&lt;/span&gt;
+&lt;span class="gd"&gt;--- a/vimrc.bundles&lt;/span&gt;
+&lt;span class="gi"&gt;+++ b/vimrc.bundles&lt;/span&gt;
+&lt;span class="gu"&gt;@@ -299,6 +299,9 @@ call plug#end()&lt;/span&gt;
+    &amp;quot; let g:syntastic_javascript_checkers = [&amp;#39;jsl&amp;#39;, &amp;#39;jshint&amp;#39;]
+    &amp;quot; let g:syntastic_html_checkers=[&amp;#39;tidy&amp;#39;, &amp;#39;jshint&amp;#39;]
+
+&lt;span class="gi"&gt;+    &amp;quot; FIXME: if asm, 在64位系统上写32位汇编才需要&lt;/span&gt;
+&lt;span class="gi"&gt;+    let g:syntastic_asm_compiler_options = &amp;quot;--32&amp;quot;&lt;/span&gt;
+&lt;span class="gi"&gt;+&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：参考syntastic文档 - &lt;a href="https://github.com/scrooloose/syntastic/wiki/ASM:---gcc"&gt;&lt;span class="caps"&gt;ASM&lt;/span&gt;:&amp;nbsp;gcc&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;64位Ubuntu通过gcc生成C代码对应的32位汇编代码&lt;/h3&gt;
+&lt;p&gt;直接通过gcc生成C代码对应的汇编代码只需&lt;code&gt;gcc -S&lt;/code&gt;，但生成32位汇编代码就需要：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gcc -m32 -S hello.c
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：需要安装&lt;code&gt;libc6-dev-i386&lt;/code&gt;，否则会报错。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category><category term="Vim"></category></entry><entry><title>编译、链接、运行汇编程序</title><link href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html" rel="alternate"></link><published>2016-06-17T00:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/Compile-Link-and-Run-ASM-Program.html</id><summary type="html">&lt;p&gt;学习汇编过程中每次输入as,&amp;nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。&lt;/p&gt;
 &lt;p&gt;所以，写个小脚本完成汇编程序的编译、链接及运行。&lt;/p&gt;
 &lt;h2&gt;脚本介绍&lt;/h2&gt;
 &lt;p&gt;脚本内容如下：&lt;/p&gt;

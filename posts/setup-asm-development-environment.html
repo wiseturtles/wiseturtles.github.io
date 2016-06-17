@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - Ubuntu+Vim配置汇编程序开发环境
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="asm" />
+      <meta name="tags" contents="Linux" />
+      <meta name="tags" contents="Vim" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+            <li><a href="http://blog.wiseturtles.com/about-us.html">关于我们</a></li>
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>Ubuntu+Vim配置汇编程序开发环境</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/asm.html">asm</a> <a href="http://blog.wiseturtles.com/tag/linux.html">Linux</a> <a href="http://blog.wiseturtles.com/tag/vim.html">Vim</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-06-17
+
+        </div>
+
+        <div><p>本文专门介绍Ubuntu系统上基于Vim配置汇编程序开发环境。</p>
+<h2>Ubuntu系统配置</h2>
+<p>所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&nbsp;gdb等软件。</p>
+<p>Ubuntu上安装软件很方便，指令如下：</p>
+<div class="highlight"><pre><span></span>$ sudo apt-get install binutils gcc gdb libc6-i386 libc6-dev-i386
+</pre></div>
+
+
+<h2>Vim配置</h2>
+<p>个人比较喜欢<a href="https://github.com/wklken/k-vim">k-vim</a>，根据项目的安装文档安装即可。</p>
+<p>汇编源代码的基本结构类似，每次都写一遍 <code>.section .data</code> 之类的很麻烦，通过下面补丁，新建汇编源文件时，自动加载模板：</p>
+<div class="highlight"><pre><span></span><span class="gh">diff --git a/vimrc b/vimrc</span>
+<span class="gh">index e073d53..596bcc1 100644</span>
+<span class="gd">--- a/vimrc</span>
+<span class="gi">+++ b/vimrc</span>
+<span class="gu">@@ -580,7 +580,7 @@ autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,pe</span>
+
+
+&quot; 定义函数AutoSetFileHead，自动插入文件头
+<span class="gd">-autocmd BufNewFile *.sh,*.py exec &quot;:call AutoSetFileHead()&quot;</span>
+<span class="gi">+autocmd BufNewFile *.sh,*.py,*.s exec &quot;:call AutoSetFileHead()&quot;</span>
+function! AutoSetFileHead()
+    &quot;如果文件类型为.sh文件
+    if &amp;filetype == &#39;sh&#39;
+<span class="gu">@@ -593,9 +593,23 @@ function! AutoSetFileHead()</span>
+        call append(1, &quot;\# encoding: utf-8&quot;)
+    endif
+
+<span class="gd">-    normal G</span>
+<span class="gd">-    normal o</span>
+<span class="gd">-    normal o</span>
+<span class="gi">+    &quot;如果文件类型为asm</span>
+<span class="gi">+    if &amp;filetype == &#39;asm&#39;</span>
+<span class="gi">+        call setline(1, &quot;.section .data&quot;)</span>
+<span class="gi">+        call append(1, &quot;.section .text&quot;)</span>
+<span class="gi">+        call append(2, &quot;.globl _start&quot;)</span>
+<span class="gi">+        call append(3, &quot;_start:&quot;)</span>
+<span class="gi">+    endif</span>
+<span class="gi">+</span>
+<span class="gi">+    if &amp;filetype == &#39;asm&#39;</span>
+<span class="gi">+        normal G</span>
+<span class="gi">+        normal o</span>
+<span class="gi">+    else</span>
+<span class="gi">+        normal G</span>
+<span class="gi">+        normal o</span>
+<span class="gi">+        normal o</span>
+<span class="gi">+    endif</span>
+<span class="gi">+</span>
+endfunc
+</pre></div>
+
+
+<h2>在Ubuntu&nbsp;64位系统上编译、运行32位汇编</h2>
+<p>之前提到过我学习的参考书籍讲的是32位<span class="caps">AT</span>&amp;T汇编，而我的系统是64位，所以，这里介绍在64位Ubuntu上编译、运行32位汇编程序需要做那些配置。</p>
+<h3>64位Ubuntu编译、链接32位汇编程序</h3>
+<p>在 <code>~/.bashrc</code> 中添加下面的行：</p>
+<div class="highlight"><pre><span></span># asm i386
+alias as=&#39;as --32 -gstabs&#39;
+alias ld=&#39;ld -m elf_i386&#39;
+alias gcc=&#39;gcc -m32&#39;
+</pre></div>
+
+
+<p>每次输入指令编译、运行、查看返回值也很麻烦，可以写个脚本自动完成这些工作，参考：<a href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html">编译、链接、运行汇编程序</a></p>
+<p>注：</p>
+<ul>
+<li>上面链接中提到的那坨脚本基本可以用 <code>gcc -m32 -o myhello myhello.s</code> 代替😂</li>
+<li>如果用上面的gcc指令编译汇编代码，只能在汇编代码中使用<code>.globl main</code>；而不能使用as默认的<code>.globl _start</code></li>
+</ul>
+<h3>Vim</h3>
+<h4>asm在Vim中的语法检查</h4>
+<p><a href="https://github.com/wklken/k-vim">k-vim</a>使用<code>syntastic</code>做语法检查，<code>syntastic</code>对asm源码默认检查会使用<code>as</code>编译源码，如果不指定<code>as --32</code>有些32位处理器特有的指令会引起报错。</p>
+<p>现象就是每次在Vim中<code>:w</code>保存时，可能会报：<code>Error: invalid instruction suffix for 'push'</code> 或 <code>Error: 'jcxz' is not supported in 64-bit mode</code> 之类的错误。</p>
+<p>可以在vim配置中指定<code>g:syntastic_asm_compiler_options</code>参数，避免错误，补丁如下:</p>
+<div class="highlight"><pre><span></span><span class="gh">diff --git a/vimrc.bundles b/vimrc.bundles</span>
+<span class="gh">index c7428e8..7a4555d 100644</span>
+<span class="gd">--- a/vimrc.bundles</span>
+<span class="gi">+++ b/vimrc.bundles</span>
+<span class="gu">@@ -299,6 +299,9 @@ call plug#end()</span>
+    &quot; let g:syntastic_javascript_checkers = [&#39;jsl&#39;, &#39;jshint&#39;]
+    &quot; let g:syntastic_html_checkers=[&#39;tidy&#39;, &#39;jshint&#39;]
+
+<span class="gi">+    &quot; FIXME: if asm, 在64位系统上写32位汇编才需要</span>
+<span class="gi">+    let g:syntastic_asm_compiler_options = &quot;--32&quot;</span>
+<span class="gi">+</span>
+</pre></div>
+
+
+<p>注：参考syntastic文档 - <a href="https://github.com/scrooloose/syntastic/wiki/ASM:---gcc"><span class="caps">ASM</span>:&nbsp;gcc</a></p>
+<h3>64位Ubuntu通过gcc生成C代码对应的32位汇编代码</h3>
+<p>直接通过gcc生成C代码对应的汇编代码只需<code>gcc -S</code>，但生成32位汇编代码就需要：</p>
+<div class="highlight"><pre><span></span>$ gcc -m32 -S hello.c
+</pre></div>
+
+
+<p>注：需要安装<code>libc6-dev-i386</code>，否则会报错。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="setup-asm-development-environment" data-title="Ubuntu+Vim配置汇编程序开发环境" data-url="http://blog.wiseturtles.com/posts/setup-asm-development-environment.html"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"wiseturtles"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/asm.html">asm</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
