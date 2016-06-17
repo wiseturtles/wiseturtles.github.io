@@ -44,7 +44,14 @@
 39
 40
 41
-42&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash -e&lt;/span&gt;
+42
+43
+44
+45
+46
+47
+48
+49&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash -e&lt;/span&gt;
 
 &lt;span class="k"&gt;function&lt;/span&gt; usage&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
@@ -84,8 +91,15 @@
 as &lt;span class="nv"&gt;$as_opts&lt;/span&gt; -o &lt;span class="nv"&gt;$obj&lt;/span&gt; &lt;span class="nv"&gt;$src&lt;/span&gt;
 &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ld &lt;/span&gt;&lt;span class="nv"&gt;$ld_opts&lt;/span&gt;&lt;span class="s2"&gt; -o &lt;/span&gt;&lt;span class="nv"&gt;$bin&lt;/span&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="nv"&gt;$obj&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
 ld &lt;span class="nv"&gt;$ld_opts&lt;/span&gt; -o &lt;span class="nv"&gt;$bin&lt;/span&gt; &lt;span class="nv"&gt;$obj&lt;/span&gt;
+
+&lt;span class="c1"&gt;# `set +e` 命令执行返回值不为零也不退出程序&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; +e
 &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;run &lt;/span&gt;&lt;span class="nv"&gt;$bin&lt;/span&gt;&lt;span class="s2"&gt; ...&amp;quot;&lt;/span&gt;
 &lt;span class="nv"&gt;$bin&lt;/span&gt;
+&lt;span class="c1"&gt;# 显示执行汇编程序的返回值&lt;/span&gt;
+&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;return value: &lt;/span&gt;&lt;span class="nv"&gt;$?&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# `set -e` 重新开启命令执行返回值不为零就退出程序&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt; -e
 &lt;/pre&gt;&lt;/div&gt;
 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 

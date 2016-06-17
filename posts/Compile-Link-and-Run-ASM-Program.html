@@ -113,7 +113,14 @@ On 2016-06-17
 39
 40
 41
-42</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
+42
+43
+44
+45
+46
+47
+48
+49</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash -e</span>
 
 <span class="k">function</span> usage<span class="o">()</span>
 <span class="o">{</span>
@@ -153,8 +160,15 @@ On 2016-06-17
 as <span class="nv">$as_opts</span> -o <span class="nv">$obj</span> <span class="nv">$src</span>
 <span class="nb">echo</span> <span class="s2">&quot;ld </span><span class="nv">$ld_opts</span><span class="s2"> -o </span><span class="nv">$bin</span><span class="s2"> </span><span class="nv">$obj</span><span class="s2">&quot;</span>
 ld <span class="nv">$ld_opts</span> -o <span class="nv">$bin</span> <span class="nv">$obj</span>
+
+<span class="c1"># `set +e` 命令执行返回值不为零也不退出程序</span>
+<span class="nb">set</span> +e
 <span class="nb">echo</span> <span class="s2">&quot;run </span><span class="nv">$bin</span><span class="s2"> ...&quot;</span>
 <span class="nv">$bin</span>
+<span class="c1"># 显示执行汇编程序的返回值</span>
+<span class="nb">echo</span> <span class="s2">&quot;return value: </span><span class="nv">$?</span><span class="s2">&quot;</span>
+<span class="c1"># `set -e` 重新开启命令执行返回值不为零就退出程序</span>
+<span class="nb">set</span> -e
 </pre></div>
 </td></tr></table>
 
