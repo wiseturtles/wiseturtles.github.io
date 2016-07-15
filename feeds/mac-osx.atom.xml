@@ -154,6 +154,7 @@ $ brew list --versions
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;p&gt;使用&lt;code&gt;清华大学Tuna镜像源&lt;/code&gt;：&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/"&gt;Homebrew&amp;nbsp;镜像使用帮助&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;Homebrew&amp;nbsp;Cask&lt;/h2&gt;
 &lt;p&gt;通过Homebrew可以方便的管理命令行程序，Homebrew&amp;nbsp;Cask可以管理图形界面程序。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew tap caskroom/cask
@@ -200,6 +201,10 @@ brew install wget
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h2&gt;pip&lt;/h2&gt;
+&lt;p&gt;个人经常写点Python代码，需要安装Python模块管理工具-&lt;code&gt;pip&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://pip.pypa.io/en/stable/installing/"&gt;Installing with&amp;nbsp;get-pip.py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;pypi源设置请参考：&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/"&gt;清华大学Tuna的pypi&amp;nbsp;镜像使用帮助&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;CocoaPods&lt;/h2&gt;
 &lt;p&gt;&lt;a href="https://cocoapods.org/"&gt;CocoaPods&lt;/a&gt;是Xcode项目的依赖库管理工具。&lt;/p&gt;
 &lt;p&gt;我将它安装到自己的$&lt;span class="caps"&gt;HOME&lt;/span&gt;目录下，也可以直接安装到系统目录。&lt;/p&gt;
