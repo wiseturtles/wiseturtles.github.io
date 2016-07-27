@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-05-06T12:38:00+08:00</updated><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-07-27T18:06:00+08:00</updated><entry><title>Too many files open</title><link href="http://blog.wiseturtles.com/posts/Too-many-files-open.html" rel="alternate"></link><published>2016-07-27T18:06:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-07-27:posts/Too-many-files-open.html</id><summary type="html">&lt;h2&gt;Linux&lt;/h2&gt;
+&lt;p&gt;将下面的行加入 &lt;code&gt;/etc/security/limits.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;*               soft    nofile             8192
+*               hard    nofile             8192
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将下面的行加入 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; ，提高kernel性能，可以不添加。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 1
+net.ipv4.ip_local_port_range = 1024 65000
+fs.file-max = 65000
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;运行 &lt;code&gt;sudo sysctl -p&lt;/code&gt; 将对 &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; 的修改生效。&lt;/p&gt;
+&lt;h2&gt;Mac&lt;/h2&gt;
+&lt;p&gt;查看max&amp;nbsp;files:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo launchctl limit
+    cpu         unlimited      unlimited
+    filesize    unlimited      unlimited
+    data        unlimited      unlimited
+    stack       &lt;span class="m"&gt;8388608&lt;/span&gt;        67104768
+    core        &lt;span class="m"&gt;0&lt;/span&gt;              unlimited
+    rss         unlimited      unlimited
+    memlock     unlimited      unlimited
+    maxproc     &lt;span class="m"&gt;709&lt;/span&gt;            1064
+    maxfiles    &lt;span class="m"&gt;256&lt;/span&gt;            unlimited
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;修改max&amp;nbsp;file到8192:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo launchctl limit maxfiles &lt;span class="m"&gt;8192&lt;/span&gt; unlimited
+$ sudo launchctl limit
+    cpu         unlimited      unlimited
+    filesize    unlimited      unlimited
+    data        unlimited      unlimited
+    stack       &lt;span class="m"&gt;8388608&lt;/span&gt;        67104768
+    core        &lt;span class="m"&gt;0&lt;/span&gt;              unlimited
+    rss         unlimited      unlimited
+    memlock     unlimited      unlimited
+    maxproc     &lt;span class="m"&gt;709&lt;/span&gt;            1064
+    maxfiles    &lt;span class="m"&gt;8192&lt;/span&gt;           10240
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="Linux"></category></entry><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
 &lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
 &lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install unattended-upgrades
