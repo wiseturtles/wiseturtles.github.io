@@ -42,6 +42,9 @@ $ sudo launchctl limit
     memlock     unlimited      unlimited
     maxproc     &lt;span class="m"&gt;709&lt;/span&gt;            1064
     maxfiles    &lt;span class="m"&gt;8192&lt;/span&gt;           10240
+
+&lt;span class="c1"&gt;# 注：&lt;/span&gt;
+$ sudo launchctl limit maxfiles unlimited  &lt;span class="c1"&gt;# 也可以直接设置为unlimited&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="Linux"></category></entry><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
 &lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
 &lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;

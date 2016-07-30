@@ -42,6 +42,9 @@ $ sudo launchctl limit
     memlock     unlimited      unlimited
     maxproc     &lt;span class="m"&gt;709&lt;/span&gt;            1064
     maxfiles    &lt;span class="m"&gt;8192&lt;/span&gt;           10240
+
+&lt;span class="c1"&gt;# 注：&lt;/span&gt;
+$ sudo launchctl limit maxfiles unlimited  &lt;span class="c1"&gt;# 也可以直接设置为unlimited&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="Linux"></category></entry><entry><title>Ubuntu+Vim配置汇编程序开发环境</title><link href="http://blog.wiseturtles.com/posts/setup-asm-development-environment.html" rel="alternate"></link><published>2016-06-17T20:00:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/setup-asm-development-environment.html</id><summary type="html">&lt;p&gt;本文专门介绍Ubuntu系统上基于Vim配置汇编程序开发环境。&lt;/p&gt;
 &lt;h2&gt;Ubuntu系统配置&lt;/h2&gt;
 &lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb等软件。&lt;/p&gt;
