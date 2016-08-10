@@ -1,5 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-07-27T18:06:00+08:00</updated><entry><title>Too many files open</title><link href="http://blog.wiseturtles.com/posts/Too-many-files-open.html" rel="alternate"></link><published>2016-07-27T18:06:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-07-27:posts/Too-many-files-open.html</id><summary type="html">&lt;h2&gt;Linux&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-08-10T20:40:00+08:00</updated><entry><title>SaltStack介绍</title><link href="http://blog.wiseturtles.com/posts/get-started-saltstack.html" rel="alternate"></link><published>2016-08-10T20:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-10:posts/get-started-saltstack.html</id><summary type="html">&lt;p&gt;本文只介绍了SaltStack在CentOS上的安装，其它其它有类似的包管理工具可以安装.&lt;/p&gt;
+&lt;h2&gt;CentOS上安装salt-master和salt-minion&lt;/h2&gt;
+&lt;h3&gt;安装salt-master&lt;/h3&gt;
+&lt;p&gt;在centos上安装salt-master:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;rpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;saltstack&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;yum&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;redhat&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;SALTSTACK&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;GPG&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KEY&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;cat - &amp;gt; /etc/yum.repos.d/saltstack.repo &amp;lt;&amp;lt;&amp;quot;EOF&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;[saltstack-repo]
+name=SaltStack repo for &lt;span class="caps"&gt;RHEL&lt;/span&gt;/CentOS $releasever
+baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/&lt;span class="caps"&gt;SALTSTACK&lt;/span&gt;-&lt;span class="caps"&gt;GPG&lt;/span&gt;-&lt;span class="caps"&gt;KEY&lt;/span&gt;.pub
+&lt;span class="caps"&gt;EOF&lt;/span&gt;&amp;#8217;
+    $ sudo yum clean expire-cache
+    $ sudo yum install -y salt-master
+    $ sudo systemctl enable salt-master.service
+    $ sudo systemctl restart&amp;nbsp;salt-master.service&lt;/p&gt;
+&lt;h3&gt;安装salt-minion&lt;/h3&gt;
+&lt;p&gt;在centos上安装salt-minion:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;rpm&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;repo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;saltstack&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;yum&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;redhat&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;x86_64&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;latest&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;SALTSTACK&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;GPG&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;KEY&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pub&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;cat - &amp;gt; /etc/yum.repos.d/saltstack.repo &amp;lt;&amp;lt;&amp;quot;EOF&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;[saltstack-repo]
+name=SaltStack repo for &lt;span class="caps"&gt;RHEL&lt;/span&gt;/CentOS $releasever
+baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/&lt;span class="caps"&gt;SALTSTACK&lt;/span&gt;-&lt;span class="caps"&gt;GPG&lt;/span&gt;-&lt;span class="caps"&gt;KEY&lt;/span&gt;.pub
+&lt;span class="caps"&gt;EOF&lt;/span&gt;&amp;#8217;
+    $ sudo yum clean expire-cache
+    $ sudo yum install -y salt-minion
+    $ sudo bash -c &amp;#8220;echo &amp;#8216;master: $SALT_MASTER&amp;#8217; &amp;gt;&amp;gt; /etc/salt/minion&amp;#8221; # $SALT_MASTER 替换为salt master主机的&lt;span class="caps"&gt;IP&lt;/span&gt;
+    $ sudo systemctl enable salt-minion.service
+    $ sudo systemctl restart&amp;nbsp;salt-minion.service&lt;/p&gt;
+&lt;p&gt;注: 如果salt-master使用默认配置，请确保salt-master的4505,&amp;nbsp;4506端口可以被salt-minion访问.&lt;/p&gt;
+&lt;h3&gt;简单测试&lt;/h3&gt;
+&lt;p&gt;salt-minion设置过master &lt;span class="caps"&gt;IP&lt;/span&gt;并重启salt-minion后，应该在salt-master上可以通过下面命令看到minion:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt-key -L  # 列出所有minion
+[root@master ~]$ salt-key -A  # 接受所有minion，也可以通过 -a 接受指定minion
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;接受minion后，就可以在salt-master上发布命令到minion了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;root&lt;span class="o"&gt;@&lt;/span&gt;master &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt; salt &lt;span class="s"&gt;&amp;#39;*&amp;#39;&lt;/span&gt; test.ping  &lt;span class="c1"&gt;# 简单测试master &amp;lt;-&amp;gt; minion是否连通&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;选择主机&lt;/h2&gt;
+&lt;p&gt;经常会看到 &lt;code&gt;salt '*' test.ping&lt;/code&gt; 这里的 &lt;code&gt;'*'&lt;/code&gt; 意思是作用于所有主机。&lt;/p&gt;
+&lt;p&gt;下面介绍 salt&amp;nbsp;支持的匹配方式。&lt;/p&gt;
+&lt;h3&gt;globbing&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt &amp;#39;ubuntu*&amp;#39; disk.usage
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;grains&amp;nbsp;system&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt -G &amp;#39;os:CentOS&amp;#39; cmd.run &amp;#39;id&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;regular&amp;nbsp;expression&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt -E &amp;#39;centos[0-9]&amp;#39; test.ping
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;明确指定一个列表&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt -L &amp;#39;centos1,centos2&amp;#39; test.ping
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;multiple target types can be combined in one&amp;nbsp;command&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="n"&gt;master&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;salt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;C&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt;&lt;span class="p"&gt;@&lt;/span&gt;&lt;span class="nl"&gt;os&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;CentOS&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;centos&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;S&lt;/span&gt;&lt;span class="mf"&gt;@192.168.50&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ping&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注: 参考 - &lt;a href="https://docs.saltstack.com/en/getstarted/fundamentals/targeting.html"&gt;https://docs.saltstack.com/en/getstarted/fundamentals/targeting.html&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;执行命令&lt;/h2&gt;
+&lt;h3&gt;执行单个命令，比如：在minion上执行&lt;code&gt;id&lt;/code&gt;命令并输出:&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt &amp;#39;*&amp;#39; cmd.run &amp;#39;id&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;执行脚本：&lt;/h3&gt;
+&lt;p&gt;首先要开启&lt;code&gt;/etc/salt/master&lt;/code&gt;的如下设置:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;file_roots&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+  &lt;span class="n"&gt;base&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;
+    &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="sr"&gt;/srv/s&lt;/span&gt;&lt;span class="n"&gt;alt&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果salt-master没有&lt;code&gt;/srv/salt/scripts&lt;/code&gt;目录请自己创建，然后写个简单脚本:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ cat /srv/salt/scripts/get_ip.sh
+#!/bin/bash
+
+ifconfig | grep &amp;#39;inet &amp;#39; | grep -Ev &amp;#39;127.0.0.1&amp;#39; | awk &amp;#39;{print $2}&amp;#39;
+
+[root@master ~]$ salt &amp;#39;*&amp;#39; cmd.script &amp;#39;salt://scripts/get_ip.sh&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Tips&lt;/h2&gt;
+&lt;h3&gt;以指定用户运行salt-master，避免每次输入salt指令都需要加&amp;nbsp;sudo；比如以centos用户运行salt-master&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[centos@master ~]$ sudo chown -R centos /etc/salt /var/log/salt /var/cache/salt /var/run/salt
+[centos@master ~]$ sudo mkdir -p /srv/salt
+[centos@master ~]$ sudo chown -R centos /srv/salt
+在 /etc/salt/master 中设置 user: centos
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注: 理论上salt-minion也可以通过这种方式运行以指定用户运行，但我测试会报错 &amp;#8220;Minion did not return. [No&amp;nbsp;response]&amp;#8221;&lt;/p&gt;
+&lt;h3&gt;删除不存在的salt&amp;nbsp;minion&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt-run manage.down removekeys=True
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="CentOS"></category><category term="SaltStack"></category></entry><entry><title>Too many files open</title><link href="http://blog.wiseturtles.com/posts/Too-many-files-open.html" rel="alternate"></link><published>2016-07-27T18:06:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-07-27:posts/Too-many-files-open.html</id><summary type="html">&lt;h2&gt;Linux&lt;/h2&gt;
 &lt;p&gt;将下面的行加入 &lt;code&gt;/etc/security/limits.conf&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;*               soft    nofile             8192
 *               hard    nofile             8192

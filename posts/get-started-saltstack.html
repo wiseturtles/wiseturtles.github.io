@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - SaltStack介绍
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use useso fonts instead of google online fonts-->
+    <link href='http://fonts.useso.com/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.useso.com/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="CentOS" />
+      <meta name="tags" contents="SaltStack" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+            <li><a href="http://blog.wiseturtles.com/about-us.html">关于我们</a></li>
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>SaltStack介绍</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/centos.html">CentOS</a> <a href="http://blog.wiseturtles.com/tag/saltstack.html">SaltStack</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-08-10
+
+        </div>
+
+        <div><p>本文只介绍了SaltStack在CentOS上的安装，其它其它有类似的包管理工具可以安装.</p>
+<h2>CentOS上安装salt-master和salt-minion</h2>
+<h3>安装salt-master</h3>
+<p>在centos上安装salt-master:</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;cat - &gt; /etc/yum.repos.d/saltstack.repo &lt;&lt;&quot;EOF&quot;</span>
+</pre></div>
+
+
+<p>[saltstack-repo]
+name=SaltStack repo for <span class="caps">RHEL</span>/CentOS $releasever
+baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/<span class="caps">SALTSTACK</span>-<span class="caps">GPG</span>-<span class="caps">KEY</span>.pub
+<span class="caps">EOF</span>&#8217;
+    $ sudo yum clean expire-cache
+    $ sudo yum install -y salt-master
+    $ sudo systemctl enable salt-master.service
+    $ sudo systemctl restart&nbsp;salt-master.service</p>
+<h3>安装salt-minion</h3>
+<p>在centos上安装salt-minion:</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;cat - &gt; /etc/yum.repos.d/saltstack.repo &lt;&lt;&quot;EOF&quot;</span>
+</pre></div>
+
+
+<p>[saltstack-repo]
+name=SaltStack repo for <span class="caps">RHEL</span>/CentOS $releasever
+baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/<span class="caps">SALTSTACK</span>-<span class="caps">GPG</span>-<span class="caps">KEY</span>.pub
+<span class="caps">EOF</span>&#8217;
+    $ sudo yum clean expire-cache
+    $ sudo yum install -y salt-minion
+    $ sudo bash -c &#8220;echo &#8216;master: $SALT_MASTER&#8217; &gt;&gt; /etc/salt/minion&#8221; # $SALT_MASTER 替换为salt master主机的<span class="caps">IP</span>
+    $ sudo systemctl enable salt-minion.service
+    $ sudo systemctl restart&nbsp;salt-minion.service</p>
+<p>注: 如果salt-master使用默认配置，请确保salt-master的4505,&nbsp;4506端口可以被salt-minion访问.</p>
+<h3>简单测试</h3>
+<p>salt-minion设置过master <span class="caps">IP</span>并重启salt-minion后，应该在salt-master上可以通过下面命令看到minion:</p>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt-key -L  # 列出所有minion
+[root@master ~]$ salt-key -A  # 接受所有minion，也可以通过 -a 接受指定minion
+</pre></div>
+
+
+<p>接受minion后，就可以在salt-master上发布命令到minion了。</p>
+<div class="highlight"><pre><span></span><span class="p">[</span>root<span class="o">@</span>master <span class="o">~</span><span class="p">]</span><span class="o">$</span> salt <span class="s">&#39;*&#39;</span> test.ping  <span class="c1"># 简单测试master &lt;-&gt; minion是否连通</span>
+</pre></div>
+
+
+<h2>选择主机</h2>
+<p>经常会看到 <code>salt '*' test.ping</code> 这里的 <code>'*'</code> 意思是作用于所有主机。</p>
+<p>下面介绍 salt&nbsp;支持的匹配方式。</p>
+<h3>globbing</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt &#39;ubuntu*&#39; disk.usage
+</pre></div>
+
+
+<h3>grains&nbsp;system</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt -G &#39;os:CentOS&#39; cmd.run &#39;id&#39;
+</pre></div>
+
+
+<h3>regular&nbsp;expression</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt -E &#39;centos[0-9]&#39; test.ping
+</pre></div>
+
+
+<h3>明确指定一个列表</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt -L &#39;centos1,centos2&#39; test.ping
+</pre></div>
+
+
+<h3>multiple target types can be combined in one&nbsp;command</h3>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="p">@</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="err">$</span> <span class="n">salt</span> <span class="o">-</span><span class="n">C</span> <span class="err">&#39;</span><span class="n">G</span><span class="p">@</span><span class="nl">os</span><span class="p">:</span><span class="n">CentOS</span> <span class="n">and</span> <span class="n">centos</span><span class="o">*</span> <span class="n">or</span> <span class="n">S</span><span class="mf">@192.168.50</span><span class="p">.</span><span class="o">*</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">ping</span>
+</pre></div>
+
+
+<p>注: 参考 - <a href="https://docs.saltstack.com/en/getstarted/fundamentals/targeting.html">https://docs.saltstack.com/en/getstarted/fundamentals/targeting.html</a></p>
+<h2>执行命令</h2>
+<h3>执行单个命令，比如：在minion上执行<code>id</code>命令并输出:</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt &#39;*&#39; cmd.run &#39;id&#39;
+</pre></div>
+
+
+<h3>执行脚本：</h3>
+<p>首先要开启<code>/etc/salt/master</code>的如下设置:</p>
+<div class="highlight"><pre><span></span><span class="n">file_roots</span><span class="o">:</span>
+  <span class="n">base</span><span class="o">:</span>
+    <span class="o">-</span> <span class="sr">/srv/s</span><span class="n">alt</span>
+</pre></div>
+
+
+<p>如果salt-master没有<code>/srv/salt/scripts</code>目录请自己创建，然后写个简单脚本:</p>
+<div class="highlight"><pre><span></span>[root@master ~]$ cat /srv/salt/scripts/get_ip.sh
+#!/bin/bash
+
+ifconfig | grep &#39;inet &#39; | grep -Ev &#39;127.0.0.1&#39; | awk &#39;{print $2}&#39;
+
+[root@master ~]$ salt &#39;*&#39; cmd.script &#39;salt://scripts/get_ip.sh&#39;
+</pre></div>
+
+
+<h2>Tips</h2>
+<h3>以指定用户运行salt-master，避免每次输入salt指令都需要加&nbsp;sudo；比如以centos用户运行salt-master</h3>
+<div class="highlight"><pre><span></span>[centos@master ~]$ sudo chown -R centos /etc/salt /var/log/salt /var/cache/salt /var/run/salt
+[centos@master ~]$ sudo mkdir -p /srv/salt
+[centos@master ~]$ sudo chown -R centos /srv/salt
+在 /etc/salt/master 中设置 user: centos
+</pre></div>
+
+
+<p>注: 理论上salt-minion也可以通过这种方式运行以指定用户运行，但我测试会报错 &#8220;Minion did not return. [No&nbsp;response]&#8221;</p>
+<h3>删除不存在的salt&nbsp;minion</h3>
+<div class="highlight"><pre><span></span>[root@master ~]$ salt-run manage.down removekeys=True
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/get-started-saltstack.html';
+        this.page.identifier = 'get-started-saltstack';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/asm.html">asm</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
