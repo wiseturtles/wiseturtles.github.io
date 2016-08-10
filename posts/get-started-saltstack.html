@@ -74,39 +74,39 @@ On 2016-08-10
 <p>在centos上安装salt-master:</p>
 <div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
 <span class="err">$</span> <span class="n">sudo</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;cat - &gt; /etc/yum.repos.d/saltstack.repo &lt;&lt;&quot;EOF&quot;</span>
+<span class="p">[</span><span class="n">saltstack</span><span class="o">-</span><span class="n">repo</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="n">SaltStack</span> <span class="n">repo</span> <span class="k">for</span> <span class="n">RHEL</span><span class="o">/</span><span class="n">CentOS</span> <span class="err">$</span><span class="n">releasever</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="err">$</span><span class="n">releasever</span><span class="o">/</span><span class="err">$</span><span class="n">basearch</span><span class="o">/</span><span class="n">latest</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="err">$</span><span class="n">releasever</span><span class="o">/</span><span class="err">$</span><span class="n">basearch</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
+<span class="n">EOF</span><span class="s1">&#39;</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">clean</span> <span class="n">expire</span><span class="o">-</span><span class="n">cache</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">salt</span><span class="o">-</span><span class="n">master</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">salt</span><span class="o">-</span><span class="n">master</span><span class="o">.</span><span class="n">service</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">salt</span><span class="o">-</span><span class="n">master</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
 
 
-<p>[saltstack-repo]
-name=SaltStack repo for <span class="caps">RHEL</span>/CentOS $releasever
-baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
-enabled=1
-gpgcheck=1
-gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/<span class="caps">SALTSTACK</span>-<span class="caps">GPG</span>-<span class="caps">KEY</span>.pub
-<span class="caps">EOF</span>&#8217;
-    $ sudo yum clean expire-cache
-    $ sudo yum install -y salt-master
-    $ sudo systemctl enable salt-master.service
-    $ sudo systemctl restart&nbsp;salt-master.service</p>
 <h3>安装salt-minion</h3>
 <p>在centos上安装salt-minion:</p>
 <div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">--</span><span class="kn">import</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
 <span class="err">$</span> <span class="n">sudo</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;cat - &gt; /etc/yum.repos.d/saltstack.repo &lt;&lt;&quot;EOF&quot;</span>
+<span class="p">[</span><span class="n">saltstack</span><span class="o">-</span><span class="n">repo</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="n">SaltStack</span> <span class="n">repo</span> <span class="k">for</span> <span class="n">RHEL</span><span class="o">/</span><span class="n">CentOS</span> <span class="err">$</span><span class="n">releasever</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="err">$</span><span class="n">releasever</span><span class="o">/</span><span class="err">$</span><span class="n">basearch</span><span class="o">/</span><span class="n">latest</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">gpgkey</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">saltstack</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yum</span><span class="o">/</span><span class="n">redhat</span><span class="o">/</span><span class="err">$</span><span class="n">releasever</span><span class="o">/</span><span class="err">$</span><span class="n">basearch</span><span class="o">/</span><span class="n">latest</span><span class="o">/</span><span class="n">SALTSTACK</span><span class="o">-</span><span class="n">GPG</span><span class="o">-</span><span class="n">KEY</span><span class="o">.</span><span class="n">pub</span>
+<span class="n">EOF</span><span class="s1">&#39;</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">clean</span> <span class="n">expire</span><span class="o">-</span><span class="n">cache</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">salt</span><span class="o">-</span><span class="n">minion</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">bash</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;echo &#39;master: $SALT_MASTER&#39; &gt;&gt; /etc/salt/minion&quot;</span> <span class="c1"># $SALT_MASTER 替换为salt master主机的IP</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">salt</span><span class="o">-</span><span class="n">minion</span><span class="o">.</span><span class="n">service</span>
+<span class="err">$</span> <span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">salt</span><span class="o">-</span><span class="n">minion</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
 
 
-<p>[saltstack-repo]
-name=SaltStack repo for <span class="caps">RHEL</span>/CentOS $releasever
-baseurl=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest
-enabled=1
-gpgcheck=1
-gpgkey=https://repo.saltstack.com/yum/redhat/$releasever/$basearch/latest/<span class="caps">SALTSTACK</span>-<span class="caps">GPG</span>-<span class="caps">KEY</span>.pub
-<span class="caps">EOF</span>&#8217;
-    $ sudo yum clean expire-cache
-    $ sudo yum install -y salt-minion
-    $ sudo bash -c &#8220;echo &#8216;master: $SALT_MASTER&#8217; &gt;&gt; /etc/salt/minion&#8221; # $SALT_MASTER 替换为salt master主机的<span class="caps">IP</span>
-    $ sudo systemctl enable salt-minion.service
-    $ sudo systemctl restart&nbsp;salt-minion.service</p>
 <p>注: 如果salt-master使用默认配置，请确保salt-master的4505,&nbsp;4506端口可以被salt-minion访问.</p>
 <h3>简单测试</h3>
 <p>salt-minion设置过master <span class="caps">IP</span>并重启salt-minion后，应该在salt-master上可以通过下面命令看到minion:</p>
@@ -183,7 +183,7 @@ ifconfig | grep &#39;inet &#39; | grep -Ev &#39;127.0.0.1&#39; | awk &#39;{print
 
 
 <p>注: 理论上salt-minion也可以通过这种方式运行以指定用户运行，但我测试会报错 &#8220;Minion did not return. [No&nbsp;response]&#8221;</p>
-<h3>删除不存在的salt&nbsp;minion</h3>
+<h3>删除无法连接的salt&nbsp;minion</h3>
 <div class="highlight"><pre><span></span>[root@master ~]$ salt-run manage.down removekeys=True
 </pre></div></div>
 
