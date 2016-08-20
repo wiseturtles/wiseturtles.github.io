@@ -192,8 +192,13 @@ $ <span class="nb">cd</span> ~/k-vim <span class="o">&amp;&amp;</span> bash -x i
 <p>注：
 1. k-vim没有适配最新版的vbundle，导致运行安装程序报错，基本就是Bundle修改为Plugin。。。
 2.&nbsp;YouCompleteMe安装总失败，后来手动下载安装</p>
+<h2>安装Java <span class="caps">JDK</span></h2>
+<div class="highlight"><pre><span></span>$ brew cask install java
+</pre></div>
+
+
 <h2>Intellij <span class="caps">IDEA</span></h2>
-<p><span class="caps">IDEA</span>运行需要<span class="caps">JDK</span>，从oracle官网下载、安装Java 1.8 <span class="caps">JDK</span>。</p>
+<p><span class="caps">IDEA</span>运行需要<span class="caps">JDK</span>。</p>
 <p>从<span class="caps">IDEA</span> -&gt; Project Default -&gt; Project Structure -&gt; <span class="caps">SDKS</span>中添加<span class="caps">JDK</span>和Intellij Platform Plugin <span class="caps">SDK</span>。（需要选择<span class="caps">JDK</span>、Intellij的目录）</p>
 <p>安装go-lang-idea-plugin插件，可以从<a href="https://plugins.jetbrains.com/plugin/5047">官网</a>下载安装；也可以通过下面方式编译安装。</p>
 <div class="highlight"><pre><span></span>$ git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git

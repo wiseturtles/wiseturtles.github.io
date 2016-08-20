@@ -244,8 +244,13 @@ $ &lt;span class="nb"&gt;cd&lt;/span&gt; ~/k-vim &lt;span class="o"&gt;&amp;amp;
 &lt;p&gt;注：
 1. k-vim没有适配最新版的vbundle，导致运行安装程序报错，基本就是Bundle修改为Plugin。。。
 2.&amp;nbsp;YouCompleteMe安装总失败，后来手动下载安装&lt;/p&gt;
+&lt;h2&gt;安装Java &lt;span class="caps"&gt;JDK&lt;/span&gt;&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew cask install java
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h2&gt;Intellij &lt;span class="caps"&gt;IDEA&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;运行需要&lt;span class="caps"&gt;JDK&lt;/span&gt;，从oracle官网下载、安装Java 1.8 &lt;span class="caps"&gt;JDK&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;IDEA&lt;/span&gt;运行需要&lt;span class="caps"&gt;JDK&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;从&lt;span class="caps"&gt;IDEA&lt;/span&gt; -&amp;gt; Project Default -&amp;gt; Project Structure -&amp;gt; &lt;span class="caps"&gt;SDKS&lt;/span&gt;中添加&lt;span class="caps"&gt;JDK&lt;/span&gt;和Intellij Platform Plugin &lt;span class="caps"&gt;SDK&lt;/span&gt;。（需要选择&lt;span class="caps"&gt;JDK&lt;/span&gt;、Intellij的目录）&lt;/p&gt;
 &lt;p&gt;安装go-lang-idea-plugin插件，可以从&lt;a href="https://plugins.jetbrains.com/plugin/5047"&gt;官网&lt;/a&gt;下载安装；也可以通过下面方式编译安装。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git clone https://github.com/go-lang-plugin-org/go-lang-idea-plugin.git
