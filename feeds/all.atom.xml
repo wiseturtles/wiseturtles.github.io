@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-08-15T20:40:00+08:00</updated><entry><title>申请招商银行香港一卡通</title><link href="http://blog.wiseturtles.com/posts/%E7%94%B3%E8%AF%B7%E6%8B%9B%E5%95%86%E9%93%B6%E8%A1%8C%E9%A6%99%E6%B8%AF%E4%B8%80%E5%8D%A1%E9%80%9A.html" rel="alternate"></link><published>2016-08-15T20:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-15:posts/申请招商银行香港一卡通.html</id><summary type="html">&lt;p&gt;记录下申请招商银行香港一卡通的需要的资料。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-08-24T18:20:00+08:00</updated><entry><title>git从历史中删除大文件</title><link href="http://blog.wiseturtles.com/posts/git-remove-large-files-in-history.html" rel="alternate"></link><published>2016-08-24T18:20:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-24:posts/git-remove-large-files-in-history.html</id><summary type="html">&lt;p&gt;如果有人在git库中提交了超大文件导致所有人下载代码都比较耗时怎么办？&lt;/p&gt;
+&lt;h2&gt;删除git库中的大文件&lt;/h2&gt;
+&lt;p&gt;我们知道git会保留历史记录，即使删除这些大文件并提交也无法减少git库的体积。&lt;/p&gt;
+&lt;p&gt;可以用 &lt;code&gt;git filter-branch&lt;/code&gt; 解决，比如：删除误提交的 &lt;code&gt;src/node_modules&lt;/code&gt; 目录。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git filter-branch --tree-filter &lt;span class="s1"&gt;&amp;#39;rm -rf src/node_modules&amp;#39;&lt;/span&gt; --prune-empty
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;找出git库中体积最大的文件&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ git rev-list master &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="nb"&gt;read&lt;/span&gt; rev&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; git ls-tree -lr &lt;span class="nv"&gt;$rev&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; cut -c54- &lt;span class="p"&gt;|&lt;/span&gt; grep -v &lt;span class="s1"&gt;&amp;#39;^ &amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;done&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sort -u &lt;span class="p"&gt;|&lt;/span&gt; perl -e &lt;span class="s1"&gt;&amp;#39;&lt;/span&gt;
+&lt;span class="s1"&gt;    while (&amp;lt;&amp;gt;) {&lt;/span&gt;
+&lt;span class="s1"&gt;        chomp;&lt;/span&gt;
+&lt;span class="s1"&gt;        @stuff=split(&amp;quot;\t&amp;quot;);&lt;/span&gt;
+&lt;span class="s1"&gt;        $sums{$stuff[1]} += $stuff[0];&lt;/span&gt;
+&lt;span class="s1"&gt;    }&lt;/span&gt;
+&lt;span class="s1"&gt;    print &amp;quot;$sums{$_} $_\n&amp;quot; for (keys %sums);&lt;/span&gt;
+&lt;span class="s1"&gt;    &amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sort -rn
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：
+1. 这段代码来自 - http://blog.jessitron.com/2013/08/finding-and-removing-large-files-in-git.html
+2. 还有个类似的工具有兴趣可以尝试 - &lt;a href="https://rtyley.github.io/bfg-repo-cleaner/"&gt;&lt;span class="caps"&gt;BFG&lt;/span&gt;&amp;nbsp;Repo-Cleaner&lt;/a&gt;&lt;/p&gt;</summary><category term="Git"></category></entry><entry><title>申请招商银行香港一卡通</title><link href="http://blog.wiseturtles.com/posts/%E7%94%B3%E8%AF%B7%E6%8B%9B%E5%95%86%E9%93%B6%E8%A1%8C%E9%A6%99%E6%B8%AF%E4%B8%80%E5%8D%A1%E9%80%9A.html" rel="alternate"></link><published>2016-08-15T20:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-15:posts/申请招商银行香港一卡通.html</id><summary type="html">&lt;p&gt;记录下申请招商银行香港一卡通的需要的资料。&lt;/p&gt;
 &lt;h2&gt;招商银行香港一卡通&lt;/h2&gt;
 &lt;p&gt;业务介绍：&lt;a href="http://hk.cmbchina.com/Personal/Detail.aspx?guid=742e5736-c24f-4a56-9b45-1763f488a9c1"&gt;http://hk.cmbchina.com/Personal/Detail.aspx?guid=742e5736-c24f-4a56-9b45-1763f488a9c1&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;开户资料&lt;/h3&gt;
