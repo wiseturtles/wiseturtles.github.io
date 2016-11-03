@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-17T20:00:00+08:00</updated><entry><title>Ubuntu+Vim配置汇编程序开发环境</title><link href="http://blog.wiseturtles.com/posts/setup-asm-development-environment.html" rel="alternate"></link><published>2016-06-17T20:00:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/setup-asm-development-environment.html</id><summary type="html">&lt;p&gt;本文专门介绍Ubuntu系统上基于Vim配置汇编程序开发环境。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/asm.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-06-17T20:00:00+08:00</updated><entry><title>Ubuntu+Vim配置汇编程序开发环境</title><link href="http://blog.wiseturtles.com/posts/setup-asm-development-environment.html" rel="alternate"></link><published>2016-06-17T20:00:00+08:00</published><updated>2016-06-17T20:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/setup-asm-development-environment.html</id><summary type="html">&lt;p&gt;本文专门介绍Ubuntu系统上基于Vim配置汇编程序开发环境。&lt;/p&gt;
 &lt;h2&gt;Ubuntu系统配置&lt;/h2&gt;
 &lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb等软件。&lt;/p&gt;
 &lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;
@@ -94,7 +94,7 @@ alias gcc=&amp;#39;gcc -m32&amp;#39;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;注：需要安装&lt;code&gt;libc6-dev-i386&lt;/code&gt;，否则会报错。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category><category term="Vim"></category></entry><entry><title>编译、链接、运行汇编程序</title><link href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html" rel="alternate"></link><published>2016-06-17T00:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/Compile-Link-and-Run-ASM-Program.html</id><summary type="html">&lt;p&gt;学习汇编过程中每次输入as,&amp;nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。&lt;/p&gt;
+&lt;p&gt;注：需要安装&lt;code&gt;libc6-dev-i386&lt;/code&gt;，否则会报错。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category><category term="Vim"></category></entry><entry><title>编译、链接、运行汇编程序</title><link href="http://blog.wiseturtles.com/posts/Compile-Link-and-Run-ASM-Program.html" rel="alternate"></link><published>2016-06-17T00:09:00+08:00</published><updated>2016-06-17T00:09:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-17:posts/Compile-Link-and-Run-ASM-Program.html</id><summary type="html">&lt;p&gt;学习汇编过程中每次输入as,&amp;nbsp;ld的一堆命令行参数编译、链接程序实在很麻烦。&lt;/p&gt;
 &lt;p&gt;所以，写个小脚本完成汇编程序的编译、链接及运行。&lt;/p&gt;
 &lt;h2&gt;脚本介绍&lt;/h2&gt;
 &lt;p&gt;脚本内容如下：&lt;/p&gt;
@@ -215,7 +215,7 @@ Hello World
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;终于不用一遍一遍的输入指令编译、链接、运行汇编程序了。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>在64位机器上编写、运行32位汇编代码</title><link href="http://blog.wiseturtles.com/posts/Write-32bit-asm-program-and-run-on-64bit-machine.html" rel="alternate"></link><published>2016-06-16T12:37:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-16:posts/Write-32bit-asm-program-and-run-on-64bit-machine.html</id><summary type="html">&lt;p&gt;我按照 &lt;code&gt;&amp;lt;&amp;lt;professional assembly language&amp;gt;&amp;gt;&lt;/code&gt;（中文名为：编译语言程序设计) 学习汇编，但使用pushl在我的Ubuntu 64bit上报错&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt;。
+&lt;p&gt;终于不用一遍一遍的输入指令编译、链接、运行汇编程序了。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>在64位机器上编写、运行32位汇编代码</title><link href="http://blog.wiseturtles.com/posts/Write-32bit-asm-program-and-run-on-64bit-machine.html" rel="alternate"></link><published>2016-06-16T12:37:00+08:00</published><updated>2016-06-16T12:37:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-16:posts/Write-32bit-asm-program-and-run-on-64bit-machine.html</id><summary type="html">&lt;p&gt;我按照 &lt;code&gt;&amp;lt;&amp;lt;professional assembly language&amp;gt;&amp;gt;&lt;/code&gt;（中文名为：编译语言程序设计) 学习汇编，但使用pushl在我的Ubuntu 64bit上报错&lt;code&gt;Error: invalid instruction suffix for 'push'&lt;/code&gt;。
 Google一圈发现需要在代码头部加上&lt;code&gt;.code32&lt;/code&gt;，并且ld时需要额外指定些参数。&lt;/p&gt;
 &lt;h2&gt;安装libc6-i386&lt;/h2&gt;
 &lt;p&gt;ld链接时会用到libc-i386，所以，先安装并做个软链接。&lt;/p&gt;
@@ -270,7 +270,7 @@ Hello World
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这样就方便多了，当然也可以根据个人喜好把其它参数一起加入alias中。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>Write Your First ASM Program</title><link href="http://blog.wiseturtles.com/posts/Write-Your-First-ASM-Program.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/Write-Your-First-ASM-Program.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
+&lt;p&gt;这样就方便多了，当然也可以根据个人喜好把其它参数一起加入alias中。&lt;/p&gt;</summary><category term="asm"></category><category term="Linux"></category></entry><entry><title>Write Your First ASM Program</title><link href="http://blog.wiseturtles.com/posts/Write-Your-First-ASM-Program.html" rel="alternate"></link><published>2016-06-15T22:09:00+08:00</published><updated>2016-06-15T22:09:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-06-15:posts/Write-Your-First-ASM-Program.html</id><summary type="html">&lt;p&gt;用汇编写个Hello&amp;nbsp;World，同时看看如何一步一步将c程序编译成可执行文件。&lt;/p&gt;
 &lt;h2&gt;开发环境准备&lt;/h2&gt;
 &lt;p&gt;所有开发都在Ubuntu上完成，需要用的软件包：binutils, gcc,&amp;nbsp;gdb。&lt;/p&gt;
 &lt;p&gt;Ubuntu上安装软件很方便，指令如下：&lt;/p&gt;

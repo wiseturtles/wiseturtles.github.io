@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Authors</title>
+    <title>Wise Turtles - 国内程序员常用镜像
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,11 @@
     <!-- use gmirror fonts instead of google online fonts-->
     <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="developer" />
+      <meta name="tags" contents="mirrors" />
 
 </head>
 
@@ -52,13 +58,87 @@
     <div class="row">
 
         <div class="span9">
-    <h1>Authors on Wise Turtles</h1>
+    <div class='article'>
+        <div class="content-title">
+            <h1>国内程序员常用镜像</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/developer.html">developer</a> <a href="http://blog.wiseturtles.com/tag/mirrors.html">mirrors</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2016-11-03
 
-    <ul>        <li><a href="http://blog.wiseturtles.com/author/craygit.html">craygit</a> (2)</li>
-        <li><a href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a> (31)</li>
-        <li><a href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a> (29)</li>
-        <li><a href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a> (7)</li>
-    </ul>
+        </div>
+
+        <div><p>作为伟大国家中的一名码农，大家都经常会碰到莫名其妙的无法访问。所以，整理下我用的镜像。。</p>
+<h2>mirrors</h2>
+<h3>常使用的国内源</h3>
+<ul>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/">tuna</a></li>
+<li><a href="http://mirrors.aliyun.com/">aliyun</a></li>
+<li><a href="http://mirrors.163.com/">163</a></li>
+<li><a href="https://mirrors.ustc.edu.cn/">ustc</a></li>
+</ul>
+<p>注：主流Linux的包都有同步。</p>
+<h3>Python&nbsp;pypi</h3>
+<ul>
+<li>Tuna: <code>https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
+<li>douban: <code>http://pypi.doubanio.com/simple/</code></li>
+<li>ustc: <code>https://mirrors.ustc.edu.cn/pypi/web/simple/</code></li>
+</ul>
+<p>选一个访问最快的源，写到配置文件中：</p>
+<div class="highlight"><pre><span></span>$ cat ~/.pip/pip.conf
+<span class="o">[</span>global<span class="o">]</span>
+index-url <span class="o">=</span> https://pypi.tuna.tsinghua.edu.cn/simple
+</pre></div>
+
+
+<h3>Java&nbsp;Maven</h3>
+<p>将如下源写到maven的conf/settings.xml文件中的mirrors节点中。</p>
+<p>aliyun:</p>
+<div class="highlight"><pre><span></span> <span class="nt">&lt;mirror&gt;</span>
+    <span class="nt">&lt;id&gt;</span>alimaven<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;name&gt;</span>aliyun maven<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;url&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;mirrorOf&gt;</span>central<span class="nt">&lt;/mirrorOf&gt;</span>
+<span class="nt">&lt;/mirror&gt;</span>
+</pre></div>
+
+
+<h3>Ruby&nbsp;gem</h3>
+<p>ruby-china:</p>
+<div class="highlight"><pre><span></span>$ gem sources -l <span class="c1"># 查看当前使用的源</span>
+$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ <span class="c1"># 删除当前使用的源，并添加ruby-china的源；假设你当前使用的是rubygems.org</span>
+</pre></div>
+
+
+<p>详情请移步<a href="https://gems.ruby-china.org/">ruby-china&nbsp;gem</a></p>
+<h3>homebrew</h3>
+<p>请参考:</p>
+<ul>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/">tuna&nbsp;homebrew</a></li>
+<li><a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew-bottles/">tuna&nbsp;homebrew-bottles</a></li>
+</ul>
+<h3>iOS&nbsp;CocoaPods</h3>
+<p>请参考<a href="http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/">用CocoaPods做iOS程序的依赖管理</a></p>
+<p>文章中提到的ruby&nbsp;gem源可以用上文中的替换。</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/mirrors-for-china-developer.html';
+        this.page.identifier = 'mirrors-for-china-developer';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
         </div>
 
         <div class="span3">

@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-08-24T18:20:00+08:00</updated><entry><title>git从历史中删除大文件</title><link href="http://blog.wiseturtles.com/posts/git-remove-large-files-in-history.html" rel="alternate"></link><published>2016-08-24T18:20:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-24:posts/git-remove-large-files-in-history.html</id><summary type="html">&lt;p&gt;如果有人在git库中提交了超大文件导致所有人下载代码都比较耗时怎么办？&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/configuration.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-11-03T21:13:00+08:00</updated><entry><title>国内程序员常用镜像</title><link href="http://blog.wiseturtles.com/posts/mirrors-for-china-developer.html" rel="alternate"></link><published>2016-11-03T21:13:00+08:00</published><updated>2016-11-03T21:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-11-03:posts/mirrors-for-china-developer.html</id><summary type="html">&lt;p&gt;作为伟大国家中的一名码农，大家都经常会碰到莫名其妙的无法访问。所以，整理下我用的镜像。。&lt;/p&gt;
+&lt;h2&gt;mirrors&lt;/h2&gt;
+&lt;h3&gt;常使用的国内源&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/"&gt;tuna&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://mirrors.aliyun.com/"&gt;aliyun&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://mirrors.163.com/"&gt;163&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://mirrors.ustc.edu.cn/"&gt;ustc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注：主流Linux的包都有同步。&lt;/p&gt;
+&lt;h3&gt;Python&amp;nbsp;pypi&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Tuna: &lt;code&gt;https://pypi.tuna.tsinghua.edu.cn/simple&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;douban: &lt;code&gt;http://pypi.doubanio.com/simple/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;ustc: &lt;code&gt;https://mirrors.ustc.edu.cn/pypi/web/simple/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;选一个访问最快的源，写到配置文件中：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.pip/pip.conf
+&lt;span class="o"&gt;[&lt;/span&gt;global&lt;span class="o"&gt;]&lt;/span&gt;
+index-url &lt;span class="o"&gt;=&lt;/span&gt; https://pypi.tuna.tsinghua.edu.cn/simple
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Java&amp;nbsp;Maven&lt;/h3&gt;
+&lt;p&gt;将如下源写到maven的conf/settings.xml文件中的mirrors节点中。&lt;/p&gt;
+&lt;p&gt;aliyun:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; &lt;span class="nt"&gt;&amp;lt;mirror&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;id&amp;gt;&lt;/span&gt;alimaven&lt;span class="nt"&gt;&amp;lt;/id&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;aliyun maven&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;url&amp;gt;&lt;/span&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;span class="nt"&gt;&amp;lt;/url&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;mirrorOf&amp;gt;&lt;/span&gt;central&lt;span class="nt"&gt;&amp;lt;/mirrorOf&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/mirror&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Ruby&amp;nbsp;gem&lt;/h3&gt;
+&lt;p&gt;ruby-china:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gem sources -l &lt;span class="c1"&gt;# 查看当前使用的源&lt;/span&gt;
+$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ &lt;span class="c1"&gt;# 删除当前使用的源，并添加ruby-china的源；假设你当前使用的是rubygems.org&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;详情请移步&lt;a href="https://gems.ruby-china.org/"&gt;ruby-china&amp;nbsp;gem&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;homebrew&lt;/h3&gt;
+&lt;p&gt;请参考:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/"&gt;tuna&amp;nbsp;homebrew&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew-bottles/"&gt;tuna&amp;nbsp;homebrew-bottles&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;iOS&amp;nbsp;CocoaPods&lt;/h3&gt;
+&lt;p&gt;请参考&lt;a href="http://blog.devtang.com/2014/05/25/use-cocoapod-to-manage-ios-lib-dependency/"&gt;用CocoaPods做iOS程序的依赖管理&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;文章中提到的ruby&amp;nbsp;gem源可以用上文中的替换。&lt;/p&gt;</summary><category term="developer"></category><category term="mirrors"></category></entry><entry><title>git从历史中删除大文件</title><link href="http://blog.wiseturtles.com/posts/git-remove-large-files-in-history.html" rel="alternate"></link><published>2016-08-24T18:20:00+08:00</published><updated>2016-08-24T18:20:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-24:posts/git-remove-large-files-in-history.html</id><summary type="html">&lt;p&gt;如果有人在git库中提交了超大文件导致所有人下载代码都比较耗时怎么办？&lt;/p&gt;
 &lt;h2&gt;删除git库中的大文件&lt;/h2&gt;
 &lt;p&gt;我们知道git会保留历史记录，即使删除这些大文件并提交也无法减少git库的体积。&lt;/p&gt;
 &lt;p&gt;可以用 &lt;code&gt;git filter-branch&lt;/code&gt; 解决，比如：删除误提交的 &lt;code&gt;src/node_modules&lt;/code&gt; 目录。&lt;/p&gt;
@@ -21,7 +72,7 @@
 
 &lt;p&gt;注：
 1. 这段代码来自 - http://blog.jessitron.com/2013/08/finding-and-removing-large-files-in-git.html
-2. 还有个类似的工具有兴趣可以尝试 - &lt;a href="https://rtyley.github.io/bfg-repo-cleaner/"&gt;&lt;span class="caps"&gt;BFG&lt;/span&gt;&amp;nbsp;Repo-Cleaner&lt;/a&gt;&lt;/p&gt;</summary><category term="Git"></category></entry><entry><title>SaltStack介绍</title><link href="http://blog.wiseturtles.com/posts/get-started-saltstack.html" rel="alternate"></link><published>2016-08-10T20:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-10:posts/get-started-saltstack.html</id><summary type="html">&lt;p&gt;本文只介绍了SaltStack在CentOS上的安装，其它其它有类似的包管理工具可以安装.&lt;/p&gt;
+2. 还有个类似的工具有兴趣可以尝试 - &lt;a href="https://rtyley.github.io/bfg-repo-cleaner/"&gt;&lt;span class="caps"&gt;BFG&lt;/span&gt;&amp;nbsp;Repo-Cleaner&lt;/a&gt;&lt;/p&gt;</summary><category term="Git"></category></entry><entry><title>SaltStack介绍</title><link href="http://blog.wiseturtles.com/posts/get-started-saltstack.html" rel="alternate"></link><published>2016-08-10T20:40:00+08:00</published><updated>2016-08-10T20:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-08-10:posts/get-started-saltstack.html</id><summary type="html">&lt;p&gt;本文只介绍了SaltStack在CentOS上的安装，其它其它有类似的包管理工具可以安装.&lt;/p&gt;
 &lt;h2&gt;CentOS上安装salt-master和salt-minion&lt;/h2&gt;
 &lt;h3&gt;安装salt-master&lt;/h3&gt;
 &lt;p&gt;在centos上安装salt-master:&lt;/p&gt;
@@ -138,7 +189,7 @@ ifconfig | grep &amp;#39;inet &amp;#39; | grep -Ev &amp;#39;127.0.0.1&amp;#39; |
 &lt;p&gt;注: 理论上salt-minion也可以通过这种方式运行以指定用户运行，但我测试会报错 &amp;#8220;Minion did not return. [No&amp;nbsp;response]&amp;#8221;&lt;/p&gt;
 &lt;h3&gt;删除无法连接的salt&amp;nbsp;minion&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[root@master ~]$ salt-run manage.down removekeys=True
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="CentOS"></category><category term="SaltStack"></category></entry><entry><title>Too many files open</title><link href="http://blog.wiseturtles.com/posts/Too-many-files-open.html" rel="alternate"></link><published>2016-07-27T18:06:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-07-27:posts/Too-many-files-open.html</id><summary type="html">&lt;h2&gt;Linux&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="CentOS"></category><category term="SaltStack"></category></entry><entry><title>Too many files open</title><link href="http://blog.wiseturtles.com/posts/Too-many-files-open.html" rel="alternate"></link><published>2016-07-27T18:06:00+08:00</published><updated>2016-07-27T18:06:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-07-27:posts/Too-many-files-open.html</id><summary type="html">&lt;h2&gt;Linux&lt;/h2&gt;
 &lt;p&gt;将下面的行加入 &lt;code&gt;/etc/security/limits.conf&lt;/code&gt;&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;*               soft    nofile             8192
 *               hard    nofile             8192
@@ -184,7 +235,7 @@ $ sudo launchctl limit
 
 &lt;span class="c1"&gt;# 注：&lt;/span&gt;
 $ sudo launchctl limit maxfiles unlimited  &lt;span class="c1"&gt;# 也可以直接设置为unlimited&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="Linux"></category></entry><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="Linux"></category></entry><entry><title>Ubuntu/Debian自动安装安全更新</title><link href="http://blog.wiseturtles.com/posts/ubuntu-debian-automatic-security-updates.html" rel="alternate"></link><published>2016-05-06T12:38:00+08:00</published><updated>2016-05-06T12:38:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-05-06:posts/ubuntu-debian-automatic-security-updates.html</id><summary type="html">&lt;p&gt;有台Ubuntu机器，仅仅为了科学上网，但，这年头漏洞这么多，万一哪天成肉鸡了呢。。。&lt;/p&gt;
 &lt;p&gt;本文简单记录下Ubuntu系统配置自己安装系统安全补丁。(Debian系统应该也适用)&lt;/p&gt;
 &lt;h2&gt;安装unattended-upgrades自动更新安全补丁&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install unattended-upgrades
@@ -209,7 +260,7 @@ $ sudo dpkg-reconfigure unattended-upgrades  &lt;span class="c1"&gt;# 选Yes，�
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://help.ubuntu.com/community/AutomaticSecurityUpdates"&gt;https://help.ubuntu.com/community/AutomaticSecurityUpdates&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/"&gt;https://spin.atomicobject.com/2014/08/04/debian-ubuntu-security-updates/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Ubunu"></category><category term="Debian"></category></entry><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><published>2016-04-05T11:39:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Ubunu"></category><category term="Debian"></category></entry><entry><title>MySQL自动备份，并同步到AmazonS3</title><link href="http://blog.wiseturtles.com/posts/MySQL-backup-to-Amazon-S3.html" rel="alternate"></link><published>2016-04-05T11:39:00+08:00</published><updated>2016-04-05T11:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-04-05:posts/MySQL-backup-to-Amazon-S3.html</id><summary type="html">&lt;p&gt;MySQL自动备份，并将本地备份同步到Amazon&amp;nbsp;S3，然后配置邮件通知。&lt;/p&gt;
 &lt;p&gt;注: 系统为Ubuntu&amp;nbsp;14.04，Debian系统也类似。&lt;/p&gt;
 &lt;h2&gt;安装automysqlbackup&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install automysqlbackup
@@ -251,7 +302,7 @@ sudo /usr/local/bin/s3cmd -c /home/user/.s3cfg -r sync local-automysqlbackup-pat
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><published>2016-03-11T18:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
+&lt;p&gt;注: 备份前配置s3cmd，确保它有权限操作你的S3&amp;nbsp;bucket&lt;/p&gt;</summary><category term="mysql"></category><category term="backup"></category><category term="S3"></category></entry><entry><title>Gerrit备份</title><link href="http://blog.wiseturtles.com/posts/Gerrit-backup.html" rel="alternate"></link><published>2016-03-11T18:52:00+08:00</published><updated>2016-03-11T18:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-03-11:posts/Gerrit-backup.html</id><summary type="html">&lt;p&gt;将Gerrit实时同步到其它系统完成Gerrit git repos备份。通常用这种方式完成Gerrit&amp;nbsp;Mirror。&lt;/p&gt;
 &lt;h2&gt;通过Gerrit replication&amp;nbsp;plugin完成Gerrit同步&lt;/h2&gt;
 &lt;h3&gt;安装buck&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;ubuntu@gerrit$ sudo apt-get install ant
@@ -316,7 +367,7 @@ ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbac
 &lt;h2&gt;参考文档:&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="https://gerrit.googlesource.com/gerrit/+/v2.0.2/Documentation/config-replication.txt"&gt;config-replication.txt&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><published>2015-10-31T20:46:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
+&lt;/ul&gt;</summary><category term="Gerrit"></category><category term="replication"></category><category term="MySQL"></category></entry><entry><title>Python Gevent安装报错</title><link href="http://blog.wiseturtles.com/posts/gevent-install-error.html" rel="alternate"></link><published>2015-10-31T20:46:00+08:00</published><updated>2015-10-31T20:46:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-31:posts/gevent-install-error.html</id><summary type="html">&lt;p&gt;Mac上pip安装gevent报错信息如下：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;libev/ev.c:1029:42: error: &amp;#39;_Noreturn&amp;#39; keyword must precede function declarator
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -326,7 +377,7 @@ ubuntu@gerrit$ sudo automysqlbackup  &lt;span class="c1"&gt;# 运行automysqlbac
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><published>2015-10-27T19:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
+&lt;p&gt;这里有讨论：https://github.com/NixOS/nixpkgs/issues/8569&lt;/p&gt;</summary><category term="python"></category><category term="pip"></category><category term="gevent"></category></entry><entry><title>Android命令行工具</title><link href="http://blog.wiseturtles.com/posts/Android-command-line-tools.html" rel="alternate"></link><published>2015-10-27T19:52:00+08:00</published><updated>2015-10-27T19:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-27:posts/Android-command-line-tools.html</id><summary type="html">&lt;h2&gt;Android命令行工具&lt;/h2&gt;
 &lt;h3&gt;android&lt;/h3&gt;
 &lt;p&gt;下面介绍命令行下使用android脚本。&lt;/p&gt;
 &lt;p&gt;场景：命令行下安装android build tools、sdk、&lt;span class="caps"&gt;API&lt;/span&gt;。&lt;/p&gt;
@@ -338,7 +389,7 @@ $ android list sdk -a -u --proxy-host proxy-host --proxy-port proxy-port  &lt;sp
 
 &lt;p&gt;安装指定的包：(num1,&amp;nbsp;num2是上面命令返回的序号)&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ android update sdk -u -a -t &amp;lt;num1,num2&amp;gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><published>2015-10-15T21:52:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Android"></category></entry><entry><title>Python Pypi源</title><link href="http://blog.wiseturtles.com/posts/config-python-pip.html" rel="alternate"></link><published>2015-10-15T21:52:00+08:00</published><updated>2015-10-15T21:52:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-15:posts/config-python-pip.html</id><summary type="html">&lt;h2&gt;pip安装&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget https://bootstrap.pypa.io/get-pip.py
 $ sudo python get-pip.py
 &lt;/pre&gt;&lt;/div&gt;
@@ -371,7 +422,7 @@ index-url =&amp;nbsp;http://mirrors.aliyuncs.com/pypi/simple/&lt;/p&gt;
 &lt;p&gt;不加trusted-host会报下面的警告:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;The repository located at mirrors.aliyun.com is not a trusted or secure host and is being ignored. If this repository is available via &lt;span class="caps"&gt;HTTPS&lt;/span&gt; it is recommended to use &lt;span class="caps"&gt;HTTPS&lt;/span&gt; instead, otherwise you may silence this warning and allow it anyways with &amp;#8216;&amp;#8212;trusted-host&amp;nbsp;mirrors.aliyun.com&amp;#8217;.&lt;/p&gt;
-&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><published>2015-10-10T13:27:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
+&lt;/blockquote&gt;</summary><category term="python"></category><category term="pip"></category><category term="pypi"></category></entry><entry><title>Nginx配置SSL证书</title><link href="http://blog.wiseturtles.com/posts/nginx-config-ssl-certificate.html" rel="alternate"></link><published>2015-10-10T13:27:00+08:00</published><updated>2015-10-10T13:27:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-10-10:posts/nginx-config-ssl-certificate.html</id><summary type="html">&lt;p&gt;本文参考:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.cocoachina.com/ios/20150703/12392.html"&gt;http://www.cocoachina.com/ios/20150703/12392.html&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/"&gt;https://hack0nair.me/2014-08-14-nginx-with-ssl-of-wosign/&lt;/a&gt;&lt;/li&gt;
@@ -464,7 +515,7 @@ $ openssl dhparam -out dhparam.pem 4096
 &lt;p&gt;测试&lt;span class="caps"&gt;HTTPS&lt;/span&gt;配置的是否安全：&lt;a href="https://www.ssllabs.com/ssltest/"&gt;https://www.ssllabs.com/ssltest/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;注：如果安全评分比较低，请认真阅读&lt;a href="http://note.sdo.com/u/634668972018478681/n/Z1NG3C6A959F29DD2FA2D543B8C9B30B551810C3"&gt;Strong &lt;span class="caps"&gt;SSL&lt;/span&gt; Security on&amp;nbsp;nginx&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;测试&lt;span class="caps"&gt;SPDY&lt;/span&gt;&lt;/h2&gt;
-&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><published>2015-09-23T16:40:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
+&lt;p&gt;检测配置的&lt;span class="caps"&gt;SPDY&lt;/span&gt;：&lt;a href="https://spdycheck.org/"&gt;https://spdycheck.org/&lt;/a&gt;&lt;/p&gt;</summary><category term="nginx"></category><category term="ssl"></category><category term="https"></category></entry><entry><title>iptables配置</title><link href="http://blog.wiseturtles.com/posts/iptables-on-debian-centos.html" rel="alternate"></link><published>2015-09-23T16:40:00+08:00</published><updated>2015-09-23T16:40:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-23:posts/iptables-on-debian-centos.html</id><summary type="html">&lt;p&gt;最近使用阿里云&lt;span class="caps"&gt;ECS&lt;/span&gt;，发现既然没有提供安全组，能让小白用户方便的配置下允许外网访问的端口。&amp;nbsp;默认所有绑定到外网ip或四个零的端口，外网都可以访问，然后，看看iptables文档，自己来配下咯。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;安装iptables&lt;/h2&gt;
 &lt;h3&gt;Debian&lt;/h3&gt;
@@ -566,7 +617,7 @@ iptables: Saving firewall rules to /etc/sysconfig/iptables:&lt;span class="o"&gt
 
 &lt;p&gt;重启自动运行iptables:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo chkconfig iptables on
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><published>2015-09-22T15:55:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="iptables"></category></entry><entry><title>Debian 8.2上安装Sentry</title><link href="http://blog.wiseturtles.com/posts/setup-sentry-on-debian-8.2.html" rel="alternate"></link><published>2015-09-22T15:55:00+08:00</published><updated>2015-09-22T15:55:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-22:posts/setup-sentry-on-debian-8.2.html</id><summary type="html">&lt;p&gt;Sentry是一个很好用的错误、异常收集平台，支持Python, Node.js, &lt;span class="caps"&gt;PHP&lt;/span&gt;, Ruby, Java,&amp;nbsp;Go以及Android、iOS。&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://sentry.readthedocs.org/en/stable/index.html#"&gt;官方安装文档&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
@@ -727,7 +778,7 @@ $ sudo supervisorctl  &lt;span class="c1"&gt;# 查看sentry, sentry_worker运行
 &lt;p&gt;重启nginx，并通过http://your-ip&amp;nbsp;访问。&lt;/p&gt;
 &lt;h2&gt;测试&lt;/h2&gt;
 &lt;p&gt;开始我们就提到过sentry支持目前所有主流语言，
-参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><published>2015-09-18T13:13:00+08:00</published><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
+参考&lt;a href="https://docs.getsentry.com/hosted/clients/python/"&gt;这里&lt;/a&gt;&amp;nbsp;可以检查是否能将错误、异常发生到自己搭建的sentry。&lt;/p&gt;</summary><category term="sentry"></category></entry><entry><title>Gitlab安装</title><link href="http://blog.wiseturtles.com/posts/gitlab-setup-on-centos6.html" rel="alternate"></link><published>2015-09-18T13:13:00+08:00</published><updated>2015-09-18T13:13:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/gitlab-setup-on-centos6.html</id><summary type="html">&lt;p&gt;公司没有统一的代码管理平台，虽然曾经用过stash、jira、confluence，但调研后还是觉得用gitlab。&amp;nbsp;下面介绍下gitlab安装、配置。&lt;/p&gt;
 &lt;h2&gt;系统环境&lt;/h2&gt;
 &lt;p&gt;查看系统版本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat /etc/issue
