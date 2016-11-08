@@ -44,24 +44,28 @@ index-url &lt;span class="o"&gt;=&lt;/span&gt; https://pypi.tuna.tsinghua.edu.cn
 
 &lt;h3&gt;Java&amp;nbsp;Gradle&lt;/h3&gt;
 &lt;p&gt;创建 或 修改&lt;code&gt;~/.gradle/init.gradle&lt;/code&gt; 文件，使用oschina 或者 aliyun&amp;nbsp;的源。&lt;/p&gt;
-&lt;p&gt;$ cat ~/.gradle/init.gradle
-  allprojects{
-      repositories {
-          // def REPOSITORY_URL = &amp;#8216;http://maven.oschina.net/content/groups/public&amp;#8217;
-          def REPOSITORY_URL = &amp;#8216;http://maven.aliyun.com/nexus/content/groups/public/&amp;#8217;
-          all { ArtifactRepository repo -&amp;gt;
-              if(repo instanceof MavenArtifactRepository){
-                  def url = repo.url.toString()
-                  if (url.startsWith(&amp;#8216;https://repo1.maven.org/maven2&amp;#8217;) || url.startsWith(&amp;#8216;https://jcenter.bintray.com/&amp;#8217;)) {
-                      project.logger.lifecycle &amp;#8220;Repository ${repo.url} replaced by $REPOSITORY_URL.&amp;#8221;
-                      remove repo
-                  }
-              }
-          }
-          maven {
-              url REPOSITORY_URL
-          }
-      }&amp;nbsp;}&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.gradle/init.gradle
+allprojects&lt;span class="o"&gt;{&lt;/span&gt;
+  repositories &lt;span class="o"&gt;{&lt;/span&gt;
+      // def &lt;span class="nv"&gt;REPOSITORY_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://maven.oschina.net/content/groups/public&amp;#39;&lt;/span&gt;
+      def &lt;span class="nv"&gt;REPOSITORY_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;http://maven.aliyun.com/nexus/content/groups/public/&amp;#39;&lt;/span&gt;
+      all &lt;span class="o"&gt;{&lt;/span&gt; ArtifactRepository repo -&amp;gt;
+          &lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;repo instanceof MavenArtifactRepository&lt;span class="o"&gt;){&lt;/span&gt;
+              def &lt;span class="nv"&gt;url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; repo.url.toString&lt;span class="o"&gt;()&lt;/span&gt;
+              &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;url.startsWith&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://repo1.maven.org/maven2&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; url.startsWith&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;https://jcenter.bintray.com/&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;))&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+                  project.logger.lifecycle &lt;span class="s2"&gt;&amp;quot;Repository &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;repo&lt;/span&gt;&lt;span class="p"&gt;.url&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt; replaced by &lt;/span&gt;&lt;span class="nv"&gt;$REPOSITORY_URL&lt;/span&gt;&lt;span class="s2"&gt;.&amp;quot;&lt;/span&gt;
+                  remove repo
+              &lt;span class="o"&gt;}&lt;/span&gt;
+          &lt;span class="o"&gt;}&lt;/span&gt;
+      &lt;span class="o"&gt;}&lt;/span&gt;
+      maven &lt;span class="o"&gt;{&lt;/span&gt;
+          url REPOSITORY_URL
+      &lt;span class="o"&gt;}&lt;/span&gt;
+  &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h3&gt;Ruby&amp;nbsp;gem&lt;/h3&gt;
 &lt;p&gt;ruby-china:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gem sources -l &lt;span class="c1"&gt;# 查看当前使用的源&lt;/span&gt;
