@@ -22,6 +22,14 @@ index-url &lt;span class="o"&gt;=&lt;/span&gt; https://pypi.tuna.tsinghua.edu.cn
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h3&gt;&lt;span class="caps"&gt;NPM&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;使用 taobao 或者 tuna 的&lt;span class="caps"&gt;NPM&lt;/span&gt;源。&lt;/p&gt;
+&lt;p&gt;# tuna 或者 taobao设置其一即可
+  $ npm set registry https://registry.npm.taobao.org   # 淘宝
+  $ npm set registry https://npm.tuna.tsinghua.edu.cn/ #&amp;nbsp;tuna&lt;/p&gt;
+&lt;p&gt;# 查看源设置
+  $ npm get registry
+  $ cat&amp;nbsp;~/.npmrc&lt;/p&gt;
 &lt;h3&gt;Java&amp;nbsp;Maven&lt;/h3&gt;
 &lt;p&gt;将如下源写到maven的conf/settings.xml文件中的mirrors节点中。&lt;/p&gt;
 &lt;p&gt;aliyun:&lt;/p&gt;
@@ -34,6 +42,26 @@ index-url &lt;span class="o"&gt;=&lt;/span&gt; https://pypi.tuna.tsinghua.edu.cn
 &lt;/pre&gt;&lt;/div&gt;
 
 
+&lt;h3&gt;Java&amp;nbsp;Gradle&lt;/h3&gt;
+&lt;p&gt;创建 或 修改&lt;code&gt;~/.gradle/init.gradle&lt;/code&gt; 文件，使用oschina 或者 aliyun&amp;nbsp;的源。&lt;/p&gt;
+&lt;p&gt;$ cat ~/.gradle/init.gradle
+  allprojects{
+      repositories {
+          // def REPOSITORY_URL = &amp;#8216;http://maven.oschina.net/content/groups/public&amp;#8217;
+          def REPOSITORY_URL = &amp;#8216;http://maven.aliyun.com/nexus/content/groups/public/&amp;#8217;
+          all { ArtifactRepository repo -&amp;gt;
+              if(repo instanceof MavenArtifactRepository){
+                  def url = repo.url.toString()
+                  if (url.startsWith(&amp;#8216;https://repo1.maven.org/maven2&amp;#8217;) || url.startsWith(&amp;#8216;https://jcenter.bintray.com/&amp;#8217;)) {
+                      project.logger.lifecycle &amp;#8220;Repository ${repo.url} replaced by $REPOSITORY_URL.&amp;#8221;
+                      remove repo
+                  }
+              }
+          }
+          maven {
+              url REPOSITORY_URL
+          }
+      }&amp;nbsp;}&lt;/p&gt;
 &lt;h3&gt;Ruby&amp;nbsp;gem&lt;/h3&gt;
 &lt;p&gt;ruby-china:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ gem sources -l &lt;span class="c1"&gt;# 查看当前使用的源&lt;/span&gt;
