@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/node.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T13:49:00+08:00</updated><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><published>2015-09-18T13:49:00+08:00</published><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/Getstarted-Node.js.html</id><summary type="html">&lt;p&gt;大家都知道Node.js是基于JavaScript的，使JavaScript可以用于后台开发。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - node</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/node.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T13:49:00+08:00</updated><entry><title>Node.js入门</title><link href="http://blog.wiseturtles.com/posts/Getstarted-Node.js.html" rel="alternate"></link><published>2015-09-18T13:49:00+08:00</published><updated>2015-09-18T13:49:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-18:/posts/Getstarted-Node.js.html</id><summary type="html">&lt;p&gt;Node.js入门&lt;/p&gt;</summary><content type="html">&lt;p&gt;大家都知道Node.js是基于JavaScript的，使JavaScript可以用于后台开发。&lt;/p&gt;
 &lt;h2&gt;为啥学JavaScript&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;公司项目需要&lt;/li&gt;
@@ -49,4 +49,4 @@ $ npm uninstall
 &lt;li&gt;&lt;a href="https://github.com/alsotang/node-lessons"&gt;Node.js包教不包会&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://javascript.ruanyifeng.com/#nodejs"&gt;JavaScript标准参考教程&lt;/a&gt;有些章节专门介绍Node.js。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;还在看上面文章学习的阶段&amp;nbsp;:D&lt;/p&gt;</summary><category term="node.js"></category></entry></feed>
+&lt;p&gt;还在看上面文章学习的阶段&amp;nbsp;:D&lt;/p&gt;</content><category term="node.js"></category></entry></feed>

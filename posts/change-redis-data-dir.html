@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - vim</title>
+    <title>Wise Turtles - Ubuntu 16.04上修改redis data&nbsp;dir
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,11 @@
     <!-- use gmirror fonts instead of google online fonts-->
     <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="Zhang Wanming" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="redis" />
+      <meta name="tags" contents="ubuntu" />
 
 </head>
 
@@ -51,17 +57,48 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/build-vim-7.4.html"><h2>从源码编译安装vim&nbsp;7.4</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/vim.html">vim</a> <a href="http://blog.wiseturtles.com/tag/ubuntu.html">ubuntu</a> 
+    <div class='article'>
+        <div class="content-title">
+            <h1>Ubuntu 16.04上修改redis data&nbsp;dir</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/redis.html">redis</a> <a href="http://blog.wiseturtles.com/tag/ubuntu.html">ubuntu</a> 
 By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2015-03-07
+On 2017-01-17
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p>Ubuntu 12.04上源码编译安装vim&nbsp;7.4</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/build-vim-7.4.html">阅读</a></div>
-      </div>
+        </div>
 
-  
+        <div><h2>修改redis 的data&nbsp;dir</h2>
+<p>redis是通过<code>sudo apt-get install redis-server</code>命令安装的。</p>
+<h3>修改&nbsp;/etc/redis/redis.conf</h3>
+<p>dir&nbsp;/data/redisdata</p>
+<p>注：将redis data dir 修改为<code>dir /data/redisdata</code></p>
+<h3>修改&nbsp;/etc/systemd/system/redis.service</h3>
+<p>在该文件中加入一行：<code>ReadWriteDirectories=-/data/redisdata</code></p>
+<h3>测试是否可以正常保存</h3>
+<p>$ redis-cli
+  127.0.0.1:6379&gt;&nbsp;save</p>
+<h2>报错</h2>
+<p>之前只修改了 <code>/etc/redis/redis.conf</code> 下的配置，而没有修改 <code>/etc/systemd/system/redis.service</code> ，所以一直报如下错误：</p>
+<p>9827:M 17 Jan 15:08:22.596 # Failed opening .rdb for saving: Read-only file&nbsp;system</p></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/change-redis-data-dir.html';
+        this.page.identifier = 'change-redis-data-dir';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
         </div>
 
         <div class="span3">

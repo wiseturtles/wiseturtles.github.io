@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/pelican.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-03T00:04:00+08:00</updated><entry><title>如何发表文章</title><link href="http://blog.wiseturtles.com/posts/about-wiseturtles.html" rel="alternate"></link><published>2014-12-03T00:04:00+08:00</published><updated>2014-12-03T00:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-03:posts/about-wiseturtles.html</id><summary type="html">&lt;h2&gt;为什么要有这个博客&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - pelican</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/pelican.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-03T00:04:00+08:00</updated><entry><title>如何发表文章</title><link href="http://blog.wiseturtles.com/posts/about-wiseturtles.html" rel="alternate"></link><published>2014-12-03T00:04:00+08:00</published><updated>2014-12-03T00:04:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-03:/posts/about-wiseturtles.html</id><summary type="html">&lt;p&gt;如何在本博客发表文章&lt;/p&gt;</summary><content type="html">&lt;h2&gt;为什么要有这个博客&lt;/h2&gt;
 &lt;p&gt;方便知识的整理，分享和交流。更主要的是慢慢感觉年纪越来越大(黑线！！！)，记性越来越差，需要一个可以记录东西的地方.&lt;/p&gt;
 &lt;p&gt;古话说得好&lt;/p&gt;
 &lt;blockquote&gt;
@@ -155,7 +155,7 @@ A block of text.
 &lt;h2&gt;图片和附件管理&lt;/h2&gt;
 &lt;p&gt;一般不建议将文章中要使用到的图片或附件提交到blog库中，避免引起blog库迅速增大， blog库建议只保存纯文本的东西。可以将要使用的图片或附件上传到支持外链的第三方存储，然后在文正里直接引用图片或附件的&lt;span class="caps"&gt;URL&lt;/span&gt;。或者单独建立一个git库来保存图片和附件。&lt;/p&gt;
 &lt;h2&gt;最后&lt;/h2&gt;
-&lt;p&gt;这里只是介绍了大体上的一些用法，更多请参阅: &lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;http://docs.getpelican.com/en/3.5.0/content.html&lt;/a&gt;&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>pelican + github 搭建个人Blog</title><link href="http://blog.wiseturtles.com/posts/setup-pelican.html" rel="alternate"></link><published>2014-11-30T22:42:00+08:00</published><updated>2014-11-30T22:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-11-30:posts/setup-pelican.html</id><summary type="html">&lt;h2&gt;为什么选择Pelican&lt;/h2&gt;
+&lt;p&gt;这里只是介绍了大体上的一些用法，更多请参阅: &lt;a href="http://docs.getpelican.com/en/3.5.0/content.html"&gt;http://docs.getpelican.com/en/3.5.0/content.html&lt;/a&gt;&lt;/p&gt;</content><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry><entry><title>pelican + github 搭建个人Blog</title><link href="http://blog.wiseturtles.com/posts/setup-pelican.html" rel="alternate"></link><published>2014-11-30T22:42:00+08:00</published><updated>2014-11-30T22:42:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-11-30:/posts/setup-pelican.html</id><summary type="html">&lt;p&gt;如何使用github和pelican搭建个人博客&lt;/p&gt;</summary><content type="html">&lt;h2&gt;为什么选择Pelican&lt;/h2&gt;
 &lt;p&gt;想搭建一个博客，不想受门户网站博客的限制，想用更纯净的方式写作，方便数据转移，
 专注内容而不是格式，在这个页面&lt;a href="https://www.staticgen.com"&gt;https://www.staticgen.com&lt;/a&gt;罗列了各种语言的静态博客引擎,&amp;nbsp;最终选择了Pelican.&lt;/p&gt;
 &lt;p&gt;为什么呢？&lt;/p&gt;
@@ -483,7 +483,7 @@ $ make html 编译代码
 &lt;p&gt;需要注意的是上面的字体有些老的浏览器不支持，所以在使用的时候注意下当前的浏览器是否支持这些字体。&lt;/p&gt;
 &lt;h3&gt;图片添加&lt;/h3&gt;
 &lt;p&gt;有时候，再多的语言，也比不上一张图片来得直白，虽然我们可以将图片直接放在写博客的代码库里面再直接引用。但是个人感觉这样做并不好。图片一多，代码库就明显变大。一点也不方便。最好的方法是选用一个第三方的图片托管，支持外链的。这样我们只需要在图片托管处上传图片，然后在博客里面引用即可。在网上搜寻一番之后，在&lt;a href="http://c7sky.com/image-storage-server.html"&gt;这里&lt;/a&gt;找到了一些关于各种图片托管的介绍。在这里我选择了yupoo。大家也可以根据自己的需求任意选择一款。不说了，直接上图吧.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="第一张图片" src="http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="第一张图片" src="http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg"&gt;&lt;/p&gt;
 &lt;p&gt;由于markdown语法本身没有代办设置图片布局，所以可以用html标签来设置&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;p&lt;/span&gt; &lt;span class="na"&gt;align=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;center&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&amp;lt;img&lt;/span&gt; &lt;span class="na"&gt;src=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;http://pic.yupoo.com/crazygit/CQBeKErP/medish.jpg&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;title=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Test Image&amp;quot;&lt;/span&gt;&lt;span class="nt"&gt;/&amp;gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -507,4 +507,4 @@ $ make html 编译代码
 &lt;/ul&gt;
 &lt;p&gt;这些功能&lt;a href="http://docs.getpelican.com"&gt;官方文档&lt;/a&gt;都有介绍，可以自己查找。&lt;/p&gt;
 &lt;h3&gt;结束语&lt;/h3&gt;
-&lt;p&gt;暂时使用到的功能就这么多了，以后有什么新的添加我会更新的，由于小弟也是刚刚接触这个，加上文笔不怎么好，如果有什么不明白的地方或错误的地方，欢迎留言，大家一起交流下。&lt;/p&gt;</summary><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry></feed>
+&lt;p&gt;暂时使用到的功能就这么多了，以后有什么新的添加我会更新的，由于小弟也是刚刚接触这个，加上文笔不怎么好，如果有什么不明白的地方或错误的地方，欢迎留言，大家一起交流下。&lt;/p&gt;</content><category term="pelican"></category><category term="blog"></category><category term="github"></category></entry></feed>

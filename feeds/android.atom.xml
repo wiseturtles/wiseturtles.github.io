@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/android.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-29T14:45:00+08:00</updated><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><published>2015-09-29T14:45:00+08:00</published><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - android</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/android.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-29T14:45:00+08:00</updated><entry><title>Gradle代理设置</title><link href="http://blog.wiseturtles.com/posts/set-gradle-proxy.html" rel="alternate"></link><published>2015-09-29T14:45:00+08:00</published><updated>2015-09-29T14:45:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-29:/posts/set-gradle-proxy.html</id><summary type="html">&lt;p&gt;Gradle代理设置&lt;/p&gt;</summary><content type="html">&lt;p&gt;Android使用Gradle做构建工具，编译apk时可能需要从网上下载一些依赖包，国内网络情况大家都懂得。&lt;/p&gt;
 &lt;h2&gt;Gradle代理设置&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.gradle/gradle.properties
 systemProp.http.proxyHost&lt;span class="o"&gt;=&lt;/span&gt;your-proxy
@@ -7,7 +7,7 @@ systemProp.http.proxyPort&lt;span class="o"&gt;=&lt;/span&gt;proxy-port
 &lt;span class="c1"&gt;#systemProp.http.proxyUser=userid&lt;/span&gt;
 &lt;span class="c1"&gt;#systemProp.http.proxyPassword=password&lt;/span&gt;
 &lt;span class="c1"&gt;#systemProp.http.nonProxyHosts=*.nonproxyrepos.com|localhost&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="gradle"></category></entry><entry><title>export Android cantacts with vCard format via adb</title><link href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html" rel="alternate"></link><published>2015-01-11T15:20:00+08:00</published><updated>2015-01-11T15:20:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-01-11:posts/android-vcard-from-command-line.html</id><summary type="html">&lt;p&gt;参考:
+&lt;/pre&gt;&lt;/div&gt;</content><category term="gradle"></category></entry><entry><title>export Android cantacts with vCard format via adb</title><link href="http://blog.wiseturtles.com/posts/android-vcard-from-command-line.html" rel="alternate"></link><published>2015-01-11T15:20:00+08:00</published><updated>2015-01-11T15:20:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2015-01-11:/posts/android-vcard-from-command-line.html</id><summary type="html">&lt;p&gt;export Android contacts with vCard format via&amp;nbsp;adb&lt;/p&gt;</summary><content type="html">&lt;p&gt;参考:
 &lt;a href="http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms"&gt;http://www.commandlinefu.com/commands/view/11688/dump-android-contacts-sms&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;昨天手机(&lt;span class="caps"&gt;TCL&lt;/span&gt;&amp;nbsp;S960)掉地下把屏幕摔坏了，Google被xx后，就没在用过其它通讯录同步，只好想办法从坏手机里导出，屏幕完全坏了，只能通过adb完成。&lt;/p&gt;
 &lt;h1&gt;获取通讯录&lt;/h1&gt;
@@ -58,4 +58,4 @@ update system &lt;span class="nb"&gt;set&lt;/span&gt; &lt;span class="nv"&gt;val
 
 
 &lt;p&gt;如果是忘了Android锁屏图案，想找回，可以试试:&lt;/p&gt;
-&lt;p&gt;&lt;a href="https://github.com/sch3m4/androidpatternlock"&gt;https://github.com/sch3m4/androidpatternlock&lt;/a&gt;&lt;/p&gt;</summary><category term="Android"></category><category term="vCard"></category><category term="adb"></category></entry></feed>
+&lt;p&gt;&lt;a href="https://github.com/sch3m4/androidpatternlock"&gt;https://github.com/sch3m4/androidpatternlock&lt;/a&gt;&lt;/p&gt;</content><category term="Android"></category><category term="vCard"></category><category term="adb"></category></entry></feed>

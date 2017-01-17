@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/editor.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2013-11-27T09:52:00+08:00</updated><entry><title>Sublime Text 2使用入门</title><link href="http://blog.wiseturtles.com/posts/sublime-text-2.html" rel="alternate"></link><published>2013-11-27T09:52:00+08:00</published><updated>2013-11-27T09:52:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-27:posts/sublime-text-2.html</id><summary type="html">&lt;div class="contents topic" id="contents"&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - editor</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/editor.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2013-11-27T09:52:00+08:00</updated><entry><title>Sublime Text 2使用入门</title><link href="http://blog.wiseturtles.com/posts/sublime-text-2.html" rel="alternate"></link><published>2013-11-27T09:52:00+08:00</published><updated>2013-11-27T09:52:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-27:/posts/sublime-text-2.html</id><summary type="html">&lt;p class="first last"&gt;Sublime&amp;nbsp;Text2入门教程&lt;/p&gt;
+</summary><content type="html">&lt;div class="contents topic" id="contents"&gt;
 &lt;p class="topic-title first"&gt;Contents&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;a class="reference internal" href="#id1" id="id4"&gt;安装&lt;/a&gt;&lt;/li&gt;
@@ -67,4 +68,4 @@
 &lt;li&gt;&lt;a class="reference external" href="https://sublime.wbond.net/"&gt;https://sublime.wbond.net/&lt;/a&gt; （sublime package control,&amp;nbsp;插件管理的文档，在这里可以查看所有插件，获取热门插件和插件更新信息)&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
-</summary><category term="sublime"></category></entry></feed>
+</content><category term="sublime"></category></entry></feed>

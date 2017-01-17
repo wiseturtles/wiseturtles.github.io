@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mac-osx.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-02-16T14:36:00+08:00</updated><entry><title>Mac System Intregrity Protection - Operation not permitted</title><link href="http://blog.wiseturtles.com/posts/Mac-System-Intregrity-Protection.html" rel="alternate"></link><published>2016-02-16T14:36:00+08:00</published><updated>2016-02-16T14:36:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-16:posts/Mac-System-Intregrity-Protection.html</id><summary type="html">&lt;p&gt;貌似刚拿到电脑是自己手动编译安装了vim 7.3，后来都是brew install&amp;nbsp;vim最新版本。&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - mac-osx</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mac-osx.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2016-02-16T14:36:00+08:00</updated><entry><title>Mac System Intregrity Protection - Operation not permitted</title><link href="http://blog.wiseturtles.com/posts/Mac-System-Intregrity-Protection.html" rel="alternate"></link><published>2016-02-16T14:36:00+08:00</published><updated>2016-02-16T14:36:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2016-02-16:/posts/Mac-System-Intregrity-Protection.html</id><summary type="html">&lt;p&gt;Mac删除系统文件报错&lt;/p&gt;</summary><content type="html">&lt;p&gt;貌似刚拿到电脑是自己手动编译安装了vim 7.3，后来都是brew install&amp;nbsp;vim最新版本。&lt;/p&gt;
 &lt;p&gt;今天vim出了点问题，发现系统上还有个vim 7.3，准备删除时就报&lt;code&gt;Operation not permitted&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo rm -rf /usr/share/vim/
@@ -35,7 +35,7 @@ rm: /usr/share/vim: Operation not permitted
 &lt;p&gt;查看&lt;span class="caps"&gt;SIP&lt;/span&gt;状态:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ csrutil status
 System Integrity Protection status: enabled.
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="Mac"></category><category term="SIP"></category></entry><entry><title>Mac Python ValueError: unknown locale: UTF-8</title><link href="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html" rel="alternate"></link><published>2015-12-13T08:39:00+08:00</published><updated>2015-12-13T08:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-12-13:posts/mac-python-ValueError-unknown-locale-utf-8.html</id><summary type="html">&lt;p&gt;Mac brew更新软件报locale utf-8&amp;nbsp;unknown。&lt;/p&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Mac"></category><category term="SIP"></category></entry><entry><title>Mac Python ValueError: unknown locale: UTF-8</title><link href="http://blog.wiseturtles.com/posts/mac-python-ValueError-unknown-locale-utf-8.html" rel="alternate"></link><published>2015-12-13T08:39:00+08:00</published><updated>2015-12-13T08:39:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-12-13:/posts/mac-python-ValueError-unknown-locale-utf-8.html</id><summary type="html">&lt;p&gt;Mac Python报错: ValueError: unknown locale: &lt;span class="caps"&gt;UTF&lt;/span&gt;-8&lt;/p&gt;</summary><content type="html">&lt;p&gt;Mac brew更新软件报locale utf-8&amp;nbsp;unknown。&lt;/p&gt;
 &lt;h2&gt;问题描述&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;brew update &amp;amp;&amp;amp; brew upgrade&lt;/code&gt;，更新 mpv 时报错: &lt;code&gt;ValueError: unknown locale: UTF-8&lt;/code&gt;&lt;/p&gt;
 &lt;h4&gt;确定当前locale&lt;/h4&gt;
@@ -74,7 +74,7 @@ ValueError: unknown locale: UTF-8
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;&lt;code&gt;brew upgrade&lt;/code&gt;也正常工作了。&lt;/p&gt;</summary><category term="Python"></category><category term="Shell"></category><category term="Mac"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><published>2015-11-11T15:42:00+08:00</published><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;brew upgrade&lt;/code&gt;也正常工作了。&lt;/p&gt;</content><category term="Python"></category><category term="Shell"></category><category term="Mac"></category></entry><entry><title>Jenkins自动构建iOS应用</title><link href="http://blog.wiseturtles.com/posts/Jenkins-auto-build-iOS-apps.html" rel="alternate"></link><published>2015-11-11T15:42:00+08:00</published><updated>2015-11-11T15:42:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:/posts/Jenkins-auto-build-iOS-apps.html</id><summary type="html">&lt;p&gt;Jenkins-auto-build-iOS-apps&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近折腾用Jenkins自动构建iOS应用。&lt;/p&gt;
 &lt;h2&gt;编译环境&lt;/h2&gt;
 &lt;p&gt;为了构建iOS应用，必须找台Mac电脑做slave。
 安装很简单，貌似brew install&amp;nbsp;jenkins就可以了，然后，Jenkins页面上将它加入作为slave。&lt;/p&gt;
@@ -119,7 +119,7 @@ $ set-keychain-settings -t &lt;span class="m"&gt;3600&lt;/span&gt; -l ~/Library/
 &lt;h2&gt;参考文章&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/"&gt;http://www.egeek.me/2013/02/23/jenkins-and-xcode-user-interaction-is-not-allowed/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><published>2015-07-18T14:56:00+08:00</published><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
+&lt;/ul&gt;</content><category term="Jenkins"></category><category term="Mac"></category><category term="iOS"></category></entry><entry><title>Mac Pro初体验</title><link href="http://blog.wiseturtles.com/posts/mac-pro-get-started.html" rel="alternate"></link><published>2015-07-18T14:56:00+08:00</published><updated>2015-07-18T14:56:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-07-18:/posts/mac-pro-get-started.html</id><summary type="html">&lt;p&gt;Mac&amp;nbsp;Pro环境配置&lt;/p&gt;</summary><content type="html">&lt;p&gt;貌似如今不玩下Mac总觉得逼格不够，最近08年买的Thinkpad R60也坏掉了，就入手一台Mac Pro。&amp;nbsp;下面记录下环境配置和最近使用感受。&lt;/p&gt;
 &lt;h2&gt;Xcode&lt;/h2&gt;
 &lt;h3&gt;安装Xcode命令行工具:&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ xcode-select --install
@@ -280,4 +280,4 @@ $ cp &lt;span class="nv"&gt;$GOPATH&lt;/span&gt;/bin/gofmt &lt;span class="nv"&g
 &lt;li&gt;mac的屏的确要比我之前用过的笔记本好很多&lt;/li&gt;
 &lt;li&gt;严重怀疑网上那些把mac捧得太高的人只用过Windows，根本没用过Ubuntu之类的桌面Linux&amp;nbsp;(至少目前自己还没体会到mac比Linux高效在哪里)&lt;/li&gt;
 &lt;li&gt;刚开始使用难免出错，也许上面的都是错的。。&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="Mac"></category></entry></feed>
+&lt;/ol&gt;</content><category term="Mac"></category></entry></feed>

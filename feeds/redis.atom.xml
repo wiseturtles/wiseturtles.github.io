@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/redis.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-18T23:48:00+08:00</updated><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><published>2015-09-18T23:48:00+08:00</published><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:posts/install-redis-cluster.html</id><summary type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - redis</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/redis.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-01-17T15:15:00+08:00</updated><entry><title>Ubuntu 16.04上修改redis data dir</title><link href="http://blog.wiseturtles.com/posts/change-redis-data-dir.html" rel="alternate"></link><published>2017-01-17T15:15:00+08:00</published><updated>2017-01-17T15:15:00+08:00</updated><author><name>Zhang Wanming</name></author><id>tag:blog.wiseturtles.com,2017-01-17:/posts/change-redis-data-dir.html</id><summary type="html">&lt;p&gt;Ubuntu 16.04上修改redis data&amp;nbsp;dir&lt;/p&gt;</summary><content type="html">&lt;h2&gt;修改redis 的data&amp;nbsp;dir&lt;/h2&gt;
+&lt;p&gt;redis是通过&lt;code&gt;sudo apt-get install redis-server&lt;/code&gt;命令安装的。&lt;/p&gt;
+&lt;h3&gt;修改&amp;nbsp;/etc/redis/redis.conf&lt;/h3&gt;
+&lt;p&gt;dir&amp;nbsp;/data/redisdata&lt;/p&gt;
+&lt;p&gt;注：将redis data dir 修改为&lt;code&gt;dir /data/redisdata&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;修改&amp;nbsp;/etc/systemd/system/redis.service&lt;/h3&gt;
+&lt;p&gt;在该文件中加入一行：&lt;code&gt;ReadWriteDirectories=-/data/redisdata&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;测试是否可以正常保存&lt;/h3&gt;
+&lt;p&gt;$ redis-cli
+  127.0.0.1:6379&amp;gt;&amp;nbsp;save&lt;/p&gt;
+&lt;h2&gt;报错&lt;/h2&gt;
+&lt;p&gt;之前只修改了 &lt;code&gt;/etc/redis/redis.conf&lt;/code&gt; 下的配置，而没有修改 &lt;code&gt;/etc/systemd/system/redis.service&lt;/code&gt; ，所以一直报如下错误：&lt;/p&gt;
+&lt;p&gt;9827:M 17 Jan 15:08:22.596 # Failed opening .rdb for saving: Read-only file&amp;nbsp;system&lt;/p&gt;</content><category term="redis"></category><category term="ubuntu"></category></entry><entry><title>Redis集群搭建</title><link href="http://blog.wiseturtles.com/posts/install-redis-cluster.html" rel="alternate"></link><published>2015-09-18T23:48:00+08:00</published><updated>2015-09-18T23:48:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-09-18:/posts/install-redis-cluster.html</id><summary type="html">&lt;p&gt;install-redis-cluster&lt;/p&gt;</summary><content type="html">&lt;h2&gt;Redis集群搭建&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 下载&lt;/span&gt;
 $ wget http://download.redis.io/releases/redis-3.0.4.tar.gz
 $ tar -zxvf redis-3.0.4.tar.gz
@@ -179,4 +191,4 @@ OK
 
 &lt;span class="c1"&gt;# 同理python redis模块也是不能直接用集群模式了，需要替换成支持redis cluster的python模块&lt;/span&gt;
 &lt;span class="c1"&gt;# 完毕&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry></feed>
+&lt;/pre&gt;&lt;/div&gt;</content><category term="redis"></category><category term="cluster"></category><category term="install"></category></entry></feed>

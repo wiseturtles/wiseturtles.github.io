@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><published>2015-02-09T23:49:00+08:00</published><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:posts/centos-supervisor.html</id><summary type="html">&lt;h2&gt;安装&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - install</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/install.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-02-09T23:49:00+08:00</updated><entry><title>CentOS上安装Supervisor</title><link href="http://blog.wiseturtles.com/posts/centos-supervisor.html" rel="alternate"></link><published>2015-02-09T23:49:00+08:00</published><updated>2015-02-09T23:49:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-09:/posts/centos-supervisor.html</id><summary type="html">&lt;p&gt;CentOS上安装Supervisor&lt;/p&gt;</summary><content type="html">&lt;h2&gt;安装&lt;/h2&gt;
 &lt;p&gt;部署项目从Ubuntu转战到CentOS,&amp;nbsp;使用yum命令安装supervisor后，发现无法正常使用，因此只有使用pip安装.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo pip install supervisor
 &lt;/pre&gt;&lt;/div&gt;
@@ -155,7 +155,7 @@ start
 $ sudo chkconfig --add supervisord
 $ sudo chkconfig supervisord on
 $ sudo service supervisord start
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><published>2015-02-06T15:45:00+08:00</published><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:posts/openresty-install.html</id><summary type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="centos"></category><category term="supervisor"></category></entry><entry><title>OpenResty</title><link href="http://blog.wiseturtles.com/posts/openresty-install.html" rel="alternate"></link><published>2015-02-06T15:45:00+08:00</published><updated>2015-02-06T15:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-02-06:/posts/openresty-install.html</id><summary type="html">&lt;p&gt;OpenResty安装及常用配置&lt;/p&gt;</summary><content type="html">&lt;h2&gt;什么是OpenResty&lt;/h2&gt;
 &lt;p&gt;OpenResty（也称为 ngx_openresty）是一个全功能的 Web 应用服务器，它打包了标准
 的Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。对于经常需要使用&amp;nbsp;nginx第三方模块的人来说，是一个非常不错的选择.&lt;/p&gt;
 &lt;h2&gt;下载及安装&lt;/h2&gt;
@@ -362,7 +362,7 @@ sudo update-rc.d apache2 defaults &lt;span class="c1"&gt;# 添加nginx服务&lt;
 &lt;/ul&gt;
 &lt;p&gt;测试:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ logroate -f /etc/logrotate.d/nginx
-&lt;/pre&gt;&lt;/div&gt;</summary><category term="nginx"></category><category term="openresty"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><published>2015-01-15T17:09:00+08:00</published><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:posts/gerrit.html</id><summary type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="nginx"></category><category term="openresty"></category></entry><entry><title>Gerrit搭建指南</title><link href="http://blog.wiseturtles.com/posts/gerrit.html" rel="alternate"></link><published>2015-01-15T17:09:00+08:00</published><updated>2015-01-15T17:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-15:/posts/gerrit.html</id><summary type="html">&lt;p&gt;install guide of&amp;nbsp;gerrit&lt;/p&gt;</summary><content type="html">&lt;h2&gt;什么是Gerrit&lt;/h2&gt;
 &lt;p&gt;Gerrit，一种免费、开放源代码的代码审查软件，使用网页界面。利用网页浏览器，同一个团队的软件程序员，可以相互审阅彼此修改后的程序代码，决定是否能够提交，退回或者继续修改。它使用Git作为底层版本控制系统。&lt;/p&gt;
 &lt;p&gt;本文以Ubuntu&amp;nbsp;12.04，Gerrit2.9.4(目前最新的版本)为例介绍整个搭建过程&lt;/p&gt;
 &lt;h2&gt;参考文献&lt;/h2&gt;
@@ -591,7 +591,8 @@ $ gerrit/bin/gerrit.sh restart &lt;span class="c1"&gt;# 重启gerrit服务&lt;/s
 &lt;li&gt;如果用MySQL作为数据库，Gerrit数据库的引擎应该是Innodb.&lt;/li&gt;
 &lt;li&gt;配置邮件时，一直认证失败，除了在&lt;code&gt;etc/gerrt.conf&lt;/code&gt;文件里指定&lt;code&gt;sendmail.smtpUser&lt;/code&gt;, 还需要指定&lt;code&gt;sendmail.from&lt;/code&gt;为发送邮件的用户信息, 格式为&lt;code&gt;username &amp;lt;youmail@mail.com&amp;gt;&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;认证可以使用github oauth认证&lt;a href="https://github.com/davido/gerrit-oauth-provider"&gt;gerrit-oauth-provider&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</summary><category term="git"></category><category term="gerrit"></category></entry><entry><title>Windows下安装Nginx</title><link href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html" rel="alternate"></link><published>2013-11-26T09:30:00+08:00</published><updated>2013-11-26T09:30:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-26:posts/install-nginx-on-windows.html</id><summary type="html">&lt;p&gt;本文参考自 &lt;a class="reference external" href="http://nginx.org/cn/docs/windows.html"&gt;windows下安装nginx&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
+&lt;/ol&gt;</content><category term="git"></category><category term="gerrit"></category></entry><entry><title>Windows下安装Nginx</title><link href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html" rel="alternate"></link><published>2013-11-26T09:30:00+08:00</published><updated>2013-11-26T09:30:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-26:/posts/install-nginx-on-windows.html</id><summary type="html">&lt;p class="first last"&gt;Install nginx on&amp;nbsp;windows&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;本文参考自 &lt;a class="reference external" href="http://nginx.org/cn/docs/windows.html"&gt;windows下安装nginx&lt;/a&gt;&amp;nbsp;.&lt;/p&gt;
 &lt;p&gt;nginx的Windows版本使用原生Win32 &lt;span class="caps"&gt;API&lt;/span&gt;（非Cygwin模拟层）。当前nginx/Windows只使用select作为通知方法，所以不要期待它有很高的性能和扩展性。鉴于这点和一些已知问题，nginx/Windows目前还处于beta阶段。nginx/Windows和Unix版本相比，功能几乎已经齐全，除了&lt;span class="caps"&gt;XSLT&lt;/span&gt;过滤器、图像过滤器、GeoIP模块和嵌入Perl语言支持以外。&lt;/p&gt;
 &lt;p&gt;安装nginx/Windows，需要下载最新的1.5.7开发版本，因为开发分支上包含了所有已知的问题修复，尤其是针对Windows版本的问题修复。解压缩下载得到的zip文件，进入nginx-1.5.7目录，运行nginx。下面给出一个在C盘根目录下安装的例子：&lt;/p&gt;
 &lt;pre class="literal-block"&gt;
@@ -632,7 +633,8 @@ access_log   logs/site.log;
 &lt;p&gt;作为系统服务运行。
 使用“I/O完成端口”作为事件模型。&amp;nbsp;使用单工作进程多线程的模型。&lt;/p&gt;
 &lt;/div&gt;
-</summary><category term="windows"></category><category term="nginx"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><published>2013-11-03T19:09:00+08:00</published><updated>2013-11-03T19:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:posts/install-jdk.html</id><summary type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
+</content><category term="windows"></category><category term="nginx"></category></entry><entry><title>Ubuntu上手动安装JDK</title><link href="http://blog.wiseturtles.com/posts/install-jdk.html" rel="alternate"></link><published>2013-11-03T19:09:00+08:00</published><updated>2013-11-03T19:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-11-03:/posts/install-jdk.html</id><summary type="html">&lt;p class="first last"&gt;install&amp;nbsp;jdk&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Ubuntu上面自己手动安装&lt;span class="caps"&gt;JDK&lt;/span&gt;的方法如下:
 首先下载jdk-7u45-linux-i586.tar.gz压缩包，并解压到 &lt;code&gt;/usr/local/lib/jdk1.7.0_45&lt;/code&gt; ,&amp;nbsp;再执行下面的脚本&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class="nv"&gt;JDK_BIN_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/lib/jdk1.7.0_45/bin
@@ -642,7 +644,7 @@ access_log   logs/site.log;
     sudo update-alternatives --install /usr/bin/&lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$name&lt;/span&gt; &lt;span class="nv"&gt;$x&lt;/span&gt; 300
 &lt;span class="k"&gt;done&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-</summary><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><published>2013-09-30T13:44:00+08:00</published><updated>2013-09-30T13:44:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:posts/setup-wamp.html</id><summary type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
+</content><category term="ubuntu"></category><category term="jdk"></category></entry><entry><title>WAMP(Windows + Apache + Mysql + PHP) 环境搭建</title><link href="http://blog.wiseturtles.com/posts/setup-wamp.html" rel="alternate"></link><published>2013-09-30T13:44:00+08:00</published><updated>2013-09-30T13:44:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2013-09-30:/posts/setup-wamp.html</id><summary type="html">&lt;p&gt;how to use pelican to setup&amp;nbsp;wamp&lt;/p&gt;</summary><content type="html">&lt;p&gt;最近开始学习&lt;span class="caps"&gt;PHP&lt;/span&gt;，工欲善其事，必先利其器。第一步当然是环境搭建啦！&lt;/p&gt;
 &lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;开发基本也就是在不同平台下，要么是&lt;span class="caps"&gt;LAMP&lt;/span&gt;(Linux + Apache + Mysql + &lt;span class="caps"&gt;PHP&lt;/span&gt;)，要么就是&lt;span class="caps"&gt;WAMP&lt;/span&gt;(Windows + Apache + Mysql +&lt;span class="caps"&gt;PHP&lt;/span&gt;),&amp;nbsp;个人感觉在ubuntu环境下搭建环境比较简单，只需要一个命令&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install -y apache2 mysql-server-5.5 php5 php5-gd php5-mysql php5-xdebug libapache2-mod-php5 phpmyadmin
 &lt;/pre&gt;&lt;/div&gt;
@@ -656,7 +658,7 @@ access_log   logs/site.log;
 &lt;p&gt;总的来说，无论从安全性和性能上来讲，&lt;span class="caps"&gt;LAMP&lt;/span&gt;（Linux + Apache + MySQL + &lt;span class="caps"&gt;PHP&lt;/span&gt;）都优于&lt;span class="caps"&gt;WAMP&lt;/span&gt;（Windows + Apache + MySQL + &lt;span class="caps"&gt;PHP&lt;/span&gt;），不过由于Windows具有易用的特点，&lt;span class="caps"&gt;WAMP&lt;/span&gt;也未尝不是初学者的一个不错的选择。 
 &lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;上面&lt;span class="caps"&gt;WAMP&lt;/span&gt;集成环境的内容介绍引用自&lt;br /&gt;
+&lt;p&gt;上面&lt;span class="caps"&gt;WAMP&lt;/span&gt;集成环境的内容介绍引用自&lt;br&gt;
 &lt;a href="http://www.williamlong.info/archives/1281.html"&gt;http://www.williamlong.info/archives/1281.html&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;关于集成的开发环境，还不得不提到ZendServer， 这个也是一个相当不错的环境，相比&lt;span class="caps"&gt;XAMPP&lt;/span&gt;更加精简一些。&lt;/p&gt;
 &lt;p&gt;如果我们可以自己搭建一次整个开发环境的话，对这个过程将会更加熟悉。废话不多说，下面就让我们开始搭建吧！&lt;/p&gt;
@@ -673,9 +675,9 @@ Popular options for deploying Apache httpd, and, optionally, &lt;span class="cap
 &lt;/blockquote&gt;
 &lt;p&gt;从上面可以知道，Apache官方并没有提供windows下的二进制安装包，
 可以从它推荐的站点下载apache二进制安装包。
-在此选择&lt;br /&gt;
+在此选择&lt;br&gt;
 &lt;a href="https://www.apachelounge.com/download/"&gt;https://www.apachelounge.com/download/&lt;/a&gt; 
-网站上的&lt;br /&gt;
+网站上的&lt;br&gt;
 &lt;a href="https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip"&gt;https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;由于上面这个安装包是根据Visual Studio C++ 2010 &lt;span class="caps"&gt;SP1&lt;/span&gt; &lt;span class="caps"&gt;VC10&lt;/span&gt;&amp;nbsp;环境下编译的。&lt;/p&gt;
 &lt;blockquote&gt;
@@ -713,9 +715,9 @@ httpd -k start
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;如果没有修改配置文件中的默认80端口的话，访问&lt;br /&gt;
+&lt;p&gt;如果没有修改配置文件中的默认80端口的话，访问&lt;br&gt;
 &lt;a href="http://localhost/"&gt;http://localhost/&lt;/a&gt;
-如果修改了端口号为8000，则访问  &lt;br /&gt;
+如果修改了端口号为8000，则访问  &lt;br&gt;
 &lt;a href="http://localhost:8000"&gt;http://localhost:8000&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;最后看到It works页面。表示apache服务器安装成功。&amp;nbsp;如果没有，请检查上述步骤是不是有什么错误。&lt;/p&gt;
 &lt;h2&gt;Mysql安装&lt;/h2&gt;
@@ -816,7 +818,7 @@ DirectoryIndex index.html index.php
 
 &lt;p&gt;最后，重新启动apache即可。访问phpinfo();页面检查是否有xdebug，如果有，表示安装成功。&lt;/p&gt;
 &lt;h2&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;集成开发环境&lt;/h2&gt;
-&lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;的集成开发环境比较多: 如Zend Studio，Eclipse + &lt;span class="caps"&gt;PDT&lt;/span&gt;， Eclipse + PHPEclipse等。这些环境经过简单的配置之后都支持远程调试，还有一些浏览器的工具，如FireFox浏览器的&amp;#8221;FireBug +&amp;nbsp;FirePHP&amp;#8221;插件，这些资料比较多，就不在这里重复了。&lt;/p&gt;</summary><category term="php"></category><category term="wamp"></category></entry><entry><title>OpenGrok安装使用指南</title><link href="http://blog.wiseturtles.com/posts/setup-opengrok.html" rel="alternate"></link><published>2012-12-14T18:09:00+08:00</published><updated>2012-12-14T18:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2012-12-14:posts/setup-opengrok.html</id><summary type="html">&lt;p&gt;本文主要参考了下面的文章:&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;PHP&lt;/span&gt;的集成开发环境比较多: 如Zend Studio，Eclipse + &lt;span class="caps"&gt;PDT&lt;/span&gt;， Eclipse + PHPEclipse等。这些环境经过简单的配置之后都支持远程调试，还有一些浏览器的工具，如FireFox浏览器的&amp;#8221;FireBug +&amp;nbsp;FirePHP&amp;#8221;插件，这些资料比较多，就不在这里重复了。&lt;/p&gt;</content><category term="php"></category><category term="wamp"></category></entry><entry><title>OpenGrok安装使用指南</title><link href="http://blog.wiseturtles.com/posts/setup-opengrok.html" rel="alternate"></link><published>2012-12-14T18:09:00+08:00</published><updated>2012-12-14T18:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2012-12-14:/posts/setup-opengrok.html</id><summary type="html">&lt;p&gt;how to set up&amp;nbsp;OpenGrok&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文主要参考了下面的文章:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription"&gt;http://hub.opensolaris.org/bin/view/Project+opengrok/installdescription&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="http://src.opensolaris.org/source/xref/opengrok/trunk/README.txt"&gt;http://src.opensolaris.org/source/xref/opengrok/trunk/&lt;span class="caps"&gt;README&lt;/span&gt;.txt&lt;/a&gt;&lt;/li&gt;
@@ -1033,6 +1035,6 @@ Usage: opengrok.jar &lt;span class="o"&gt;[&lt;/span&gt;options&lt;span class="o
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;hr /&gt;
+&lt;hr&gt;
 &lt;p&gt;&lt;strong&gt;&lt;span class="caps"&gt;PS&lt;/span&gt;:默认情况下，调用OpenGork脚本是会生成项目的历史记录的，如果不想生成脚本的历史记录, 可以修改
-OpenGrok脚本的&lt;code&gt;UpdateGeneratedData&lt;/code&gt; 方法，去掉&lt;code&gt;StdInvocation -H&lt;/code&gt;的&lt;code&gt;-H&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;</summary><category term="opengrok"></category></entry></feed>
+OpenGrok脚本的&lt;code&gt;UpdateGeneratedData&lt;/code&gt; 方法，去掉&lt;code&gt;StdInvocation -H&lt;/code&gt;的&lt;code&gt;-H&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;</content><category term="opengrok"></category></entry></feed>

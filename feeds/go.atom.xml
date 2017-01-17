@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/go.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-15T13:47:00+08:00</updated><entry><title>Golang评价</title><link href="http://blog.wiseturtles.com/posts/golang-chaos.html" rel="alternate"></link><published>2015-09-15T13:47:00+08:00</published><updated>2015-09-15T13:47:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-15:posts/golang-chaos.html</id><summary type="html">&lt;h3&gt;djvu9&lt;/h3&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - go</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/go.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2015-09-15T13:47:00+08:00</updated><entry><title>Golang评价</title><link href="http://blog.wiseturtles.com/posts/golang-chaos.html" rel="alternate"></link><published>2015-09-15T13:47:00+08:00</published><updated>2015-09-15T13:47:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-09-15:/posts/golang-chaos.html</id><summary type="html">&lt;p&gt;收集牛人对Golang的评价&lt;/p&gt;</summary><content type="html">&lt;h3&gt;djvu9&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -21,7 +21,7 @@
 &lt;h3&gt;yinwang&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.yinwang.org/blog-cn/2014/04/18/golang/"&gt;对 Go&amp;nbsp;语言的综合评价&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary><category term="go"></category></entry><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><published>2015-07-22T16:33:00+08:00</published><updated>2015-07-22T16:33:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-hello-beego.html</id><summary type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
+&lt;/ul&gt;</content><category term="go"></category></entry><entry><title>Go学习笔记5之Beego框架</title><link href="http://blog.wiseturtles.com/posts/go-hello-beego.html" rel="alternate"></link><published>2015-07-22T16:33:00+08:00</published><updated>2015-07-22T16:33:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:/posts/go-hello-beego.html</id><summary type="html">&lt;p&gt;Go学习笔记5之Beego框架&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Beego框架准备&lt;/h3&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go get github.com/astaxie/beego
 $ go get github.com/beego/bee
 &lt;/pre&gt;&lt;/div&gt;
@@ -49,7 +49,7 @@ $ go get github.com/beego/bee
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;执行&lt;code&gt;go run hello-beego.go&lt;/code&gt;, 访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查，　如果输出&amp;#8221;hello world&amp;#8221;&amp;nbsp;表示本地beego环境已经搭建成功&lt;/p&gt;</summary><category term="go"></category><category term="beego"></category></entry><entry><title>Go学习笔记4之知识点记录</title><link href="http://blog.wiseturtles.com/posts/go-notes.html" rel="alternate"></link><published>2015-07-22T14:09:00+08:00</published><updated>2015-07-22T14:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:posts/go-notes.html</id><summary type="html">&lt;h3&gt;Go环境配置&lt;/h3&gt;
+&lt;p&gt;执行&lt;code&gt;go run hello-beego.go&lt;/code&gt;, 访问&lt;a href="http://127.0.0.1:8080"&gt;http://127.0.0.1:8080&lt;/a&gt;检查，　如果输出&amp;#8221;hello world&amp;#8221;&amp;nbsp;表示本地beego环境已经搭建成功&lt;/p&gt;</content><category term="go"></category><category term="beego"></category></entry><entry><title>Go学习笔记4之知识点记录</title><link href="http://blog.wiseturtles.com/posts/go-notes.html" rel="alternate"></link><published>2015-07-22T14:09:00+08:00</published><updated>2015-07-22T14:09:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-22:/posts/go-notes.html</id><summary type="html">&lt;p&gt;Go学习笔记4之知识点记录&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Go环境配置&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;如果你想在同一个系统中安装多个版本的Go，你可以参考第三方工具&lt;a href="https://github.com/moovweb/gvm"&gt;&lt;span class="caps"&gt;GVM&lt;/span&gt;&lt;/a&gt;，这是目前在这&amp;nbsp;方面做得最好的工具。&lt;/p&gt;
@@ -134,7 +134,7 @@ $ go get github.com/beego/bee
 
 &lt;p&gt;&lt;em&gt;注意&lt;/em&gt;:&amp;nbsp;数组之间的赋值是值的赋值，即当把一个数组作为参数传入函数的时候，传入的其实是该数组的副本，而不是它的指针。如果要使用指针，那么就需要用到后面介绍的slice类型了。&lt;/p&gt;
 &lt;h3&gt;Slice&lt;/h3&gt;
-&lt;p&gt;注意slice和数组在声明时的区别：声明数组时，方括号内写明了数组的长度或使用&amp;#8230;自动计算长度，而声明slice时，方括号内没有任何字符。&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="note"></category></entry><entry><title>Go学习笔记3之打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><published>2015-07-13T16:45:00+08:00</published><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:posts/go-ide.html</id><summary type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
+&lt;p&gt;注意slice和数组在声明时的区别：声明数组时，方括号内写明了数组的长度或使用&amp;#8230;自动计算长度，而声明slice时，方括号内没有任何字符。&lt;/p&gt;</content><category term="go"></category><category term="ide"></category><category term="note"></category></entry><entry><title>Go学习笔记3之打造Sublime Text 3作为Go的集成开发环境</title><link href="http://blog.wiseturtles.com/posts/go-ide.html" rel="alternate"></link><published>2015-07-13T16:45:00+08:00</published><updated>2015-07-13T16:45:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-07-13:/posts/go-ide.html</id><summary type="html">&lt;p&gt;Go学习笔记3之打造Sublime Text 3作为&lt;span class="caps"&gt;GO&lt;/span&gt;的集成开发环境(&lt;span class="caps"&gt;IDE&lt;/span&gt;)&lt;/p&gt;</summary><content type="html">&lt;h3&gt;可用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具&lt;/h3&gt;
 &lt;p&gt;可以用于&lt;span class="caps"&gt;GO&lt;/span&gt;开发的工具和插件目前已经非常多了,如&lt;span class="caps"&gt;VIM&lt;/span&gt;, Emacs, atom等，这里&lt;a href="https://github.com/golang/go/wiki/IDEsAndTextEditorPlugins"&gt;IDEs and Plugins for
 Go&lt;/a&gt;罗列了许多可以作为&lt;span class="caps"&gt;GO&lt;/span&gt;开发
 的&lt;span class="caps"&gt;IDE&lt;/span&gt;和插件，我们可以根据自己的使用习惯自行选择。本文主要阐述如何利用Sublime
@@ -237,7 +237,7 @@ $ go get github.com/beego/bee
 &lt;li&gt;连续两次输入&lt;code&gt;Ctrl + dot(.)&lt;/code&gt;,&amp;nbsp;可以查看GoSublime的功能和快捷键&lt;/li&gt;
 &lt;li&gt;使用&lt;code&gt;gd&lt;/code&gt;可以使用GoDef插件的跳转&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</summary><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>Go学习笔记2之初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><published>2015-06-30T23:37:00+08:00</published><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-introduce.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;p&gt;更多使用可以参考两个插件的帮助文档&lt;/p&gt;</content><category term="go"></category><category term="ide"></category><category term="sublime"></category></entry><entry><title>Go学习笔记2之初识Go</title><link href="http://blog.wiseturtles.com/posts/go-introduce.html" rel="alternate"></link><published>2015-06-30T23:37:00+08:00</published><updated>2015-06-30T23:37:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:/posts/go-introduce.html</id><summary type="html">&lt;p&gt;Go学习笔记2之初识Go&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/code.html"&gt;How to Write Go&amp;nbsp;Code&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;代码组织&lt;/h2&gt;
 &lt;h3&gt;工作空间&lt;/h3&gt;
@@ -444,7 +444,7 @@ Hello, Go examples!
 
 
 &lt;p&gt;如果当前包已经存在，&lt;code&gt;go get&lt;/code&gt;会跳过下载&lt;/p&gt;
-&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记1之安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><published>2015-06-30T23:11:00+08:00</published><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:posts/go-install.html</id><summary type="html">&lt;p&gt;本文参考于:
+&lt;p&gt;到此，我们对go有了个大致的印象，虽然有些地方看不懂，不过没有关系，我们后面会继续学习。&lt;/p&gt;</content><category term="go"></category><category term="入门"></category></entry><entry><title>Go学习笔记1之安装Go</title><link href="http://blog.wiseturtles.com/posts/go-install.html" rel="alternate"></link><published>2015-06-30T23:11:00+08:00</published><updated>2015-06-30T23:11:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-06-30:/posts/go-install.html</id><summary type="html">&lt;p&gt;Go学习笔记1之安装go&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文参考于:
 &lt;a href="https://golang.org/doc/install"&gt;Installing Go - Getting&amp;nbsp;Started&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;必备技能之翻墙&lt;/h3&gt;
 &lt;p&gt;这个是必须的技能，不然go的官网都没法访问,&amp;nbsp;后面也不用看了。&lt;/p&gt;
@@ -481,4 +481,4 @@ hello, world
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题.&lt;/p&gt;</summary><category term="go"></category><category term="入门"></category></entry></feed>
+&lt;p&gt;如果输出&amp;#8221;hello,world&amp;#8221;，&amp;nbsp;则表示环境没有什么问题.&lt;/p&gt;</content><category term="go"></category><category term="入门"></category></entry></feed>

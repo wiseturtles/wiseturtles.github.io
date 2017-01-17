@@ -45,7 +45,6 @@
         <div class="nav-collapse">
         <ul class="nav">
 
-            <li><a href="http://blog.wiseturtles.com/about-us.html">关于我们</a></li>
         </ul>
         </div>
 
@@ -82,7 +81,7 @@ On 2013-09-30
 <p>总的来说，无论从安全性和性能上来讲，<span class="caps">LAMP</span>（Linux + Apache + MySQL + <span class="caps">PHP</span>）都优于<span class="caps">WAMP</span>（Windows + Apache + MySQL + <span class="caps">PHP</span>），不过由于Windows具有易用的特点，<span class="caps">WAMP</span>也未尝不是初学者的一个不错的选择。 
 </p>
 </blockquote>
-<p>上面<span class="caps">WAMP</span>集成环境的内容介绍引用自<br />
+<p>上面<span class="caps">WAMP</span>集成环境的内容介绍引用自<br>
 <a href="http://www.williamlong.info/archives/1281.html">http://www.williamlong.info/archives/1281.html</a></p>
 <p>关于集成的开发环境，还不得不提到ZendServer， 这个也是一个相当不错的环境，相比<span class="caps">XAMPP</span>更加精简一些。</p>
 <p>如果我们可以自己搭建一次整个开发环境的话，对这个过程将会更加熟悉。废话不多说，下面就让我们开始搭建吧！</p>
@@ -99,9 +98,9 @@ Popular options for deploying Apache httpd, and, optionally, <span class="caps">
 </blockquote>
 <p>从上面可以知道，Apache官方并没有提供windows下的二进制安装包，
 可以从它推荐的站点下载apache二进制安装包。
-在此选择<br />
+在此选择<br>
 <a href="https://www.apachelounge.com/download/">https://www.apachelounge.com/download/</a> 
-网站上的<br />
+网站上的<br>
 <a href="https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip">https://www.apachelounge.com/download/win32/binaries/httpd-2.4.4-win32.zip</a></p>
 <p>由于上面这个安装包是根据Visual Studio C++ 2010 <span class="caps">SP1</span> <span class="caps">VC10</span>&nbsp;环境下编译的。</p>
 <blockquote>
@@ -139,9 +138,9 @@ httpd -k start
 </pre></div>
 
 
-<p>如果没有修改配置文件中的默认80端口的话，访问<br />
+<p>如果没有修改配置文件中的默认80端口的话，访问<br>
 <a href="http://localhost/">http://localhost/</a>
-如果修改了端口号为8000，则访问  <br />
+如果修改了端口号为8000，则访问  <br>
 <a href="http://localhost:8000">http://localhost:8000</a></p>
 <p>最后看到It works页面。表示apache服务器安装成功。&nbsp;如果没有，请检查上述步骤是不是有什么错误。</p>
 <h2>Mysql安装</h2>
