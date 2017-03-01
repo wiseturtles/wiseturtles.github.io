@@ -68,7 +68,7 @@ On 2017-03-01
 
         </div>
 
-        <div><p>由于国内访问一些网站特别慢，所以，使用一台新加坡节点的机器做代理，提供浏览器、mobile访问网站速度。</p>
+        <div><p>由于国内访问一些网站特别慢，所以，使用一台新加坡节点的机器做代理，提高浏览器、mobile访问网站速度。</p>
 <p>最近发现访问<span class="caps">AWS</span>的<span class="caps">EC2</span>也特别慢，所以，希望通过该代理加速<span class="caps">SSH</span>连接速度，<code>ProxyCommand ssh -q -W %h:%p proxy</code>这行加入希望访问的主机<code>~/.ssh/config</code>中即可。</p>
 <p>但，如果团队成员也有此需求，但又不想让团队成员有<code>ssh</code>登陆代理主机的权限，那么就继续往下看。</p>
 <h2>在代理主机上配置受限用户、sshd及团队成员的ssh公钥</h2>
