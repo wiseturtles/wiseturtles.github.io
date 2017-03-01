@@ -432,7 +432,7 @@ Hello, Go!
 
 &lt;p&gt;执行测试&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ go &lt;span class="nb"&gt;test&lt;/span&gt; github.com/crazygit/stringutil
-ok      github.com/crazygit/stringutil  0.002s
+ok      github.com/crazygit/stringutil  &lt;span class="m"&gt;0&lt;/span&gt;.002s
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -457,8 +457,8 @@ $ tar -C /usr/local -xzf go1.4.2.linux-amd64.tar.gz
 
 
 &lt;p&gt;添加环境变量:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="x"&gt;export GOROOT=/usr/local/go&lt;/span&gt;
-&lt;span class="x"&gt;export PATH=&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;PATH&lt;/span&gt;&lt;span class="x"&gt;:&lt;/span&gt;&lt;span class="p"&gt;$&lt;/span&gt;&lt;span class="nv"&gt;GOROOT&lt;/span&gt;&lt;span class="x"&gt;/bin&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;export GOROOT=/usr/local/go
+export PATH=$PATH:$GOROOT/bin
 &lt;/pre&gt;&lt;/div&gt;
 
 

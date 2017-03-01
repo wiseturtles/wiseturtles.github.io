@@ -89,11 +89,11 @@ fs.file-max = 65000
     cpu         unlimited      unlimited
     filesize    unlimited      unlimited
     data        unlimited      unlimited
-    stack       <span class="m">8388608</span>        67104768
+    stack       <span class="m">8388608</span>        <span class="m">67104768</span>
     core        <span class="m">0</span>              unlimited
     rss         unlimited      unlimited
     memlock     unlimited      unlimited
-    maxproc     <span class="m">709</span>            1064
+    maxproc     <span class="m">709</span>            <span class="m">1064</span>
     maxfiles    <span class="m">256</span>            unlimited
 </pre></div>
 
@@ -104,12 +104,12 @@ $ sudo launchctl limit
     cpu         unlimited      unlimited
     filesize    unlimited      unlimited
     data        unlimited      unlimited
-    stack       <span class="m">8388608</span>        67104768
+    stack       <span class="m">8388608</span>        <span class="m">67104768</span>
     core        <span class="m">0</span>              unlimited
     rss         unlimited      unlimited
     memlock     unlimited      unlimited
-    maxproc     <span class="m">709</span>            1064
-    maxfiles    <span class="m">8192</span>           10240
+    maxproc     <span class="m">709</span>            <span class="m">1064</span>
+    maxfiles    <span class="m">8192</span>           <span class="m">10240</span>
 
 <span class="c1"># 注：</span>
 $ sudo launchctl limit maxfiles unlimited  <span class="c1"># 也可以直接设置为unlimited</span>

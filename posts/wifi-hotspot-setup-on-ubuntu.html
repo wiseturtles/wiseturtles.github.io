@@ -79,7 +79,7 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 <h1>方法一</h1>
 <h2>查看无线网卡硬件信息</h2>
 <div class="highlight"><pre><span></span>$ sudo lspci <span class="p">|</span> grep -i network
-03:00.0 Network controller: Intel Corporation Wireless <span class="m">7260</span> <span class="o">(</span>rev 6b<span class="o">)</span>
+<span class="m">03</span>:00.0 Network controller: Intel Corporation Wireless <span class="m">7260</span> <span class="o">(</span>rev 6b<span class="o">)</span>
 </pre></div>
 
 
@@ -90,7 +90,7 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 
 <h2>查看无线网卡设备名称</h2>
 <div class="highlight"><pre><span></span>$ iwconfig
-wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span class="m">16</span> dBm   
+wlan0     IEEE <span class="m">802</span>.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span class="m">16</span> dBm   
           Retry  long limit:7   RTS thr:off   Fragment thr:off
           Power Management:on
 </pre></div>
@@ -106,10 +106,10 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power<span class="o">=</span><span cla
 <span class="nv">interface</span><span class="o">=</span>wlan0
 <span class="nv">driver</span><span class="o">=</span>nl80211
 <span class="nv">ssid</span><span class="o">=</span>your_hotspot_name
-<span class="nv">channel</span><span class="o">=</span>1
+<span class="nv">channel</span><span class="o">=</span><span class="m">1</span>
 <span class="nv">hw_mode</span><span class="o">=</span>g
-<span class="nv">auth_algs</span><span class="o">=</span>1
-<span class="nv">wpa</span><span class="o">=</span>3
+<span class="nv">auth_algs</span><span class="o">=</span><span class="m">1</span>
+<span class="nv">wpa</span><span class="o">=</span><span class="m">3</span>
 <span class="nv">wpa_passphrase</span><span class="o">=</span>your-password
 <span class="nv">wpa_key_mgmt</span><span class="o">=</span>WPA-PSK
 <span class="nv">wpa_pairwise</span><span class="o">=</span>TKIP CCMP
@@ -133,10 +133,10 @@ Make sure the follow lines are Commented out <span class="o">(</span> put a <spa
 <span class="c1">#max-lease-time 7200;</span>
 
 Add the following lines to the file <span class="o">(</span>copy and paste<span class="o">)</span>
-subnet 10.10.0.0 netmask 255.255.255.0 <span class="o">{</span>
-        range 10.10.0.2 10.10.0.16<span class="p">;</span>
-        option domain-name-servers 8.8.4.4, 208.67.222.222<span class="p">;</span>
-        option routers 10.10.0.1<span class="p">;</span>
+subnet <span class="m">10</span>.10.0.0 netmask <span class="m">255</span>.255.255.0 <span class="o">{</span>
+        range <span class="m">10</span>.10.0.2 <span class="m">10</span>.10.0.16<span class="p">;</span>
+        option domain-name-servers <span class="m">8</span>.8.4.4, <span class="m">208</span>.67.222.222<span class="p">;</span>
+        option routers <span class="m">10</span>.10.0.1<span class="p">;</span>
 <span class="o">}</span>
 
 <span class="o">(</span>Note: the only other line in this whole config file that is uncommented is :
@@ -159,20 +159,20 @@ auto lo
 iface lo inet loopback
 auto wlan0
 iface wlan0 inet static
-    address 10.10.0.1
-    netmask 255.255.255.0
+    address <span class="m">10</span>.10.0.1
+    netmask <span class="m">255</span>.255.255.0
 </pre></div>
 
 
 <h2>修改/etc/sysctl.conf</h2>
 <div class="highlight"><pre><span></span>$ grep net.ipv4.ip_forward /etc/sysctl.conf 
-net.ipv4.ip_forward<span class="o">=</span>1
+net.ipv4.ip_forward<span class="o">=</span><span class="m">1</span>
 </pre></div>
 
 
 <h2>修改/etc/rc.local</h2>
 <div class="highlight"><pre><span></span>编辑 /etc/rc.local, 在 <span class="s2">&quot;exit 0&quot;</span> 前添加下一行
-iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s <span class="m">10</span>.10.0.0/16 -o ppp0 -j MASQUERADE
 </pre></div>
 
 

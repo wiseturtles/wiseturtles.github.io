@@ -33,7 +33,7 @@
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 下载blog库&lt;/span&gt;
 $ git clone --recursive git@github.com:wiseturtles/blog.git
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; blog
-$ tree -aL 1
+$ tree -aL &lt;span class="m"&gt;1&lt;/span&gt;
 .
 ├── cache       &lt;span class="c1"&gt;# 编译生成静态文件的cache库，加快编译速度&lt;/span&gt;
 ├── content     &lt;span class="c1"&gt;# 博客内容库，所有写的文章都按照目录来分类并放在这个目录下面&lt;/span&gt;
@@ -175,7 +175,7 @@ A block of text.
 &lt;/blockquote&gt;
 &lt;p&gt;本文以Pelican3.5为例，使用Pelican需要python环境，官方推荐的python版本是2.7.X，因此开始之前，最好是检查一下当前系统的python版本是否满足情况。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ python --version
-Python 2.7.6
+Python &lt;span class="m"&gt;2&lt;/span&gt;.7.6
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -199,21 +199,21 @@ $ curl -kL http://xrl.us/pythonbrewinstall &lt;span class="p"&gt;|&lt;/span&gt; 
 $ &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;[[ -s &lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.pythonbrew/etc/bashrc ]] &amp;amp;&amp;amp; source &lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;&lt;span class="s2"&gt;/.pythonbrew/etc/bashrc&amp;quot;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
 $ &lt;span class="nb"&gt;source&lt;/span&gt; ~/.bashrc
 $ pythonbrew --version      &lt;span class="c1"&gt;# 检查是否安装成功&lt;/span&gt;
-$ pythonbrew install --verbose 2.7.5       &lt;span class="c1"&gt;# 安装python 2.7.5&lt;/span&gt;
-$ pythonbrew use 2.7.5      &lt;span class="c1"&gt;# 临时在当前会话使用python 2.7.5&lt;/span&gt;
+$ pythonbrew install --verbose &lt;span class="m"&gt;2&lt;/span&gt;.7.5       &lt;span class="c1"&gt;# 安装python 2.7.5&lt;/span&gt;
+$ pythonbrew use &lt;span class="m"&gt;2&lt;/span&gt;.7.5      &lt;span class="c1"&gt;# 临时在当前会话使用python 2.7.5&lt;/span&gt;
 $ which python              &lt;span class="c1"&gt;# 检查python版本信息是否正确&lt;/span&gt;
 
 &lt;span class="c1"&gt;# 一些关于pythonbrew的常用命令&lt;/span&gt;
 $ pythonbrew list           &lt;span class="c1"&gt;# 查看已经安装了的python版本&lt;/span&gt;
 $ pythonbrew off            &lt;span class="c1"&gt;# 禁用pythonbrew，使用系统默认的python环境&lt;/span&gt;
 $ pythonbrew list -k        &lt;span class="c1"&gt;# 查看pythonbrew提供了哪些python版本可以安装&lt;/span&gt;
-$ pythonbrew switch 2.7.5   &lt;span class="c1"&gt;# 永久切换到python 2.7.5,与use有点不同&lt;/span&gt;
+$ pythonbrew switch &lt;span class="m"&gt;2&lt;/span&gt;.7.5   &lt;span class="c1"&gt;# 永久切换到python 2.7.5,与use有点不同&lt;/span&gt;
 &lt;span class="c1"&gt;# 更多命令可以参考官方文档&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;使用pythonbrew自带的virtualenv&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pythonbrew use 2.7.5
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pythonbrew use &lt;span class="m"&gt;2&lt;/span&gt;.7.5
 $ pythonbrew venv init       &lt;span class="c1"&gt;# 初始化虚拟环境&lt;/span&gt;
 $ pythonbrew venv create pelican  &lt;span class="c1"&gt;# 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字&lt;/span&gt;
 $ pythonbrew venv use pelican     &lt;span class="c1"&gt;# 开启虚拟环境&lt;/span&gt;

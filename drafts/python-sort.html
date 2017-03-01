@@ -111,7 +111,7 @@ On 2015-09-08
     <span class="k">return</span> <span class="n">qsort</span><span class="p">([</span><span class="n">lt</span> <span class="k">for</span> <span class="n">lt</span> <span class="ow">in</span> <span class="n">alist</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">lt</span> <span class="o">&lt;</span> <span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">+</span> <span class="p">[</span><span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+</span> <span class="n">qsort</span><span class="p">([</span><span class="n">gt</span> <span class="k">for</span> <span class="n">gt</span> <span class="ow">in</span> <span class="n">alist</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">gt</span> <span class="o">&gt;=</span> <span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">alist</span> <span class="o">=</span> <span class="n">get_random_list</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">bubble_sort</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">alist</span>

@@ -12,7 +12,7 @@ rm: /usr/share/vim: Operation not permitted
 &lt;h2&gt;解决&lt;/h2&gt;
 &lt;p&gt;查看文件flag:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ls -lO /usr/share/vim
--rwxr-xr-x  &lt;span class="m"&gt;8&lt;/span&gt; root  wheel  restricted - Aug  &lt;span class="m"&gt;2&lt;/span&gt; 22:36 /usr/share/vim
+-rwxr-xr-x  &lt;span class="m"&gt;8&lt;/span&gt; root  wheel  restricted - Aug  &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="m"&gt;22&lt;/span&gt;:36 /usr/share/vim
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -54,9 +54,9 @@ System Integrity Protection status: enabled.
 &lt;h4&gt;Python获取当前locale&lt;/h4&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ python -c &lt;span class="s1"&gt;&amp;#39;import locale; print(locale.getdefaultlocale());&amp;#39;&lt;/span&gt;
 Traceback &lt;span class="o"&gt;(&lt;/span&gt;most recent call last&lt;span class="o"&gt;)&lt;/span&gt;:
-File &lt;span class="s2"&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, line 1, in &amp;lt;module&amp;gt;
-File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line 543, in getdefaultlocale &lt;span class="k"&gt;return&lt;/span&gt; _parse_localename&lt;span class="o"&gt;(&lt;/span&gt;localename&lt;span class="o"&gt;)&lt;/span&gt;
-File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line 475, in _parse_localename raise ValueError, &lt;span class="s1"&gt;&amp;#39;unknown locale: %s&amp;#39;&lt;/span&gt; % localename
+File &lt;span class="s2"&gt;&amp;quot;&amp;lt;string&amp;gt;&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;1&lt;/span&gt;, in &amp;lt;module&amp;gt;
+File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;543&lt;/span&gt;, in getdefaultlocale &lt;span class="k"&gt;return&lt;/span&gt; _parse_localename&lt;span class="o"&gt;(&lt;/span&gt;localename&lt;span class="o"&gt;)&lt;/span&gt;
+File &lt;span class="s2"&gt;&amp;quot;/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/lib/python2.7/locale.py&amp;quot;&lt;/span&gt;, line &lt;span class="m"&gt;475&lt;/span&gt;, in _parse_localename raise ValueError, &lt;span class="s1"&gt;&amp;#39;unknown locale: %s&amp;#39;&lt;/span&gt; % localename
 ValueError: unknown locale: UTF-8
 &lt;/pre&gt;&lt;/div&gt;
 

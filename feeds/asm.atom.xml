@@ -151,7 +151,7 @@ alias gcc=&amp;#39;gcc -m32&amp;#39;
 &lt;span class="k"&gt;function&lt;/span&gt; usage&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;usage: &lt;/span&gt;&lt;span class="nv"&gt;$0&lt;/span&gt;&lt;span class="s2"&gt; &amp;lt;asm-file-path&amp;gt;, the &amp;lt;asm-file-path&amp;gt; must end by &amp;#39;.s&amp;#39;&amp;quot;&lt;/span&gt;
-    &lt;span class="nb"&gt;exit&lt;/span&gt; 0
+    &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="nb"&gt;test&lt;/span&gt; &lt;span class="nv"&gt;$#&lt;/span&gt; -ne &lt;span class="m"&gt;1&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; usage
@@ -311,7 +311,7 @@ Hello World
 int main&lt;span class="o"&gt;()&lt;/span&gt;
 &lt;span class="o"&gt;{&lt;/span&gt;
     printf&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Hello World\n&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-    exit&lt;span class="o"&gt;(&lt;/span&gt;0&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    exit&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 $ gcc -S helloc.c

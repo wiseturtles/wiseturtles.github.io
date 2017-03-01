@@ -78,7 +78,7 @@ top -bn1 -u redis <span class="p">|</span>  awk <span class="s1">&#39;{mem += $1
 <span class="c1"># 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考</span>
 <span class="c1"># http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100</span>
 $ top -bn1 <span class="p">|</span>  awk <span class="s1">&#39;{mem += $10} END {print mem}&#39;</span>
-135.6
+<span class="m">135</span>.6
 </pre></div></div>
 
         <hr>

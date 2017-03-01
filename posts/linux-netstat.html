@@ -144,11 +144,11 @@ $ netstat -lx
 <span class="c1"># -p使用需要root权限,不然无法获取PID</span>
 $ sudo netstat -ltpe
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     11684/adb
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    6663/java
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200          *:*                     LISTEN      linliang   <span class="m">10361577</span>    12461/ssh
-tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       1344/nginx
-tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         1481/dnsmasq
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:5037          *:*                     LISTEN      linliang   <span class="m">4530492</span>     <span class="m">11684</span>/adb
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:63342         *:*                     LISTEN      linliang   <span class="m">10952269</span>    <span class="m">6663</span>/java
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:9200          *:*                     LISTEN      linliang   <span class="m">10361577</span>    <span class="m">12461</span>/ssh
+tcp        <span class="m">0</span>      <span class="m">0</span> *:http                  *:*                     LISTEN      root       <span class="m">12810</span>       <span class="m">1344</span>/nginx
+tcp        <span class="m">0</span>      <span class="m">0</span> localhost:domain        *:*                     LISTEN      root       <span class="m">683</span>         <span class="m">1481</span>/dnsmasq
 
 <span class="c1"># 上面的命令总如果使用-n,将会显示用户UID，而不是用户名</span>
 
@@ -164,9 +164,9 @@ Icmp:
     <span class="m">6034</span> ICMP messages received
     <span class="m">71</span> input ICMP message failed.
     ICMP input histogram:
-        destination unreachable: 5774
-        timeout in transit: 106
-        <span class="nb">echo</span> replies: 154
+        destination unreachable: <span class="m">5774</span>
+        timeout in transit: <span class="m">106</span>
+        <span class="nb">echo</span> replies: <span class="m">154</span>
     <span class="m">6882</span> ICMP messages sent
     <span class="m">0</span> ICMP messages failed
     ICMP output histogram:
@@ -180,10 +180,10 @@ $ netstat -su
 $ netstat -rn
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-0.0.0.0         172.26.50.1     0.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-169.254.0.0     0.0.0.0         255.255.0.0     U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-172.26.50.0     0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
-192.168.56.0    0.0.0.0         255.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
+<span class="m">0</span>.0.0.0         <span class="m">172</span>.26.50.1     <span class="m">0</span>.0.0.0         UG        <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+<span class="m">169</span>.254.0.0     <span class="m">0</span>.0.0.0         <span class="m">255</span>.255.0.0     U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+<span class="m">172</span>.26.50.0     <span class="m">0</span>.0.0.0         <span class="m">255</span>.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> eth1
+<span class="m">192</span>.168.56.0    <span class="m">0</span>.0.0.0         <span class="m">255</span>.255.255.0   U         <span class="m">0</span> <span class="m">0</span>          <span class="m">0</span> vboxnet0
 
 <span class="c1"># 打印网络接口(-i)</span>
 $ netstat -i
@@ -197,14 +197,14 @@ vboxnet0   <span class="m">1500</span> <span class="m">0</span>         <span cl
 <span class="c1"># 达到与ifconfig命令类似的效果</span>
 $ netstat -ie
 Kernel Interface table
-eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
+eth1      Link encap:Ethernet  HWaddr <span class="m">44</span>:39:c4:8d:d9:64
         inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
         inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
         UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
         RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
         TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
-        RX bytes:6607723134 <span class="o">(</span>6.6 GB<span class="o">)</span>  TX bytes:10396843122 <span class="o">(</span>10.3 GB<span class="o">)</span>
+        RX bytes:6607723134 <span class="o">(</span><span class="m">6</span>.6 GB<span class="o">)</span>  TX bytes:10396843122 <span class="o">(</span><span class="m">10</span>.3 GB<span class="o">)</span>
         Interrupt:20 Memory:f7c00000-f7c20000
 
 lo        Link encap:Local Loopback
@@ -214,7 +214,7 @@ lo        Link encap:Local Loopback
         RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
         TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:0
-        RX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>  TX bytes:2717552755 <span class="o">(</span>2.7 GB<span class="o">)</span>
+        RX bytes:2717552755 <span class="o">(</span><span class="m">2</span>.7 GB<span class="o">)</span>  TX bytes:2717552755 <span class="o">(</span><span class="m">2</span>.7 GB<span class="o">)</span>
 
 vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
@@ -223,7 +223,7 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         RX packets:0 errors:0 dropped:0 overruns:0 frame:0
         TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
-        RX bytes:0 <span class="o">(</span>0.0 B<span class="o">)</span>  TX bytes:130893 <span class="o">(</span>130.8 KB<span class="o">)</span>
+        RX bytes:0 <span class="o">(</span><span class="m">0</span>.0 B<span class="o">)</span>  TX bytes:130893 <span class="o">(</span><span class="m">130</span>.8 KB<span class="o">)</span>
 </pre></div></div>
 
         <hr>

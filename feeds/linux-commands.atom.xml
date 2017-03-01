@@ -9,7 +9,7 @@ top -bn1 -u redis &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&
 &lt;span class="c1"&gt;# 结果可能大于100%，反应出目前机器内容可用较少, 具体解释可以参考&lt;/span&gt;
 &lt;span class="c1"&gt;# http://serverfault.com/questions/471757/sum-of-memory-of-few-processes-in-top-is-greater-than-100&lt;/span&gt;
 $ top -bn1 &lt;span class="p"&gt;|&lt;/span&gt;  awk &lt;span class="s1"&gt;&amp;#39;{mem += $10} END {print mem}&amp;#39;&lt;/span&gt;
-135.6
+&lt;span class="m"&gt;135&lt;/span&gt;.6
 &lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="command"></category><category term="top"></category></entry><entry><title>Linux远程文件拷贝</title><link href="http://blog.wiseturtles.com/posts/copy-remote-host-file.html" rel="alternate"></link><published>2015-11-11T10:12:00+08:00</published><updated>2015-11-11T10:12:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2015-11-11:/posts/copy-remote-host-file.html</id><summary type="html">&lt;p&gt;Linux远程文件拷贝&lt;/p&gt;</summary><content type="html">&lt;p&gt;我们经常会碰到从一个主机上拷贝文件到其他主机，本文汇总下常用方法。&lt;/p&gt;
 &lt;h2&gt;ssh&lt;/h2&gt;
 &lt;p&gt;提到远程文件拷贝，大家肯定首先想到的是ssh。(啥? 你想到的是ftp??&amp;nbsp;搭建个ftp好麻烦&amp;#8230;)&lt;/p&gt;
@@ -126,11 +126,11 @@ $ netstat -lx
 &lt;span class="c1"&gt;# -p使用需要root权限,不然无法获取PID&lt;/span&gt;
 $ sudo netstat -ltpe
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode       PID/Program name
-tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:5037          *:*                     LISTEN      linliang   &lt;span class="m"&gt;4530492&lt;/span&gt;     11684/adb
-tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:63342         *:*                     LISTEN      linliang   &lt;span class="m"&gt;10952269&lt;/span&gt;    6663/java
-tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:9200          *:*                     LISTEN      linliang   &lt;span class="m"&gt;10361577&lt;/span&gt;    12461/ssh
-tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; *:http                  *:*                     LISTEN      root       &lt;span class="m"&gt;12810&lt;/span&gt;       1344/nginx
-tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:domain        *:*                     LISTEN      root       &lt;span class="m"&gt;683&lt;/span&gt;         1481/dnsmasq
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:5037          *:*                     LISTEN      linliang   &lt;span class="m"&gt;4530492&lt;/span&gt;     &lt;span class="m"&gt;11684&lt;/span&gt;/adb
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:63342         *:*                     LISTEN      linliang   &lt;span class="m"&gt;10952269&lt;/span&gt;    &lt;span class="m"&gt;6663&lt;/span&gt;/java
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:9200          *:*                     LISTEN      linliang   &lt;span class="m"&gt;10361577&lt;/span&gt;    &lt;span class="m"&gt;12461&lt;/span&gt;/ssh
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; *:http                  *:*                     LISTEN      root       &lt;span class="m"&gt;12810&lt;/span&gt;       &lt;span class="m"&gt;1344&lt;/span&gt;/nginx
+tcp        &lt;span class="m"&gt;0&lt;/span&gt;      &lt;span class="m"&gt;0&lt;/span&gt; localhost:domain        *:*                     LISTEN      root       &lt;span class="m"&gt;683&lt;/span&gt;         &lt;span class="m"&gt;1481&lt;/span&gt;/dnsmasq
 
 &lt;span class="c1"&gt;# 上面的命令总如果使用-n,将会显示用户UID，而不是用户名&lt;/span&gt;
 
@@ -146,9 +146,9 @@ Icmp:
     &lt;span class="m"&gt;6034&lt;/span&gt; ICMP messages received
     &lt;span class="m"&gt;71&lt;/span&gt; input ICMP message failed.
     ICMP input histogram:
-        destination unreachable: 5774
-        timeout in transit: 106
-        &lt;span class="nb"&gt;echo&lt;/span&gt; replies: 154
+        destination unreachable: &lt;span class="m"&gt;5774&lt;/span&gt;
+        timeout in transit: &lt;span class="m"&gt;106&lt;/span&gt;
+        &lt;span class="nb"&gt;echo&lt;/span&gt; replies: &lt;span class="m"&gt;154&lt;/span&gt;
     &lt;span class="m"&gt;6882&lt;/span&gt; ICMP messages sent
     &lt;span class="m"&gt;0&lt;/span&gt; ICMP messages failed
     ICMP output histogram:
@@ -162,10 +162,10 @@ $ netstat -su
 $ netstat -rn
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-0.0.0.0         172.26.50.1     0.0.0.0         UG        &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
-169.254.0.0     0.0.0.0         255.255.0.0     U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
-172.26.50.0     0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
-192.168.56.0    0.0.0.0         255.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; vboxnet0
+&lt;span class="m"&gt;0&lt;/span&gt;.0.0.0         &lt;span class="m"&gt;172&lt;/span&gt;.26.50.1     &lt;span class="m"&gt;0&lt;/span&gt;.0.0.0         UG        &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+&lt;span class="m"&gt;169&lt;/span&gt;.254.0.0     &lt;span class="m"&gt;0&lt;/span&gt;.0.0.0         &lt;span class="m"&gt;255&lt;/span&gt;.255.0.0     U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+&lt;span class="m"&gt;172&lt;/span&gt;.26.50.0     &lt;span class="m"&gt;0&lt;/span&gt;.0.0.0         &lt;span class="m"&gt;255&lt;/span&gt;.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; eth1
+&lt;span class="m"&gt;192&lt;/span&gt;.168.56.0    &lt;span class="m"&gt;0&lt;/span&gt;.0.0.0         &lt;span class="m"&gt;255&lt;/span&gt;.255.255.0   U         &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt;          &lt;span class="m"&gt;0&lt;/span&gt; vboxnet0
 
 &lt;span class="c1"&gt;# 打印网络接口(-i)&lt;/span&gt;
 $ netstat -i
@@ -179,14 +179,14 @@ vboxnet0   &lt;span class="m"&gt;1500&lt;/span&gt; &lt;span class="m"&gt;0&lt;/s
 &lt;span class="c1"&gt;# 达到与ifconfig命令类似的效果&lt;/span&gt;
 $ netstat -ie
 Kernel Interface table
-eth1      Link encap:Ethernet  HWaddr 44:39:c4:8d:d9:64
+eth1      Link encap:Ethernet  HWaddr &lt;span class="m"&gt;44&lt;/span&gt;:39:c4:8d:d9:64
         inet addr:172.26.50.13  Bcast:172.26.50.255  Mask:255.255.255.0
         inet6 addr: fe80::4639:c4ff:fe8d:d964/64 Scope:Link
         UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
         RX packets:10651112 errors:0 dropped:0 overruns:0 frame:0
         TX packets:10656940 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
-        RX bytes:6607723134 &lt;span class="o"&gt;(&lt;/span&gt;6.6 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:10396843122 &lt;span class="o"&gt;(&lt;/span&gt;10.3 GB&lt;span class="o"&gt;)&lt;/span&gt;
+        RX bytes:6607723134 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;6&lt;/span&gt;.6 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:10396843122 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;.3 GB&lt;span class="o"&gt;)&lt;/span&gt;
         Interrupt:20 Memory:f7c00000-f7c20000
 
 lo        Link encap:Local Loopback
@@ -196,7 +196,7 @@ lo        Link encap:Local Loopback
         RX packets:5095811 errors:0 dropped:0 overruns:0 frame:0
         TX packets:5095811 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:0
-        RX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;2.7 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;2.7 GB&lt;span class="o"&gt;)&lt;/span&gt;
+        RX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;.7 GB&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:2717552755 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;.7 GB&lt;span class="o"&gt;)&lt;/span&gt;
 
 vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         inet addr:192.168.56.1  Bcast:192.168.56.255  Mask:255.255.255.0
@@ -205,7 +205,7 @@ vboxnet0  Link encap:Ethernet  HWaddr 0a:00:27:00:00:00
         RX packets:0 errors:0 dropped:0 overruns:0 frame:0
         TX packets:1505 errors:0 dropped:0 overruns:0 carrier:0
         collisions:0 txqueuelen:1000
-        RX bytes:0 &lt;span class="o"&gt;(&lt;/span&gt;0.0 B&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:130893 &lt;span class="o"&gt;(&lt;/span&gt;130.8 KB&lt;span class="o"&gt;)&lt;/span&gt;
+        RX bytes:0 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.0 B&lt;span class="o"&gt;)&lt;/span&gt;  TX bytes:130893 &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="m"&gt;130&lt;/span&gt;.8 KB&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="command"></category><category term="netstat"></category></entry><entry><title>ps</title><link href="http://blog.wiseturtles.com/posts/linux-ps.html" rel="alternate"></link><published>2015-01-13T09:51:00+08:00</published><updated>2015-01-13T09:51:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2015-01-13:/posts/linux-ps.html</id><summary type="html">&lt;p&gt;the usage of&amp;nbsp;ps&lt;/p&gt;</summary><content type="html">&lt;p&gt;本文参考：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href="http://www.binarytides.com/linux-ps-command/"&gt;10 basic examples of Linux ps&amp;nbsp;command&lt;/a&gt;&lt;/li&gt;
@@ -256,7 +256,7 @@ $ ps -f -u www-data,root
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;按照进程id来查找&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ps -f -p 3150,7298,6455
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ps -f -p &lt;span class="m"&gt;3150&lt;/span&gt;,7298,6455
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -316,11 +316,11 @@ priority     kernel scheduling priority
 &lt;p&gt;使用&lt;code&gt;--forest&lt;/code&gt;选项&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ps -f --forest -C nginx
 UID        PID  PPID  C STIME TTY          TIME CMD
-root      &lt;span class="m"&gt;1344&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:00:00 nginx: master process /usr/sbin/nginx
-www-data  &lt;span class="m"&gt;1345&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:01:52  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
-www-data  &lt;span class="m"&gt;1346&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:02:05  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
-www-data  &lt;span class="m"&gt;1348&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:02:00  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
-www-data  &lt;span class="m"&gt;1349&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        00:01:04  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
+root      &lt;span class="m"&gt;1344&lt;/span&gt;     &lt;span class="m"&gt;1&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 nginx: master process /usr/sbin/nginx
+www-data  &lt;span class="m"&gt;1345&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:01:52  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
+www-data  &lt;span class="m"&gt;1346&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:02:05  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
+www-data  &lt;span class="m"&gt;1348&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:02:00  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
+www-data  &lt;span class="m"&gt;1349&lt;/span&gt;  &lt;span class="m"&gt;1344&lt;/span&gt;  &lt;span class="m"&gt;0&lt;/span&gt;  &lt;span class="m"&gt;2014&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:01:04  &lt;span class="se"&gt;\_&lt;/span&gt; nginx: worker process
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -338,13 +338,13 @@ PID USER     COMMAND
 &lt;span class="m"&gt;1349&lt;/span&gt; www-data nginx
 
 &lt;span class="c1"&gt;# 使用--ppid选项列出子进程&lt;/span&gt;
-$ ps --ppid 2359
+$ ps --ppid &lt;span class="m"&gt;2359&lt;/span&gt;
 PID TTY          TIME CMD
-&lt;span class="m"&gt;4524&lt;/span&gt; ?        00:00:00 apache2
-&lt;span class="m"&gt;4525&lt;/span&gt; ?        00:00:00 apache2
-&lt;span class="m"&gt;4526&lt;/span&gt; ?        00:00:00 apache2
-&lt;span class="m"&gt;4527&lt;/span&gt; ?        00:00:00 apache2
-&lt;span class="m"&gt;4528&lt;/span&gt; ?        00:00:00 apache2
+&lt;span class="m"&gt;4524&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 apache2
+&lt;span class="m"&gt;4525&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 apache2
+&lt;span class="m"&gt;4526&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 apache2
+&lt;span class="m"&gt;4527&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 apache2
+&lt;span class="m"&gt;4528&lt;/span&gt; ?        &lt;span class="m"&gt;00&lt;/span&gt;:00:00 apache2
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -938,7 +938,7 @@ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loa
 &lt;p&gt;&lt;em&gt;Load averages are not normalized for the number of CPUs in a system, so a load  aver‐ age  of 1 means a single &lt;span class="caps"&gt;CPU&lt;/span&gt; system is loaded all the time while on a 4 &lt;span class="caps"&gt;CPU&lt;/span&gt; system it means it was idle 75% of the&amp;nbsp;time.&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;语法&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ uptime
-10:14:31 up &lt;span class="m"&gt;10&lt;/span&gt; days, 20:55,  &lt;span class="m"&gt;6&lt;/span&gt; users,  load average: 0.28, 0.42, 0.54
+&lt;span class="m"&gt;10&lt;/span&gt;:14:31 up &lt;span class="m"&gt;10&lt;/span&gt; days, &lt;span class="m"&gt;20&lt;/span&gt;:55,  &lt;span class="m"&gt;6&lt;/span&gt; users,  load average: &lt;span class="m"&gt;0&lt;/span&gt;.28, &lt;span class="m"&gt;0&lt;/span&gt;.42, &lt;span class="m"&gt;0&lt;/span&gt;.54
 &lt;/pre&gt;&lt;/div&gt;
 
 

@@ -74,7 +74,7 @@ On 2013-11-03
 <span class="k">for</span> x in <span class="k">$(</span>find <span class="nv">$JDK_BIN_PATH</span><span class="k">)</span>
 <span class="k">do</span>
     <span class="nv">name</span><span class="o">=</span><span class="k">$(</span>basename <span class="nv">$x</span><span class="k">)</span>
-    sudo update-alternatives --install /usr/bin/<span class="nv">$name</span> <span class="nv">$name</span> <span class="nv">$x</span> 300
+    sudo update-alternatives --install /usr/bin/<span class="nv">$name</span> <span class="nv">$name</span> <span class="nv">$x</span> <span class="m">300</span>
 <span class="k">done</span>
 </pre></div>
 </div>

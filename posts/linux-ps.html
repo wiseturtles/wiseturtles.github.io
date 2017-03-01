@@ -118,7 +118,7 @@ $ ps -f -u www-data,root
 </li>
 <li>
 <p>按照进程id来查找</p>
-<div class="highlight"><pre><span></span>$ ps -f -p 3150,7298,6455
+<div class="highlight"><pre><span></span>$ ps -f -p <span class="m">3150</span>,7298,6455
 </pre></div>
 
 
@@ -178,11 +178,11 @@ priority     kernel scheduling priority
 <p>使用<code>--forest</code>选项</p>
 <div class="highlight"><pre><span></span>$ ps -f --forest -C nginx
 UID        PID  PPID  C STIME TTY          TIME CMD
-root      <span class="m">1344</span>     <span class="m">1</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:00:00 nginx: master process /usr/sbin/nginx
-www-data  <span class="m">1345</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:01:52  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1346</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:02:05  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1348</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:02:00  <span class="se">\_</span> nginx: worker process
-www-data  <span class="m">1349</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        00:01:04  <span class="se">\_</span> nginx: worker process
+root      <span class="m">1344</span>     <span class="m">1</span>  <span class="m">0</span>  <span class="m">2014</span> ?        <span class="m">00</span>:00:00 nginx: master process /usr/sbin/nginx
+www-data  <span class="m">1345</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        <span class="m">00</span>:01:52  <span class="se">\_</span> nginx: worker process
+www-data  <span class="m">1346</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        <span class="m">00</span>:02:05  <span class="se">\_</span> nginx: worker process
+www-data  <span class="m">1348</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        <span class="m">00</span>:02:00  <span class="se">\_</span> nginx: worker process
+www-data  <span class="m">1349</span>  <span class="m">1344</span>  <span class="m">0</span>  <span class="m">2014</span> ?        <span class="m">00</span>:01:04  <span class="se">\_</span> nginx: worker process
 </pre></div>
 
 
@@ -200,13 +200,13 @@ PID USER     COMMAND
 <span class="m">1349</span> www-data nginx
 
 <span class="c1"># 使用--ppid选项列出子进程</span>
-$ ps --ppid 2359
+$ ps --ppid <span class="m">2359</span>
 PID TTY          TIME CMD
-<span class="m">4524</span> ?        00:00:00 apache2
-<span class="m">4525</span> ?        00:00:00 apache2
-<span class="m">4526</span> ?        00:00:00 apache2
-<span class="m">4527</span> ?        00:00:00 apache2
-<span class="m">4528</span> ?        00:00:00 apache2
+<span class="m">4524</span> ?        <span class="m">00</span>:00:00 apache2
+<span class="m">4525</span> ?        <span class="m">00</span>:00:00 apache2
+<span class="m">4526</span> ?        <span class="m">00</span>:00:00 apache2
+<span class="m">4527</span> ?        <span class="m">00</span>:00:00 apache2
+<span class="m">4528</span> ?        <span class="m">00</span>:00:00 apache2
 </pre></div>
 
 

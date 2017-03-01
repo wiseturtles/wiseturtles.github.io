@@ -117,7 +117,7 @@ $ sudo /usr/bin/install -c -m &lt;span class="m"&gt;755&lt;/span&gt; ./src/check
 
 
 &lt;p&gt;测试是否可以工作:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/local/nagios/libexec/check_nrpe -H 10.4.2.2 &lt;span class="c1"&gt;# 该IP是被监控主机的IP&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ /usr/local/nagios/libexec/check_nrpe -H &lt;span class="m"&gt;10&lt;/span&gt;.4.2.2 &lt;span class="c1"&gt;# 该IP是被监控主机的IP&lt;/span&gt;
 NRPE v2.13
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -130,7 +130,7 @@ NRPE v2.13
 
 &lt;p&gt;配置nagios-nrpe-server，允许监控主机连接该被监控主机。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo vim /etc/nagios/nrpe.cfg
-$ 将 监控主机IP 填入 allowed_hosts 字段，如: &lt;span class="nv"&gt;allowed_hosts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;127.0.0.1,10.4.22.22
+$ 将 监控主机IP 填入 allowed_hosts 字段，如: &lt;span class="nv"&gt;allowed_hosts&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;127&lt;/span&gt;.0.0.1,10.4.22.22
 $ sudo service nagios-nrpe-server restart
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -139,8 +139,8 @@ $ sudo service nagios-nrpe-server restart
 &lt;h2&gt;配置监控主机&lt;/h2&gt;
 &lt;p&gt;/usr/local/nagios/etc/nagios.cfg&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ diff -u nagios.cfg.back nagios.cfg
---- nagios.cfg.back2015-05-23 11:07:51.436491931 +0800
-+++ nagios.cfg2015-05-23 22:08:09.872618927 +0800
+--- nagios.cfg.back2015-05-23 &lt;span class="m"&gt;11&lt;/span&gt;:07:51.436491931 +0800
++++ nagios.cfg2015-05-23 &lt;span class="m"&gt;22&lt;/span&gt;:08:09.872618927 +0800
 @@ -30,6 +30,9 @@
 &lt;span class="nv"&gt;cfg_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios/etc/objects/contacts.cfg
 &lt;span class="nv"&gt;cfg_file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/local/nagios/etc/objects/timeperiods.cfg
@@ -172,7 +172,7 @@ define host&lt;span class="o"&gt;{&lt;/span&gt;
                                     &lt;span class="p"&gt;;&lt;/span&gt; in &lt;span class="o"&gt;(&lt;/span&gt;or inherited by&lt;span class="o"&gt;)&lt;/span&gt; the linux-server host template definition.
     host_name                       appstore01
     &lt;span class="nb"&gt;alias&lt;/span&gt;                           appstore01 on ucloud
-    address                         10.4.2.2
+    address                         &lt;span class="m"&gt;10&lt;/span&gt;.4.2.2
     &lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="c1"&gt;##############&lt;/span&gt;
@@ -184,7 +184,7 @@ define host&lt;span class="o"&gt;{&lt;/span&gt;
                                     &lt;span class="p"&gt;;&lt;/span&gt; in &lt;span class="o"&gt;(&lt;/span&gt;or inherited by&lt;span class="o"&gt;)&lt;/span&gt; the linux-server host template definition.
     host_name                       appstore02
     &lt;span class="nb"&gt;alias&lt;/span&gt;                           appstore02 on ucloud
-    address                         10.4.2.22
+    address                         &lt;span class="m"&gt;10&lt;/span&gt;.4.2.22
     &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -207,7 +207,7 @@ define hostgroup&lt;span class="o"&gt;{&lt;/span&gt;
 +# &lt;span class="s1"&gt;&amp;#39;check_mysql&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
 +define command&lt;span class="o"&gt;{&lt;/span&gt;
 +   command_name    check_mysql
-+   command_line    &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_mysql -H &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -u &lt;span class="nv"&gt;$ARG1&lt;/span&gt;$ -p &lt;span class="nv"&gt;$ARG2&lt;/span&gt;$ -d &lt;span class="nv"&gt;$ARG3&lt;/span&gt;$ -P 3306
++   command_line    &lt;span class="nv"&gt;$USER1&lt;/span&gt;$/check_mysql -H &lt;span class="nv"&gt;$HOSTADDRESS&lt;/span&gt;$ -u &lt;span class="nv"&gt;$ARG1&lt;/span&gt;$ -p &lt;span class="nv"&gt;$ARG2&lt;/span&gt;$ -d &lt;span class="nv"&gt;$ARG3&lt;/span&gt;$ -P &lt;span class="m"&gt;3306&lt;/span&gt;
 +   &lt;span class="o"&gt;}&lt;/span&gt;
 
 +# &lt;span class="s1"&gt;&amp;#39;check_http_with_url_port&amp;#39;&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; definition
@@ -243,7 +243,7 @@ define service &lt;span class="o"&gt;{&lt;/span&gt;
         use                             generic-service
         hostgroup_name                  appstore-group
         service_description             SSH
-        check_command                   check_ssh!-p 1122
+        check_command                   check_ssh!-p &lt;span class="m"&gt;1122&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="c1"&gt;#################&lt;/span&gt;
@@ -331,14 +331,14 @@ define service &lt;span class="o"&gt;{&lt;/span&gt;
 &lt;span class="c1"&gt;######################################&lt;/span&gt;
 &lt;span class="c1"&gt;# Do any local nrpe configuration here&lt;/span&gt;
 &lt;span class="c1"&gt;######################################&lt;/span&gt;
-command&lt;span class="o"&gt;[&lt;/span&gt;check_disk_root&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /
-command&lt;span class="o"&gt;[&lt;/span&gt;check_disk_data&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_disk -w 25% -c 10% -p /data
+command&lt;span class="o"&gt;[&lt;/span&gt;check_disk_root&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_disk -w &lt;span class="m"&gt;25&lt;/span&gt;% -c &lt;span class="m"&gt;10&lt;/span&gt;% -p /
+command&lt;span class="o"&gt;[&lt;/span&gt;check_disk_data&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_disk -w &lt;span class="m"&gt;25&lt;/span&gt;% -c &lt;span class="m"&gt;10&lt;/span&gt;% -p /data
 command&lt;span class="o"&gt;[&lt;/span&gt;check_redis&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_tcp -H localhost -p &lt;span class="m"&gt;6379&lt;/span&gt; -t &lt;span class="m"&gt;5&lt;/span&gt; -E -s &lt;span class="s1"&gt;&amp;#39;info\r\n&amp;#39;&lt;/span&gt; -q &lt;span class="s1"&gt;&amp;#39;quit\r\n&amp;#39;&lt;/span&gt; -e &lt;span class="s1"&gt;&amp;#39;uptime_in_days&amp;#39;&lt;/span&gt; -M crit
 command&lt;span class="o"&gt;[&lt;/span&gt;check_memcached&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_tcp -H localhost -p &lt;span class="m"&gt;11211&lt;/span&gt; -t &lt;span class="m"&gt;5&lt;/span&gt; -E -s &lt;span class="s1"&gt;&amp;#39;stats\r\nquit\r\n&amp;#39;&lt;/span&gt; -e &lt;span class="s1"&gt;&amp;#39;uptime&amp;#39;&lt;/span&gt; -M crit
 command&lt;span class="o"&gt;[&lt;/span&gt;check_mysql&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_mysql -H localhost -u user -p passwd -d your-database
-command&lt;span class="o"&gt;[&lt;/span&gt;check_http_tdanceweb&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_http -H localhost -p &lt;span class="m"&gt;6688&lt;/span&gt; -t 3
+command&lt;span class="o"&gt;[&lt;/span&gt;check_http_tdanceweb&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_http -H localhost -p &lt;span class="m"&gt;6688&lt;/span&gt; -t &lt;span class="m"&gt;3&lt;/span&gt;
 command&lt;span class="o"&gt;[&lt;/span&gt;check_http_appstore&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_http -H localhost -p &lt;span class="m"&gt;8888&lt;/span&gt; -t &lt;span class="m"&gt;3&lt;/span&gt; -u /m3/subjects
-command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_http -H localhost -p &lt;span class="m"&gt;9999&lt;/span&gt; -t 3
+command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"&gt;]=&lt;/span&gt;/usr/lib/nagios/plugins/check_http -H localhost -p &lt;span class="m"&gt;9999&lt;/span&gt; -t &lt;span class="m"&gt;3&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -362,7 +362,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 &lt;p&gt;由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？&lt;/p&gt;
 &lt;p&gt;以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&amp;nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。&lt;/p&gt;
 &lt;p&gt;前提:&amp;nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -fNL 9200:localhost:9200 192.167.0.1
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -fNL &lt;span class="m"&gt;9200&lt;/span&gt;:localhost:9200 &lt;span class="m"&gt;192&lt;/span&gt;.167.0.1
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -374,7 +374,7 @@ command&lt;span class="o"&gt;[&lt;/span&gt;check_http_launcher&lt;span class="o"
 
 &lt;p&gt;那么以后使用&lt;code&gt;sshes&lt;/code&gt;就可以方便的建立一个ssh隧道连接,　同理，此法可用于连接服务器上的mysql及其它服务.&lt;/p&gt;
 &lt;p&gt;另外一个常用的是通过ssh翻墙的命令&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -qTfnN -D &lt;span class="m"&gt;7070&lt;/span&gt; 192.167.0.2
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ ssh -qTfnN -D &lt;span class="m"&gt;7070&lt;/span&gt; &lt;span class="m"&gt;192&lt;/span&gt;.167.0.2
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -396,38 +396,38 @@ $ scp -P &lt;span class="m"&gt;4455&lt;/span&gt; root@192.168.0.1:/tmp/a a
 
 &lt;p&gt;这样比较繁琐。稍微配置一下便可以化繁为简&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.ssh/config
-Host 192.168.0.1
+Host &lt;span class="m"&gt;192&lt;/span&gt;.168.0.1
     User root
-    Port 4455
+    Port &lt;span class="m"&gt;4455&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;这样以后每次访问该服务器都不需要带上用户及端口信息&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# ssh登陆&lt;/span&gt;
-$ ssh 192.168.0.1
+$ ssh &lt;span class="m"&gt;192&lt;/span&gt;.168.0.1
 &lt;span class="c1"&gt;# scp拷贝&lt;/span&gt;
-$ scp -P 192.168.0.1:/tmp/a a
+$ scp -P &lt;span class="m"&gt;192&lt;/span&gt;.168.0.1:/tmp/a a
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;当本机需要通过不同的key登陆到不同的服务器时，我们都是通过&lt;code&gt;-i&lt;/code&gt;来临时指定key.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="c1"&gt;# 使用a.key登陆192.168.0.1&lt;/span&gt;
-$ ssh -i ~/.ssh/a.key 192.168.0.1
+$ ssh -i ~/.ssh/a.key &lt;span class="m"&gt;192&lt;/span&gt;.168.0.1
 &lt;span class="c1"&gt;# 使用b.key登陆192.168.0.2&lt;/span&gt;
-$ ssh -i ~/.ssh/b.key 192.168.0.2
+$ ssh -i ~/.ssh/b.key &lt;span class="m"&gt;192&lt;/span&gt;.168.0.2
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;稍微配置一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat ~/.ssh/config
-Host 192.168.0.1
+Host &lt;span class="m"&gt;192&lt;/span&gt;.168.0.1
     User root
-    Port 4455
+    Port &lt;span class="m"&gt;4455&lt;/span&gt;
     IdentityFile ~/.ssh/a.key
 
-Host 192.168.0.2
+Host &lt;span class="m"&gt;192&lt;/span&gt;.168.0.2
     User root
-    Port 4455
+    Port &lt;span class="m"&gt;4455&lt;/span&gt;
     IdentityFile ~/.ssh/b.key
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -461,7 +461,7 @@ Host 192.168.0.2
 &lt;p&gt;重写&lt;code&gt;cd&lt;/code&gt;命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;function&lt;/span&gt; workon_cwd &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="c1"&gt;# Check that this is a Git repo&lt;/span&gt;
-    &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir 2&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
+    &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;git rev-parse --git-dir &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt; /dev/null&lt;span class="sb"&gt;`&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
         &lt;span class="c1"&gt;# Find the repo root and check for virtualenv name override&lt;/span&gt;
         &lt;span class="nv"&gt;GIT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;&lt;span class="se"&gt;\c&lt;/span&gt;d &lt;span class="nv"&gt;$GIT_DIR&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;
@@ -523,7 +523,7 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 &lt;h1&gt;方法一&lt;/h1&gt;
 &lt;h2&gt;查看无线网卡硬件信息&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo lspci &lt;span class="p"&gt;|&lt;/span&gt; grep -i network
-03:00.0 Network controller: Intel Corporation Wireless &lt;span class="m"&gt;7260&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;rev 6b&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="m"&gt;03&lt;/span&gt;:00.0 Network controller: Intel Corporation Wireless &lt;span class="m"&gt;7260&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;rev 6b&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -534,7 +534,7 @@ Android利用Fiddler抓包：http://www.trinea.cn/android/android-network-sniffe
 
 &lt;h2&gt;查看无线网卡设备名称&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ iwconfig
-wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt; dBm   
+wlan0     IEEE &lt;span class="m"&gt;802&lt;/span&gt;.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;16&lt;/span&gt; dBm   
           Retry  long limit:7   RTS thr:off   Fragment thr:off
           Power Management:on
 &lt;/pre&gt;&lt;/div&gt;
@@ -550,10 +550,10 @@ wlan0     IEEE 802.11bgn  Mode:Master  Tx-Power&lt;span class="o"&gt;=&lt;/span&
 &lt;span class="nv"&gt;interface&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;wlan0
 &lt;span class="nv"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;nl80211
 &lt;span class="nv"&gt;ssid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your_hotspot_name
-&lt;span class="nv"&gt;channel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
+&lt;span class="nv"&gt;channel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
 &lt;span class="nv"&gt;hw_mode&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;g
-&lt;span class="nv"&gt;auth_algs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1
-&lt;span class="nv"&gt;wpa&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3
+&lt;span class="nv"&gt;auth_algs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="nv"&gt;wpa&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;
 &lt;span class="nv"&gt;wpa_passphrase&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;your-password
 &lt;span class="nv"&gt;wpa_key_mgmt&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;WPA-PSK
 &lt;span class="nv"&gt;wpa_pairwise&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;TKIP CCMP
@@ -577,10 +577,10 @@ Make sure the follow lines are Commented out &lt;span class="o"&gt;(&lt;/span&gt
 &lt;span class="c1"&gt;#max-lease-time 7200;&lt;/span&gt;
 
 Add the following lines to the file &lt;span class="o"&gt;(&lt;/span&gt;copy and paste&lt;span class="o"&gt;)&lt;/span&gt;
-subnet 10.10.0.0 netmask 255.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
-        range 10.10.0.2 10.10.0.16&lt;span class="p"&gt;;&lt;/span&gt;
-        option domain-name-servers 8.8.4.4, 208.67.222.222&lt;span class="p"&gt;;&lt;/span&gt;
-        option routers 10.10.0.1&lt;span class="p"&gt;;&lt;/span&gt;
+subnet &lt;span class="m"&gt;10&lt;/span&gt;.10.0.0 netmask &lt;span class="m"&gt;255&lt;/span&gt;.255.255.0 &lt;span class="o"&gt;{&lt;/span&gt;
+        range &lt;span class="m"&gt;10&lt;/span&gt;.10.0.2 &lt;span class="m"&gt;10&lt;/span&gt;.10.0.16&lt;span class="p"&gt;;&lt;/span&gt;
+        option domain-name-servers &lt;span class="m"&gt;8&lt;/span&gt;.8.4.4, &lt;span class="m"&gt;208&lt;/span&gt;.67.222.222&lt;span class="p"&gt;;&lt;/span&gt;
+        option routers &lt;span class="m"&gt;10&lt;/span&gt;.10.0.1&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="o"&gt;(&lt;/span&gt;Note: the only other line in this whole config file that is uncommented is :
@@ -603,20 +603,20 @@ auto lo
 iface lo inet loopback
 auto wlan0
 iface wlan0 inet static
-    address 10.10.0.1
-    netmask 255.255.255.0
+    address &lt;span class="m"&gt;10&lt;/span&gt;.10.0.1
+    netmask &lt;span class="m"&gt;255&lt;/span&gt;.255.255.0
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改/etc/sysctl.conf&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep net.ipv4.ip_forward /etc/sysctl.conf 
-net.ipv4.ip_forward&lt;span class="o"&gt;=&lt;/span&gt;1
+net.ipv4.ip_forward&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2&gt;修改/etc/rc.local&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;编辑 /etc/rc.local, 在 &lt;span class="s2"&gt;&amp;quot;exit 0&amp;quot;&lt;/span&gt; 前添加下一行
-iptables -t nat -A POSTROUTING -s 10.10.0.0/16 -o ppp0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s &lt;span class="m"&gt;10&lt;/span&gt;.10.0.0/16 -o ppp0 -j MASQUERADE
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -657,7 +657,7 @@ deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe m
 
 &lt;h2&gt;nis无法启动，导致升级过程中配置nis包失败&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ grep redhat /etc/hosts
-172.26.32.12    cd-redhat-001.TCTCD
+&lt;span class="m"&gt;172&lt;/span&gt;.26.32.12    cd-redhat-001.TCTCD
 
 $ tail -1 /etc/yp.conf 
 ypserver cd-redhat-001.TCTCD

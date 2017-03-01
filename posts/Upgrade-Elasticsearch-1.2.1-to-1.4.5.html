@@ -93,7 +93,7 @@ input <span class="o">{</span>
     <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:logstash&quot;</span>
     <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
     <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;appstore_logs&quot;</span><span class="o">]</span>
-    <span class="nv">db</span> <span class="o">=</span>&gt; 0
+    <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">0</span>
   <span class="o">}</span>
   redis <span class="o">{</span>
     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
@@ -102,7 +102,7 @@ input <span class="o">{</span>
     <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
     <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_reports&quot;</span>
     <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_reports&quot;</span><span class="o">]</span>
-    <span class="nv">db</span> <span class="o">=</span>&gt; 0
+    <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">0</span>
   <span class="o">}</span>
   redis <span class="o">{</span>
     <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span>
@@ -111,7 +111,7 @@ input <span class="o">{</span>
     <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
     <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s1">&#39;appstore:imei_reports&#39;</span>
     <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;imei_reports&quot;</span><span class="o">]</span>
-    <span class="nv">db</span> <span class="o">=</span>&gt; 1
+    <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">1</span>
   <span class="o">}</span>
   redis <span class="o">{</span> 
      <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span> 
@@ -120,7 +120,7 @@ input <span class="o">{</span>
      <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;tclonline&quot;</span>
      <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_date_reports&quot;</span> 
      <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_date_reports&quot;</span><span class="o">]</span> 
-     <span class="nv">db</span> <span class="o">=</span>&gt; 3
+     <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">3</span>
    <span class="o">}</span> 
    redis <span class="o">{</span> 
      <span class="nv">codec</span> <span class="o">=</span>&gt; <span class="s2">&quot;json&quot;</span> 
@@ -129,7 +129,7 @@ input <span class="o">{</span>
      <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;pwd&quot;</span>
      <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;appstore:overview_model_reports&quot;</span> 
      <span class="nv">tags</span> <span class="o">=</span>&gt; <span class="o">[</span><span class="s2">&quot;overview_model_reports&quot;</span><span class="o">]</span> 
-     <span class="nv">db</span> <span class="o">=</span>&gt; 3
+     <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">3</span>
 
    <span class="o">}</span> 
 <span class="o">}</span>
@@ -155,7 +155,7 @@ output <span class="o">{</span>
     <span class="o">}</span>
     redis<span class="o">{</span>
       <span class="nv">data_type</span> <span class="o">=</span>&gt; <span class="s2">&quot;list&quot;</span>
-      <span class="nv">db</span> <span class="o">=</span>&gt; 3
+      <span class="nv">db</span> <span class="o">=</span>&gt; <span class="m">3</span>
       <span class="nv">host</span> <span class="o">=</span>&gt; <span class="s2">&quot;x.x.x.x&quot;</span> 
       <span class="nv">password</span> <span class="o">=</span>&gt; <span class="s2">&quot;passwd&quot;</span>
       <span class="nv">key</span> <span class="o">=</span>&gt; <span class="s2">&quot;logstash:appstore_logs&quot;</span>
@@ -213,7 +213,7 @@ $ tar zxf elasticsearch-1.4.5.tar.gz
 
 <p>安装插件：</p>
 <div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /data/software <span class="c1"># 安装分词插件</span>
-$ git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
+$ git clone -b <span class="m">1</span>.4.0 https://github.com/medcl/elasticsearch-rtf.git
 $ <span class="nb">cd</span> elasticsearch-rtf
 $ cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
 $ cp -vrf config/ik config/mmseg /data/softwares/elasticsearch-1.4.5/config/
@@ -234,20 +234,20 @@ cluster.name: elasticsearch_dashboard
 node.name: <span class="s2">&quot;es1&quot;</span>
 node.master: <span class="nb">true</span>
 node.data: <span class="nb">true</span>
-index.number_of_shards: 5
-index.number_of_replicas: 2
+index.number_of_shards: <span class="m">5</span>
+index.number_of_replicas: <span class="m">2</span>
 path.data: /data/softwares/elasticsearch-1.4.5/data
 path.work: /data/softwares/elasticsearch-1.4.5/work
 path.logs: /data/log/elasticsearch
 path.plugins: /data/softwares/elasticsearch-1.4.5/plugins
-network.bind_host: 192.168.1.2
-network.publish_host: 192.168.1.2
-network.host: 192.168.1.2
-transport.tcp.port: 9300
-http.port: 9200
+network.bind_host: <span class="m">192</span>.168.1.2
+network.publish_host: <span class="m">192</span>.168.1.2
+network.host: <span class="m">192</span>.168.1.2
+transport.tcp.port: <span class="m">9300</span>
+http.port: <span class="m">9200</span>
 indices.recovery.max_bytes_per_sec: 200mb
-indices.recovery.concurrent_streams: 8
-discovery.zen.minimum_master_nodes: 2
+indices.recovery.concurrent_streams: <span class="m">8</span>
+discovery.zen.minimum_master_nodes: <span class="m">2</span>
 discovery.zen.ping.timeout: 10s
 discovery.zen.ping.multicast.enabled: <span class="nb">true</span>
 discovery.zen.ping.unicast.hosts: <span class="o">[</span><span class="s2">&quot;192.168.1.2&quot;</span>, <span class="s2">&quot;192.168.1.6&quot;</span>, <span class="s2">&quot;192.168.1.7&quot;</span><span class="o">]</span>
@@ -313,19 +313,19 @@ $ 修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
 $ cat /etc/supervisor/supervisord.conf <span class="p">|</span> grep -Ev <span class="s1">&#39;^;|^$&#39;</span>
 <span class="o">[</span>unix_http_server<span class="o">]</span>
 <span class="nv">file</span><span class="o">=</span>/var/run/supervisor.sock    <span class="p">;</span> <span class="o">(</span>the path to the socket file<span class="o">)</span>
-<span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default 0700<span class="o">)</span>
+<span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default <span class="m">0700</span><span class="o">)</span>
 <span class="o">[</span>rpcinterface:supervisor<span class="o">]</span>
 supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface:make_main_rpcinterface
 <span class="o">[</span>supervisord<span class="o">]</span>
 <span class="nv">http_port</span><span class="o">=</span>/var/run/supervisor.sock <span class="p">;</span> <span class="o">(</span>default is to run a UNIX domain socket server<span class="o">)</span>
 <span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
 <span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
-<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
+<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default <span class="m">10</span><span class="o">)</span>
 <span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
 <span class="nv">pidfile</span><span class="o">=</span>/var/run/supervisord.pid <span class="p">;</span> <span class="o">(</span>supervisord pidfile<span class="p">;</span>default supervisord.pid<span class="o">)</span>
 <span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> true<span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
-<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
-<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
+<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default <span class="m">1024</span><span class="o">)</span>
+<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default <span class="m">200</span><span class="o">)</span>
 <span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
 <span class="o">[</span>supervisorctl<span class="o">]</span>
 <span class="nv">serverurl</span><span class="o">=</span>unix:////var/run/supervisor.sock <span class="p">;</span> use a unix:// URL  <span class="k">for</span> a unix socket

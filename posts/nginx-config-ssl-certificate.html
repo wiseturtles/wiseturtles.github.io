@@ -93,60 +93,60 @@ On 2015-10-10
 将<code>.crt</code> 和 <code>.key</code> 文件放入Nginx主机的 /etc/ssl&nbsp;目录。</p>
 <p>生成dhparam.pem:</p>
 <div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /etc/ssl/certs
-$ openssl dhparam -out dhparam.pem 4096
+$ openssl dhparam -out dhparam.pem <span class="m">4096</span>
 </pre></div>
 
 
 <p>同时，启用了spdy，参考: <a href="https://www.vobe.io/114">https://www.vobe.io/114</a></p>
 <p>Nginx配置文件(<code>/etc/nginx/sites-avaiable/default</code>)如下:</p>
-<div class="highlight"><pre><span></span><span class="nn">#server</span> <span class="p">{</span>
-<span class="err">#</span>   <span class="n">listen</span> <span class="m">80</span><span class="p">;</span>
-<span class="err">#</span>   <span class="n">server_name</span> <span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="p">;</span>
-<span class="err">#</span>   <span class="n">add_header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="m">15768000</span><span class="p">;</span>
-<span class="err">#</span>   <span class="n">return</span> <span class="m">301</span> <span class="n">https</span><span class="o">://</span><span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><span class="p">#</span><span class="nn">server</span> <span class="p">{</span>
+<span class="err">#</span>   <span class="err">listen</span> <span class="err">80</span><span class="p">;</span>
+<span class="err">#</span>   <span class="err">server_name</span> <span class="err">your-domain</span><span class="p">;</span>
+<span class="err">#</span>   <span class="err">add_header</span> <span class="err">Strict-Transport-Security</span> <span class="err">max-age=15768000</span><span class="p">;</span>
+<span class="err">#</span>   <span class="err">return</span> <span class="err">301</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">your-domain</span><span class="err">$</span><span class="n">request_uri</span><span class="p">;</span>
 <span class="err">#</span><span class="p">}</span>
 
 <span class="nt">server</span> <span class="p">{</span>
-    <span class="n">listen</span> <span class="m">80</span><span class="p">;</span> <span class="err">#</span> <span class="err">如果希望</span><span class="n">http</span><span class="err">直接跳转到</span><span class="n">https</span><span class="err">，删除该行，并去掉上面的注释</span>
-    <span class="n">listen</span> <span class="m">443</span> <span class="n">ssl</span> <span class="n">spdy</span><span class="p">;</span>
-    <span class="n">spdy_headers_comp</span> <span class="m">1</span><span class="p">;</span>
-    <span class="n">server_name</span> <span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="p">;</span>
+    <span class="err">listen</span> <span class="err">80</span><span class="p">;</span> <span class="err">#</span> <span class="err">如果希望http直接跳转到https，删除该行，并去掉上面的注释</span>
+    <span class="err">listen</span> <span class="err">443</span> <span class="err">ssl</span> <span class="err">spdy</span><span class="p">;</span>
+    <span class="err">spdy_headers_comp</span> <span class="err">1</span><span class="p">;</span>
+    <span class="err">server_name</span> <span class="err">your-domain</span><span class="p">;</span>
 
-    <span class="n">ssl</span> <span class="n">on</span><span class="p">;</span>
-    <span class="n">ssl_certificate</span>      <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="o">.</span><span class="n">crt</span><span class="p">;</span>
-    <span class="n">ssl_certificate_key</span>  <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">domain</span><span class="o">.</span><span class="n">key</span><span class="p">;</span>
+    <span class="err">ssl</span> <span class="err">on</span><span class="p">;</span>
+    <span class="err">ssl_certificate</span>      <span class="err">/etc/ssl/your-domain.crt</span><span class="p">;</span>
+    <span class="err">ssl_certificate_key</span>  <span class="err">/etc/ssl/your-domain.key</span><span class="p">;</span>
 
-    <span class="n">ssl_protocols</span> <span class="n">TLSv1</span> <span class="n">TLSv1</span><span class="o">.</span><span class="m">1</span> <span class="n">TLSv1</span><span class="o">.</span><span class="m">2</span><span class="p">;</span>
+    <span class="err">ssl_protocols</span> <span class="err">TLSv1</span> <span class="err">TLSv1.1</span> <span class="err">TLSv1.2</span><span class="p">;</span>
 
-    <span class="n">ssl_ciphers</span> <span class="s1">&#39;AES256+EECDH:AES256+EDH:!aNULL&#39;</span><span class="p">;</span>
-    <span class="m">#ssl</span><span class="n">_ciphers</span> <span class="s2">&quot;ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4&quot;</span>
+    <span class="err">ssl_ciphers</span> <span class="err">&#39;AES256+</span><span class="n">EECDH</span><span class="p">:</span><span class="n">AES256</span><span class="o">+</span><span class="n">EDH</span><span class="o">:!</span><span class="n">aNULL</span><span class="err">&#39;</span><span class="p">;</span>
+    <span class="err">#ssl_ciphers</span> <span class="err">&quot;</span><span class="n">ECDHE-RSA-AES256-GCM-SHA384</span><span class="p">:</span><span class="n">ECDHE-RSA-AES128-GCM-SHA256</span><span class="o">:</span><span class="n">DHE-RSA-AES256-GCM-SHA384</span><span class="o">:</span><span class="n">DHE-RSA-AES128-GCM-SHA256</span><span class="o">:</span><span class="n">ECDHE-RSA-AES256-SHA384</span><span class="o">:</span><span class="n">ECDHE-RSA-AES128-SHA256</span><span class="o">:</span><span class="n">ECDHE-RSA-AES256-SHA</span><span class="o">:</span><span class="n">ECDHE-RSA-AES128-SHA</span><span class="o">:</span><span class="n">DHE-RSA-AES256-SHA256</span><span class="o">:</span><span class="n">DHE-RSA-AES128-SHA256</span><span class="o">:</span><span class="n">DHE-RSA-AES256-SHA</span><span class="o">:</span><span class="n">DHE-RSA-AES128-SHA</span><span class="o">:</span><span class="n">ECDHE-RSA-DES-CBC3-SHA</span><span class="o">:</span><span class="n">EDH-RSA-DES-CBC3-SHA</span><span class="o">:</span><span class="n">AES256-GCM-SHA384</span><span class="o">:</span><span class="n">AES128-GCM-SHA256</span><span class="o">:</span><span class="n">AES256-SHA256</span><span class="o">:</span><span class="n">AES128-SHA256</span><span class="o">:</span><span class="n">AES256-SHA</span><span class="o">:</span><span class="n">AES128-SHA</span><span class="o">:</span><span class="n">DES-CBC3-SHA</span><span class="o">:</span><span class="n">HIGH</span><span class="o">:!</span><span class="n">aNULL</span><span class="o">:!</span><span class="n">eNULL</span><span class="o">:!</span><span class="n">EXPORT</span><span class="o">:!</span><span class="n">DES</span><span class="o">:!</span><span class="n">MD5</span><span class="o">:!</span><span class="n">PSK</span><span class="o">:!</span><span class="n">RC4</span><span class="err">&quot;</span>
 
-    <span class="n">ssl_prefer_server_ciphers</span>  <span class="n">on</span><span class="p">;</span>
-    <span class="n">ssl_dhparam</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssl</span><span class="o">/</span><span class="n">certs</span><span class="o">/</span><span class="n">dhparam</span><span class="o">.</span><span class="n">pem</span><span class="p">;</span>
+    <span class="n">ssl_prefer_server_ciphers</span>  <span class="kc">on</span><span class="p">;</span>
+    <span class="err">ssl_dhparam</span> <span class="err">/etc/ssl/certs/dhparam.pem</span><span class="p">;</span>
 
-    <span class="n">ssl_session_cache</span>    <span class="n">shared</span><span class="o">:</span><span class="n">SSL</span><span class="o">:</span><span class="m">20</span><span class="n">m</span><span class="p">;</span>
-    <span class="n">ssl_session_timeout</span>  <span class="m">60</span><span class="n">m</span><span class="p">;</span>
+    <span class="err">ssl_session_cache</span>    <span class="n">shared</span><span class="p">:</span><span class="n">SSL</span><span class="o">:</span><span class="mi">20</span><span class="n">m</span><span class="p">;</span>
+    <span class="err">ssl_session_timeout</span>  <span class="err">60m</span><span class="p">;</span>
 
-    <span class="n">ssl_stapling</span> <span class="n">on</span><span class="p">;</span>
-    <span class="n">ssl_stapling_verify</span> <span class="n">on</span><span class="p">;</span>
-    <span class="m">#ssl</span><span class="n">_trusted_certificate</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">cert</span><span class="o">/</span><span class="n">trustchain</span><span class="o">.</span><span class="n">crt</span><span class="p">;</span>
-    <span class="m">#resolv</span><span class="n">er</span> <span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">4</span><span class="o">.</span><span class="m">4</span> <span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">8</span><span class="o">.</span><span class="m">8</span> <span class="n">valid</span><span class="o">=</span><span class="m">300s</span><span class="p">;</span>
-    <span class="m">#resolv</span><span class="n">er_timeout</span> <span class="m">10s</span><span class="p">;</span>
+    <span class="err">ssl_stapling</span> <span class="err">on</span><span class="p">;</span>
+    <span class="err">ssl_stapling_verify</span> <span class="err">on</span><span class="p">;</span>
+    <span class="err">#ssl_trusted_certificate</span> <span class="err">/etc/nginx/cert/trustchain.crt</span><span class="p">;</span>
+    <span class="err">#resolver</span> <span class="err">8.8.4.4</span> <span class="err">8.8.8.8</span> <span class="err">valid=300s</span><span class="p">;</span>
+    <span class="err">#resolver_timeout</span> <span class="err">10s</span><span class="p">;</span>
 
-    <span class="n">add_header</span> <span class="n">Strict</span><span class="o">-</span><span class="n">Transport</span><span class="o">-</span><span class="n">Security</span> <span class="n">max</span><span class="o">-</span><span class="n">age</span><span class="o">=</span><span class="m">15768000</span><span class="p">;</span>
+    <span class="err">add_header</span> <span class="err">Strict-Transport-Security</span> <span class="err">max-age=15768000</span><span class="p">;</span>
 
-    <span class="n">add_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Frame</span><span class="o">-</span><span class="n">Options</span> <span class="n">DENY</span><span class="p">;</span>
-    <span class="n">add_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Content</span><span class="o">-</span><span class="n">Type</span><span class="o">-</span><span class="n">Options</span> <span class="n">nosniff</span><span class="p">;</span>
+    <span class="err">add_header</span> <span class="err">X-Frame-Options</span> <span class="err">DENY</span><span class="p">;</span>
+    <span class="err">add_header</span> <span class="err">X-Content-Type-Options</span> <span class="err">nosniff</span><span class="p">;</span>
 
-    <span class="n">add_header</span> <span class="n">Alternate</span><span class="o">-</span><span class="n">Protocol</span> <span class="m">443</span><span class="o">:</span><span class="n">npn</span><span class="o">-</span><span class="n">spdy</span><span class="o">/</span><span class="m">3</span><span class="o">.</span><span class="m">1</span><span class="p">;</span>
+    <span class="err">add_header</span> <span class="err">Alternate-Protocol</span> <span class="err">443:npn-spdy/3.1</span><span class="p">;</span>
 
-    <span class="n">proxy_set_header</span>   <span class="n">Host</span>                 <span class="err">$</span><span class="n">http_host</span><span class="p">;</span>
-    <span class="n">proxy_set_header</span>   <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">Proto</span>    <span class="err">$</span><span class="n">scheme</span><span class="p">;</span>
-    <span class="n">proxy_set_header</span>   <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">For</span>      <span class="err">$</span><span class="n">remote_addr</span><span class="p">;</span>
-    <span class="n">proxy_redirect</span>     <span class="n">off</span><span class="p">;</span>
+    <span class="err">proxy_set_header</span>   <span class="err">Host</span>                 <span class="err">$http_host</span><span class="p">;</span>
+    <span class="err">proxy_set_header</span>   <span class="err">X-Forwarded-Proto</span>    <span class="err">$scheme</span><span class="p">;</span>
+    <span class="err">proxy_set_header</span>   <span class="err">X-Forwarded-For</span>      <span class="err">$remote_addr</span><span class="p">;</span>
+    <span class="err">proxy_redirect</span>     <span class="err">off</span><span class="p">;</span>
 
-    <span class="n">location</span> <span class="o">/</span><span class="n">your</span><span class="o">-</span><span class="n">service</span> <span class="err">{</span>
-        <span class="n">proxy_pass</span>         <span class="n">http</span><span class="o">://</span><span class="n">localhost</span><span class="o">:</span><span class="m">8888</span><span class="p">;</span>
+    <span class="err">location</span> <span class="err">/your-service</span> <span class="err">{</span>
+        <span class="err">proxy_pass</span>         <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="o">:</span><span class="mi">8888</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="err">}</span>
 </pre></div>

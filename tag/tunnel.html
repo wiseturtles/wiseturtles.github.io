@@ -2,8 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles - Upgrade Ubuntu from 10.04 to&nbsp;12.04
-</title>
+    <title>Wise Turtles - tunnel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -26,11 +25,6 @@
     <!-- use gmirror fonts instead of google online fonts-->
     <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
-    <meta name="author" contents="Zhang Wanming" />
-    <meta name="description" contents="" />
-
-      <meta name="tags" contents="Ubuntu" />
-      <meta name="tags" contents="Nis" />
 
 </head>
 
@@ -57,100 +51,17 @@
     <div class="row">
 
         <div class="span9">
-    <div class='article'>
-        <div class="content-title">
-            <h1>Upgrade Ubuntu from 10.04 to&nbsp;12.04</h1>
-            <br />
-    Tags <a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a> <a href="http://blog.wiseturtles.com/tag/nis.html">Nis</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/zhang-wanming.html">Zhang Wanming</a>
-On 2014-12-04
+      <div class='article'>
+          <a href="http://blog.wiseturtles.com/posts/create-restricted-linux-user-for-ssh-tunnel.html"><h2>create restricted linux user for ssh&nbsp;tunnel</h2></a>
+          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/linux.html">Linux</a> <a href="http://blog.wiseturtles.com/tag/ssh.html">SSH</a> <a href="http://blog.wiseturtles.com/tag/tunnel.html">tunnel</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2017-03-01
 
-        </div>
+</div>
+          <div class="summary"><b>内容摘要:</b><p>Linux中创建一个受限的用户，专门做ssh&nbsp;tunnel</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/create-restricted-linux-user-for-ssh-tunnel.html">阅读</a></div>
+      </div>
 
-        <div><p>公司开发人员电脑都安装的是Ubuntu 10.04，现在越来越不好用，而且，很多同事发现编译最新的Firefox <span class="caps">OS</span>都有问题，所以，我尝试升级并把碰到的问题记录下来。</p>
-<h1>升级</h1>
-<h2>修改源</h2>
-<div class="highlight"><pre><span></span>$ cat /etc/apt/sources.list
-deb http://172.26.32.18/ubuntu/ lucid main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-security main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://172.26.32.18/ubuntu/ lucid-backports main restricted universe multiverse
-
-<span class="c1"># aliyun</span>
-deb http://mirrors.aliyun.com/ubuntu/ lucid main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ lucid-backports main restricted universe multiverse
-</pre></div>
-
-
-<h2>开始升级</h2>
-<div class="highlight"><pre><span></span>$ sudo <span class="k">do</span>-release-upgrade
-</pre></div>
-
-
-<h2>nis无法启动，导致升级过程中配置nis包失败</h2>
-<div class="highlight"><pre><span></span>$ grep redhat /etc/hosts
-<span class="m">172</span>.26.32.12    cd-redhat-001.TCTCD
-
-$ tail -1 /etc/yp.conf 
-ypserver cd-redhat-001.TCTCD
-
-$ cat /etc/defaultdomain 
-TCTCD
-
-$ grep NIS /etc/default/nis <span class="p">|</span> grep -Ev <span class="s1">&#39;#&#39;</span>
-<span class="nv">NISSERVER</span><span class="o">=</span><span class="nb">false</span>
-<span class="nv">NISCLIENT</span><span class="o">=</span><span class="nb">true</span>
-<span class="nv">NISMASTER</span><span class="o">=</span>
-
-$ cat /etc/auto.master
-/home /etc/auto.home
-
-$ cat /etc/auto.home 
-xcsu cd-redhat-001.TCTCD:/home/xcsu
-
-$ /usr/lib/yp/ypinit -s cd-redhat-001.TCTCD
-
-$ sudo service portmap restart
-$ sudo service nis restart
-</pre></div>
-
-
-<h1>启动后登录时发现只能用administrator和guest登录</h1>
-<div class="highlight"><pre><span></span>$ cat /etc/lightdm/lightdm.conf 
-<span class="o">[</span>SeatDefaults<span class="o">]</span>
-user-session<span class="o">=</span>ubuntu
-greeter-session<span class="o">=</span>unity-greeter
-allow-guest<span class="o">=</span><span class="nb">false</span>
-greeter-show-manual-login<span class="o">=</span><span class="nb">true</span>
-</pre></div>
-
-
-<h2>重启电脑，就可以用其它用户登录了</h2>
-<div class="highlight"><pre><span></span>$ sudo reboot
-</pre></div></div>
-
-        <hr>
-
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-        this.page.url = 'http://blog.wiseturtles.com/posts/upgrade-ubuntu-from-10.04-to-12.04.html';
-        this.page.identifier = 'upgrade-ubuntu-from-10.04-to-12.04';
-    };
-
-    (function() {
-        var d = document, s = d.createElement('script');
-        s.src = '//wiseturtles.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-    </div>
+  
         </div>
 
         <div class="span3">

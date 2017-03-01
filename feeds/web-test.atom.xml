@@ -22,12 +22,12 @@
 $ workon &lt;span class="nb"&gt;test&lt;/span&gt;
 
 $ cat requirements.txt
-&lt;span class="nv"&gt;gunicorn&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;19.3.0
-&lt;span class="nv"&gt;flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.10.1
-flask-redis&lt;span class="o"&gt;==&lt;/span&gt;0.1.0
-&lt;span class="nv"&gt;gevent&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;1.0.2
-&lt;span class="nv"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;4.2
-&lt;span class="nv"&gt;eventlet&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;0.17.4
+&lt;span class="nv"&gt;gunicorn&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;19&lt;/span&gt;.3.0
+&lt;span class="nv"&gt;flask&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.10.1
+flask-redis&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.1.0
+&lt;span class="nv"&gt;gevent&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;.0.2
+&lt;span class="nv"&gt;tornado&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;4&lt;/span&gt;.2
+&lt;span class="nv"&gt;eventlet&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="m"&gt;0&lt;/span&gt;.17.4
 
 $ pip install -r requirements.txt
 &lt;/pre&gt;&lt;/div&gt;
@@ -38,8 +38,8 @@ $ pip install -r requirements.txt
 &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;flask_redis&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;
 
 &lt;span class="n"&gt;REDIS_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;redis://:password-string@localhost:6379/0&amp;quot;&lt;/span&gt;
-&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Flask&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_object&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vm"&gt;__name__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;redis&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FlaskRedis&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
@@ -48,7 +48,7 @@ $ pip install -r requirements.txt
     &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;incr&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;redis&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;hit&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
-&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
     &lt;span class="n"&gt;app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -289,7 +289,7 @@ Options are:
     -n requests     Number of requests to perform &lt;span class="c1"&gt;# 请求次数&lt;/span&gt;
     -c concurrency  Number of multiple requests to make at a &lt;span class="nb"&gt;time&lt;/span&gt; &lt;span class="c1"&gt;# 并发数&lt;/span&gt;
     -t timelimit    Seconds to max. to spend on benchmarking &lt;span class="c1"&gt;# 压力测试的最大时间&lt;/span&gt;
-                    This implies -n 50000
+                    This implies -n &lt;span class="m"&gt;50000&lt;/span&gt;
     -s timeout      Seconds to max. &lt;span class="nb"&gt;wait&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; each response
                     Default is &lt;span class="m"&gt;30&lt;/span&gt; seconds
     -b windowsize   Size of TCP send/receive buffer, in bytes
@@ -340,7 +340,7 @@ $ ab -c &lt;span class="m"&gt;100&lt;/span&gt; -n &lt;span class="m"&gt;10000&lt
 &lt;span class="c1"&gt;# POST&lt;/span&gt;
 
 $ cat data.json
-&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;apps&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;package_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;com.baidu.browser.apps&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;app_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;百度浏览器&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version_code&amp;quot;&lt;/span&gt;: 1, &lt;span class="s2"&gt;&amp;quot;version_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;5.3.4.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;pm_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;TCL M2M&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;apps&amp;quot;&lt;/span&gt;: &lt;span class="o"&gt;[{&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;package_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;com.baidu.browser.apps&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;app_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;百度浏览器&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version_code&amp;quot;&lt;/span&gt;: &lt;span class="m"&gt;1&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;version_name&amp;quot;&lt;/span&gt;: &lt;span class="s2"&gt;&amp;quot;5.3.4.1&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}]&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;pm_name&amp;quot;&lt;/span&gt;:&lt;span class="s2"&gt;&amp;quot;TCL M2M&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;}&lt;/span&gt;
 
 &lt;span class="c1"&gt;# post json 数据&lt;/span&gt;
 $ ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/span&gt; -p data.json -T &lt;span class="s2"&gt;&amp;quot;application/json&amp;quot;&lt;/span&gt; -r &lt;span class="s2"&gt;&amp;quot;127.0.0.1:8888/m3/apps/update&amp;quot;&lt;/span&gt;
@@ -369,7 +369,7 @@ $ ab -c &lt;span class="m"&gt;1000&lt;/span&gt; -t &lt;span class="m"&gt;30&lt;/
 webbench &lt;span class="o"&gt;[&lt;/span&gt;option&lt;span class="o"&gt;]&lt;/span&gt;... URL
 -f&lt;span class="p"&gt;|&lt;/span&gt;--force               Don&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;t &lt;span class="nb"&gt;wait&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; reply from server.
 -r&lt;span class="p"&gt;|&lt;/span&gt;--reload              Send reload request - Pragma: no-cache.
--t&lt;span class="p"&gt;|&lt;/span&gt;--time &amp;lt;sec&amp;gt;          Run benchmark &lt;span class="k"&gt;for&lt;/span&gt; &amp;lt;sec&amp;gt; seconds. Default 30.
+-t&lt;span class="p"&gt;|&lt;/span&gt;--time &amp;lt;sec&amp;gt;          Run benchmark &lt;span class="k"&gt;for&lt;/span&gt; &amp;lt;sec&amp;gt; seconds. Default &lt;span class="m"&gt;30&lt;/span&gt;.
 -p&lt;span class="p"&gt;|&lt;/span&gt;--proxy &amp;lt;server:port&amp;gt; Use proxy server &lt;span class="k"&gt;for&lt;/span&gt; request.
 -c&lt;span class="p"&gt;|&lt;/span&gt;--clients &amp;lt;n&amp;gt;         Run &amp;lt;n&amp;gt; HTTP clients at once. Default one.
 -9&lt;span class="p"&gt;|&lt;/span&gt;--http09              Use HTTP/0.9 style requests.

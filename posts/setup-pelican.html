@@ -88,7 +88,7 @@ On 2014-11-30
 </blockquote>
 <p>本文以Pelican3.5为例，使用Pelican需要python环境，官方推荐的python版本是2.7.X，因此开始之前，最好是检查一下当前系统的python版本是否满足情况。</p>
 <div class="highlight"><pre><span></span>$ python --version
-Python 2.7.6
+Python <span class="m">2</span>.7.6
 </pre></div>
 
 
@@ -112,21 +112,21 @@ $ curl -kL http://xrl.us/pythonbrewinstall <span class="p">|</span> bash    <spa
 $ <span class="nb">echo</span> <span class="s2">&quot;[[ -s </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc ]] &amp;&amp; source </span><span class="nv">$HOME</span><span class="s2">/.pythonbrew/etc/bashrc&quot;</span> &gt;&gt; ~/.bashrc
 $ <span class="nb">source</span> ~/.bashrc
 $ pythonbrew --version      <span class="c1"># 检查是否安装成功</span>
-$ pythonbrew install --verbose 2.7.5       <span class="c1"># 安装python 2.7.5</span>
-$ pythonbrew use 2.7.5      <span class="c1"># 临时在当前会话使用python 2.7.5</span>
+$ pythonbrew install --verbose <span class="m">2</span>.7.5       <span class="c1"># 安装python 2.7.5</span>
+$ pythonbrew use <span class="m">2</span>.7.5      <span class="c1"># 临时在当前会话使用python 2.7.5</span>
 $ which python              <span class="c1"># 检查python版本信息是否正确</span>
 
 <span class="c1"># 一些关于pythonbrew的常用命令</span>
 $ pythonbrew list           <span class="c1"># 查看已经安装了的python版本</span>
 $ pythonbrew off            <span class="c1"># 禁用pythonbrew，使用系统默认的python环境</span>
 $ pythonbrew list -k        <span class="c1"># 查看pythonbrew提供了哪些python版本可以安装</span>
-$ pythonbrew switch 2.7.5   <span class="c1"># 永久切换到python 2.7.5,与use有点不同</span>
+$ pythonbrew switch <span class="m">2</span>.7.5   <span class="c1"># 永久切换到python 2.7.5,与use有点不同</span>
 <span class="c1"># 更多命令可以参考官方文档</span>
 </pre></div>
 
 
 <p>使用pythonbrew自带的virtualenv</p>
-<div class="highlight"><pre><span></span>$ pythonbrew use 2.7.5
+<div class="highlight"><pre><span></span>$ pythonbrew use <span class="m">2</span>.7.5
 $ pythonbrew venv init       <span class="c1"># 初始化虚拟环境</span>
 $ pythonbrew venv create pelican  <span class="c1"># 创建名字为pelican的虚拟环境，这里可以将pelican替换成任意你喜欢的名字</span>
 $ pythonbrew venv use pelican     <span class="c1"># 开启虚拟环境</span>

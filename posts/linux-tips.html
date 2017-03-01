@@ -71,7 +71,7 @@ On 2015-01-20
 <p>由于服务器上一些服务的端口没有对外开发，但是在开发时又想直接使用服务器上的这些服务，该怎么办？</p>
 <p>以我们服务器A(192.167.0.1) 为例, 上面有Elasticsheach数据库为例, 由于Elasticsearch数据库比较&nbsp;大，从服务器上将数据拷贝到本地不太现实，便可以通过ssh端口转发来实现。</p>
 <p>前提:&nbsp;本地服务器可以通过ssh登陆到服务器A(192.167.0.1)</p>
-<div class="highlight"><pre><span></span>$ ssh -fNL 9200:localhost:9200 192.167.0.1
+<div class="highlight"><pre><span></span>$ ssh -fNL <span class="m">9200</span>:localhost:9200 <span class="m">192</span>.167.0.1
 </pre></div>
 
 
@@ -83,7 +83,7 @@ On 2015-01-20
 
 <p>那么以后使用<code>sshes</code>就可以方便的建立一个ssh隧道连接,　同理，此法可用于连接服务器上的mysql及其它服务.</p>
 <p>另外一个常用的是通过ssh翻墙的命令</p>
-<div class="highlight"><pre><span></span>$ ssh -qTfnN -D <span class="m">7070</span> 192.167.0.2
+<div class="highlight"><pre><span></span>$ ssh -qTfnN -D <span class="m">7070</span> <span class="m">192</span>.167.0.2
 </pre></div>
 
 
@@ -105,38 +105,38 @@ $ scp -P <span class="m">4455</span> root@192.168.0.1:/tmp/a a
 
 <p>这样比较繁琐。稍微配置一下便可以化繁为简</p>
 <div class="highlight"><pre><span></span>$ cat ~/.ssh/config
-Host 192.168.0.1
+Host <span class="m">192</span>.168.0.1
     User root
-    Port 4455
+    Port <span class="m">4455</span>
 </pre></div>
 
 
 <p>这样以后每次访问该服务器都不需要带上用户及端口信息</p>
 <div class="highlight"><pre><span></span><span class="c1"># ssh登陆</span>
-$ ssh 192.168.0.1
+$ ssh <span class="m">192</span>.168.0.1
 <span class="c1"># scp拷贝</span>
-$ scp -P 192.168.0.1:/tmp/a a
+$ scp -P <span class="m">192</span>.168.0.1:/tmp/a a
 </pre></div>
 
 
 <p>当本机需要通过不同的key登陆到不同的服务器时，我们都是通过<code>-i</code>来临时指定key.</p>
 <div class="highlight"><pre><span></span><span class="c1"># 使用a.key登陆192.168.0.1</span>
-$ ssh -i ~/.ssh/a.key 192.168.0.1
+$ ssh -i ~/.ssh/a.key <span class="m">192</span>.168.0.1
 <span class="c1"># 使用b.key登陆192.168.0.2</span>
-$ ssh -i ~/.ssh/b.key 192.168.0.2
+$ ssh -i ~/.ssh/b.key <span class="m">192</span>.168.0.2
 </pre></div>
 
 
 <p>稍微配置一下</p>
 <div class="highlight"><pre><span></span>$ cat ~/.ssh/config
-Host 192.168.0.1
+Host <span class="m">192</span>.168.0.1
     User root
-    Port 4455
+    Port <span class="m">4455</span>
     IdentityFile ~/.ssh/a.key
 
-Host 192.168.0.2
+Host <span class="m">192</span>.168.0.2
     User root
-    Port 4455
+    Port <span class="m">4455</span>
     IdentityFile ~/.ssh/b.key
 </pre></div>
 
@@ -170,7 +170,7 @@ Host 192.168.0.2
 <p>重写<code>cd</code>命令，使它在进入到python项目时，自动激活与项目名一样的虚拟环境</p>
 <div class="highlight"><pre><span></span><span class="k">function</span> workon_cwd <span class="o">{</span>
     <span class="c1"># Check that this is a Git repo</span>
-    <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir 2&gt; /dev/null<span class="sb">`</span>
+    <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span>git rev-parse --git-dir <span class="m">2</span>&gt; /dev/null<span class="sb">`</span>
     <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> <span class="o">==</span> <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># Find the repo root and check for virtualenv name override</span>
         <span class="nv">GIT_DIR</span><span class="o">=</span><span class="sb">`</span><span class="se">\c</span>d <span class="nv">$GIT_DIR</span><span class="p">;</span> <span class="nb">pwd</span><span class="sb">`</span>

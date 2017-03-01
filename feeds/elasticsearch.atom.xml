@@ -194,7 +194,7 @@ input &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;appstore:logstash&amp;quot;&lt;/span&gt;
     &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;passwd&amp;quot;&lt;/span&gt;
     &lt;span class="nv"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;appstore_logs&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 0
+    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;0&lt;/span&gt;
   &lt;span class="o"&gt;}&lt;/span&gt;
   redis &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;codec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;json&amp;quot;&lt;/span&gt;
@@ -203,7 +203,7 @@ input &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;passwd&amp;quot;&lt;/span&gt;
     &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;appstore:overview_reports&amp;quot;&lt;/span&gt;
     &lt;span class="nv"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;overview_reports&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 0
+    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;0&lt;/span&gt;
   &lt;span class="o"&gt;}&lt;/span&gt;
   redis &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;codec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;json&amp;quot;&lt;/span&gt;
@@ -212,7 +212,7 @@ input &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;passwd&amp;quot;&lt;/span&gt;
     &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s1"&gt;&amp;#39;appstore:imei_reports&amp;#39;&lt;/span&gt;
     &lt;span class="nv"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;imei_reports&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
-    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 1
+    &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;1&lt;/span&gt;
   &lt;span class="o"&gt;}&lt;/span&gt;
   redis &lt;span class="o"&gt;{&lt;/span&gt; 
      &lt;span class="nv"&gt;codec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;json&amp;quot;&lt;/span&gt; 
@@ -221,7 +221,7 @@ input &lt;span class="o"&gt;{&lt;/span&gt;
      &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;tclonline&amp;quot;&lt;/span&gt;
      &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;appstore:overview_date_reports&amp;quot;&lt;/span&gt; 
      &lt;span class="nv"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;overview_date_reports&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; 
-     &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 3
+     &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;3&lt;/span&gt;
    &lt;span class="o"&gt;}&lt;/span&gt; 
    redis &lt;span class="o"&gt;{&lt;/span&gt; 
      &lt;span class="nv"&gt;codec&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;json&amp;quot;&lt;/span&gt; 
@@ -230,7 +230,7 @@ input &lt;span class="o"&gt;{&lt;/span&gt;
      &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;pwd&amp;quot;&lt;/span&gt;
      &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;appstore:overview_model_reports&amp;quot;&lt;/span&gt; 
      &lt;span class="nv"&gt;tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;overview_model_reports&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt; 
-     &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 3
+     &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;3&lt;/span&gt;
 
    &lt;span class="o"&gt;}&lt;/span&gt; 
 &lt;span class="o"&gt;}&lt;/span&gt;
@@ -256,7 +256,7 @@ output &lt;span class="o"&gt;{&lt;/span&gt;
     &lt;span class="o"&gt;}&lt;/span&gt;
     redis&lt;span class="o"&gt;{&lt;/span&gt;
       &lt;span class="nv"&gt;data_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;list&amp;quot;&lt;/span&gt;
-      &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; 3
+      &lt;span class="nv"&gt;db&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="m"&gt;3&lt;/span&gt;
       &lt;span class="nv"&gt;host&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;x.x.x.x&amp;quot;&lt;/span&gt; 
       &lt;span class="nv"&gt;password&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;passwd&amp;quot;&lt;/span&gt;
       &lt;span class="nv"&gt;key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&amp;gt; &lt;span class="s2"&gt;&amp;quot;logstash:appstore_logs&amp;quot;&lt;/span&gt;
@@ -314,7 +314,7 @@ $ tar zxf elasticsearch-1.4.5.tar.gz
 
 &lt;p&gt;安装插件：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ &lt;span class="nb"&gt;cd&lt;/span&gt; /data/software &lt;span class="c1"&gt;# 安装分词插件&lt;/span&gt;
-$ git clone -b 1.4.0 https://github.com/medcl/elasticsearch-rtf.git
+$ git clone -b &lt;span class="m"&gt;1&lt;/span&gt;.4.0 https://github.com/medcl/elasticsearch-rtf.git
 $ &lt;span class="nb"&gt;cd&lt;/span&gt; elasticsearch-rtf
 $ cp -vrf plugins/analysis-ik /data/softwares/elasticsearch-1.4.5/plugins/
 $ cp -vrf config/ik config/mmseg /data/softwares/elasticsearch-1.4.5/config/
@@ -335,20 +335,20 @@ cluster.name: elasticsearch_dashboard
 node.name: &lt;span class="s2"&gt;&amp;quot;es1&amp;quot;&lt;/span&gt;
 node.master: &lt;span class="nb"&gt;true&lt;/span&gt;
 node.data: &lt;span class="nb"&gt;true&lt;/span&gt;
-index.number_of_shards: 5
-index.number_of_replicas: 2
+index.number_of_shards: &lt;span class="m"&gt;5&lt;/span&gt;
+index.number_of_replicas: &lt;span class="m"&gt;2&lt;/span&gt;
 path.data: /data/softwares/elasticsearch-1.4.5/data
 path.work: /data/softwares/elasticsearch-1.4.5/work
 path.logs: /data/log/elasticsearch
 path.plugins: /data/softwares/elasticsearch-1.4.5/plugins
-network.bind_host: 192.168.1.2
-network.publish_host: 192.168.1.2
-network.host: 192.168.1.2
-transport.tcp.port: 9300
-http.port: 9200
+network.bind_host: &lt;span class="m"&gt;192&lt;/span&gt;.168.1.2
+network.publish_host: &lt;span class="m"&gt;192&lt;/span&gt;.168.1.2
+network.host: &lt;span class="m"&gt;192&lt;/span&gt;.168.1.2
+transport.tcp.port: &lt;span class="m"&gt;9300&lt;/span&gt;
+http.port: &lt;span class="m"&gt;9200&lt;/span&gt;
 indices.recovery.max_bytes_per_sec: 200mb
-indices.recovery.concurrent_streams: 8
-discovery.zen.minimum_master_nodes: 2
+indices.recovery.concurrent_streams: &lt;span class="m"&gt;8&lt;/span&gt;
+discovery.zen.minimum_master_nodes: &lt;span class="m"&gt;2&lt;/span&gt;
 discovery.zen.ping.timeout: 10s
 discovery.zen.ping.multicast.enabled: &lt;span class="nb"&gt;true&lt;/span&gt;
 discovery.zen.ping.unicast.hosts: &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;192.168.1.2&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;192.168.1.6&amp;quot;&lt;/span&gt;, &lt;span class="s2"&gt;&amp;quot;192.168.1.7&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
@@ -414,19 +414,19 @@ $ 修改/etc/init.d/supervisor 以及 chkconfig 添加系统启动就不说了
 $ cat /etc/supervisor/supervisord.conf &lt;span class="p"&gt;|&lt;/span&gt; grep -Ev &lt;span class="s1"&gt;&amp;#39;^;|^$&amp;#39;&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;unix_http_server&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;file&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisor.sock    &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;the path to the socket file&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;chmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;                       &lt;span class="p"&gt;;&lt;/span&gt; sockef file mode &lt;span class="o"&gt;(&lt;/span&gt;default 0700&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;chmod&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;0700&lt;/span&gt;                       &lt;span class="p"&gt;;&lt;/span&gt; sockef file mode &lt;span class="o"&gt;(&lt;/span&gt;default &lt;span class="m"&gt;0700&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;rpcinterface:supervisor&lt;span class="o"&gt;]&lt;/span&gt;
 supervisor.rpcinterface_factory &lt;span class="o"&gt;=&lt;/span&gt; supervisor.rpcinterface:make_main_rpcinterface
 &lt;span class="o"&gt;[&lt;/span&gt;supervisord&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;http_port&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisor.sock &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;default is to run a UNIX domain socket server&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;logfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor/supervisord.log &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;main log file&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nv"&gt;$CWD&lt;/span&gt;/supervisord.log&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;logfile_maxbytes&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;50MB       &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;max main logfile bytes b4 rotation&lt;span class="p"&gt;;&lt;/span&gt;default 50MB&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;num of main logfile rotation backups&lt;span class="p"&gt;;&lt;/span&gt;default 10&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;logfile_backups&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;10&lt;/span&gt;          &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;num of main logfile rotation backups&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="m"&gt;10&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;loglevel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;debug              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;logging level&lt;span class="p"&gt;;&lt;/span&gt;default info&lt;span class="p"&gt;;&lt;/span&gt; others: debug,warn&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;pidfile&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/supervisord.pid &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;supervisord pidfile&lt;span class="p"&gt;;&lt;/span&gt;default supervisord.pid&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;nodaemon&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nb"&gt;false&lt;/span&gt;              &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;start in foreground &lt;span class="k"&gt;if&lt;/span&gt; true&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="nb"&gt;false&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;minfds&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1024&lt;/span&gt;                 &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail startup file descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 1024&lt;span class="o"&gt;)&lt;/span&gt;
-&lt;span class="nv"&gt;minprocs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;                &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail process descriptors&lt;span class="p"&gt;;&lt;/span&gt;default 200&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;minfds&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1024&lt;/span&gt;                 &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail startup file descriptors&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="m"&gt;1024&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;minprocs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;200&lt;/span&gt;                &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;min. avail process descriptors&lt;span class="p"&gt;;&lt;/span&gt;default &lt;span class="m"&gt;200&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="nv"&gt;childlogdir&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/data/log/supervisor &lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;AUTO&amp;#39;&lt;/span&gt; child log dir, default &lt;span class="nv"&gt;$TEMP&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
 &lt;span class="o"&gt;[&lt;/span&gt;supervisorctl&lt;span class="o"&gt;]&lt;/span&gt;
 &lt;span class="nv"&gt;serverurl&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;unix:////var/run/supervisor.sock &lt;span class="p"&gt;;&lt;/span&gt; use a unix:// URL  &lt;span class="k"&gt;for&lt;/span&gt; a unix socket

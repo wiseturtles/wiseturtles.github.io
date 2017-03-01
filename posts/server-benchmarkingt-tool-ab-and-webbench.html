@@ -81,7 +81,7 @@ Options are:
     -n requests     Number of requests to perform <span class="c1"># 请求次数</span>
     -c concurrency  Number of multiple requests to make at a <span class="nb">time</span> <span class="c1"># 并发数</span>
     -t timelimit    Seconds to max. to spend on benchmarking <span class="c1"># 压力测试的最大时间</span>
-                    This implies -n 50000
+                    This implies -n <span class="m">50000</span>
     -s timeout      Seconds to max. <span class="nb">wait</span> <span class="k">for</span> each response
                     Default is <span class="m">30</span> seconds
     -b windowsize   Size of TCP send/receive buffer, in bytes
@@ -132,7 +132,7 @@ $ ab -c <span class="m">100</span> -n <span class="m">10000</span> http://www.ba
 <span class="c1"># POST</span>
 
 $ cat data.json
-<span class="o">{</span><span class="s2">&quot;apps&quot;</span>: <span class="o">[{</span><span class="s2">&quot;package_name&quot;</span>: <span class="s2">&quot;com.baidu.browser.apps&quot;</span>, <span class="s2">&quot;app_name&quot;</span>:<span class="s2">&quot;百度浏览器&quot;</span>, <span class="s2">&quot;version_code&quot;</span>: 1, <span class="s2">&quot;version_name&quot;</span>: <span class="s2">&quot;5.3.4.1&quot;</span><span class="o">}]</span>, <span class="s2">&quot;pm_name&quot;</span>:<span class="s2">&quot;TCL M2M&quot;</span><span class="o">}</span>
+<span class="o">{</span><span class="s2">&quot;apps&quot;</span>: <span class="o">[{</span><span class="s2">&quot;package_name&quot;</span>: <span class="s2">&quot;com.baidu.browser.apps&quot;</span>, <span class="s2">&quot;app_name&quot;</span>:<span class="s2">&quot;百度浏览器&quot;</span>, <span class="s2">&quot;version_code&quot;</span>: <span class="m">1</span>, <span class="s2">&quot;version_name&quot;</span>: <span class="s2">&quot;5.3.4.1&quot;</span><span class="o">}]</span>, <span class="s2">&quot;pm_name&quot;</span>:<span class="s2">&quot;TCL M2M&quot;</span><span class="o">}</span>
 
 <span class="c1"># post json 数据</span>
 $ ab -c <span class="m">1000</span> -t <span class="m">30</span> -p data.json -T <span class="s2">&quot;application/json&quot;</span> -r <span class="s2">&quot;127.0.0.1:8888/m3/apps/update&quot;</span>
@@ -161,7 +161,7 @@ $ ab -c <span class="m">1000</span> -t <span class="m">30</span> -p data.json -T
 webbench <span class="o">[</span>option<span class="o">]</span>... URL
 -f<span class="p">|</span>--force               Don<span class="err">&#39;</span>t <span class="nb">wait</span> <span class="k">for</span> reply from server.
 -r<span class="p">|</span>--reload              Send reload request - Pragma: no-cache.
--t<span class="p">|</span>--time &lt;sec&gt;          Run benchmark <span class="k">for</span> &lt;sec&gt; seconds. Default 30.
+-t<span class="p">|</span>--time &lt;sec&gt;          Run benchmark <span class="k">for</span> &lt;sec&gt; seconds. Default <span class="m">30</span>.
 -p<span class="p">|</span>--proxy &lt;server:port&gt; Use proxy server <span class="k">for</span> request.
 -c<span class="p">|</span>--clients &lt;n&gt;         Run &lt;n&gt; HTTP clients at once. Default one.
 -9<span class="p">|</span>--http09              Use HTTP/0.9 style requests.

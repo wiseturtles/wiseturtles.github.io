@@ -81,7 +81,7 @@ $ sudo mkdir /etc/supervisor/conf.d
 $ cat /etc/supervisor/supervisord.conf
 <span class="o">[</span>unix_http_server<span class="o">]</span>
 <span class="nv">file</span><span class="o">=</span>/var/tmp/supervisor.sock    <span class="p">;</span> <span class="o">(</span>the path to the socket file<span class="o">)</span>
-<span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default 0700<span class="o">)</span>
+<span class="nv">chmod</span><span class="o">=</span><span class="m">0700</span>                       <span class="p">;</span> sockef file mode <span class="o">(</span>default <span class="m">0700</span><span class="o">)</span>
 
 <span class="p">;</span> the below section must remain in the config file <span class="k">for</span> RPC
 <span class="p">;</span> <span class="o">(</span>supervisorctl/web interface<span class="o">)</span> to work, additional interfaces may be
@@ -91,18 +91,18 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 
 <span class="o">[</span>supervisord<span class="o">]</span>
 <span class="nv">http_port</span><span class="o">=</span>/var/run/supervisor.sock <span class="p">;</span> <span class="o">(</span>default is to run a UNIX domain socket server<span class="o">)</span>
-<span class="p">;</span><span class="nv">http_port</span><span class="o">=</span>127.0.0.1:9001  <span class="p">;</span> <span class="o">(</span>alternately, ip_address:port specifies AF_INET<span class="o">)</span>
-<span class="p">;</span><span class="nv">sockchmod</span><span class="o">=</span><span class="m">0700</span>              <span class="p">;</span> AF_UNIX socketmode <span class="o">(</span>AF_INET ignore, default 0700<span class="o">)</span>
+<span class="p">;</span><span class="nv">http_port</span><span class="o">=</span><span class="m">127</span>.0.0.1:9001  <span class="p">;</span> <span class="o">(</span>alternately, ip_address:port specifies AF_INET<span class="o">)</span>
+<span class="p">;</span><span class="nv">sockchmod</span><span class="o">=</span><span class="m">0700</span>              <span class="p">;</span> AF_UNIX socketmode <span class="o">(</span>AF_INET ignore, default <span class="m">0700</span><span class="o">)</span>
 <span class="p">;</span><span class="nv">sockchown</span><span class="o">=</span>nobody.nogroup     <span class="p">;</span> AF_UNIX socket uid.gid owner <span class="o">(</span>AF_INET ignores<span class="o">)</span>
-<span class="p">;</span><span class="nv">umask</span><span class="o">=</span><span class="m">022</span>                   <span class="p">;</span> <span class="o">(</span>process file creation umask<span class="p">;</span>default 022<span class="o">)</span>
+<span class="p">;</span><span class="nv">umask</span><span class="o">=</span><span class="m">022</span>                   <span class="p">;</span> <span class="o">(</span>process file creation umask<span class="p">;</span>default <span class="m">022</span><span class="o">)</span>
 <span class="nv">logfile</span><span class="o">=</span>/data/log/supervisor/supervisord.log <span class="p">;</span> <span class="o">(</span>main log file<span class="p">;</span>default <span class="nv">$CWD</span>/supervisord.log<span class="o">)</span>
 <span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB       <span class="p">;</span> <span class="o">(</span>max main logfile bytes b4 rotation<span class="p">;</span>default 50MB<span class="o">)</span>
-<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default 10<span class="o">)</span>
+<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span>          <span class="p">;</span> <span class="o">(</span>num of main logfile rotation backups<span class="p">;</span>default <span class="m">10</span><span class="o">)</span>
 <span class="nv">loglevel</span><span class="o">=</span>debug              <span class="p">;</span> <span class="o">(</span>logging level<span class="p">;</span>default info<span class="p">;</span> others: debug,warn<span class="o">)</span>
 <span class="nv">pidfile</span><span class="o">=</span>/var/run/supervisord.pid <span class="p">;</span> <span class="o">(</span>supervisord pidfile<span class="p">;</span>default supervisord.pid<span class="o">)</span>
 <span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span>              <span class="p">;</span> <span class="o">(</span>start in foreground <span class="k">if</span> true<span class="p">;</span>default <span class="nb">false</span><span class="o">)</span>
-<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default 1024<span class="o">)</span>
-<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default 200<span class="o">)</span>
+<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span>                 <span class="p">;</span> <span class="o">(</span>min. avail startup file descriptors<span class="p">;</span>default <span class="m">1024</span><span class="o">)</span>
+<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span>                <span class="p">;</span> <span class="o">(</span>min. avail process descriptors<span class="p">;</span>default <span class="m">200</span><span class="o">)</span>
 <span class="nv">childlogdir</span><span class="o">=</span>/data/log/supervisor <span class="p">;</span> <span class="o">(</span><span class="s1">&#39;AUTO&#39;</span> child log dir, default <span class="nv">$TEMP</span><span class="o">)</span>
 
 <span class="p">;</span><span class="nv">nocleanup</span><span class="o">=</span><span class="nb">true</span>              <span class="p">;</span> <span class="o">(</span>don<span class="s1">&#39;t clean up tempfiles at start;default false)</span>
@@ -130,9 +130,9 @@ supervisor.rpcinterface_factory <span class="o">=</span> supervisor.rpcinterface
 <span class="s1">;autorestart=true            ; retstart at unexpected quit (default: true)</span>
 <span class="s1">;startsecs=10                ; number of secs prog must stay running (def. 10)</span>
 <span class="s1">;startretries=3              ; max # of serial start failures (default 3)</span>
-<span class="s1">;exitcodes=0,2               ; &#39;</span>expected<span class="err">&#39;</span> <span class="nb">exit</span> codes <span class="k">for</span> process <span class="o">(</span>default 0,2<span class="o">)</span>
+<span class="s1">;exitcodes=0,2               ; &#39;</span>expected<span class="err">&#39;</span> <span class="nb">exit</span> codes <span class="k">for</span> process <span class="o">(</span>default <span class="m">0</span>,2<span class="o">)</span>
 <span class="p">;</span><span class="nv">stopsignal</span><span class="o">=</span>QUIT             <span class="p">;</span> signal used to <span class="nb">kill</span> process <span class="o">(</span>default TERM<span class="o">)</span>
-<span class="p">;</span><span class="nv">stopwaitsecs</span><span class="o">=</span><span class="m">10</span>             <span class="p">;</span> max num secs to <span class="nb">wait</span> before SIGKILL <span class="o">(</span>default 10<span class="o">)</span>
+<span class="p">;</span><span class="nv">stopwaitsecs</span><span class="o">=</span><span class="m">10</span>             <span class="p">;</span> max num secs to <span class="nb">wait</span> before SIGKILL <span class="o">(</span>default <span class="m">10</span><span class="o">)</span>
 <span class="p">;</span><span class="nv">user</span><span class="o">=</span>chrism                 <span class="p">;</span> setuid to this UNIX account to run the program
 <span class="p">;</span><span class="nv">log_stdout</span><span class="o">=</span><span class="nb">true</span>             <span class="p">;</span> <span class="k">if</span> true, log program stdout <span class="o">(</span>default <span class="nb">true</span><span class="o">)</span>
 <span class="p">;</span><span class="nv">log_stderr</span><span class="o">=</span><span class="nb">true</span>             <span class="p">;</span> <span class="k">if</span> true, log program stderr <span class="o">(</span>def <span class="nb">false</span><span class="o">)</span>

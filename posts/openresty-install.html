@@ -109,8 +109,8 @@ On 2015-02-06
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;</span><span class="nv">$DAEMON</span><span class="s2">&quot;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&quot;</span><span class="nv">$CONF</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DAEMON</span><span class="s2"> has no permission to run. \033[0m&quot;</span>
     <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m Or </span><span class="nv">$CONF</span><span class="s2"> doesn&#39;t exist. \033[0m&quot;</span>
-    sleep 1
-    <span class="nb">exit</span> 1
+    sleep <span class="m">1</span>
+    <span class="nb">exit</span> <span class="m">1</span>
 <span class="k">fi</span>
 
 do_start<span class="o">()</span> <span class="o">{</span>
@@ -119,12 +119,12 @@ do_start<span class="o">()</span> <span class="o">{</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> is already running or crashed. \033[0m&quot;</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reopening </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -s reopen -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reopened. \033[0m&quot;</span>
     <span class="k">else</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
@@ -136,7 +136,7 @@ do_stop<span class="o">()</span> <span class="o">{</span>
     <span class="k">else</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Stopping </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -s stop -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> stopped. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
@@ -147,12 +147,12 @@ do_reload<span class="o">()</span> <span class="o">{</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m </span><span class="nv">$DESC</span><span class="s2"> isn&#39;t running. \033[0m&quot;</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Starting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> started. \033[0m&quot;</span>
     <span class="k">else</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Reloading </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -s reload -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> reloaded. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
@@ -164,7 +164,7 @@ do_quit<span class="o">()</span> <span class="o">{</span>
     <span class="k">else</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m </span><span class="nv">$DESC</span><span class="s2"> Quitting </span><span class="nv">$CONF</span><span class="s2"> ... \033[0m&quot;</span>
         <span class="nv">$DAEMON</span> -s quit -c <span class="nv">$CONF</span>
-        sleep 1
+        sleep <span class="m">1</span>
         <span class="nb">echo</span> -e <span class="s2">&quot;\033[36m </span><span class="nv">$DESC</span><span class="s2"> quitted. \033[0m&quot;</span>
     <span class="k">fi</span>
 <span class="o">}</span>
@@ -203,11 +203,11 @@ do_info
 <span class="p">;;</span>
 *<span class="o">)</span>
 <span class="nb">echo</span> <span class="s2">&quot;Usage: </span><span class="nv">$SCRIPT</span><span class="s2"> {start|stop|reload|restart|quit|test|info}&quot;</span>
-<span class="nb">exit</span> 2
+<span class="nb">exit</span> <span class="m">2</span>
 <span class="p">;;</span>
 <span class="k">esac</span>
 
-<span class="nb">exit</span> 0
+<span class="nb">exit</span> <span class="m">0</span>
 </pre></div>
 
 
@@ -244,7 +244,7 @@ sudo update-rc.d apache2 defaults <span class="c1"># 添加nginx服务</span>
 /etc/openresty/nginx/logs/*.log <span class="o">{</span>
     daily
     missingok
-    rotate 52
+    rotate <span class="m">52</span>
     dateext
     dateformat  -%Y-%m-%d
     compress
