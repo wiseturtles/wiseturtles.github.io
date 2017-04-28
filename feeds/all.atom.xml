@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-04-28T13:00:00+08:00</updated><entry><title>在Mac OSX上安装Hadoop</title><link href="http://blog.wiseturtles.com/posts/install-hadoop-on-mac-osx.html" rel="alternate"></link><published>2017-04-28T13:00:00+08:00</published><updated>2017-04-28T13:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-04-28:/posts/install-hadoop-on-mac-osx.html</id><summary type="html">&lt;p&gt;install hadoop on mac&amp;nbsp;osx&lt;/p&gt;</summary><content type="html">&lt;h2&gt;安装Hadoop&lt;/h2&gt;
+&lt;p&gt;只是安装来学习Hadoop，所以，在自己笔记本上安装的。正式的线上环境会用多台机器搭建集群 或者 直接使用&lt;span class="caps"&gt;AWS&lt;/span&gt;的&lt;span class="caps"&gt;EMR&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;我希望尽可能的通过包管理安装软件，而不是手动下载安装。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install hadoop
 &lt;/pre&gt;&lt;/div&gt;
@@ -87,7 +88,11 @@ export PATH=&amp;quot;$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH&amp;quot;
 &lt;p&gt;停止:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;$ sbin/stop-yarn.sh&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;</content><category term="Mac"></category><category term="Hadoop"></category><category term="BigData"></category></entry><entry><title>create restricted linux user for ssh tunnel</title><link href="http://blog.wiseturtles.com/posts/create-restricted-linux-user-for-ssh-tunnel.html" rel="alternate"></link><published>2017-03-01T11:30:00+08:00</published><updated>2017-03-01T11:30:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-03-01:/posts/create-restricted-linux-user-for-ssh-tunnel.html</id><summary type="html">&lt;p&gt;Linux中创建一个受限的用户，专门做ssh&amp;nbsp;tunnel&lt;/p&gt;</summary><content type="html">&lt;p&gt;由于国内访问一些网站特别慢，所以，使用一台新加坡节点的机器做代理，提高浏览器、mobile访问网站速度。&lt;/p&gt;
+&lt;/ol&gt;
+&lt;h2&gt;参考文档&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html"&gt;Hadoop: Setting up a Single Node&amp;nbsp;Cluster.&lt;/a&gt;   &lt;/li&gt;
+&lt;/ul&gt;</content><category term="Mac"></category><category term="Hadoop"></category><category term="BigData"></category></entry><entry><title>create restricted linux user for ssh tunnel</title><link href="http://blog.wiseturtles.com/posts/create-restricted-linux-user-for-ssh-tunnel.html" rel="alternate"></link><published>2017-03-01T11:30:00+08:00</published><updated>2017-03-01T11:30:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-03-01:/posts/create-restricted-linux-user-for-ssh-tunnel.html</id><summary type="html">&lt;p&gt;Linux中创建一个受限的用户，专门做ssh&amp;nbsp;tunnel&lt;/p&gt;</summary><content type="html">&lt;p&gt;由于国内访问一些网站特别慢，所以，使用一台新加坡节点的机器做代理，提高浏览器、mobile访问网站速度。&lt;/p&gt;
 &lt;p&gt;最近发现访问&lt;span class="caps"&gt;AWS&lt;/span&gt;的&lt;span class="caps"&gt;EC2&lt;/span&gt;也特别慢，所以，希望通过该代理加速&lt;span class="caps"&gt;SSH&lt;/span&gt;连接速度，&lt;code&gt;ProxyCommand ssh -q -W %h:%p proxy&lt;/code&gt;这行加入希望访问的主机&lt;code&gt;~/.ssh/config&lt;/code&gt;中即可。&lt;/p&gt;
 &lt;p&gt;但，如果团队成员也有此需求，但又不想让团队成员有&lt;code&gt;ssh&lt;/code&gt;登陆代理主机的权限，那么就继续往下看。&lt;/p&gt;
 &lt;h2&gt;在代理主机上配置受限用户、sshd及团队成员的ssh公钥&lt;/h2&gt;

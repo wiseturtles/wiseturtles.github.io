@@ -69,6 +69,7 @@ On 2017-04-28
         </div>
 
         <div><h2>安装Hadoop</h2>
+<p>只是安装来学习Hadoop，所以，在自己笔记本上安装的。正式的线上环境会用多台机器搭建集群 或者 直接使用<span class="caps">AWS</span>的<span class="caps">EMR</span>。</p>
 <p>我希望尽可能的通过包管理安装软件，而不是手动下载安装。</p>
 <div class="highlight"><pre><span></span>$ brew install hadoop
 </pre></div>
@@ -156,7 +157,11 @@ export PATH=&quot;$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH&quot;
 <p>停止:</p>
 <p><code>$ sbin/stop-yarn.sh</code></p>
 </li>
-</ol></div>
+</ol>
+<h2>参考文档</h2>
+<ul>
+<li><a href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html">Hadoop: Setting up a Single Node&nbsp;Cluster.</a>   </li>
+</ul></div>
 
         <hr>
 
