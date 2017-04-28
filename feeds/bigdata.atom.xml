@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - bigdata</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/bigdata.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-04-28T13:00:00+08:00</updated><entry><title>在Mac OSX上安装Hadoop</title><link href="http://blog.wiseturtles.com/posts/install-hadoop-on-mac-osx.html" rel="alternate"></link><published>2017-04-28T13:00:00+08:00</published><updated>2017-04-28T13:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-04-28:/posts/install-hadoop-on-mac-osx.html</id><summary type="html">&lt;p&gt;install hadoop on mac&amp;nbsp;osx&lt;/p&gt;</summary><content type="html">&lt;h2&gt;安装Hadoop&lt;/h2&gt;
+&lt;p&gt;我希望尽可能的通过包管理安装软件，而不是手动下载安装。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install hadoop
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;修改配置文件&lt;/h3&gt;
+&lt;p&gt;Hadoop安装路径: &lt;code&gt;brew --prefix hadoop&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;配置文件路径: &lt;code&gt;$(brew --prefix hadoop)/libexec/etc/hadoop/&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;core-site.xml:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;property&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;fs.defaultFS&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;value&amp;gt;&lt;/span&gt;hdfs://localhost:9000&lt;span class="nt"&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;hdfs-site.xml:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;property&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;dfs.replication&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;value&amp;gt;&lt;/span&gt;1&lt;span class="nt"&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;mapred-site.xml:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;property&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;mapreduce.framework.name&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;value&amp;gt;&lt;/span&gt;yarn&lt;span class="nt"&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;strong&gt;yarn-site.xml:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;property&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;name&amp;gt;&lt;/span&gt;yarn.nodemanager.aux-services&lt;span class="nt"&gt;&amp;lt;/name&amp;gt;&lt;/span&gt;
+        &lt;span class="nt"&gt;&amp;lt;value&amp;gt;&lt;/span&gt;mapreduce_shuffle&lt;span class="nt"&gt;&amp;lt;/value&amp;gt;&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;lt;/property&amp;gt;&lt;/span&gt;
+&lt;span class="nt"&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;启动&lt;span class="caps"&gt;HDFS&lt;/span&gt; (NameNode,&amp;nbsp;DataNode)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;格式化&lt;span class="caps"&gt;HDFS&lt;/span&gt;文件系统：&lt;code&gt;$ bin/hdfs namenode -format&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;启动NameNode 和 DataNode：&lt;code&gt;$ sbin/start-dfs.sh&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;创建&lt;span class="caps"&gt;HDFS&lt;/span&gt;目录，为运行MapReduce做准备&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ bin/hdfs dfs -mkdir /user
+$ bin/hdfs dfs -mkdir /user/&amp;lt;username&amp;gt;
+$ bin/hdfs dfs -put libexec/etc/hadoop input&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;运行demo:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ bin/hadoop jar libexec/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.8.0.jar grep input output 'dfs[a-z.]+'&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看demo输出: &lt;code&gt;$ bin/hdfs dfs -cat outpu/*&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;停止NameNode 和 DataNode: &lt;code&gt;$ sbin/stop-dfs.sh&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;修改 ~/.zshrc ，将hadoop的bin, sbin加入&lt;span class="caps"&gt;PATH&lt;/span&gt;环境变量：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;# hadoop
+HADOOP_HOME=$(brew --prefix hadoop)
+export PATH=&amp;quot;$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;&lt;span class="caps"&gt;YARN&lt;/span&gt;&amp;nbsp;(ResourceManager)&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;启动:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ sbin/start-yarn.sh&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;查看: &lt;a href="http://localhost:8088/"&gt;http://localhost:8088/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;停止:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;$ sbin/stop-yarn.sh&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</content><category term="Mac"></category><category term="Hadoop"></category><category term="BigData"></category></entry></feed>
