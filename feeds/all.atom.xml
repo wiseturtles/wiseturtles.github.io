@@ -1,5 +1,662 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-04-28T13:00:00+08:00</updated><entry><title>在Mac OSX上安装Hadoop</title><link href="http://blog.wiseturtles.com/posts/install-hadoop-on-mac-osx.html" rel="alternate"></link><published>2017-04-28T13:00:00+08:00</published><updated>2017-04-28T13:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-04-28:/posts/install-hadoop-on-mac-osx.html</id><summary type="html">&lt;p&gt;install hadoop on mac&amp;nbsp;osx&lt;/p&gt;</summary><content type="html">&lt;h2&gt;安装Hadoop&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-05-03T13:00:00+08:00</updated><entry><title>在Mac OSX练习Pig使用</title><link href="http://blog.wiseturtles.com/posts/learn-pig-on-mac-osx.html" rel="alternate"></link><published>2017-05-03T13:00:00+08:00</published><updated>2017-05-03T13:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-05-03:/posts/learn-pig-on-mac-osx.html</id><summary type="html">&lt;p&gt;learn pig on mac&amp;nbsp;osx&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Pig&lt;/h1&gt;
+&lt;p&gt;看《Hadoop权威指南第三版》并记录在 Mac &lt;span class="caps"&gt;OSX&lt;/span&gt;&amp;nbsp;系统上练习Pig使用。&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;p&gt;在Mac &lt;span class="caps"&gt;OSX&lt;/span&gt;&amp;nbsp;上安装命令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install pig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;命令行使用&lt;/h2&gt;
+&lt;h2&gt;Pig&amp;nbsp;Latin语言&lt;/h2&gt;
+&lt;p&gt;Pig&amp;nbsp;Latin的关系操作：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;操作&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;加载与存储&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;LOAD&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;从文件系统或其他存储加载数据，存入关系&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;加载与存储&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;STORE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将一个关系存放在文件系统或者其他存储中&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;加载与存储&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;DUMP&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将关系打印到控制台&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;FILTER&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将关系中删除不需要的行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;DISTINCT&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将关系中删除重复的行&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;FOREACH&lt;/span&gt; &amp;#8230; &lt;span class="caps"&gt;GENERATE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将关系中添加或删除字段&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;MAPREDUCE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;以一个关系作为输入运行某个MapReduce 作业&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;STREAM&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;使用外部程序对一个关系进行变换&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;过滤&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;SAMPLE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;对一个关系进行随机取样&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分组与连接&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;JOIN&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;连接两个或多个关系&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分组和连接&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;COGROUP&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;对两个或更多关系中的数据进行分组&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分组和连接&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;GROUP&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;在一个关系中对数据进行分组&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;分组和连接&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;CROSS&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;创建两个或更多关系的乘积 (叉乘)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;排序&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;ORDER&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;根据一个或多个字段对某个关系进行排序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;排序&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;LIMIT&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;将一个关系的元组个人限定在一定数量内&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;组合和切分&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;UNION&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;合并两个或多个关系为一个关系&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;组合和切分&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;SPLIT&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;把某个关系切分为两个或多个关系&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Pig&amp;nbsp;Latin的诊断操作&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;操作&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;DESCRIBE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;打印关系的模式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;EXPLAIN&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;打印逻辑和物理计划&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;ILLUSTRATE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;使用生成的输入子集显示逻辑计划的试运行结果&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这些命令不会被加入逻辑计划中&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;DUMP&lt;/span&gt;也是一种诊断操作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pig Latin的宏和&lt;span class="caps"&gt;UDF&lt;/span&gt;语句&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;语句&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;REGISTER&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;在Pig运行时环境中注册一个&lt;span class="caps"&gt;JAR&lt;/span&gt;文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;DEFINE&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;为宏、&lt;span class="caps"&gt;UDF&lt;/span&gt;、流式脚本或命令规范新建别名&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;span class="caps"&gt;IMPORT&lt;/span&gt;&lt;/td&gt;
+&lt;td&gt;把另一个文件中定义的宏导入脚本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这些命令不处理关系，所以它们不会被加入逻辑计划&lt;/li&gt;
+&lt;li&gt;这些命令会被立即执行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pig Latin&amp;nbsp;命令&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类别&lt;/th&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;cat&lt;/td&gt;
+&lt;td&gt;打印一个或多个文件的内容&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;cd&lt;/td&gt;
+&lt;td&gt;改变当前目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;copyFromLocal&lt;/td&gt;
+&lt;td&gt;复制本地文件或目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;copyToLocal&lt;/td&gt;
+&lt;td&gt;将一个文件或目录从Hadoop 文件系统复制到本地文件系统&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;cp&lt;/td&gt;
+&lt;td&gt;把一个文件或目录复制到另一个目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;fs&lt;/td&gt;
+&lt;td&gt;访问Hadoop文件系统外壳程序&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;ls&lt;/td&gt;
+&lt;td&gt;打印文件列表信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;mkdir&lt;/td&gt;
+&lt;td&gt;创建新目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;mv&lt;/td&gt;
+&lt;td&gt;将一个文件或目录移动到另一个目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;pwd&lt;/td&gt;
+&lt;td&gt;打印当前工作目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;rm&lt;/td&gt;
+&lt;td&gt;删除一个文件或目录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop文件系统&lt;/td&gt;
+&lt;td&gt;rmf&lt;/td&gt;
+&lt;td&gt;强制删除文件或目录 (文件或目录不存在也不会失败)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;kill&lt;/td&gt;
+&lt;td&gt;终止某个MapReduce 作业&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;exec&lt;/td&gt;
+&lt;td&gt;在新的 Grunt 外壳程序中以批处理模式运行脚本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;help&lt;/td&gt;
+&lt;td&gt;显示可用的命令和选项&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;quit&lt;/td&gt;
+&lt;td&gt;退出解释器&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;run&lt;/td&gt;
+&lt;td&gt;在当前 Grunt 外壳程序中运行脚本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;set&lt;/td&gt;
+&lt;td&gt;设置 Pig 选项 和 MapReduce 作业属性&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hadoop MapReduce 工具&lt;/td&gt;
+&lt;td&gt;sh&lt;/td&gt;
+&lt;td&gt;在 Grunt 中运行外壳命令&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Pig Latin&amp;nbsp;表达式&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类别&lt;/th&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;常量&lt;/td&gt;
+&lt;td&gt;文字&lt;/td&gt;
+&lt;td&gt;常量值&lt;/td&gt;
+&lt;td&gt;1.0, &amp;#8216;a&amp;#8217;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;字段 (位置指定)&lt;/td&gt;
+&lt;td&gt;$n&lt;/td&gt;
+&lt;td&gt;第n个字段(从0开始)&lt;/td&gt;
+&lt;td&gt;$0, $1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;字段 (名字指定)&lt;/td&gt;
+&lt;td&gt;f&lt;/td&gt;
+&lt;td&gt;字段名f&lt;/td&gt;
+&lt;td&gt;year&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;字段 (消除歧义)&lt;/td&gt;
+&lt;td&gt;r::f&lt;/td&gt;
+&lt;td&gt;分组或连接后，关系r中的名为f的字段&lt;/td&gt;
+&lt;td&gt;A::year&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;投影&lt;/td&gt;
+&lt;td&gt;c.$n, c.f&lt;/td&gt;
+&lt;td&gt;在容器c (关系、包或元组) 中的字段按位置 或 名称指定&lt;/td&gt;
+&lt;td&gt;records.$0, records.year&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Map 查找&lt;/td&gt;
+&lt;td&gt;m#k&lt;/td&gt;
+&lt;td&gt;在映射m中键k所对应的值&lt;/td&gt;
+&lt;td&gt;items#&amp;#8217;Coat&amp;#8217;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;类型转换&lt;/td&gt;
+&lt;td&gt;(t) f&lt;/td&gt;
+&lt;td&gt;将字段f转换为类型t&lt;/td&gt;
+&lt;td&gt;(int) year&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;算术&lt;/td&gt;
+&lt;td&gt;+, -, *, /, %&lt;/td&gt;
+&lt;td&gt;加、减、乘、除、取余&lt;/td&gt;
+&lt;td&gt;$1 + $2, $1 - $2, $1 * $2, $1 / $2, $1 % $2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;条件&lt;/td&gt;
+&lt;td&gt;x ? y : z&lt;/td&gt;
+&lt;td&gt;三元运算符，如果 x 为真，则y，否则为 z&lt;/td&gt;
+&lt;td&gt;quality == 0 ? 0 : 1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;比较&lt;/td&gt;
+&lt;td&gt;==, !=, &amp;gt;, &amp;lt;, &amp;gt;=, &amp;lt;=, x matches y, x is null, x is not null&lt;/td&gt;
+&lt;td&gt;相等、不等、大于、小于、大于等于、小于等于、正则匹配、是空值、不是空值&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;quality matches '[01459]'&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;布尔型&lt;/td&gt;
+&lt;td&gt;or, and, not&lt;/td&gt;
+&lt;td&gt;逻辑或，逻辑与，逻辑非&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;q == 0 or q == 1&lt;/code&gt;, &lt;code&gt;not q matches '[01459]'&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;平面化&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;FLATTEN&lt;/span&gt;(f)&lt;/td&gt;
+&lt;td&gt;从包或元组中去除嵌套&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;FLATTEN&lt;/span&gt;(group)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Pig Latin&amp;nbsp;类型&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;类别&lt;/th&gt;
+&lt;th&gt;数据类型&lt;/th&gt;
+&lt;th&gt;描述&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;数值&lt;/td&gt;
+&lt;td&gt;int&lt;/td&gt;
+&lt;td&gt;32位有符号整数&lt;/td&gt;
+&lt;td&gt;99&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数值&lt;/td&gt;
+&lt;td&gt;long&lt;/td&gt;
+&lt;td&gt;64位有符号整数&lt;/td&gt;
+&lt;td&gt;199L&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数值&lt;/td&gt;
+&lt;td&gt;float&lt;/td&gt;
+&lt;td&gt;32位浮点数&lt;/td&gt;
+&lt;td&gt;0.8F&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数值&lt;/td&gt;
+&lt;td&gt;double&lt;/td&gt;
+&lt;td&gt;64位浮点数&lt;/td&gt;
+&lt;td&gt;0.88&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;文本&lt;/td&gt;
+&lt;td&gt;chararray&lt;/td&gt;
+&lt;td&gt;&lt;span class="caps"&gt;UTF&lt;/span&gt;-16格式的字符数组&lt;/td&gt;
+&lt;td&gt;&amp;#8216;hello world&amp;#8217;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;二进制&lt;/td&gt;
+&lt;td&gt;bytearray&lt;/td&gt;
+&lt;td&gt;字节数组&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;复杂类型&lt;/td&gt;
+&lt;td&gt;tuple&lt;/td&gt;
+&lt;td&gt;任何类型的字段序列&lt;/td&gt;
+&lt;td&gt;(1, &amp;#8216;programmer&amp;#8217;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;复杂类型&lt;/td&gt;
+&lt;td&gt;bag&lt;/td&gt;
+&lt;td&gt;元组的无序多重集合 (允许重复的元组)&lt;/td&gt;
+&lt;td _1_="(1," _2_="(2)" _hello_="'hello'),"&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;复杂类型&lt;/td&gt;
+&lt;td&gt;map&lt;/td&gt;
+&lt;td&gt;一个键值对的集合。键必须是字符数组，值可以是任意类型的数据&lt;/td&gt;
+&lt;td&gt;[&amp;#8216;a&amp;#8217;#&amp;#8217;hello&amp;#8217;, &amp;#8216;b&amp;#8217;#&amp;#8217;world&amp;#8217;]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内置函数：&lt;span class="caps"&gt;TOTUPLE&lt;/span&gt;, &lt;span class="caps"&gt;TOBAG&lt;/span&gt;, &lt;span class="caps"&gt;TOMAP&lt;/span&gt;&amp;nbsp;将表达式转换为元组、包以及映射。&lt;/li&gt;
+&lt;li&gt;包必须在某个关系中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Schema&lt;/h2&gt;
+&lt;p&gt;Pig&amp;nbsp;中的一个关系可以关联一个模式。模式为关系的字段指定名称和类型。&lt;/p&gt;
+&lt;p&gt;Load语句的&lt;span class="caps"&gt;AS&lt;/span&gt;字句可以在关系上附以模式：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;LOAD&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; &lt;span class="nt"&gt;AS&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;year&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;temperature&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;quality&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;DESCRIBE&lt;/span&gt; &lt;span class="nt"&gt;records&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;records&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="n"&gt;year&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;temperature&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;quality&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="err"&gt;注：不指定类型的话，默认是&lt;/span&gt;&lt;span class="nt"&gt;bytearray&lt;/span&gt;
+    &lt;span class="nt"&gt;DESCRIBE&lt;/span&gt; &lt;span class="err"&gt;用来查看模式&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;Schema&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;函数&lt;/h2&gt;
+&lt;p&gt;Pig的函数有四种类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;计算函数 (Eval&amp;nbsp;function)&lt;/li&gt;
+&lt;li&gt;过滤函数 (Filter&amp;nbsp;function)&lt;/li&gt;
+&lt;li&gt;加载函数 (Load&amp;nbsp;function)&lt;/li&gt;
+&lt;li&gt;存储函数 (Store&amp;nbsp;function)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;宏&lt;/h2&gt;
+&lt;p&gt;宏提供了在Pig Latin内对可重用的Pig&amp;nbsp;Latin代码进行打包的功能。&lt;/p&gt;
+&lt;p&gt;示例：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat max_temp.macro
+DEFINE max_by_group&lt;span class="o"&gt;(&lt;/span&gt;X, group_key, max_field&lt;span class="o"&gt;)&lt;/span&gt; RETURNS Y &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="nv"&gt;A&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; GROUP &lt;span class="nv"&gt;$X&lt;/span&gt; by &lt;span class="nv"&gt;$group_key&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;$Y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FOREACH A GENERATE group, MAX&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;$X&lt;/span&gt;.&lt;span class="nv"&gt;$max_field&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;导入宏：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; IMPORT &amp;#39;./max_temp.macro&amp;#39;;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;使用宏：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;LOAD&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; &lt;span class="nt"&gt;AS&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;year&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;chararray&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;temperature&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;quality&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;max_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;max_by_group&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;records&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;year&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;temperature&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;DUMP&lt;/span&gt; &lt;span class="nt"&gt;max_temp&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;用户自定义函数 (&lt;span class="caps"&gt;UDF&lt;/span&gt;)&lt;/h2&gt;
+&lt;p&gt;以插件形式提供使用用户定制代码的能力。可以使用Java、Python、JavaScript写&lt;span class="caps"&gt;UDF&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;下面是删除不符合质量要求的气温记录&amp;nbsp;(Java代码)：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;hadoopbook&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pig&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;IsGoodQuality&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;java&lt;/span&gt;
+&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;hadoopbook&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;pig&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.io.IOException&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.ArrayList&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;java.util.List&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.pig.FilterFunc&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.pig.backend.executionengine.ExecException&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.pig.data.DataType&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.pig.data.Tuple&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;org.apache.pig.impl.logicalLayer.FrontendException&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;IsGoodQuality&lt;/span&gt; &lt;span class="n"&gt;extends&lt;/span&gt; &lt;span class="n"&gt;FilterFunc&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+  &lt;span class="nd"&gt;@Override&lt;/span&gt;
+  &lt;span class="n"&gt;public&lt;/span&gt; &lt;span class="n"&gt;Boolean&lt;/span&gt; &lt;span class="k"&gt;exec&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Tuple&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;throws&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;tuple&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="k"&gt;try&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;Object&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;tuple&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+      &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;object&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="n"&gt;null&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;false&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="p"&gt;}&lt;/span&gt;
+      &lt;span class="nb"&gt;int&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Integer&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nb"&gt;object&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+      &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="mi"&gt;9&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;catch&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ExecException&lt;/span&gt; &lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+      &lt;span class="n"&gt;throw&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;IOException&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;e&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;编译、打包：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ javac -cp &lt;span class="k"&gt;$(&lt;/span&gt;brew --prefix pig&lt;span class="k"&gt;)&lt;/span&gt;/libexec/pig-0.16.0-core-h2.jar:&lt;span class="k"&gt;$(&lt;/span&gt;hadoop classpath&lt;span class="k"&gt;)&lt;/span&gt; com/hadoopbook/pig/IsGoodQuality.java
+$ jar -cf com/hadoopbook/pig/IsGoodQuality.jar com/hadoopbook/pig/IsGoodQuality.class
+
+注：我通过brew安装的pig所以使用了&lt;span class="k"&gt;$(&lt;/span&gt;brew --prefix pig&lt;span class="k"&gt;)&lt;/span&gt;；可以手动指定pig.jar的具体路径。
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;在Pig中使用该&lt;span class="caps"&gt;UDF&lt;/span&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pig
+grunt&amp;gt; REGISTER ./com/hadoopbook/pig/IsGoodQuality.jar&lt;span class="p"&gt;;&lt;/span&gt;
+grunt&amp;gt; DEFINE isGood com.hadoopbook.pig.IsGoodQuality&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+grunt&amp;gt; &lt;span class="nv"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; LOAD &lt;span class="s1"&gt;&amp;#39;/input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; AS &lt;span class="o"&gt;(&lt;/span&gt;year:chararray, temperature:int, quality:int&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+grunt&amp;gt; &lt;span class="nv"&gt;filtered_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FILTER records BY temperature !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;9999&lt;/span&gt; AND isGood&lt;span class="o"&gt;(&lt;/span&gt;quality&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+grunt&amp;gt; DUMP filtered_records&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;写成pig程序：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat max_temp_filter_udf.pig
+--max_temp_filter_udf.pig
+REGISTER com/hadoopbook/pig/IsGoodQuality.jar&lt;span class="p"&gt;;&lt;/span&gt;
+DEFINE isGood com.hadoopbook.pig.IsGoodQuality&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; LOAD &lt;span class="s1"&gt;&amp;#39;/input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; AS &lt;span class="o"&gt;(&lt;/span&gt;year:chararray, temperature:int, quality:int&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;filtered_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FILTER records BY temperature !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;9999&lt;/span&gt; AND isGood&lt;span class="o"&gt;(&lt;/span&gt;quality&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;grouped_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; GROUP filtered_records BY year&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;max_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FOREACH grouped_records GENERATE group, MAX&lt;span class="o"&gt;(&lt;/span&gt;filtered_records.temperature&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+DUMP max_temp&lt;span class="p"&gt;;&lt;/span&gt;
+STORE max_temp INTO &lt;span class="s1"&gt;&amp;#39;max_temp_output&amp;#39;&lt;/span&gt; USING PigStorage&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;数据加载和存储&lt;/h2&gt;
+&lt;p&gt;前面已经有用Load加载数据了。下面看看怎么存储数据：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; STORE max_temp INTO &amp;#39;max_temp_output&amp;#39; USING PigStorage(&amp;#39;:&amp;#39;);
+grunt&amp;gt; cat max_temp_output
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;数据过滤&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;FILTER&lt;/code&gt; 、&lt;code&gt;LIMIT&lt;/code&gt; 用来过滤行；&lt;code&gt;FOREACH ... GENERATE&lt;/code&gt;用来删除、添加列(字段)。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; max_temp = FOREACH grouped_records GENERATE group, MAX(filtered_records.temperature);
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;&lt;span class="caps"&gt;STREAM&lt;/span&gt;操作&lt;/h3&gt;
+&lt;p&gt;&lt;span class="caps"&gt;STREAM&lt;/span&gt;操作可以让外部程序或脚本对关系中的数据进行变换。这一操作的命名对应于Hadoop的Streaming，后者为MapReduce提供类似能力。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;LOAD&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; &lt;span class="nt"&gt;AS&lt;/span&gt; &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nt"&gt;year&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;chararray&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;temperature&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nt"&gt;quality&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="nd"&gt;int&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;second_field&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nt"&gt;STREAM&lt;/span&gt; &lt;span class="nt"&gt;records&lt;/span&gt; &lt;span class="nt"&gt;THROUGH&lt;/span&gt; &lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="nt"&gt;cut&lt;/span&gt; &lt;span class="nt"&gt;-f&lt;/span&gt; &lt;span class="nt"&gt;2&lt;/span&gt;&lt;span class="err"&gt;`&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;span class="nt"&gt;grunt&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nt"&gt;DUMP&lt;/span&gt; &lt;span class="nt"&gt;second_field&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h4&gt;Python写stream脚本&lt;/h4&gt;
+&lt;p&gt;is_good_quality.py程序:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;cat&lt;/span&gt; &lt;span class="n"&gt;is_good_quality&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;
+&lt;span class="c1"&gt;#!/usr/bin/env python&lt;/span&gt;
+&lt;span class="c1"&gt;# encoding: utf-8&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;re&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;year&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;line&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;strip&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt; &lt;span class="o"&gt;!=&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;9999&amp;#39;&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;re&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;match&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;[01459]&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;{}&lt;/span&gt;&lt;span class="se"&gt;\t&lt;/span&gt;&lt;span class="s1"&gt;{}&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;year&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;temp&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Pig程序:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat max_temp_filter_stream.pig
+--max_temp_filter_stream.pig
+
+DEFINE is_good_quality &lt;span class="sb"&gt;`&lt;/span&gt;is_good_quality.py&lt;span class="sb"&gt;`&lt;/span&gt; SHIP &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;is_good_quality.py&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; LOAD &lt;span class="s1"&gt;&amp;#39;/input/ncdc/micro-tab/sample.txt&amp;#39;&lt;/span&gt; AS &lt;span class="o"&gt;(&lt;/span&gt;year:chararray, temperature:int, quality:int&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;filtered_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; STREAM records THROUGH is_good_quality AS &lt;span class="o"&gt;(&lt;/span&gt;year:chararray, temperature:int&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;grouped_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; GROUP filtered_records BY year&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;max_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FOREACH grouped_records GENERATE group, MAX&lt;span class="o"&gt;(&lt;/span&gt;filtered_records.temperature&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+DUMP max_temp&lt;span class="p"&gt;;&lt;/span&gt;
+STORE max_temp INTO &lt;span class="s1"&gt;&amp;#39;max_temp_stream&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ hdfs dfs -put max_temp_filter_stream.pig
+$ pig -f max_temp_filter_stream.pig
+$ hdfs dfs -cat max_temp_stream/*
+&lt;span class="m"&gt;1949&lt;/span&gt;    &lt;span class="m"&gt;111&lt;/span&gt;
+&lt;span class="m"&gt;1950&lt;/span&gt;    &lt;span class="m"&gt;22&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;数据分组与连接&lt;/h2&gt;
+&lt;h3&gt;连接/&lt;span class="caps"&gt;JOIN&lt;/span&gt;&lt;/h3&gt;
+&lt;p&gt;连接：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; C = JOIN A BY $0, B BY $1;
+
+注：等式连接，即：连接A.$0 == B.$1 的行，结果中的字段由所有输入关系的所有字段组成。
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;如果要连接的关系太大，不能全部放入内存，则应该使用通用的连接操作。如果有一个关系小到能够全部放入内存，则可以使用分段复制连接(fragment replicate&amp;nbsp;join)，它把小的输入关系发生到所有mapper，并在map端使用内存查找表对(分段的)较大的关系进行连接。&lt;/p&gt;
+&lt;p&gt;分段复制连接：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; C = JOIN A BY $0, B BY $1 USING &amp;quot;replicated&amp;quot;;
+
+注：第一个关系必须是大的关系，后面则是一个或多个相对较小的关系。(能够全部放入内存)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;实战技巧&lt;/h2&gt;
+&lt;h3&gt;并行处理&lt;/h3&gt;
+&lt;p&gt;Pig根据输入数据的大小设置reducer个数：每&lt;span class="caps"&gt;1GB&lt;/span&gt; 输入使用一个reducer，且 reducer 的个数不超过 999。可以设置 pig.exec.reducers.bytes.per.ducer 和 pig.exec.reducers.max&amp;nbsp;来修改默认设置。&lt;/p&gt;
+&lt;p&gt;为了告诉 Pig 每个作业要用多少个 reducer ，可以在 reducer 阶段的操作中使用 &lt;span class="caps"&gt;PARALLEL&lt;/span&gt; 子句。在 reduce 阶段使用的操作包括所有的 分组(grouping)、连接 (joining)操作(&lt;span class="caps"&gt;GROUP&lt;/span&gt;, &lt;span class="caps"&gt;COGROUP&lt;/span&gt;, &lt;span class="caps"&gt;JOIN&lt;/span&gt;, &lt;span class="caps"&gt;CROSS&lt;/span&gt;)以及&lt;span class="caps"&gt;DISTINCT&lt;/span&gt; 和 &lt;span class="caps"&gt;ORDER&lt;/span&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; grouped_records = GROUP records BY year PARALLEL 30;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也可以通过设置 default_paralle&amp;nbsp;选项达到相同效果：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;grunt&amp;gt; set default_parallel 30;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：map 任务的歌声由输入的大小决定(每个&lt;span class="caps"&gt;HDFS&lt;/span&gt;块一个map），不受&lt;span class="caps"&gt;PARALLEL&lt;/span&gt;&amp;nbsp;子句影响。&lt;/p&gt;
+&lt;h3&gt;参数替换&lt;/h3&gt;
+&lt;p&gt;以下脚本中，$input, $output&amp;nbsp;用来指定输入和输出路径：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat max_temp_param.pig
+&lt;span class="nv"&gt;records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; LOAD &lt;span class="s1"&gt;&amp;#39;$input&amp;#39;&lt;/span&gt; AS &lt;span class="o"&gt;(&lt;/span&gt;year:chararray, temperature:int, quality:int&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;filtered_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FILTER records BY temperature !&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;9999&lt;/span&gt; AND &lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="nv"&gt;quality&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;0&lt;/span&gt; OR &lt;span class="nv"&gt;quality&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt; OR &lt;span class="nv"&gt;quality&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;4&lt;/span&gt; OR &lt;span class="nv"&gt;quality&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;5&lt;/span&gt; OR &lt;span class="nv"&gt;quality&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="m"&gt;9&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;grouped_records&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; GROUP filtered_records BY year&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="nv"&gt;max_temp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; FOREACH grouped_records GENERATE group, MAX&lt;span class="o"&gt;(&lt;/span&gt;filtered_records.temperature&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+STORE max_temp INTO &lt;span class="s1"&gt;&amp;#39;$output&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pig -param &lt;span class="nv"&gt;input&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/input/ncdc/micro-tab/sample.txt -param &lt;span class="nv"&gt;output&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/tmp/out max_temp_param.pig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;也可以将参数放在文件中：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ cat max_temp_param.param
+&lt;span class="c1"&gt;# Input file&lt;/span&gt;
+&lt;span class="nv"&gt;input&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/input/ncdc/micro-tab/sample.txt
+&lt;span class="c1"&gt;# Output file&lt;/span&gt;
+&lt;span class="nv"&gt;output&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/tmp/out
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;运行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ pig -param_file max_temp_param.param max_temp_param.pig
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Mac"></category><category term="Pig"></category><category term="BigData"></category></entry><entry><title>在Mac OSX上安装Hadoop</title><link href="http://blog.wiseturtles.com/posts/install-hadoop-on-mac-osx.html" rel="alternate"></link><published>2017-04-28T13:00:00+08:00</published><updated>2017-04-28T13:00:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-04-28:/posts/install-hadoop-on-mac-osx.html</id><summary type="html">&lt;p&gt;install hadoop on mac&amp;nbsp;osx&lt;/p&gt;</summary><content type="html">&lt;h2&gt;安装Hadoop&lt;/h2&gt;
 &lt;p&gt;只是安装来学习Hadoop，所以，在自己笔记本上安装的。正式的线上环境会用多台机器搭建集群 或者 直接使用&lt;span class="caps"&gt;AWS&lt;/span&gt;的&lt;span class="caps"&gt;EMR&lt;/span&gt;。&lt;/p&gt;
 &lt;p&gt;我希望尽可能的通过包管理安装软件，而不是手动下载安装。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ brew install hadoop

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - 在Mac <span class="caps">OSX</span>练习Pig使用
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use gmirror fonts instead of google online fonts-->
+    <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Mac" />
+      <meta name="tags" contents="Pig" />
+      <meta name="tags" contents="BigData" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>在Mac <span class="caps">OSX</span>练习Pig使用</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/mac.html">Mac</a> <a href="http://blog.wiseturtles.com/tag/pig.html">Pig</a> <a href="http://blog.wiseturtles.com/tag/bigdata.html">BigData</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2017-05-03
+
+        </div>
+
+        <div><h1>Pig</h1>
+<p>看《Hadoop权威指南第三版》并记录在 Mac <span class="caps">OSX</span>&nbsp;系统上练习Pig使用。</p>
+<h2>安装</h2>
+<p>在Mac <span class="caps">OSX</span>&nbsp;上安装命令如下：</p>
+<div class="highlight"><pre><span></span>$ brew install pig
+</pre></div>
+
+
+<h2>命令行使用</h2>
+<h2>Pig&nbsp;Latin语言</h2>
+<p>Pig&nbsp;Latin的关系操作：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加载与存储</td>
+<td><span class="caps">LOAD</span></td>
+<td>从文件系统或其他存储加载数据，存入关系</td>
+</tr>
+<tr>
+<td>加载与存储</td>
+<td><span class="caps">STORE</span></td>
+<td>将一个关系存放在文件系统或者其他存储中</td>
+</tr>
+<tr>
+<td>加载与存储</td>
+<td><span class="caps">DUMP</span></td>
+<td>将关系打印到控制台</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">FILTER</span></td>
+<td>将关系中删除不需要的行</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">DISTINCT</span></td>
+<td>将关系中删除重复的行</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">FOREACH</span> &#8230; <span class="caps">GENERATE</span></td>
+<td>将关系中添加或删除字段</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">MAPREDUCE</span></td>
+<td>以一个关系作为输入运行某个MapReduce 作业</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">STREAM</span></td>
+<td>使用外部程序对一个关系进行变换</td>
+</tr>
+<tr>
+<td>过滤</td>
+<td><span class="caps">SAMPLE</span></td>
+<td>对一个关系进行随机取样</td>
+</tr>
+<tr>
+<td>分组与连接</td>
+<td><span class="caps">JOIN</span></td>
+<td>连接两个或多个关系</td>
+</tr>
+<tr>
+<td>分组和连接</td>
+<td><span class="caps">COGROUP</span></td>
+<td>对两个或更多关系中的数据进行分组</td>
+</tr>
+<tr>
+<td>分组和连接</td>
+<td><span class="caps">GROUP</span></td>
+<td>在一个关系中对数据进行分组</td>
+</tr>
+<tr>
+<td>分组和连接</td>
+<td><span class="caps">CROSS</span></td>
+<td>创建两个或更多关系的乘积 (叉乘)</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><span class="caps">ORDER</span></td>
+<td>根据一个或多个字段对某个关系进行排序</td>
+</tr>
+<tr>
+<td>排序</td>
+<td><span class="caps">LIMIT</span></td>
+<td>将一个关系的元组个人限定在一定数量内</td>
+</tr>
+<tr>
+<td>组合和切分</td>
+<td><span class="caps">UNION</span></td>
+<td>合并两个或多个关系为一个关系</td>
+</tr>
+<tr>
+<td>组合和切分</td>
+<td><span class="caps">SPLIT</span></td>
+<td>把某个关系切分为两个或多个关系</td>
+</tr>
+</tbody>
+</table>
+<p>Pig&nbsp;Latin的诊断操作</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="caps">DESCRIBE</span></td>
+<td>打印关系的模式</td>
+</tr>
+<tr>
+<td><span class="caps">EXPLAIN</span></td>
+<td>打印逻辑和物理计划</td>
+</tr>
+<tr>
+<td><span class="caps">ILLUSTRATE</span></td>
+<td>使用生成的输入子集显示逻辑计划的试运行结果</td>
+</tr>
+</tbody>
+</table>
+<p>注：</p>
+<ul>
+<li>这些命令不会被加入逻辑计划中</li>
+<li><span class="caps">DUMP</span>也是一种诊断操作</li>
+</ul>
+<p>Pig Latin的宏和<span class="caps">UDF</span>语句</p>
+<table>
+<thead>
+<tr>
+<th>语句</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="caps">REGISTER</span></td>
+<td>在Pig运行时环境中注册一个<span class="caps">JAR</span>文件</td>
+</tr>
+<tr>
+<td><span class="caps">DEFINE</span></td>
+<td>为宏、<span class="caps">UDF</span>、流式脚本或命令规范新建别名</td>
+</tr>
+<tr>
+<td><span class="caps">IMPORT</span></td>
+<td>把另一个文件中定义的宏导入脚本</td>
+</tr>
+</tbody>
+</table>
+<p>注：</p>
+<ul>
+<li>这些命令不处理关系，所以它们不会被加入逻辑计划</li>
+<li>这些命令会被立即执行</li>
+</ul>
+<p>Pig Latin&nbsp;命令</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hadoop文件系统</td>
+<td>cat</td>
+<td>打印一个或多个文件的内容</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>cd</td>
+<td>改变当前目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>copyFromLocal</td>
+<td>复制本地文件或目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>copyToLocal</td>
+<td>将一个文件或目录从Hadoop 文件系统复制到本地文件系统</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>cp</td>
+<td>把一个文件或目录复制到另一个目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>fs</td>
+<td>访问Hadoop文件系统外壳程序</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>ls</td>
+<td>打印文件列表信息</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>mkdir</td>
+<td>创建新目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>mv</td>
+<td>将一个文件或目录移动到另一个目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>pwd</td>
+<td>打印当前工作目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>rm</td>
+<td>删除一个文件或目录</td>
+</tr>
+<tr>
+<td>Hadoop文件系统</td>
+<td>rmf</td>
+<td>强制删除文件或目录 (文件或目录不存在也不会失败)</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>kill</td>
+<td>终止某个MapReduce 作业</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>exec</td>
+<td>在新的 Grunt 外壳程序中以批处理模式运行脚本</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>help</td>
+<td>显示可用的命令和选项</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>quit</td>
+<td>退出解释器</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>run</td>
+<td>在当前 Grunt 外壳程序中运行脚本</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>set</td>
+<td>设置 Pig 选项 和 MapReduce 作业属性</td>
+</tr>
+<tr>
+<td>Hadoop MapReduce 工具</td>
+<td>sh</td>
+<td>在 Grunt 中运行外壳命令</td>
+</tr>
+</tbody>
+</table>
+<p>Pig Latin&nbsp;表达式</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>表达式</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>常量</td>
+<td>文字</td>
+<td>常量值</td>
+<td>1.0, &#8216;a&#8217;</td>
+</tr>
+<tr>
+<td>字段 (位置指定)</td>
+<td>$n</td>
+<td>第n个字段(从0开始)</td>
+<td>$0, $1</td>
+</tr>
+<tr>
+<td>字段 (名字指定)</td>
+<td>f</td>
+<td>字段名f</td>
+<td>year</td>
+</tr>
+<tr>
+<td>字段 (消除歧义)</td>
+<td>r::f</td>
+<td>分组或连接后，关系r中的名为f的字段</td>
+<td>A::year</td>
+</tr>
+<tr>
+<td>投影</td>
+<td>c.$n, c.f</td>
+<td>在容器c (关系、包或元组) 中的字段按位置 或 名称指定</td>
+<td>records.$0, records.year</td>
+</tr>
+<tr>
+<td>Map 查找</td>
+<td>m#k</td>
+<td>在映射m中键k所对应的值</td>
+<td>items#&#8217;Coat&#8217;</td>
+</tr>
+<tr>
+<td>类型转换</td>
+<td>(t) f</td>
+<td>将字段f转换为类型t</td>
+<td>(int) year</td>
+</tr>
+<tr>
+<td>算术</td>
+<td>+, -, *, /, %</td>
+<td>加、减、乘、除、取余</td>
+<td>$1 + $2, $1 - $2, $1 * $2, $1 / $2, $1 % $2</td>
+</tr>
+<tr>
+<td>条件</td>
+<td>x ? y : z</td>
+<td>三元运算符，如果 x 为真，则y，否则为 z</td>
+<td>quality == 0 ? 0 : 1</td>
+</tr>
+<tr>
+<td>比较</td>
+<td>==, !=, &gt;, &lt;, &gt;=, &lt;=, x matches y, x is null, x is not null</td>
+<td>相等、不等、大于、小于、大于等于、小于等于、正则匹配、是空值、不是空值</td>
+<td><code>quality matches '[01459]'</code></td>
+</tr>
+<tr>
+<td>布尔型</td>
+<td>or, and, not</td>
+<td>逻辑或，逻辑与，逻辑非</td>
+<td><code>q == 0 or q == 1</code>, <code>not q matches '[01459]'</code></td>
+</tr>
+<tr>
+<td>平面化</td>
+<td><span class="caps">FLATTEN</span>(f)</td>
+<td>从包或元组中去除嵌套</td>
+<td><span class="caps">FLATTEN</span>(group)</td>
+</tr>
+</tbody>
+</table>
+<p>Pig Latin&nbsp;类型</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>数据类型</th>
+<th>描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数值</td>
+<td>int</td>
+<td>32位有符号整数</td>
+<td>99</td>
+</tr>
+<tr>
+<td>数值</td>
+<td>long</td>
+<td>64位有符号整数</td>
+<td>199L</td>
+</tr>
+<tr>
+<td>数值</td>
+<td>float</td>
+<td>32位浮点数</td>
+<td>0.8F</td>
+</tr>
+<tr>
+<td>数值</td>
+<td>double</td>
+<td>64位浮点数</td>
+<td>0.88</td>
+</tr>
+<tr>
+<td>文本</td>
+<td>chararray</td>
+<td><span class="caps">UTF</span>-16格式的字符数组</td>
+<td>&#8216;hello world&#8217;</td>
+</tr>
+<tr>
+<td>二进制</td>
+<td>bytearray</td>
+<td>字节数组</td>
+<td></td>
+</tr>
+<tr>
+<td>复杂类型</td>
+<td>tuple</td>
+<td>任何类型的字段序列</td>
+<td>(1, &#8216;programmer&#8217;)</td>
+</tr>
+<tr>
+<td>复杂类型</td>
+<td>bag</td>
+<td>元组的无序多重集合 (允许重复的元组)</td>
+<td _1_="(1," _2_="(2)" _hello_="'hello'),"></td>
+</tr>
+<tr>
+<td>复杂类型</td>
+<td>map</td>
+<td>一个键值对的集合。键必须是字符数组，值可以是任意类型的数据</td>
+<td>[&#8216;a&#8217;#&#8217;hello&#8217;, &#8216;b&#8217;#&#8217;world&#8217;]</td>
+</tr>
+</tbody>
+</table>
+<p>注：</p>
+<ul>
+<li>内置函数：<span class="caps">TOTUPLE</span>, <span class="caps">TOBAG</span>, <span class="caps">TOMAP</span>&nbsp;将表达式转换为元组、包以及映射。</li>
+<li>包必须在某个关系中。</li>
+</ul>
+<h2>Schema</h2>
+<p>Pig&nbsp;中的一个关系可以关联一个模式。模式为关系的字段指定名称和类型。</p>
+<p>Load语句的<span class="caps">AS</span>字句可以在关系上附以模式：</p>
+<div class="highlight"><pre><span></span><span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">records</span> <span class="o">=</span> <span class="nt">LOAD</span> <span class="s1">&#39;input/ncdc/micro-tab/sample.txt&#39;</span> <span class="nt">AS</span> <span class="o">(</span><span class="nt">year</span><span class="p">:</span><span class="nd">int</span><span class="o">,</span> <span class="nt">temperature</span><span class="p">:</span><span class="nd">int</span><span class="o">,</span> <span class="nt">quality</span><span class="p">:</span><span class="nd">int</span><span class="o">);</span>
+<span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">DESCRIBE</span> <span class="nt">records</span><span class="o">;</span>
+<span class="nt">records</span><span class="o">:</span> <span class="p">{</span><span class="n">year</span><span class="p">:</span><span class="n">int</span><span class="p">,</span><span class="n">temperature</span><span class="o">:</span><span class="n">int</span><span class="p">,</span><span class="n">quality</span><span class="o">:</span><span class="n">int</span><span class="p">}</span>
+
+<span class="err">注：不指定类型的话，默认是</span><span class="nt">bytearray</span>
+    <span class="nt">DESCRIBE</span> <span class="err">用来查看模式</span> <span class="o">(</span><span class="nt">Schema</span><span class="o">)</span>
+</pre></div>
+
+
+<h2>函数</h2>
+<p>Pig的函数有四种类型：</p>
+<ul>
+<li>计算函数 (Eval&nbsp;function)</li>
+<li>过滤函数 (Filter&nbsp;function)</li>
+<li>加载函数 (Load&nbsp;function)</li>
+<li>存储函数 (Store&nbsp;function)</li>
+</ul>
+<h2>宏</h2>
+<p>宏提供了在Pig Latin内对可重用的Pig&nbsp;Latin代码进行打包的功能。</p>
+<p>示例：</p>
+<div class="highlight"><pre><span></span>$ cat max_temp.macro
+DEFINE max_by_group<span class="o">(</span>X, group_key, max_field<span class="o">)</span> RETURNS Y <span class="o">{</span>
+<span class="nv">A</span> <span class="o">=</span> GROUP <span class="nv">$X</span> by <span class="nv">$group_key</span><span class="p">;</span>
+<span class="nv">$Y</span> <span class="o">=</span> FOREACH A GENERATE group, MAX<span class="o">(</span><span class="nv">$X</span>.<span class="nv">$max_field</span><span class="o">)</span><span class="p">;</span>
+<span class="o">}</span><span class="p">;</span>
+</pre></div>
+
+
+<p>导入宏：</p>
+<div class="highlight"><pre><span></span>grunt&gt; IMPORT &#39;./max_temp.macro&#39;;
+</pre></div>
+
+
+<p>使用宏：</p>
+<div class="highlight"><pre><span></span><span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">records</span> <span class="o">=</span> <span class="nt">LOAD</span> <span class="s1">&#39;/input/ncdc/micro-tab/sample.txt&#39;</span> <span class="nt">AS</span> <span class="o">(</span><span class="nt">year</span><span class="p">:</span><span class="nd">chararray</span><span class="o">,</span> <span class="nt">temperature</span><span class="p">:</span><span class="nd">int</span><span class="o">,</span> <span class="nt">quality</span><span class="p">:</span><span class="nd">int</span><span class="o">);</span>
+<span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">max_temp</span> <span class="o">=</span> <span class="nt">max_by_group</span><span class="o">(</span><span class="nt">records</span><span class="o">,</span> <span class="nt">year</span><span class="o">,</span> <span class="nt">temperature</span><span class="o">);</span>
+<span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">DUMP</span> <span class="nt">max_temp</span><span class="o">;</span>
+</pre></div>
+
+
+<h2>用户自定义函数 (<span class="caps">UDF</span>)</h2>
+<p>以插件形式提供使用用户定制代码的能力。可以使用Java、Python、JavaScript写<span class="caps">UDF</span>。</p>
+<p>下面是删除不符合质量要求的气温记录&nbsp;(Java代码)：</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">cat</span> <span class="n">com</span><span class="o">/</span><span class="n">hadoopbook</span><span class="o">/</span><span class="n">pig</span><span class="o">/</span><span class="n">IsGoodQuality</span><span class="o">.</span><span class="n">java</span>
+<span class="n">package</span> <span class="n">com</span><span class="o">.</span><span class="n">hadoopbook</span><span class="o">.</span><span class="n">pig</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.pig.FilterFunc</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.pig.backend.executionengine.ExecException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.pig.data.DataType</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.pig.data.Tuple</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">org.apache.pig.impl.logicalLayer.FrontendException</span><span class="p">;</span>
+
+<span class="n">public</span> <span class="k">class</span> <span class="nc">IsGoodQuality</span> <span class="n">extends</span> <span class="n">FilterFunc</span> <span class="p">{</span>
+
+  <span class="nd">@Override</span>
+  <span class="n">public</span> <span class="n">Boolean</span> <span class="k">exec</span><span class="p">(</span><span class="n">Tuple</span> <span class="nb">tuple</span><span class="p">)</span> <span class="n">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">tuple</span> <span class="o">==</span> <span class="n">null</span> <span class="o">||</span> <span class="nb">tuple</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="n">Object</span> <span class="nb">object</span> <span class="o">=</span> <span class="nb">tuple</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nb">object</span> <span class="o">==</span> <span class="n">null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">false</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nb">int</span> <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">Integer</span><span class="p">)</span> <span class="nb">object</span><span class="p">;</span>
+      <span class="k">return</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span> <span class="o">||</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">5</span> <span class="o">||</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">9</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">ExecException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">throw</span> <span class="n">new</span> <span class="n">IOException</span><span class="p">(</span><span class="n">e</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>编译、打包：</p>
+<div class="highlight"><pre><span></span>$ javac -cp <span class="k">$(</span>brew --prefix pig<span class="k">)</span>/libexec/pig-0.16.0-core-h2.jar:<span class="k">$(</span>hadoop classpath<span class="k">)</span> com/hadoopbook/pig/IsGoodQuality.java
+$ jar -cf com/hadoopbook/pig/IsGoodQuality.jar com/hadoopbook/pig/IsGoodQuality.class
+
+注：我通过brew安装的pig所以使用了<span class="k">$(</span>brew --prefix pig<span class="k">)</span>；可以手动指定pig.jar的具体路径。
+</pre></div>
+
+
+<p>在Pig中使用该<span class="caps">UDF</span>：</p>
+<div class="highlight"><pre><span></span>$ pig
+grunt&gt; REGISTER ./com/hadoopbook/pig/IsGoodQuality.jar<span class="p">;</span>
+grunt&gt; DEFINE isGood com.hadoopbook.pig.IsGoodQuality<span class="o">()</span><span class="p">;</span>
+grunt&gt; <span class="nv">records</span> <span class="o">=</span> LOAD <span class="s1">&#39;/input/ncdc/micro-tab/sample.txt&#39;</span> AS <span class="o">(</span>year:chararray, temperature:int, quality:int<span class="o">)</span><span class="p">;</span>
+grunt&gt; <span class="nv">filtered_records</span> <span class="o">=</span> FILTER records BY temperature !<span class="o">=</span> <span class="m">9999</span> AND isGood<span class="o">(</span>quality<span class="o">)</span><span class="p">;</span>
+grunt&gt; DUMP filtered_records<span class="p">;</span>
+</pre></div>
+
+
+<p>写成pig程序：</p>
+<div class="highlight"><pre><span></span>$ cat max_temp_filter_udf.pig
+--max_temp_filter_udf.pig
+REGISTER com/hadoopbook/pig/IsGoodQuality.jar<span class="p">;</span>
+DEFINE isGood com.hadoopbook.pig.IsGoodQuality<span class="o">()</span><span class="p">;</span>
+<span class="nv">records</span> <span class="o">=</span> LOAD <span class="s1">&#39;/input/ncdc/micro-tab/sample.txt&#39;</span> AS <span class="o">(</span>year:chararray, temperature:int, quality:int<span class="o">)</span><span class="p">;</span>
+<span class="nv">filtered_records</span> <span class="o">=</span> FILTER records BY temperature !<span class="o">=</span> <span class="m">9999</span> AND isGood<span class="o">(</span>quality<span class="o">)</span><span class="p">;</span>
+<span class="nv">grouped_records</span> <span class="o">=</span> GROUP filtered_records BY year<span class="p">;</span>
+<span class="nv">max_temp</span> <span class="o">=</span> FOREACH grouped_records GENERATE group, MAX<span class="o">(</span>filtered_records.temperature<span class="o">)</span><span class="p">;</span>
+DUMP max_temp<span class="p">;</span>
+STORE max_temp INTO <span class="s1">&#39;max_temp_output&#39;</span> USING PigStorage<span class="o">(</span><span class="s1">&#39;:&#39;</span><span class="o">)</span><span class="p">;</span>
+</pre></div>
+
+
+<h2>数据加载和存储</h2>
+<p>前面已经有用Load加载数据了。下面看看怎么存储数据：</p>
+<div class="highlight"><pre><span></span>grunt&gt; STORE max_temp INTO &#39;max_temp_output&#39; USING PigStorage(&#39;:&#39;);
+grunt&gt; cat max_temp_output
+</pre></div>
+
+
+<h2>数据过滤</h2>
+<p><code>FILTER</code> 、<code>LIMIT</code> 用来过滤行；<code>FOREACH ... GENERATE</code>用来删除、添加列(字段)。</p>
+<div class="highlight"><pre><span></span>grunt&gt; max_temp = FOREACH grouped_records GENERATE group, MAX(filtered_records.temperature);
+</pre></div>
+
+
+<h3><span class="caps">STREAM</span>操作</h3>
+<p><span class="caps">STREAM</span>操作可以让外部程序或脚本对关系中的数据进行变换。这一操作的命名对应于Hadoop的Streaming，后者为MapReduce提供类似能力。</p>
+<div class="highlight"><pre><span></span><span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">records</span> <span class="o">=</span> <span class="nt">LOAD</span> <span class="s1">&#39;/input/ncdc/micro-tab/sample.txt&#39;</span> <span class="nt">AS</span> <span class="o">(</span><span class="nt">year</span><span class="p">:</span><span class="nd">chararray</span><span class="o">,</span> <span class="nt">temperature</span><span class="p">:</span><span class="nd">int</span><span class="o">,</span> <span class="nt">quality</span><span class="p">:</span><span class="nd">int</span><span class="o">);</span>
+<span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">second_field</span> <span class="o">=</span> <span class="nt">STREAM</span> <span class="nt">records</span> <span class="nt">THROUGH</span> <span class="err">`</span><span class="nt">cut</span> <span class="nt">-f</span> <span class="nt">2</span><span class="err">`</span><span class="o">;</span>
+<span class="nt">grunt</span><span class="o">&gt;</span> <span class="nt">DUMP</span> <span class="nt">second_field</span><span class="o">;</span>
+</pre></div>
+
+
+<h4>Python写stream脚本</h4>
+<p>is_good_quality.py程序:</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="n">cat</span> <span class="n">is_good_quality</span><span class="o">.</span><span class="n">py</span>
+<span class="c1">#!/usr/bin/env python</span>
+<span class="c1"># encoding: utf-8</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">q</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">!=</span> <span class="s1">&#39;9999&#39;</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;[01459]&#39;</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;{}</span><span class="se">\t</span><span class="s1">{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">temp</span><span class="p">))</span>
+</pre></div>
+
+
+<p>Pig程序:</p>
+<div class="highlight"><pre><span></span>$ cat max_temp_filter_stream.pig
+--max_temp_filter_stream.pig
+
+DEFINE is_good_quality <span class="sb">`</span>is_good_quality.py<span class="sb">`</span> SHIP <span class="o">(</span><span class="s1">&#39;is_good_quality.py&#39;</span><span class="o">)</span><span class="p">;</span>
+<span class="nv">records</span> <span class="o">=</span> LOAD <span class="s1">&#39;/input/ncdc/micro-tab/sample.txt&#39;</span> AS <span class="o">(</span>year:chararray, temperature:int, quality:int<span class="o">)</span><span class="p">;</span>
+<span class="nv">filtered_records</span> <span class="o">=</span> STREAM records THROUGH is_good_quality AS <span class="o">(</span>year:chararray, temperature:int<span class="o">)</span><span class="p">;</span>
+<span class="nv">grouped_records</span> <span class="o">=</span> GROUP filtered_records BY year<span class="p">;</span>
+<span class="nv">max_temp</span> <span class="o">=</span> FOREACH grouped_records GENERATE group, MAX<span class="o">(</span>filtered_records.temperature<span class="o">)</span><span class="p">;</span>
+DUMP max_temp<span class="p">;</span>
+STORE max_temp INTO <span class="s1">&#39;max_temp_stream&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>运行：</p>
+<div class="highlight"><pre><span></span>$ hdfs dfs -put max_temp_filter_stream.pig
+$ pig -f max_temp_filter_stream.pig
+$ hdfs dfs -cat max_temp_stream/*
+<span class="m">1949</span>    <span class="m">111</span>
+<span class="m">1950</span>    <span class="m">22</span>
+</pre></div>
+
+
+<h2>数据分组与连接</h2>
+<h3>连接/<span class="caps">JOIN</span></h3>
+<p>连接：</p>
+<div class="highlight"><pre><span></span>grunt&gt; C = JOIN A BY $0, B BY $1;
+
+注：等式连接，即：连接A.$0 == B.$1 的行，结果中的字段由所有输入关系的所有字段组成。
+</pre></div>
+
+
+<p>如果要连接的关系太大，不能全部放入内存，则应该使用通用的连接操作。如果有一个关系小到能够全部放入内存，则可以使用分段复制连接(fragment replicate&nbsp;join)，它把小的输入关系发生到所有mapper，并在map端使用内存查找表对(分段的)较大的关系进行连接。</p>
+<p>分段复制连接：</p>
+<div class="highlight"><pre><span></span>grunt&gt; C = JOIN A BY $0, B BY $1 USING &quot;replicated&quot;;
+
+注：第一个关系必须是大的关系，后面则是一个或多个相对较小的关系。(能够全部放入内存)
+</pre></div>
+
+
+<h2>实战技巧</h2>
+<h3>并行处理</h3>
+<p>Pig根据输入数据的大小设置reducer个数：每<span class="caps">1GB</span> 输入使用一个reducer，且 reducer 的个数不超过 999。可以设置 pig.exec.reducers.bytes.per.ducer 和 pig.exec.reducers.max&nbsp;来修改默认设置。</p>
+<p>为了告诉 Pig 每个作业要用多少个 reducer ，可以在 reducer 阶段的操作中使用 <span class="caps">PARALLEL</span> 子句。在 reduce 阶段使用的操作包括所有的 分组(grouping)、连接 (joining)操作(<span class="caps">GROUP</span>, <span class="caps">COGROUP</span>, <span class="caps">JOIN</span>, <span class="caps">CROSS</span>)以及<span class="caps">DISTINCT</span> 和 <span class="caps">ORDER</span>。</p>
+<div class="highlight"><pre><span></span>grunt&gt; grouped_records = GROUP records BY year PARALLEL 30;
+</pre></div>
+
+
+<p>也可以通过设置 default_paralle&nbsp;选项达到相同效果：</p>
+<div class="highlight"><pre><span></span>grunt&gt; set default_parallel 30;
+</pre></div>
+
+
+<p>注：map 任务的歌声由输入的大小决定(每个<span class="caps">HDFS</span>块一个map），不受<span class="caps">PARALLEL</span>&nbsp;子句影响。</p>
+<h3>参数替换</h3>
+<p>以下脚本中，$input, $output&nbsp;用来指定输入和输出路径：</p>
+<div class="highlight"><pre><span></span>$ cat max_temp_param.pig
+<span class="nv">records</span> <span class="o">=</span> LOAD <span class="s1">&#39;$input&#39;</span> AS <span class="o">(</span>year:chararray, temperature:int, quality:int<span class="o">)</span><span class="p">;</span>
+<span class="nv">filtered_records</span> <span class="o">=</span> FILTER records BY temperature !<span class="o">=</span> <span class="m">9999</span> AND <span class="o">(</span><span class="nv">quality</span> <span class="o">==</span> <span class="m">0</span> OR <span class="nv">quality</span> <span class="o">==</span> <span class="m">1</span> OR <span class="nv">quality</span> <span class="o">==</span> <span class="m">4</span> OR <span class="nv">quality</span> <span class="o">==</span> <span class="m">5</span> OR <span class="nv">quality</span> <span class="o">==</span> <span class="m">9</span><span class="o">)</span><span class="p">;</span>
+<span class="nv">grouped_records</span> <span class="o">=</span> GROUP filtered_records BY year<span class="p">;</span>
+<span class="nv">max_temp</span> <span class="o">=</span> FOREACH grouped_records GENERATE group, MAX<span class="o">(</span>filtered_records.temperature<span class="o">)</span><span class="p">;</span>
+STORE max_temp INTO <span class="s1">&#39;$output&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>运行：</p>
+<div class="highlight"><pre><span></span>$ pig -param <span class="nv">input</span><span class="o">=</span>/input/ncdc/micro-tab/sample.txt -param <span class="nv">output</span><span class="o">=</span>/tmp/out max_temp_param.pig
+</pre></div>
+
+
+<p>也可以将参数放在文件中：</p>
+<div class="highlight"><pre><span></span>$ cat max_temp_param.param
+<span class="c1"># Input file</span>
+<span class="nv">input</span><span class="o">=</span>/input/ncdc/micro-tab/sample.txt
+<span class="c1"># Output file</span>
+<span class="nv">output</span><span class="o">=</span>/tmp/out
+</pre></div>
+
+
+<p>运行：</p>
+<div class="highlight"><pre><span></span>$ pig -param_file max_temp_param.param max_temp_param.pig
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/learn-pig-on-mac-osx.html';
+        this.page.identifier = 'learn-pig-on-mac-osx';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/asm.html">asm</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/bigdata.html">bigdata</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/life.html">life</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+<a href="https://github.com/wiseturtles"><img style="position: absolute; top: 50px; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" /></a>
+</body>
+</html>
