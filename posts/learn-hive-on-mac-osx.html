@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>Wise Turtles - 在Mac <span class="caps">OSX</span>练习Hive
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://blog.wiseturtles.com/theme/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/bootstrap.min.responsive.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/local.css" rel="stylesheet">
+    <link href="http://blog.wiseturtles.com/theme/pygments/emacs.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+    <link rel="Bookmark" href="http://blog.wiseturtles.com/theme/images/favicon.ico">
+
+    <!-- baidu -->
+    <meta name="baidu-site-verification" content="lTsGMtiPuN" />
+
+    <!-- use gmirror fonts instead of google online fonts-->
+    <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Mac" />
+      <meta name="tags" contents="Hive" />
+      <meta name="tags" contents="BigData" />
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+    <div class="container">
+
+        <a class="brand" href="http://blog.wiseturtles.com">Wise Turtles</a>
+
+        <div class="nav-collapse">
+        <ul class="nav">
+
+        </ul>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="content">
+    <div class="row">
+
+        <div class="span9">
+    <div class='article'>
+        <div class="content-title">
+            <h1>在Mac <span class="caps">OSX</span>练习Hive</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/mac.html">Mac</a> <a href="http://blog.wiseturtles.com/tag/hive.html">Hive</a> <a href="http://blog.wiseturtles.com/tag/bigdata.html">BigData</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2017-05-04
+
+        </div>
+
+        <div><h1>Hive</h1>
+<h2>安装</h2>
+<p>将Hive的metastore存在MySQL中。</p>
+<p>Mac <span class="caps">OSX</span> 上安装&nbsp;Hive</p>
+<div class="highlight"><pre><span></span>$ brew install hive mysql
+$ brew services start mysql
+$ tail -n <span class="m">3</span> ~/.zshrc
+<span class="c1"># Hive</span>
+<span class="nb">export</span> <span class="nv">HIVE_HOME</span><span class="o">=</span><span class="s2">&quot;/usr/local/opt/hive&quot;</span>
+<span class="nb">export</span> <span class="nv">HCAT_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HIVE_HOME</span><span class="s2">/libexec/hcatalog&quot;</span>
+$ <span class="nb">source</span> ~/.zshrc
+</pre></div>
+
+
+<p>为Hive在MySQL中创建数据库，并分配用户访问权限。</p>
+<div class="highlight"><pre><span></span>$ mysql -u root -p
+mysql&gt; create database metastore<span class="p">;</span>
+mysql&gt; grant all privileges on metastore.* to <span class="s1">&#39;hive&#39;</span>@<span class="s1">&#39;localhost&#39;</span> identified by <span class="s1">&#39;hive&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>下载MySQL jdbc&nbsp;connector：</p>
+<div class="highlight"><pre><span></span>$ wget -P /tmp/ https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.42.tar.gz
+$ <span class="nb">cd</span> /tmp/ <span class="o">&amp;&amp;</span> tar zxf mysql-connector-java-5.1.42.tar.gz
+$ mv mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar <span class="k">$(</span>brew --prefix hive<span class="k">)</span>/libexec/lib/
+</pre></div>
+
+
+<p>修改&nbsp;libexec/conf/hive-site.xml</p>
+<div class="highlight"><pre><span></span>$ cd $(brew --prefix hive)
+$ cp libexec/conf/hive-default.xml.template libexec/conf/hive-site.xml
+$ 修改 hive-site.xml
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionURL<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>jdbc:mysql://localhost/metastore?useSSL=false<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;description&gt;</span>
+    JDBC connect string for a JDBC metastore.
+    To use SSL to encrypt/authenticate the connection, provide database-specific SSL flag in the connection URL.
+    For example, jdbc:postgresql://myhost/db?ssl=true for postgres database.
+    <span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionDriverName<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>com.mysql.jdbc.Driver<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Driver class name for a JDBC metastore<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionUserName<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Username to use against metastore database<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;property&gt;</span>
+    <span class="nt">&lt;name&gt;</span>javax.jdo.option.ConnectionPassword<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;value&gt;</span>hive<span class="nt">&lt;/value&gt;</span>
+    <span class="nt">&lt;description&gt;</span>password to use against metastore database<span class="nt">&lt;/description&gt;</span>
+<span class="nt">&lt;/property&gt;</span>
+</pre></div>
+
+
+<p>运行&nbsp;Hive：</p>
+<div class="highlight"><pre><span></span>$ hive
+hive&gt; show tables<span class="p">;</span>
+</pre></div>
+
+
+<h3>参考</h3>
+<ul>
+<li><a href="https://www.cloudera.com/documentation/enterprise/5-6-x/topics/cdh_ig_hive_metastore_configure.html">Configuring the Hive&nbsp;Metastore</a></li>
+</ul></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/learn-hive-on-mac-osx.html';
+        this.page.identifier = 'learn-hive-on-mac-osx';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
+        </div>
+
+        <div class="span3">
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                站内
+                </li>
+                <li><a href="http://blog.wiseturtles.com/categories.html">分类</a>
+                <li><a href="http://blog.wiseturtles.com/tags.html">标签</a>
+                <li><a href="http://blog.wiseturtles.com/archives.html">存档</a>
+                <li><a href="http://blog.wiseturtles.com/feeds/all.atom.xml" rel="alternate">Atom订阅</a></li>
+            </ul>
+            </div>
+
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                分类列表
+                </li>
+
+                <li><a href="http://blog.wiseturtles.com/category/android.html">android</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/asm.html">asm</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/bigdata.html">bigdata</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/configuration.html">configuration</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/editor.html">editor</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/elasticsearch.html">Elasticsearch</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/go.html">go</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/install.html">install</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/java.html">java</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/life.html">life</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/linux-commands.html">linux-commands</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mac-osx.html">mac-osx</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/mysql.html">mysql</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/node.html">node</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/pelican.html">pelican</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/python.html">python</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/redis.html">redis</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/ubuntu.html">ubuntu</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/vim.html">vim</a></li>
+                <li><a href="http://blog.wiseturtles.com/category/web-test.html">web-test</a></li>
+            </ul>
+            </div>
+
+            <div class="well" style="padding: 8px 0; background-color: #FBFBFB;">
+            <ul class="nav nav-list">
+                <li class="nav-header">
+                友情链接
+                </li>
+
+                <li><a href="https://travis-ci.org/">Travis-ci</a></li>
+                <li><a href="http://wercker.com/">Wercker</a></li>
+                <li><a href="http://www.cloudbees.com">Cloudbees</a></li>
+                <li><a href="http://docs.getpelican.com/">Pelican</a></li>
+                <li><a href="http://jinja.pocoo.org/">Jinja</a></li>
+            </ul>
+            </div>
+
+
+
+        </div>     </div>     </div> 
+<footer>
+<br />
+<p align="center"><a href="http://blog.wiseturtles.com">Wise Turtles</a> &copy; crazygit 2015, Powered by <a href="http://getpelican.com/">Pelican</a>
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ffcdd4a94883b9017bfe908b983068ee7' type='text/javascript'%3E%3C/script%3E"));
+</script></p>
+</footer>
+
+</div> <!-- /container -->
+<!-- use baidu jquery cdn instead of google" -->
+<script src="http://libs.baidu.com/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-collapse.js"></script>
+</body>
+</html>
