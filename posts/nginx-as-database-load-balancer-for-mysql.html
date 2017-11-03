@@ -2,7 +2,8 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>Wise Turtles</title>
+    <title>Wise Turtles - nginx as Database Load Balancer for&nbsp;MySQL
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -25,6 +26,12 @@
     <!-- use gmirror fonts instead of google online fonts-->
     <link href='http://fonts.gmirror.org/css?family=Tangerine' rel='stylesheet' type='text/css'>
     <link href='http://fonts.gmirror.org/css?family=Rancho&effect=fire-animation' rel='stylesheet' type='text/css'>
+    <meta name="author" contents="ox0spy" />
+    <meta name="description" contents="" />
+
+      <meta name="tags" contents="Ubuntu" />
+      <meta name="tags" contents="Nginx" />
+      <meta name="tags" contents="MySQL" />
 
 </head>
 
@@ -51,76 +58,90 @@
     <div class="row">
 
         <div class="span9">
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html"><h2>Windows下安装Nginx</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/windows.html">windows</a> <a href="http://blog.wiseturtles.com/tag/nginx.html">nginx</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2013-11-26
+    <div class='article'>
+        <div class="content-title">
+            <h1>nginx as Database Load Balancer for&nbsp;MySQL</h1>
+            <br />
+    Tags <a href="http://blog.wiseturtles.com/tag/ubuntu.html">Ubuntu</a> <a href="http://blog.wiseturtles.com/tag/nginx.html">Nginx</a> <a href="http://blog.wiseturtles.com/tag/mysql.html">MySQL</a> 
+By <a class="url fn" href="http://blog.wiseturtles.com/author/ox0spy.html">ox0spy</a>
+On 2017-11-03
 
-</div>
-          <div class="summary"><b>内容摘要:</b><p class="first last">Install nginx on&nbsp;windows</p>
- <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/install-nginx-on-windows.html">阅读</a></div>
-      </div>
+        </div>
 
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/install-python-on-windows.html"><h2>Windows环境下搭建python开发环境</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/windows.html">windows</a> <a href="http://blog.wiseturtles.com/tag/python.html">python</a> <a href="http://blog.wiseturtles.com/tag/pypi-mirrors.html">pypi mirrors</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2013-11-25
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p class="first last">install python on&nbsp;windows</p>
- <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/install-python-on-windows.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/install-jdk.html"><h2>Ubuntu上手动安装<span class="caps">JDK</span></h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/ubuntu.html">ubuntu</a> <a href="http://blog.wiseturtles.com/tag/jdk.html">jdk</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2013-11-03
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p class="first last">install&nbsp;jdk</p>
- <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/install-jdk.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/setup-wamp.html"><h2><span class="caps">WAMP</span>(Windows + Apache + Mysql + <span class="caps">PHP</span>)&nbsp;环境搭建</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/php.html">php</a> <a href="http://blog.wiseturtles.com/tag/wamp.html">wamp</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2013-09-30
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>how to use pelican to setup&nbsp;wamp</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/setup-wamp.html">阅读</a></div>
-      </div>
-
-      <div class='article'>
-          <a href="http://blog.wiseturtles.com/posts/setup-opengrok.html"><h2>OpenGrok安装使用指南</h2></a>
-          <div class= "well small">     Tags <a href="http://blog.wiseturtles.com/tag/opengrok.html">opengrok</a> 
-By <a class="url fn" href="http://blog.wiseturtles.com/author/crazygit.html">crazygit</a>
-On 2012-12-14
-
-</div>
-          <div class="summary"><b>内容摘要:</b><p>how to set up&nbsp;OpenGrok</p> <a class="btn btn-info xsmall" href="http://blog.wiseturtles.com/posts/setup-opengrok.html">阅读</a></div>
-      </div>
-
-<div class="pagination">
+        <div><p>这个配置能完成几件事情：</p>
 <ul>
-    <li class="prev"><a href="http://blog.wiseturtles.com/index7.html">&larr; 上一页</a></li>
-
-    <li class=""><a href="http://blog.wiseturtles.com/index.html">1</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index2.html">2</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index3.html">3</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index4.html">4</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index5.html">5</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index6.html">6</a></li>
-    <li class=""><a href="http://blog.wiseturtles.com/index7.html">7</a></li>
-    <li class="active"><a href="http://blog.wiseturtles.com/index8.html">8</a></li>
-
-    <li class="next disabled"><a href="#">&rarr; 下一页</a></li>
-
+<li>如题，通过Nginx做MySQL负载均衡</li>
+<li>从外网的内网中的<span class="caps">RDS</span></li>
 </ul>
-</div>  
+<h2>安装</h2>
+<div class="highlight"><pre><span></span>$ sudo apt-get install nginx
+</pre></div>
+
+
+<h2>配置</h2>
+<p>/etc/nginx/nginx.conf</p>
+<div class="highlight"><pre><span></span>user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 768;
+    # multi_accept on;
+}
+
+stream { include stream.conf; }
+</pre></div>
+
+
+<p>/etc/nginx/stream.conf</p>
+<div class="highlight"><pre><span></span><span class="nt">upstream</span> <span class="nt">mysql_cluster</span> <span class="p">{</span>
+    <span class="err">server</span> <span class="n">node1</span><span class="p">:</span><span class="mi">3306</span><span class="p">;</span>
+    <span class="err">server</span> <span class="n">node2</span><span class="p">:</span><span class="mi">3306</span><span class="p">;</span>
+    <span class="err">zone</span> <span class="err">tcp_mem</span> <span class="err">64k</span><span class="p">;</span>
+    <span class="err">least_conn</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">server</span> <span class="p">{</span>
+    <span class="err">listen</span> <span class="err">3306</span><span class="p">;</span> <span class="err">#</span> <span class="err">MySQL</span> <span class="err">default</span>
+    <span class="err">proxy_pass</span> <span class="err">mysql_cluster</span><span class="p">;</span>
+    <span class="err">proxy_timeout</span> <span class="err">5s</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>重启 <code>Nginx</code>：</p>
+<div class="highlight"><pre><span></span>$ sudo service nginx restart
+</pre></div>
+
+
+<p>注：</p>
+<ul>
+<li>配置安全组 或&nbsp;防火墙</li>
+<li>只让指定 <span class="caps">IP</span> 或 网段访问 nginx&nbsp;主机</li>
+<li>允许Nginx主机访问MySQL集群</li>
+</ul>
+<h2>测试</h2>
+<div class="highlight"><pre><span></span>$ mysql -h localhost -u xxx -p  <span class="c1"># 测试是否可以连接MySQL</span>
+</pre></div></div>
+
+        <hr>
+
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"2","bdPos":"left","bdTop":"250"},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"32"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script><div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = 'http://blog.wiseturtles.com/posts/nginx-as-database-load-balancer-for-mysql.html';
+        this.page.identifier = 'nginx-as-database-load-balancer-for-mysql';
+    };
+
+    (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//wiseturtles.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
         </div>
 
         <div class="span3">

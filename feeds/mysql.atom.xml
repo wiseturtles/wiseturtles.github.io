@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - mysql</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mysql.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2014-12-17T11:25:00+08:00</updated><entry><title>MySQL查看用户权限</title><link href="http://blog.wiseturtles.com/posts/show-grants.html" rel="alternate"></link><published>2014-12-17T11:25:00+08:00</published><updated>2014-12-17T11:25:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-17:/posts/show-grants.html</id><summary type="html">&lt;p&gt;show mysql user&amp;nbsp;grants&lt;/p&gt;</summary><content type="html">&lt;h2&gt;命令&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Wise Turtles - mysql</title><link href="http://blog.wiseturtles.com/" rel="alternate"></link><link href="http://blog.wiseturtles.com/feeds/mysql.atom.xml" rel="self"></link><id>http://blog.wiseturtles.com/</id><updated>2017-11-03T16:24:00+08:00</updated><entry><title>nginx as Database Load Balancer for MySQL</title><link href="http://blog.wiseturtles.com/posts/nginx-as-database-load-balancer-for-mysql.html" rel="alternate"></link><published>2017-11-03T16:24:00+08:00</published><updated>2017-11-03T16:24:00+08:00</updated><author><name>ox0spy</name></author><id>tag:blog.wiseturtles.com,2017-11-03:/posts/nginx-as-database-load-balancer-for-mysql.html</id><summary type="html">&lt;p&gt;用Nginx做MySQL的反向代理，实现MySQL服务器的负载均衡&lt;/p&gt;</summary><content type="html">&lt;p&gt;这个配置能完成几件事情：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如题，通过Nginx做MySQL负载均衡&lt;/li&gt;
+&lt;li&gt;从外网的内网中的&lt;span class="caps"&gt;RDS&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-get install nginx
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;配置&lt;/h2&gt;
+&lt;p&gt;/etc/nginx/nginx.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 768;
+    # multi_accept on;
+}
+
+stream { include stream.conf; }
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;/etc/nginx/stream.conf&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;upstream&lt;/span&gt; &lt;span class="nt"&gt;mysql_cluster&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;server&lt;/span&gt; &lt;span class="n"&gt;node1&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;server&lt;/span&gt; &lt;span class="n"&gt;node2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;3306&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;zone&lt;/span&gt; &lt;span class="err"&gt;tcp_mem&lt;/span&gt; &lt;span class="err"&gt;64k&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;least_conn&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nt"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="err"&gt;listen&lt;/span&gt; &lt;span class="err"&gt;3306&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="err"&gt;#&lt;/span&gt; &lt;span class="err"&gt;MySQL&lt;/span&gt; &lt;span class="err"&gt;default&lt;/span&gt;
+    &lt;span class="err"&gt;proxy_pass&lt;/span&gt; &lt;span class="err"&gt;mysql_cluster&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="err"&gt;proxy_timeout&lt;/span&gt; &lt;span class="err"&gt;5s&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;重启 &lt;code&gt;Nginx&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo service nginx restart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置安全组 或&amp;nbsp;防火墙&lt;/li&gt;
+&lt;li&gt;只让指定 &lt;span class="caps"&gt;IP&lt;/span&gt; 或 网段访问 nginx&amp;nbsp;主机&lt;/li&gt;
+&lt;li&gt;允许Nginx主机访问MySQL集群&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;测试&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ mysql -h localhost -u xxx -p  &lt;span class="c1"&gt;# 测试是否可以连接MySQL&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="Ubuntu"></category><category term="Nginx"></category><category term="MySQL"></category></entry><entry><title>MySQL查看用户权限</title><link href="http://blog.wiseturtles.com/posts/show-grants.html" rel="alternate"></link><published>2014-12-17T11:25:00+08:00</published><updated>2014-12-17T11:25:00+08:00</updated><author><name>crazygit</name></author><id>tag:blog.wiseturtles.com,2014-12-17:/posts/show-grants.html</id><summary type="html">&lt;p&gt;show mysql user&amp;nbsp;grants&lt;/p&gt;</summary><content type="html">&lt;h2&gt;命令&lt;/h2&gt;
 &lt;p&gt;&lt;span class="caps"&gt;SHOW&lt;/span&gt; &lt;span class="caps"&gt;GRANTS&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;官方文档: &lt;a href="http://dev.mysql.com/doc/refman/5.6/en/show-grants.html"&gt;http://dev.mysql.com/doc/refman/5.6/en/show-grants.html&lt;/a&gt;&lt;/p&gt;
 &lt;h2&gt;常看帮助&lt;/h2&gt;
